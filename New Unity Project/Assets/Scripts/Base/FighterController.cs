@@ -30,13 +30,13 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] Animator _animator;
-    //InputHandler
+    InputHandler _inputHandler;
     Rigidbody _rigidbody;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        //_inputHandler = GetComponent<InputHandler>();
+        _inputHandler = GetComponent<InputHandler>();
     }
 
     public void InitializeFighter()
@@ -68,12 +68,11 @@ public abstract class FighterController : MonoBehaviour
     public virtual void OnGroundMovement()
     {
         //Get input from the handler
-        var controllerInput = new Vector3(0, 0, 0);
-        controllerInput.Normalize();
+        var xCalculation = 0.0f;
 
-        controllerInput *= _speed;
+        xCalculation *= _speed;
 
-        _controllerVelocity = new Vector3(controllerInput.x, _rigidbody.velocity.y, _rigidbody.velocity.z);
+        _controllerVelocity = new Vector3(xCalculation, _rigidbody.velocity.y, 0);
     }
 
     public virtual void OnAirMovement()
@@ -83,6 +82,8 @@ public abstract class FighterController : MonoBehaviour
         {
             _yVelocity = Physics.gravity.y * 2;
         }
+
+        _controllerVelocity = new Vector3(_controllerVelocity.x, _yVelocity, 0);
     }
 
     public virtual void OnDash()
@@ -92,7 +93,8 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void ProcessInput()
     {
-        
+        //If grounded, If stick low = crouching, else idle, else air
+
     }
 
     public virtual void ProcessHitRegister(HitRegister register)
