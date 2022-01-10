@@ -82,6 +82,10 @@ public abstract class FighterController : MonoBehaviour
         {
             _yVelocity = Physics.gravity.y * 2;
         }
+        else
+        {
+            _yVelocity = Physics.gravity.y;
+        }
 
         _controllerVelocity = new Vector3(_controllerVelocity.x, _yVelocity, 0);
     }
