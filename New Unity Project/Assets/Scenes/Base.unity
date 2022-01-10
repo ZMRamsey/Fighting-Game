@@ -441,6 +441,8 @@ GameObject:
   m_Component:
   - component: {fileID: 765215812}
   - component: {fileID: 765215811}
+  - component: {fileID: 765215814}
+  - component: {fileID: 765215813}
   m_Layer: 0
   m_Name: DebugFighter
   m_TagString: Untagged
@@ -460,15 +462,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7335d0fc168d1ad4f9ef4ce8fae5d443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
+  _maxHealth: 100
   _groundLayers:
     serializedVersion: 2
     m_Bits: 0
-  _speed: 0
-  _jumpForce: 0
-  _jumpHeight: 0
-  _canAirDash: 0
-  _canGroundDash: 0
+  _speed: 2
+  _jumpForce: 2
+  _jumpHeight: 2
+  _canAirDash: 1
+  _canGroundDash: 1
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 0}
 --- !u!4 &765215812
@@ -485,6 +487,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765215813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765215810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6196ec747606fd45b972f011038f5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &765215814
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765215810}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1204973663
 GameObject:
   m_ObjectHideFlags: 0
