@@ -85,13 +85,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - LightShadowCutoff: 0.313
+    - LightShadowCutoff: 0.295
     - LightShadowSmooth: 0
-    - RimGlow: 0.9
+    - RimGlow: 0.585
     - Scale: 489.07
     - Speed: 4
-    - Strength: 0.1
-    - WiggleStrength: 2
+    - Strength: 1.22
+    - WiggleStrength: 0.02
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
