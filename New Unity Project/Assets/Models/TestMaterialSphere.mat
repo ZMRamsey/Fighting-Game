@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestMaterial
+  m_Name: TestMaterialSphere
   m_Shader: {fileID: -6465566751694194690, guid: 7f40b4a59923f1547955e5a3582f0e77, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -87,9 +87,9 @@ Material:
     m_Floats:
     - LightShadowCutoff: 0.313
     - LightShadowSmooth: 0
-    - RimGlow: 1
+    - RimGlow: 0.84
     - Speed: 4
-    - Strength: 0.005
+    - Strength: 0.1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
