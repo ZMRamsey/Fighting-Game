@@ -17,6 +17,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
     [SerializeField] float _fallMultiplier;
+    [SerializeField] float _jumpFalloff;
     [SerializeField] bool _canAirDash;
     [SerializeField] bool _canGroundDash;
     [SerializeField] bool _onJump;
@@ -107,7 +108,7 @@ public abstract class FighterController : MonoBehaviour
             }
         }
         else {
-            _yVelocity *= 0.94f;
+            _yVelocity *= _jumpFalloff;
 
             if (_rigidbody.velocity.y < 0) {
                 _onJump = false;

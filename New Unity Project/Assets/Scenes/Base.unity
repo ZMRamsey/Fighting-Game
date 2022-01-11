@@ -277,12 +277,13 @@ MonoBehaviour:
     m_Bits: 1024
   _height: 1.74
   _speed: 2
-  _jumpForce: 2
-  _fallMultiplier: 2.5
+  _jumpForce: 32
+  _fallMultiplier: 1.5
+  _jumpFalloff: 0.975
   _canAirDash: 1
   _canGroundDash: 1
   _onJump: 0
-  _controllerVelocity: {x: 0, y: 0, z: 0}
+  _controllerVelocity: {x: 0, y: 0.19619724, z: 0}
   _animator: {fileID: 0}
 --- !u!4 &287597343
 Transform:
@@ -292,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287597338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 4.39, z: 0}
+  m_LocalPosition: {x: -1.84, y: 4.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1067670422}
@@ -832,12 +833,13 @@ MonoBehaviour:
     m_Bits: 1024
   _height: 1.74
   _speed: 2
-  _jumpForce: 2
-  _fallMultiplier: 2.5
+  _jumpForce: 32
+  _fallMultiplier: 1.5
+  _jumpFalloff: 0.975
   _canAirDash: 1
   _canGroundDash: 1
   _onJump: 0
-  _controllerVelocity: {x: 0, y: 0, z: 0}
+  _controllerVelocity: {x: 0, y: 0.19619724, z: 0}
   _animator: {fileID: 0}
 --- !u!4 &765215812
 Transform:
@@ -847,7 +849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765215810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 4.39, z: 0}
+  m_LocalPosition: {x: 3.3899999, y: 4.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 419033215}
@@ -1102,9 +1104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fighterOne: {fileID: 765215812}
   _fighterTwo: {fileID: 287597343}
-  _cameraPositionOffset: {x: 0, y: 2, z: 7}
-  _yOffset: 0.1
-  _speed: 2
+  _cameraPositionOffset: {x: 0, y: 1, z: 5.6}
+  _yOffset: 1
+  _speed: 3
   _camera: {fileID: 1781519608}
 --- !u!4 &1532864669 stripped
 Transform:
