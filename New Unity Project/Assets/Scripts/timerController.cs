@@ -40,7 +40,6 @@ public class timer : MonoBehaviour
 
     public void EndMatch()
     {
-        ApplicationException.Load
     }
 
 
