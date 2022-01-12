@@ -28,7 +28,7 @@ public class CameraContoller : MonoBehaviour
 
     private void LateUpdate()
     {
-        _camera.LookAt(_cameraTarget);
+
         transform.position = Vector3.MoveTowards(transform.position, _cameraTarget + _cameraPositionOffset, Time.deltaTime * _speed);
     }
 }
