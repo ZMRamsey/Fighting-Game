@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum FighterAction { none, attacking, blocking, jumping, damage };
 public enum FighterStance { standing, crouching, air, blow };
@@ -21,6 +22,10 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] bool _canAirDash;
     [SerializeField] bool _canGroundDash;
     [SerializeField] bool _onJump;
+
+    [Header("Aesthetic")]
+    [SerializeField] Transform _controllerScaler;
+    [SerializeField] float _stretchSpeed;
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
@@ -47,6 +52,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void Update() {
+        _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
         if (_myStance == FighterStance.standing) {
@@ -69,6 +75,12 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnGroundMovement() {
         var xCalculation = 0.0f;
+        if (Keyboard.current.aKey.IsPressed()) {
+            xCalculation = 1;
+        }
+        if (Keyboard.current.dKey.IsPressed()) {
+            xCalculation = -1;
+        }
 
         AdjustControllerHeight();
 
@@ -95,6 +107,10 @@ public abstract class FighterController : MonoBehaviour
 
         Vector3 result = rayDirection * springForce;
         _yVelocity = result.y;
+    }
+
+    public virtual void OnLand() {
+        _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
     }
 
     public virtual void OnAirMovement() {
@@ -150,8 +166,16 @@ public abstract class FighterController : MonoBehaviour
         //ProcessKnockback
     }
 
+    bool _wasGrounded;
     public bool IsGrounded() {
         var groundCheck = Physics.Raycast(transform.position, Vector3.down, out _groundHit, _height, _groundLayers);
+
+        if (groundCheck && !_wasGrounded) {
+            OnLand();
+        }
+
+        _wasGrounded = groundCheck;
+
         Debug.DrawLine(transform.position, transform.position + Vector3.down, Color.red, _height * 2);
         return groundCheck;
     }
