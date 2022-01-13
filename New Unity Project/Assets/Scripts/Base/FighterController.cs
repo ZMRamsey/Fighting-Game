@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum FighterAction { none, attacking, blocking, jumping, damage };
-public enum FighterStance { standing, crouching, air, blow };
+public enum FighterAction { none, attacking, jumping, dead };
+public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] bool _canAirDash;
     [SerializeField] bool _canGroundDash;
     [SerializeField] bool _onJump;
+    [SerializeField] bool _canJump;
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
@@ -29,8 +30,8 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
-    float _yVelocity;
     float _commandMeter;
+    float _yVelocity;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -49,11 +50,16 @@ public abstract class FighterController : MonoBehaviour
 
     public void InitializeFighter() {
         _health = _maxHealth;
+        _canJump = true;
     }
 
     void Update() {
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
+
+        if (Keyboard.current.wKey.wasPressedThisFrame) {
+            _onJump = true;
+        }
 
         if (_myStance == FighterStance.standing) {
             OnGroundMovement();
@@ -65,6 +71,14 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void FixedUpdate() {
+
+        //_controllerVelocity = Vector3.ClampMagnitude(_controllerVelocity, 20);
+
+        if (_onJump && _canJump && _myAction != FighterAction.jumping) {
+            OnJump();
+            return;
+        }
+
         _rigidbody.velocity = _controllerVelocity;
     }
 
@@ -86,11 +100,6 @@ public abstract class FighterController : MonoBehaviour
 
         xCalculation *= _speed;
 
-        if (_onJump) {
-            _myAction = FighterAction.jumping;
-            _yVelocity = _jumpForce;
-        }
-
         _controllerVelocity = new Vector3(xCalculation, _yVelocity, 0);
     }
 
@@ -111,28 +120,54 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnLand() {
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
+        _canJump = true;
+    }
+
+    public virtual void OnJump() {
+        _onJump = false;
+        _canJump = false;
+
+        _myAction = FighterAction.jumping;
+
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+        _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
     }
 
     public virtual void OnAirMovement() {
+        var x = _rigidbody.velocity.x;
+        var y = _rigidbody.velocity.y;
+
         if (_myAction != FighterAction.jumping) {
 
             if (_rigidbody.velocity.y < 0) {
-                _yVelocity = Physics.gravity.y * _fallMultiplier;
+                _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * (_fallMultiplier - 1));
             }
             else {
-                _yVelocity = Physics.gravity.y;
+                _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass);
             }
         }
         else {
-            _yVelocity *= _jumpFalloff;
-
-            if (_rigidbody.velocity.y < 0) {
-                _onJump = false;
+            if (_rigidbody.velocity.y > 0) {
+                y *= _jumpFalloff;
+            }
+            else {
                 ResetAction();
             }
         }
 
-        _controllerVelocity = new Vector3(_controllerVelocity.x, _yVelocity, 0);
+        var xCalculation = 0.0f;
+        if (Keyboard.current.aKey.IsPressed()) {
+            xCalculation = 1;
+        }
+        if (Keyboard.current.dKey.IsPressed()) {
+            xCalculation = -1;
+        }
+
+        _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 0.6f);
+
+        x = Mathf.Clamp(x, -5f, 5f);
+
+        _controllerVelocity = new Vector3(x, y, 0);
     }
 
     public virtual void OnDash() {
@@ -168,6 +203,10 @@ public abstract class FighterController : MonoBehaviour
 
     bool _wasGrounded;
     public bool IsGrounded() {
+        if (_myAction == FighterAction.jumping) {
+            return false;
+        }
+
         var groundCheck = Physics.Raycast(transform.position, Vector3.down, out _groundHit, _height, _groundLayers);
 
         if (groundCheck && !_wasGrounded) {
