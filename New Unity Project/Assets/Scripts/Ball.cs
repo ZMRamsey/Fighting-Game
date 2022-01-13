@@ -106,6 +106,11 @@ public class Ball : MonoBehaviour
         _smoke.Play();
     }
 
+    public float getSpeed()
+    {
+        return _speed;
+    }
+
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
         OnWallHit();
