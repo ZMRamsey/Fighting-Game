@@ -6,12 +6,26 @@ using UnityEngine.InputSystem;
 public class Ball : MonoBehaviour
 {
     //[SerializeField] Vector3 _ballVelocity;
+    [Header("Settings")]
+    [SerializeField] float _maxSpeed = 40;
+
+    [Header("Aesthetic")]
     [SerializeField] Transform _ballHolder;
-    [SerializeField] Rigidbody _rb;
     [SerializeField] float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
-    [SerializeField] float _airTime;
+    [SerializeField] ParticleSystem _smoke;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip[] _initialImpact;
+    [SerializeField] AudioClip[] _ricochets;
+    [SerializeField] AudioClip _testHit;
+
+    [Header("Componenets")]
+    [SerializeField] AudioSource _source;
+    [SerializeField] Rigidbody _rb;
+    bool _freeze;
     float _squishTimer;
+    float _speed;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -26,10 +40,10 @@ public class Ball : MonoBehaviour
 
     [ContextMenu("Shoot")]
     public void Shoot() {
+        _source.PlayOneShot(_testHit);
         SquishBall();
         _rb.velocity = Vector3.zero;
         Vector3 targetVelocity = new Vector3(20, 5, 0);
-        _airTime = targetVelocity.magnitude;
         _rb.velocity = targetVelocity;
     }
 
@@ -39,6 +53,8 @@ public class Ball : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             Shoot();
         }
+
+        _speed = _rb.velocity.magnitude;
 
         Vector3 velocity = _rb.velocity;
 
@@ -59,14 +75,16 @@ public class Ball : MonoBehaviour
             _squishTimer -= Time.deltaTime;
         }
 
-        if (_airTime < 0) {
-            velocity.x = velocity.x * 0.9f;
-        }
-        else {
-            _airTime -= Time.deltaTime;
-        }
+        velocity.x = velocity.x * 0.9f;
 
-        _rb.velocity = velocity;
+        var tempVel = _rb.velocity;
+        tempVel = Vector3.ClampMagnitude(tempVel, _maxSpeed);
+
+        _rb.velocity = tempVel;
+
+        if (_freeze) {
+            _rb.velocity = Vector3.zero;
+        }
     }
 
     void SquishBall() {
@@ -79,7 +97,17 @@ public class Ball : MonoBehaviour
         _ballHolder.localScale = new Vector3(x, 1, 1);
     }
 
+    void OnWallHit() {
+        float calc = _speed / _initialImpact.Length;
+        int con = (int)calc;
+
+        _source.PlayOneShot(_initialImpact[con]);
+
+        _smoke.Play();
+    }
+
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
+        OnWallHit();
     }
 }
