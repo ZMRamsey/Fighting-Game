@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class ShuttleHit : MonoBehaviour
 {
-    [SerializeField] GameObject _ball;
+    //[SerializeField] GameObject _ball;
+    Ball _self;
+
+    private void Awake()
+    {
+        _self = transform.root.GetComponent<Ball>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         //Player hit
         if (collision.gameObject.layer == 7)
         {
-            //Handle bouncing off player if done here
-            //collision.gameObject.GetComponent;
-            if (_ball.GetComponent<Ball>().getSpeed() >= 20)
+            //new HitRegister(damage, new Vector3(0, 0, 0));
+            //Handle bouncing off player event here
+            if (_self.getSpeed() >= 20)
             {
                 Debug.Log("KO");
             }
@@ -22,5 +28,7 @@ public class ShuttleHit : MonoBehaviour
                 Debug.Log("Boink");
             }
         }
+
     }
+   
 }
