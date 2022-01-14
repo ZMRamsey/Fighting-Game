@@ -12,17 +12,15 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _maxHealth;
     float _health;
 
-    [Header("Settings")]
+    [Header("Base Settings")]
     [SerializeField] LayerMask _groundLayers;
-    [SerializeField] float _height;
     [SerializeField] float _speed;
+    [SerializeField] float _height;
+
+    [Header("Air Settings")]
     [SerializeField] float _jumpForce;
     [SerializeField] float _fallMultiplier;
     [SerializeField] float _jumpFalloff;
-    [SerializeField] bool _canAirDash;
-    [SerializeField] bool _canGroundDash;
-    [SerializeField] bool _onJump;
-    [SerializeField] bool _canJump;
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
@@ -32,6 +30,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
+    bool _onJump;
+    bool _canJump;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -134,8 +134,8 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnAirMovement() {
-        var x = _rigidbody.velocity.x;
-        var y = _rigidbody.velocity.y;
+        var velocityX = _rigidbody.velocity.x;
+        var velocityY = _rigidbody.velocity.y;
 
         if (_myAction != FighterAction.jumping) {
 
@@ -148,7 +148,7 @@ public abstract class FighterController : MonoBehaviour
         }
         else {
             if (_rigidbody.velocity.y > 0) {
-                y *= _jumpFalloff;
+                velocityY *= _jumpFalloff;
             }
             else {
                 ResetAction();
@@ -165,9 +165,9 @@ public abstract class FighterController : MonoBehaviour
 
         _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 0.6f);
 
-        x = Mathf.Clamp(x, -5f, 5f);
+        velocityX = Mathf.Clamp(velocityX, -5f, 5f);
 
-        _controllerVelocity = new Vector3(x, y, 0);
+        _controllerVelocity = new Vector3(velocityX, velocityY, 0);
     }
 
     public virtual void OnDash() {

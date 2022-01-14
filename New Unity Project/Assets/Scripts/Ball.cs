@@ -23,13 +23,17 @@ public class Ball : MonoBehaviour
     [Header("Componenets")]
     [SerializeField] AudioSource _source;
     [SerializeField] Rigidbody _rb;
+    [SerializeField] Transform _fighterDebug;
     bool _freeze;
     float _squishTimer;
     float _speed;
+    float _magnitude;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
         spawn = transform.position;
+
+        _speed = 1;
     }
 
     [ContextMenu("Reset Ball")]
@@ -38,23 +42,42 @@ public class Ball : MonoBehaviour
     }
 
 
-    [ContextMenu("Shoot")]
-    public void Shoot() {
+    void ProcessForce(Vector3 direction) {
         _source.PlayOneShot(_testHit);
+
         SquishBall();
+
         _rb.velocity = Vector3.zero;
-        Vector3 targetVelocity = new Vector3(20, 5, 0);
+
+        Vector3 targetVelocity = direction * _speed;
+
         _rb.velocity = targetVelocity;
+
+        _speed++;
+    }
+
+    Coroutine shootCoroutine;
+    public void Shoot(Vector3 distance) {
+        if(shootCoroutine != null) {
+            StopCoroutine(shootCoroutine);
+        }
+
+        shootCoroutine = StartCoroutine(ShootProccess(distance));
     }
 
 
     Vector3 spawn;
     void Update() {
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
-            Shoot();
+            _rb.velocity = Vector3.zero;
+            transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
+            //Shoot(new Vector3(1f, 12));
+            //Shoot(new Vector3(10f, 8f));
+            Shoot(new Vector3(12f, 4f));
+            //Shoot(new Vector3(2f, 8f));
         }
 
-        _speed = _rb.velocity.magnitude;
+        _magnitude = _rb.velocity.magnitude;
 
         Vector3 velocity = _rb.velocity;
 
@@ -98,19 +121,28 @@ public class Ball : MonoBehaviour
     }
 
     void OnWallHit() {
-        float calc = _speed / _initialImpact.Length;
+        float calc = _magnitude / _initialImpact.Length;
         int con = (int)calc;
+        con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
 
         _source.PlayOneShot(_initialImpact[con]);
+
+        _smoke.Play();
     }
 
-    public float getSpeed()
-    {
-        return _speed;
+    public float getSpeed() {
+        return _magnitude;
     }
 
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
         OnWallHit();
+    }
+
+    IEnumerator ShootProccess(Vector3 distance) {
+        _freeze = true;
+        yield return new WaitForSeconds(0.1f);
+        _freeze = false;
+        ProcessForce(distance);
     }
 }
