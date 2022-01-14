@@ -65,14 +65,6 @@ public class Ball : MonoBehaviour
         shootCoroutine = StartCoroutine(ShootProccess(distance));
     }
 
-    public void Shoot(Vector3 shotSpeed)
-    {
-        _source.PlayOneShot(_testHit);
-        SquishBall();
-        _rb.velocity = Vector3.zero;
-        _rb.velocity = shotSpeed;
-    }
-
     Vector3 spawn;
     void Update() {
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
@@ -80,7 +72,7 @@ public class Ball : MonoBehaviour
             transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
             //Shoot(new Vector3(1f, 12));
             //Shoot(new Vector3(10f, 8f));
-            Shoot(new Vector3(12f, 4f));
+            //Shoot(new Vector3(12f, 4f));
             //Shoot(new Vector3(2f, 8f));
         }
 
