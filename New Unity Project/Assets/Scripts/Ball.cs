@@ -102,8 +102,11 @@ public class Ball : MonoBehaviour
         int con = (int)calc;
 
         _source.PlayOneShot(_initialImpact[con]);
+    }
 
-        _smoke.Play();
+    public float getSpeed()
+    {
+        return _speed;
     }
 
     private void OnCollisionEnter(Collision collision) {
