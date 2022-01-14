@@ -18,7 +18,7 @@ public class Hurtbox : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ball>())
         {

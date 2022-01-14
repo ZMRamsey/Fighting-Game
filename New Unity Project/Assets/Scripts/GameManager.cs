@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    static GameManager _instance;
+
+    [SerializeField] Shaker _cameraShaker;
+
+    public static GameManager Get() {
+        return _instance;
+    }
+
+    void Awake()
     {
-        
+        _instance = this;   
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public Shaker GetCameraShaker() {
+        return _cameraShaker;
     }
 }

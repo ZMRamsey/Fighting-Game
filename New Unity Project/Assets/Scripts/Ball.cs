@@ -13,7 +13,9 @@ public class Ball : MonoBehaviour
     [SerializeField] Transform _ballHolder;
     [SerializeField] float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
-    [SerializeField] ParticleSystem _smoke;
+    [SerializeField] ParticleSystem _hit;
+    [SerializeField] ParticleSystem _wallHit;
+    [SerializeField] TrailRenderer _trail;
 
     [Header("Audio")]
     [SerializeField] AudioClip[] _initialImpact;
@@ -43,6 +45,7 @@ public class Ball : MonoBehaviour
 
     void ProcessForce(Vector3 direction) {
         _source.PlayOneShot(_testHit);
+        _hit.Play();
 
         SquishBall();
 
@@ -66,6 +69,8 @@ public class Ball : MonoBehaviour
 
     Vector3 spawn;
     void Update() {
+        _trail.emitting = _rb.velocity.magnitude > 40;
+
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             _rb.velocity = Vector3.zero;
             //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
@@ -118,14 +123,27 @@ public class Ball : MonoBehaviour
         _ballHolder.localScale = new Vector3(x, 1, 1);
     }
 
-    void OnWallHit() {
+    void OnWallHit(ContactPoint point) {
+        if (_magnitude > 35) {
+            GameManager.Get().GetCameraShaker().SetShake(0.5f);
+        }
+        if (_magnitude > 15) {
+            GameManager.Get().GetCameraShaker().SetShake(0.2f);
+        }
+        if (_magnitude > 8) {
+            GameManager.Get().GetCameraShaker().SetShake(0.1f);
+        }
         float calc = _magnitude / _initialImpact.Length;
         int con = (int)calc;
         con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
 
         _source.PlayOneShot(_initialImpact[con]);
 
-        _smoke.Play();
+        var hit = Instantiate(_wallHit.gameObject, point.point, Quaternion.identity);
+        hit.transform.rotation = Quaternion.FromToRotation(Vector3.forward, point.normal);
+        hit.GetComponent<ParticleSystem>().Play();
+        hit.transform.position += hit.transform.forward * 0.1f;
+        Destroy(hit, 1);
     }
 
     public float getSpeed() {
@@ -134,12 +152,12 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
-        OnWallHit();
+        OnWallHit(collision.contacts[0]);
     }
 
     IEnumerator ShootProccess(Vector3 distance) {
         _freeze = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
         _freeze = false;
         ProcessForce(distance);
     }

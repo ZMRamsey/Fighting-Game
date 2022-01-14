@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CameraContoller : MonoBehaviour
 {
-    [SerializeField] Transform _fighterOne, _fighterTwo;
+    [SerializeField] Transform _fighterOne, _fighterTwo, _ball;
     [SerializeField] Vector3 _cameraPositionOffset;
-    [SerializeField] float _yOffset;
     [SerializeField] float _speed;
     [SerializeField] Transform _camera;
+    [SerializeField] Vector2 _limitX;
+    [SerializeField] Vector2 _limitY;
     Vector3 _cameraTarget;
 
     // Start is called before the first frame update
@@ -20,15 +21,20 @@ public class CameraContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _cameraTarget = (_fighterOne.position + _fighterTwo.position) / 2;
+        //_cameraTarget = (_fighterOne.position + _fighterTwo.position) / 2;
+        _cameraTarget = _ball.position;
 
-        _cameraTarget.y += _yOffset;
+        _cameraTarget.y += _cameraPositionOffset.y;
+
+        //_cameraTarget.x = Mathf.Clamp(_cameraTarget.x, _limitX.x, _limitX.y);
+        _cameraTarget.y = Mathf.Clamp(_cameraTarget.y, _limitY.x, _limitY.y);
 
     }
 
     private void LateUpdate()
     {
-
-        transform.position = Vector3.MoveTowards(transform.position, _cameraTarget + _cameraPositionOffset, Time.deltaTime * _speed);
+        Vector3 pos = Vector3.Lerp(transform.position, _cameraTarget + _cameraPositionOffset, Time.deltaTime * _speed);
+        pos.x = Mathf.Clamp(pos.x, _limitX.x, _limitX.y);
+        transform.position = pos;
     }
 }
