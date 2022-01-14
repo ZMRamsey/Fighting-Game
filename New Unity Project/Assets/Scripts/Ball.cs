@@ -69,9 +69,9 @@ public class Ball : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             _rb.velocity = Vector3.zero;
             //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
-            //Shoot(new Vector3(1f, 12));
+            //Shoot(new Vector3(1f, 12f));
             //Shoot(new Vector3(10f, 8f));
-            //Shoot(new Vector3(12f, 4f));
+            Shoot(new Vector3(12f, 4f));
             //Shoot(new Vector3(2f, 8f));
         }
 

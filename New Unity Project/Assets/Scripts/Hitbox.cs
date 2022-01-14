@@ -5,7 +5,8 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour
 {
     FighterController _self;
-    [SerializeField] string _shotType;
+    [SerializeField] string _shotType = "chip";
+    [SerializeField] GameObject _character;
 
     private void Awake()
     {
@@ -21,23 +22,28 @@ public class Hitbox : MonoBehaviour
         var ball = collision.transform.GetComponent<Ball>();
         if (ball != null)
         {
+            float facing = 1;
+            if (_character.GetComponent<SpriteRenderer>().flipX)
+            {
+                facing = -1;
+            }
             //Play shot type depending on button pressed
             switch (_shotType)
             {
                 case "chip":
-                    ball.Shoot(new Vector3(1, 5, 0));
+                    ball.Shoot(new Vector3(1f * facing, 2f));
                     break;
 
                 case "drive":
-                    ball.Shoot(new Vector3(15, 5, 0));
+                    ball.Shoot(new Vector3(12f * facing, 3f));
                     break;
 
                 case "drop":
-                    ball.Shoot(new Vector3(10, 10, 0));
+                    ball.Shoot(new Vector3(6f * facing, 6f));
                     break;
 
                 case "smash":
-                    ball.Shoot(new Vector3(25, -5, 0));
+                    ball.Shoot(new Vector3(16f * facing, -2f));
                     break;
 
                 default:
