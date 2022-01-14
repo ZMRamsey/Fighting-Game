@@ -11,16 +11,6 @@ public class ShuttleHit : MonoBehaviour
         _self = transform.root.GetComponent<Ball>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Player hit
-        if (collision.gameObject.layer == 7)
-        {
-            //new HitRegister(damage, new Vector3(0, 0, 0));
-        }
-
-    }
-
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.transform == _self.transform)
@@ -31,6 +21,10 @@ public class ShuttleHit : MonoBehaviour
         if (hurt != null)
         {
             new HitRegister(_self.getSpeed(), new Vector3(0, 0, 0));
+        }
+        if (collision.gameObject.layer == 10)
+        {
+            //point over stuff
         }
     }
 
