@@ -23,7 +23,6 @@ public class Ball : MonoBehaviour
     [Header("Componenets")]
     [SerializeField] AudioSource _source;
     [SerializeField] Rigidbody _rb;
-    [SerializeField] Transform _fighterDebug;
     bool _freeze;
     float _squishTimer;
     float _speed;
@@ -69,7 +68,7 @@ public class Ball : MonoBehaviour
     void Update() {
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             _rb.velocity = Vector3.zero;
-            transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
+            //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
             //Shoot(new Vector3(1f, 12));
             //Shoot(new Vector3(10f, 8f));
             //Shoot(new Vector3(12f, 4f));
