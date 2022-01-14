@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Not the same job as hitregister?
+
 public class Hurtbox : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,9 +18,9 @@ public class Hurtbox : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 11)
+        if (collision.gameObject.GetComponent<Ball>())
         {
             Debug.Log("ouchie");
         }
