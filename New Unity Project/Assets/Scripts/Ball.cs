@@ -47,6 +47,13 @@ public class Ball : MonoBehaviour
         _rb.velocity = targetVelocity;
     }
 
+    public void Shoot(Vector3 shotSpeed)
+    {
+        _source.PlayOneShot(_testHit);
+        SquishBall();
+        _rb.velocity = Vector3.zero;
+        _rb.velocity = shotSpeed;
+    }
 
     Vector3 spawn;
     void Update() {

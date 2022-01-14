@@ -14,31 +14,34 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        var ball = collision.transform.GetComponent<Ball>();
-        if (ball != null && collision.transform == _self.transform)
+        if (collision.transform == _self.transform)
         {
-            Debug.Log("A winner is you");
+            return;
+        }
+        var ball = collision.transform.GetComponent<Ball>();
+        if (ball != null)
+        {
             //Play shot type depending on button pressed
             switch (_shotType)
             {
                 case "chip":
-                    ball.Shoot();
+                    ball.Shoot(new Vector3(1, 5, 0));
                     break;
 
                 case "drive":
-                    ball.Shoot();
+                    ball.Shoot(new Vector3(15, 5, 0));
                     break;
 
                 case "drop":
-                    ball.Shoot();
+                    ball.Shoot(new Vector3(10, 10, 0));
                     break;
 
                 case "smash":
-                    ball.Shoot();
+                    ball.Shoot(new Vector3(25, -5, 0));
                     break;
 
                 default:
-                    ball.Shoot();
+                    Debug.Log("Fuccy Wuccy Has Occurred");
                     break;
             }
         }
