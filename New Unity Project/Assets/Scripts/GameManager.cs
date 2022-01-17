@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     static GameManager _instance;
 
     [SerializeField] Shaker _cameraShaker;
+    [SerializeField] FighterController _fighterOne;
+    [SerializeField] FighterController _fighterTwo;
+    [SerializeField] ShuttleCock _shuttle;
 
     public static GameManager Get() {
         return _instance;
@@ -25,5 +28,10 @@ public class GameManager : MonoBehaviour
 
     public Shaker GetCameraShaker() {
         return _cameraShaker;
+    }
+
+    public void StunFrames(float timer) {
+        _fighterOne.StunController(timer);
+        _fighterTwo.StunController(timer);
     }
 }

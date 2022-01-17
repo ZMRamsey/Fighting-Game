@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Ball : MonoBehaviour
+public class ShuttleCock : MonoBehaviour
 {
     //[SerializeField] Vector3 _ballVelocity;
     [Header("Settings")]
@@ -60,7 +60,9 @@ public class Ball : MonoBehaviour
 
     Coroutine shootCoroutine;
     public void Shoot(Vector3 distance) {
-        if(shootCoroutine != null) {
+        GameManager.Get().StunFrames(0.15f);
+
+        if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
 
@@ -138,10 +140,16 @@ public class Ball : MonoBehaviour
         }
 
         float calc = _magnitude / _initialImpact.Length;
+
+
         int con = (int)calc;
         con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
 
         _source.PlayOneShot(_initialImpact[con]);
+
+        if (force > 20) {
+            _source.PlayOneShot(_ricochets[Random.Range(0, _ricochets.Length)]);
+        }
 
         var hit = Instantiate(_wallHit.gameObject, point.point, Quaternion.identity);
         hit.transform.rotation = Quaternion.FromToRotation(Vector3.forward, point.normal);

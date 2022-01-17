@@ -20,7 +20,7 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
-        var ball = collision.transform.GetComponent<Ball>();
+        var ball = collision.transform.GetComponent<ShuttleCock>();
         if (ball != null)
         {
             float facing = 1;

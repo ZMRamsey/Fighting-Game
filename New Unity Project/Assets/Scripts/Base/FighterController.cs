@@ -32,6 +32,7 @@ public abstract class FighterController : MonoBehaviour
     float _commandMeter;
     float _yVelocity;
     bool _canJump;
+    bool _freeze;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -82,7 +83,12 @@ public abstract class FighterController : MonoBehaviour
             return;
         }
 
-        _rigidbody.velocity = _controllerVelocity;
+        if (_freeze) {
+            _rigidbody.velocity = Vector3.zero;
+        }
+        else {
+            _rigidbody.velocity = _controllerVelocity;
+        }
     }
 
     void ResetAction() {
@@ -225,5 +231,28 @@ public abstract class FighterController : MonoBehaviour
 
     public FighterAction GetFighterAction() {
         return _myAction;
+    }
+
+    public void StunController(float time) {
+        if(Stun != null) {
+            StopCoroutine(Stun);
+        }
+        Stun = StartCoroutine(StunFrame(time));
+    }
+
+
+    Coroutine Stun;
+    Vector3 _tempVelocity;
+    IEnumerator StunFrame(float time) {
+        _tempVelocity = _rigidbody.velocity;
+        _freeze = true;
+        _animator.speed = 0;
+        _rigidbody.isKinematic = true;
+        yield return new WaitForSeconds(time);
+        _freeze = false;
+        _rigidbody.isKinematic = false;
+        _animator.speed = 1;
+        _rigidbody.velocity = _tempVelocity;
+        StopCoroutine(Stun);
     }
 }

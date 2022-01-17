@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ShuttleHit : MonoBehaviour
 {
-    Ball _self;
+    ShuttleCock _self;
 
     private void Awake()
     {
-        _self = transform.root.GetComponent<Ball>();
+        _self = transform.root.GetComponent<ShuttleCock>();
     }
 
     private void OnTriggerEnter(Collider collision)

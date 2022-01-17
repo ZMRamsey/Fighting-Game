@@ -20,7 +20,7 @@ public class Hurtbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.GetComponent<Ball>())
+        if (collision.gameObject.GetComponent<ShuttleCock>())
         {
             Debug.Log("ouchie");
         }
