@@ -13,20 +13,16 @@ public class CameraContoller : MonoBehaviour
     Vector3 _cameraTarget;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        //_cameraTarget = (_fighterOne.position + _fighterTwo.position) / 2;
+        //_cameraTarget = (_focusOne.position + _focusTwo.position) / 2;
         _cameraTarget = _ball.position;
 
         _cameraTarget.y += _cameraPositionOffset.y;
 
-        //_cameraTarget.x = Mathf.Clamp(_cameraTarget.x, _limitX.x, _limitX.y);
+        _cameraTarget.x = Mathf.Clamp(_cameraTarget.x, _limitX.x, _limitX.y);
         _cameraTarget.y = Mathf.Clamp(_cameraTarget.y, _limitY.x, _limitY.y);
 
     }

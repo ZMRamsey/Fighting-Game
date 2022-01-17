@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Shaker : MonoBehaviour
 {
-    public float shake_intensity = .01f;
+    public float _shakeIntensity = .01f;
     [SerializeField] float _dampen;
 
-    float shake_decay = 0.01f;
-    [SerializeField] float shake_duration = 0;
+    float _shakeDecay = 0.01f;
+    [SerializeField] float _shakeDuration = 0;
     [SerializeField] bool _ignoreScaling;
 
     public bool shake;
@@ -23,11 +23,11 @@ public class Shaker : MonoBehaviour
 
     void Update() {
         if (shake) {
-            shake_duration = shake_intensity;
+            _shakeDuration = _shakeIntensity;
         }
 
-        if (shake_duration > 0) {
-            float dur = Mathf.Clamp(shake_duration, 0, 1);
+        if (_shakeDuration > 0) {
+            float dur = Mathf.Clamp(_shakeDuration, 0, 1);
             if (_ignoreScaling) {
                 dur = 1;
             }
@@ -35,11 +35,11 @@ public class Shaker : MonoBehaviour
             Vector3 targetPos = originPosition + Random.insideUnitSphere * dur;
 
             Quaternion targetRot = new Quaternion(
-                originRotation.x + Random.Range(-shake_intensity, shake_intensity) * .1f * dur,
-                originRotation.y + Random.Range(-shake_intensity, shake_intensity) * .1f * dur,
-                originRotation.z + Random.Range(-shake_intensity, shake_intensity) * .1f * dur,
-                originRotation.w + Random.Range(-shake_intensity, shake_intensity) * .1f * dur);
-            shake_duration -= Time.deltaTime;
+                originRotation.x + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur,
+                originRotation.y + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur,
+                originRotation.z + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur,
+                originRotation.w + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur);
+            _shakeDuration -= Time.deltaTime;
             transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * _dampen);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * _dampen);
         }
@@ -49,8 +49,11 @@ public class Shaker : MonoBehaviour
         }
     }
 
-    public void SetShake(float duration) {
-        shake_duration = duration;
+    public void SetShake(float duration, float strength, bool ignoreScale) {
+        _ignoreScaling = ignoreScale;
+        _shakeIntensity = strength;
+        _dampen = strength;
+        _shakeDuration = duration;
 
     }
 }

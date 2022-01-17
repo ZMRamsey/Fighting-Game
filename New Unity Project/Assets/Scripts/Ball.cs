@@ -71,12 +71,12 @@ public class Ball : MonoBehaviour
     void Update() {
         _trail.emitting = _rb.velocity.magnitude > 40;
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+        if (Keyboard.current.rKey.wasPressedThisFrame) {
             _rb.velocity = Vector3.zero;
             //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
             //Shoot(new Vector3(1f, 12f));
             //Shoot(new Vector3(10f, 8f));
-            Shoot(new Vector3(12f, 4f));
+            Shoot(new Vector3(-12f, 4f));
             //Shoot(new Vector3(2f, 8f));
         }
 
@@ -123,16 +123,20 @@ public class Ball : MonoBehaviour
         _ballHolder.localScale = new Vector3(x, 1, 1);
     }
 
-    void OnWallHit(ContactPoint point) {
-        if (_magnitude > 35) {
-            GameManager.Get().GetCameraShaker().SetShake(0.5f);
+    void OnWallHit(ContactPoint point, float force) {
+        if (force > 80) {
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2.5f, true);
         }
-        if (_magnitude > 15) {
-            GameManager.Get().GetCameraShaker().SetShake(0.2f);
+        else if (force > 50) {
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
         }
-        if (_magnitude > 8) {
-            GameManager.Get().GetCameraShaker().SetShake(0.1f);
+        else if (force > 20) {
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
         }
+        else {
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 0.5f, true);
+        }
+
         float calc = _magnitude / _initialImpact.Length;
         int con = (int)calc;
         con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
@@ -152,7 +156,7 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
-        OnWallHit(collision.contacts[0]);
+        OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
     }
 
     IEnumerator ShootProccess(Vector3 distance) {

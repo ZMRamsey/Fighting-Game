@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public enum FighterAction { none, attacking, jumping, dead };
 public enum FighterStance { standing, air, blow };
@@ -25,12 +24,13 @@ public abstract class FighterController : MonoBehaviour
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
     [SerializeField] float _stretchSpeed;
+    [SerializeField] AudioSource _source;
+    [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
-    bool _onJump;
     bool _canJump;
     RaycastHit _groundHit;
 
@@ -57,9 +57,8 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
-        if (Keyboard.current.wKey.wasPressedThisFrame) {
-            _onJump = true;
-        }
+        _animator.SetBool("grounded", _myStance == FighterStance.standing);
+        _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
         if (_myStance == FighterStance.standing) {
             OnGroundMovement();
@@ -68,13 +67,17 @@ public abstract class FighterController : MonoBehaviour
         if (_myStance == FighterStance.air || _myAction == FighterAction.jumping) {
             OnAirMovement();
         }
+
+        if (_inputHandler.GetSmash()) {
+            _animator.SetTrigger("smash");
+        }
     }
 
     void FixedUpdate() {
 
         //_controllerVelocity = Vector3.ClampMagnitude(_controllerVelocity, 20);
 
-        if (_onJump && _canJump && _myAction != FighterAction.jumping) {
+        if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping) {
             OnJump();
             return;
         }
@@ -88,14 +91,8 @@ public abstract class FighterController : MonoBehaviour
 
 
     public virtual void OnGroundMovement() {
-        var xCalculation = 0.0f;
-        if (Keyboard.current.aKey.IsPressed()) {
-            xCalculation = 1;
-        }
-        if (Keyboard.current.dKey.IsPressed()) {
-            xCalculation = -1;
-        }
-
+        var xCalculation = _inputHandler.GetInputX();
+        
         AdjustControllerHeight();
 
         xCalculation *= _speed;
@@ -120,12 +117,17 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnLand() {
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
+        GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
+        _source.PlayOneShot(_jumpDownSFX);
+        _animator.SetTrigger("land");
         _canJump = true;
     }
 
     public virtual void OnJump() {
-        _onJump = false;
         _canJump = false;
+
+        _animator.SetTrigger("jump");
+        _source.PlayOneShot(_jumpUpSFX);
 
         _myAction = FighterAction.jumping;
 
@@ -155,13 +157,7 @@ public abstract class FighterController : MonoBehaviour
             }
         }
 
-        var xCalculation = 0.0f;
-        if (Keyboard.current.aKey.IsPressed()) {
-            xCalculation = 1;
-        }
-        if (Keyboard.current.dKey.IsPressed()) {
-            xCalculation = -1;
-        }
+        var xCalculation = _inputHandler.GetInputX();
 
         _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 0.6f);
 

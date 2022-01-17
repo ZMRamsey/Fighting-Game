@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ShotType { chip, drive, drop, smash, special};
 public class Hitbox : MonoBehaviour
 {
     FighterController _self;
-    [SerializeField] string _shotType = "chip";
+    [SerializeField] ShotType _shotType;
     [SerializeField] GameObject _character;
 
     private void Awake()
@@ -30,19 +31,19 @@ public class Hitbox : MonoBehaviour
             //Play shot type depending on button pressed
             switch (_shotType)
             {
-                case "chip":
+                case ShotType.chip:
                     ball.Shoot(new Vector3(1f * facing, 2f));
                     break;
 
-                case "drive":
+                case ShotType.drive:
                     ball.Shoot(new Vector3(12f * facing, 3f));
                     break;
 
-                case "drop":
+                case ShotType.drop:
                     ball.Shoot(new Vector3(6f * facing, 6f));
                     break;
 
-                case "smash":
+                case ShotType.smash:
                     ball.Shoot(new Vector3(16f * facing, -2f));
                     break;
 
