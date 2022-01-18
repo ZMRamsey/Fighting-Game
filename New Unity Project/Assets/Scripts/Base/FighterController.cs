@@ -125,6 +125,7 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
         _source.PlayOneShot(_jumpDownSFX);
+       
         _animator.SetTrigger("land");
         _canJump = true;
     }

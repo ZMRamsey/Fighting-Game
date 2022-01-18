@@ -5840,7 +5840,7 @@ RectTransform:
   m_Children:
   - {fileID: 442363262}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6860,7 +6860,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1744718069
 MonoBehaviour:
@@ -6875,6 +6875,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraShaker: {fileID: 1778820963}
+  _fighterOne: {fileID: 765215811}
+  _fighterTwo: {fileID: 1977965238}
+  _shuttle: {fileID: 1768378424}
+--- !u!114 &1768378424 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+  m_PrefabInstance: {fileID: 6655499865781991961}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffb360e48d48724aa80a95f67127fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1778820961
 GameObject:
   m_ObjectHideFlags: 0
@@ -7213,7 +7227,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: -0.5
+  Pan2D: 0.5
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -7464,6 +7478,22 @@ PrefabInstance:
       propertyPath: _maxSpeed
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _ricochets.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _ricochets.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a515a928aaf60a344ac48ab5435f98dd, type: 3}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _ricochets.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c2ab8110913ba549a63dec9de60048f, type: 3}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _ricochets.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 57dde67896170474bac227e86b649f0b, type: 3}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
