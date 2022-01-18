@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShuttleHit : MonoBehaviour
 {
     ShuttleCock _self;
-    bool _coolDown;
 
     private void Awake()
     {
@@ -18,32 +17,23 @@ public class ShuttleHit : MonoBehaviour
         {
             return;
         }
-        if (!_coolDown)
+        var hurt = collision.transform.GetComponent<Hurtbox>();
+        if (hurt != null)
         {
-            var hurt = collision.transform.GetComponent<Hurtbox>();
-            if (hurt != null)
-            {
-                new HitRegister(_self.getSpeed(), new Vector3(0, 0, 0));
-            }
-            if (collision.gameObject.layer == 10)
-            {
-                //point over stuff
-                if (_self.transform.position.x > 0)
-                {
-                    //give point to one side
-                }
-                else
-                {
-                    //give point to other side
-                }
-                //shouldnt be any issue since the net will take up x = 0
-            }
+            new HitRegister(_self.getSpeed(), new Vector3(0, 0, 0));
         }
-        _coolDown = false;
-    }
-
-    public void resetCoolDown()
-    {
-        _coolDown = true;
+        if (collision.gameObject.layer == 10)
+        {
+            //point over stuff
+            if (_self.transform.position.x > 0)
+            {
+                //give point to one side
+            }
+            else
+            {
+                //give point to other side
+            }
+            //shouldnt be any issue since the net will take up x = 0
+        }
     }
 }
