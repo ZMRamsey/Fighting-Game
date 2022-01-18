@@ -60,7 +60,8 @@ public class ShuttleCock : MonoBehaviour
 
     Coroutine shootCoroutine;
     public void Shoot(Vector3 distance) {
-        GameManager.Get().StunFrames(0.15f);
+        GameManager.Get().StunFrames(0.3f);
+        GameManager.Get().GetCameraShaker().SetShake(0.3f, 1.5f, true);
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
@@ -169,7 +170,7 @@ public class ShuttleCock : MonoBehaviour
 
     IEnumerator ShootProccess(Vector3 distance) {
         _freeze = true;
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.3f);
         _freeze = false;
         ProcessForce(distance);
     }
