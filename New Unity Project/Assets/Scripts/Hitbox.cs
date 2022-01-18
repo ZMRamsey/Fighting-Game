@@ -8,7 +8,7 @@ public class Hitbox : MonoBehaviour
     FighterController _self;
     [SerializeField] ShotType _shotType;
     [SerializeField] GameObject _character;
-    bool _coolDown;
+    bool _coolDown = true;
 
     private void Awake()
     {
