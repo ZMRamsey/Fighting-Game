@@ -59,7 +59,11 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    private void resetCD()
+    public void SetType(ShotType type) {
+        _shotType = type;
+    }
+
+    public void ResetCD()
     {
         _coolDown = true;
     }

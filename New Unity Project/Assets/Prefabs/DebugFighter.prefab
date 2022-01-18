@@ -138,11 +138,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7335d0fc168d1ad4f9ef4ce8fae5d443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _smashMove:
+    _animationPath: smash
+    _shotType: 3
+  _chipMove:
+    _animationPath: 
+    _shotType: 0
+  _driveMove:
+    _animationPath: 
+    _shotType: 0
+  _dropMove:
+    _animationPath: 
+    _shotType: 0
+  _hitboxes: {fileID: 8449722441802523801}
   _maxHealth: 100
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
-  _speed: 6
+  _speed: 8
   _height: 2
   _jumpForce: 40
   _fallMultiplier: 2
@@ -302,6 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8449722441626646048}
+  - component: {fileID: 9082674267934592954}
   - component: {fileID: 8449722441626646051}
   - component: {fileID: 8449722441626646050}
   m_Layer: 7
@@ -326,6 +340,18 @@ Transform:
   m_Father: {fileID: 8449722440683419896}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9082674267934592954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8449722441626646049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581d1ffc3eec94d4780e66c74afc5096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &8449722441626646051
 SpriteRenderer:
   m_ObjectHideFlags: 0

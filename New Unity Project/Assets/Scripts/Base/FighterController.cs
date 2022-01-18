@@ -7,6 +7,12 @@ public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
 {
+    [Header("Moves")]
+    [SerializeField] FighterMove _smashMove;
+    [SerializeField] FighterMove _chipMove;
+    [SerializeField] FighterMove _driveMove;
+    [SerializeField] FighterMove _dropMove;
+    [SerializeField] Hitbox _hitboxes;
     [Header("Health")]
     [SerializeField] float _maxHealth;
     float _health;
@@ -69,8 +75,11 @@ public abstract class FighterController : MonoBehaviour
             OnAirMovement();
         }
 
-        if (_inputHandler.GetSmash()) {
-            _animator.SetTrigger("smash");
+        if (_inputHandler.GetSmash() && _myAction != FighterAction.attacking) {
+            _myAction = FighterAction.attacking;
+            ResetHitbox();
+            _hitboxes.SetType(_smashMove.GetType());
+            _animator.SetTrigger(_smashMove.GetPath());
         }
     }
 
@@ -106,6 +115,18 @@ public abstract class FighterController : MonoBehaviour
         _controllerVelocity = new Vector3(xCalculation, _yVelocity, 0);
     }
 
+    public void ResetHitbox() {
+        _hitboxes.ResetCD();
+    }
+
+    public void ResetAttack() {
+        if(_myAction != FighterAction.attacking) {
+            return;
+        }
+
+        ResetAction();
+    }
+
     void AdjustControllerHeight() {
         var rayDirection = transform.TransformDirection(Vector3.down);
 
@@ -128,6 +149,8 @@ public abstract class FighterController : MonoBehaviour
        
         _animator.SetTrigger("land");
         _canJump = true;
+
+        ResetAttack();
     }
 
     public virtual void OnJump() {
@@ -140,6 +163,10 @@ public abstract class FighterController : MonoBehaviour
 
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
         _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
+    }
+
+    public virtual void OnAttack() {
+
     }
 
     public virtual void OnAirMovement() {
@@ -156,7 +183,10 @@ public abstract class FighterController : MonoBehaviour
             }
         }
         else {
-            if (_rigidbody.velocity.y > 0) {
+            if (_rigidbody.velocity.y > 0 && !_inputHandler.GetJumpHeld()) {
+                velocityY *= 0.6f;
+            }
+            else if (_rigidbody.velocity.y > 0) {
                 velocityY *= _jumpFalloff;
             }
             else {
