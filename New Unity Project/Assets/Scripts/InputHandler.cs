@@ -11,8 +11,12 @@ public class InputHandler : MonoBehaviour
     float _inputX;
 
     bool _jumpInput;
+    bool _jumpHeld;
     bool _smashInput;
     bool _dropInput;
+    bool _driveInput;
+    bool _chipInput;
+    bool _specialInput;
 
     void Update() {
         if (_state == InputState.player) {
@@ -23,6 +27,8 @@ public class InputHandler : MonoBehaviour
             if (Keyboard.current.dKey.IsPressed()) {
                 _inputX = -1;
             }
+
+            _jumpHeld = Keyboard.current.wKey.isPressed;
 
             if (Keyboard.current.wKey.wasPressedThisFrame) {
                 _jumpInput = true;
@@ -38,6 +44,10 @@ public class InputHandler : MonoBehaviour
         return _inputX;
     }
 
+    public bool GetJumpHeld() {
+        return _jumpHeld;
+    }
+
     public bool GetJump(bool can) {
         if (!can) {
             return false;
@@ -51,6 +61,30 @@ public class InputHandler : MonoBehaviour
     public bool GetSmash() {
         var temp = _smashInput;
         _smashInput = false;
+        return temp;
+    }
+
+    public bool GetDrop() {
+        var temp = _dropInput;
+        _dropInput = false;
+        return temp;
+    }
+
+    public bool GetDrive() {
+        var temp = _driveInput;
+        _driveInput = false;
+        return temp;
+    }
+
+    public bool GetChip() {
+        var temp = _chipInput;
+        _chipInput = false;
+        return temp;
+    }
+
+    public bool GetSpecial() {
+        var temp = _specialInput;
+        _specialInput = false;
         return temp;
     }
 }

@@ -7,6 +7,12 @@ public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
 {
+    [Header("Moves")]
+    [SerializeField] FighterMove _smashMove;
+    [SerializeField] FighterMove _chipMove;
+    [SerializeField] FighterMove _driveMove;
+    [SerializeField] FighterMove _dropMove;
+    [SerializeField] Hitbox _hitboxes;
     [Header("Health")]
     [SerializeField] float _maxHealth;
     float _health;
@@ -26,12 +32,14 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _stretchSpeed;
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
+    [SerializeField] ParticleSystem _impact;
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
     bool _canJump;
+    bool _canAttack;
     bool _freeze;
     RaycastHit _groundHit;
 
@@ -47,6 +55,8 @@ public abstract class FighterController : MonoBehaviour
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
         _inputHandler = GetComponent<InputHandler>();
+
+        _canAttack = true;
     }
 
     public void InitializeFighter() {
@@ -61,6 +71,16 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
+        if (_inputHandler.GetSmash() && _canAttack) {
+            _canAttack = false;
+            ResetHitbox();
+            _hitboxes.SetType(_smashMove.GetType());
+            _animator.SetTrigger(_smashMove.GetPath());
+        }
+    }
+
+    void FixedUpdate() {
+
         if (_myStance == FighterStance.standing) {
             OnGroundMovement();
         }
@@ -69,14 +89,6 @@ public abstract class FighterController : MonoBehaviour
             OnAirMovement();
         }
 
-        if (_inputHandler.GetSmash()) {
-            _animator.SetTrigger("smash");
-        }
-    }
-
-    void FixedUpdate() {
-
-        //_controllerVelocity = Vector3.ClampMagnitude(_controllerVelocity, 20);
 
         if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping) {
             OnJump();
@@ -106,6 +118,20 @@ public abstract class FighterController : MonoBehaviour
         _controllerVelocity = new Vector3(xCalculation, _yVelocity, 0);
     }
 
+    public void ResetHitbox() {
+        _hitboxes.ResetCD();
+    }
+
+    public void ResetAttack() {
+        if(_canAttack) {
+            return;
+        }
+
+        _canAttack = true;
+
+        ResetAction();
+    }
+
     void AdjustControllerHeight() {
         var rayDirection = transform.TransformDirection(Vector3.down);
 
@@ -128,6 +154,8 @@ public abstract class FighterController : MonoBehaviour
        
         _animator.SetTrigger("land");
         _canJump = true;
+
+        ResetAttack();
     }
 
     public virtual void OnJump() {
@@ -140,6 +168,10 @@ public abstract class FighterController : MonoBehaviour
 
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
         _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
+    }
+
+    public virtual void OnAttack() {
+
     }
 
     public virtual void OnAirMovement() {
@@ -156,7 +188,10 @@ public abstract class FighterController : MonoBehaviour
             }
         }
         else {
-            if (_rigidbody.velocity.y > 0) {
+            if (_rigidbody.velocity.y > 0 && !_inputHandler.GetJumpHeld()) {
+                velocityY *= 0.6f;
+            }
+            else if (_rigidbody.velocity.y > 0) {
                 velocityY *= _jumpFalloff;
             }
             else {
@@ -166,7 +201,7 @@ public abstract class FighterController : MonoBehaviour
 
         var xCalculation = _inputHandler.GetInputX();
 
-        _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 0.6f);
+        _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 5);
 
         velocityX = Mathf.Clamp(velocityX, -5f, 5f);
 
@@ -190,6 +225,12 @@ public abstract class FighterController : MonoBehaviour
     public virtual void ProcessHitRegister(HitRegister register) {
         ApplyDamage(register.GetDamage());
         ProcessKnockback(register.GetKnockbackDirection());
+    }
+
+    public virtual void OnSuccessfulHit(Vector3 point) {
+        _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
+        _impact.transform.position = point;
+        _impact.Play();
     }
 
     void ApplyDamage(float damage) {
@@ -254,6 +295,9 @@ public abstract class FighterController : MonoBehaviour
         _rigidbody.isKinematic = false;
         _animator.speed = 1;
         _rigidbody.velocity = _tempVelocity;
+        if (IsGrounded()) {
+            _canJump = true;
+        }
         StopCoroutine(Stun);
     }
 }

@@ -31,6 +31,9 @@ public class Hitbox : MonoBehaviour
                 {
                     facing = -1;
                 }
+
+                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
+
                 //Play shot type depending on button pressed
                 switch (_shotType)
                 {
@@ -59,7 +62,11 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    private void resetCD()
+    public void SetType(ShotType type) {
+        _shotType = type;
+    }
+
+    public void ResetCD()
     {
         _coolDown = true;
     }
