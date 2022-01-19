@@ -7,15 +7,10 @@ public class Scroller : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI quoteText;
     [SerializeField] string text;
-    [SerializeField] int index;
     [SerializeField] float speed;
-    [SerializeField] float timer;
-    // Update is called once per frame
 
-    private void Awake()
-    {
-
-    }
+    int index;
+    float timer;
 
     private void Update()
     {
