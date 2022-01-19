@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 public class RandomGen : MonoBehaviour
 {
+    public Sprite spriteDeselected;
+    public Sprite spriteSelected;
+
     public GameObject[] characters;
+    public GameObject[] buttons;
     public int objNum;
     public int objCount;
 
@@ -16,8 +20,11 @@ public class RandomGen : MonoBehaviour
         while (objCount < 2)
         {
             characters[objCount].SetActive(false);
+
+            buttons[objCount].GetComponent<Image>().sprite = spriteDeselected;
             objCount += 1;
         }
         characters[objNum].SetActive(true);
+        buttons[objNum].GetComponent<Image>().sprite = spriteSelected;
     }
 }
