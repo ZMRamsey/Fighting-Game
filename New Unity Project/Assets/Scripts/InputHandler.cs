@@ -34,8 +34,20 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = true;
             }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+            if (Keyboard.current.rightArrowKey.wasPressedThisFrame) {
+                _driveInput = true;
+            }
+
+            if (Keyboard.current.upArrowKey.wasPressedThisFrame) {
+                _dropInput = true;
+            }
+
+            if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
                 _smashInput = true;
+            }
+
+            if (Keyboard.current.downArrowKey.wasPressedThisFrame) {
+                _chipInput = true;
             }
         }
     }

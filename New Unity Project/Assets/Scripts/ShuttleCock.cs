@@ -59,9 +59,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Coroutine shootCoroutine;
-    public void Shoot(Vector3 distance) {
-        GameManager.Get().StunFrames(0.3f);
-        GameManager.Get().GetCameraShaker().SetShake(0.3f, 1.5f, true);
+    public void Shoot(Vector3 distance, bool player) {
+        if (player) {
+            GameManager.Get().StunFrames(0.3f);
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
+        }
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
@@ -79,7 +81,7 @@ public class ShuttleCock : MonoBehaviour
             //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
             //Shoot(new Vector3(1f, 12f));
             //Shoot(new Vector3(10f, 8f));
-            Shoot(new Vector3(-12f, 4f));
+            Shoot(new Vector3(-12f, 4f), false);
             //Shoot(new Vector3(2f, 8f));
         }
 
