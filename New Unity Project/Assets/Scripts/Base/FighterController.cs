@@ -12,6 +12,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _chipMove;
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
+    FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
     [Header("Health")]
     [SerializeField] float _maxHealth;
@@ -71,12 +72,6 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
-        if (_inputHandler.GetSmash() && _canAttack) {
-            _canAttack = false;
-            ResetHitbox();
-            _hitboxes.SetType(_smashMove.GetType());
-            _animator.SetTrigger(_smashMove.GetPath());
-        }
     }
 
     void FixedUpdate() {
@@ -220,6 +215,42 @@ public abstract class FighterController : MonoBehaviour
             _myStance = FighterStance.air;
         }
 
+        if (_inputHandler.GetSmash() && _canAttack) {
+            _canAttack = false;
+            ResetHitbox();
+
+            _currentMove = _smashMove;
+            UpdateMove();
+        }
+
+        if (_inputHandler.GetDrive() && _canAttack) {
+            _canAttack = false;
+            ResetHitbox();
+
+            _currentMove = _driveMove;
+            UpdateMove();
+        }
+
+        if (_inputHandler.GetDrop() && _canAttack) {
+            _canAttack = false;
+            ResetHitbox();
+
+            _currentMove = _dropMove;
+            UpdateMove();
+        }
+
+        if (_inputHandler.GetChip() && _canAttack) {
+            _canAttack = false;
+            ResetHitbox();
+
+            _currentMove = _chipMove;
+            UpdateMove();
+        }
+    }
+
+    void UpdateMove() {
+        _hitboxes.SetType(_currentMove.GetType());
+        _animator.SetTrigger(_currentMove.GetPath());
     }
 
     public virtual void ProcessHitRegister(HitRegister register) {

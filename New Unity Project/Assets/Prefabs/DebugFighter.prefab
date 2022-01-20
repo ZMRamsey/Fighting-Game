@@ -25,8 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698408857893365142}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.35, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8449722441595079345}
@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4842,7 +4842,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 122
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -5010,23 +5010,23 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
   _chipMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
+    _animationPath: smash
+    _clipName: Test_Shoot
+    _shotType: 3
+    _frames: 15
+    _hitFrame: 8
   _driveMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
+    _animationPath: smash
+    _clipName: Test_Shoot
+    _shotType: 1
+    _frames: 15
+    _hitFrame: 8
   _dropMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
+    _animationPath: smash
+    _clipName: Test_Shoot
+    _shotType: 2
+    _frames: 15
+    _hitFrame: 8
   _hitboxes: {fileID: 8449722441802523801}
   _maxHealth: 100
   _groundLayers:
@@ -5042,6 +5042,7 @@ MonoBehaviour:
   _source: {fileID: 8449722441595079357}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
+  _impact: {fileID: 6212882350678304784}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 8449722441626646050}
 --- !u!54 &8449722441595079347

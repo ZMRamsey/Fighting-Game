@@ -7997,26 +7997,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6212882350678304784, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6562146948648770721, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6562146948648770721, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6562146948648770721, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6562146948648770721, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8449722441595079345, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -8061,22 +8041,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8449722441595079350, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: _impact
-      value: 
-      objectReference: {fileID: 8449722442174664438}
     - target: {fileID: 8449722441595079351, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
       propertyPath: m_Name
       value: DebugFighter
       objectReference: {fileID: 0}
-    - target: {fileID: 8599455794781427620, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-      propertyPath: m_MaxParticleSize
-      value: 122
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
---- !u!198 &8449722442174664438 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6212882350678304784, guid: 740196970fdfbac4ab2519ff584de66c, type: 3}
-  m_PrefabInstance: {fileID: 8449722442174664437}
-  m_PrefabAsset: {fileID: 0}
