@@ -38,8 +38,15 @@ public class ShuttleCock : MonoBehaviour
         _speed = 1;
     }
 
+    private void Start() {
+        ResetShuttle();
+    }
+
     [ContextMenu("Reset Ball")]
-    public void ResetBall() {
+    public void ResetShuttle() {
+        _rb.isKinematic = true;
+        _waitForHit = true;
+        _rb.velocity = Vector3.zero;
         transform.position = _spawn;
     }
 
@@ -86,10 +93,7 @@ public class ShuttleCock : MonoBehaviour
         _trail.emitting = _rb.velocity.magnitude > 40;
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
-            _rb.isKinematic = true;
-            _waitForHit = true;
-            _rb.velocity = Vector3.zero;
-            transform.position = _spawn;
+            ResetShuttle();
         }
 
         _magnitude = _rb.velocity.magnitude;
