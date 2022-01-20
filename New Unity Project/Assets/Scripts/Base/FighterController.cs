@@ -14,9 +14,6 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _dropMove;
     FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
-    [Header("Health")]
-    [SerializeField] float _maxHealth;
-    float _health;
 
     [Header("Base Settings")]
     [SerializeField] LayerMask _groundLayers;
@@ -61,7 +58,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void InitializeFighter() {
-        _health = _maxHealth;
+        _commandMeter = 0.0f;
         _canJump = true;
     }
 
@@ -125,6 +122,22 @@ public abstract class FighterController : MonoBehaviour
         _canAttack = true;
 
         ResetAction();
+    }
+
+    void AddMeter(float value) {
+        _commandMeter += value;
+
+        if(_commandMeter > 100) {
+            _commandMeter = 100;
+        }
+    }
+
+    public float GetMeter() {
+        return _commandMeter / 100;
+    }
+
+    public virtual void OnSuperMechanic() {
+
     }
 
     void AdjustControllerHeight() {
@@ -254,26 +267,17 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void ProcessHitRegister(HitRegister register) {
-        ApplyDamage(register.GetDamage());
-        ProcessKnockback(register.GetKnockbackDirection());
+        KnockOut();
     }
 
     public virtual void OnSuccessfulHit(Vector3 point) {
+        AddMeter(12);
         _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();
     }
 
-    void ApplyDamage(float damage) {
-        _health -= Mathf.Abs(damage);
-
-        if (_health < 0) {
-            _health = 0;
-        }
-    }
-
-    public void ProcessKnockback(Vector3 knockbackDirection) {
-        //ProcessKnockback
+    void KnockOut() {
     }
 
     bool _wasGrounded;
@@ -292,10 +296,6 @@ public abstract class FighterController : MonoBehaviour
 
         Debug.DrawLine(transform.position, transform.position + Vector3.down, Color.red, _height * 2);
         return groundCheck;
-    }
-
-    public float GetHealth() {
-        return _health;
     }
 
     public FighterStance GetFighterStance() {

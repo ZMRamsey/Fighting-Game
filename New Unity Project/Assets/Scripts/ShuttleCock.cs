@@ -26,24 +26,33 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] AudioSource _source;
     [SerializeField] Rigidbody _rb;
     bool _freeze;
+    bool _waitForHit;
     float _squishTimer;
     float _speed;
     float _magnitude;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
-        spawn = transform.position;
+        _spawn = transform.position;
 
         _speed = 1;
     }
 
     [ContextMenu("Reset Ball")]
     public void ResetBall() {
-        transform.position = spawn;
+        transform.position = _spawn;
     }
 
 
-    void ProcessForce(Vector3 direction) {
+    void ProcessForce(Vector3 direction, bool slowDown) {
+        if (slowDown) {
+            _speed = _speed / 2;
+
+            if (_speed < 1) {
+                _speed = 1;
+            }
+        }
+
         _source.PlayOneShot(_testHit);
         _hit.Play();
 
@@ -59,7 +68,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Coroutine shootCoroutine;
-    public void Shoot(Vector3 distance, bool player) {
+    public void Shoot(Vector3 distance, bool player, bool slowDown) {
         if (player) {
             GameManager.Get().StunFrames(0.3f);
             GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
@@ -69,20 +78,18 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(distance));
+        shootCoroutine = StartCoroutine(ShootProccess(distance, slowDown));
     }
 
-    Vector3 spawn;
+    Vector3 _spawn;
     void Update() {
         _trail.emitting = _rb.velocity.magnitude > 40;
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
+            _rb.isKinematic = true;
+            _waitForHit = true;
             _rb.velocity = Vector3.zero;
-            //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
-            //Shoot(new Vector3(1f, 12f));
-            //Shoot(new Vector3(10f, 8f));
-            Shoot(new Vector3(-12f, 4f), false);
-            //Shoot(new Vector3(2f, 8f));
+            transform.position = _spawn;
         }
 
         _magnitude = _rb.velocity.magnitude;
@@ -170,10 +177,13 @@ public class ShuttleCock : MonoBehaviour
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
     }
 
-    IEnumerator ShootProccess(Vector3 distance) {
+    IEnumerator ShootProccess(Vector3 distance, bool slowDown) {
         _freeze = true;
         yield return new WaitForSeconds(0.3f);
         _freeze = false;
-        ProcessForce(distance);
+        if (_waitForHit) {
+            _rb.isKinematic = false;
+        }
+        ProcessForce(distance, slowDown);
     }
 }

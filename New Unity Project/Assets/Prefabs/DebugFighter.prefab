@@ -4962,9 +4962,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8449722441595079345}
   - component: {fileID: 8449722441595079350}
+  - component: {fileID: 8449722441595079344}
   - component: {fileID: 8449722441595079347}
   - component: {fileID: 8449722441595079357}
-  - component: {fileID: 8449722441595079344}
   - component: {fileID: 8449722441595079346}
   m_Layer: 7
   m_Name: DebugFighter
@@ -5045,6 +5045,19 @@ MonoBehaviour:
   _impact: {fileID: 6212882350678304784}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 8449722441626646050}
+--- !u!114 &8449722441595079344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8449722441595079351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6196ec747606fd45b972f011038f5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _state: 1
 --- !u!54 &8449722441595079347
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5157,19 +5170,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8449722441595079344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8449722441595079351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6196ec747606fd45b972f011038f5b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _state: 1
 --- !u!136 &8449722441595079346
 CapsuleCollider:
   m_ObjectHideFlags: 0

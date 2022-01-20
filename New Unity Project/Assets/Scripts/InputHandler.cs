@@ -49,6 +49,10 @@ public class InputHandler : MonoBehaviour
             if (Keyboard.current.downArrowKey.wasPressedThisFrame) {
                 _chipInput = true;
             }
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+                _specialInput = true;
+            }
         }
     }
 

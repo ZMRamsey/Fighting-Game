@@ -11,9 +11,14 @@ public class FighterControllerDebug : MonoBehaviour
     [SerializeField] TextMeshProUGUI _UIDebug;
     [SerializeField] InputHandler _handler;
     [SerializeField] RectTransform _movementDebugPoint;
+    [SerializeField] Sprite[] _driveBtnState;
+    [SerializeField] Sprite[] _dropBtnState;
+    [SerializeField] Image _driveBtn;
+    [SerializeField] Image _dropBtn;
 
     float x = 0;
     float y = 0;
+    float _driveCooldown;
 
     float inputY;
 
@@ -21,7 +26,7 @@ public class FighterControllerDebug : MonoBehaviour
     {
         string debugText = $"Fighter Stance = <color=red>{_controller.GetFighterStance()}</color> \n" +
             $"Fighter Action = <color=red>{_controller.GetFighterAction()}</color> \n" +
-            $"Current Input String =";
+            $"Fighter Meter = <color=red>{_controller.GetMeter() * 100}</color>% \n";
 
         _UIDebug.text = debugText;
 
