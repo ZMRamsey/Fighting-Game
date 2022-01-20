@@ -8,15 +8,15 @@ public enum InputState { none, player, ai};
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] InputState _state;
-    protected float _inputX;
+    public float _inputX;
 
-    protected bool _jumpInput;
-    protected bool _jumpHeld;
-    protected bool _smashInput;
-    protected bool _dropInput;
-    protected bool _driveInput;
-    protected bool _chipInput;
-    protected bool _specialInput;
+    public bool _jumpInput;
+    public bool _jumpHeld;
+    public bool _smashInput;
+    public bool _dropInput;
+    public bool _driveInput;
+    public bool _chipInput;
+    public bool _specialInput;
 
     void Update() {
         if (_state == InputState.player) {

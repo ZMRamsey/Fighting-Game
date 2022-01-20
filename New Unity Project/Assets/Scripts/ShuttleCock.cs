@@ -176,6 +176,22 @@ public class ShuttleCock : MonoBehaviour
         return _magnitude;
     }
 
+    public bool IsBallActive() {
+        return _waitForHit == false;
+    }
+
+    public bool IsHeadingRight() {
+        return _rb.velocity.x > 0;
+    }
+
+    public bool IsHeadingLeft() {
+        return _rb.velocity.x < 0;
+    }
+
+    public Vector3 GetVelocity() {
+        return _rb.velocity;
+    }
+
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
