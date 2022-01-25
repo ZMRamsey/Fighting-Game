@@ -20,7 +20,7 @@ public class ShuttleHit : MonoBehaviour
         var hurt = collision.transform.GetComponent<Hurtbox>();
         if (hurt != null)
         {
-            new HitRegister(_self.getSpeed(), new Vector3(0, 0, 0));
+            new HitRegister(_self.GetSpeedPercent(), new Vector3(0, 0, 0));
         }
         if (collision.gameObject.layer == 10)
         {

@@ -5,13 +5,12 @@ using UnityEngine.InputSystem;
 
 public class ShuttleCock : MonoBehaviour
 {
-    //[SerializeField] Vector3 _ballVelocity;
     [Header("Settings")]
     [SerializeField] float _maxSpeed = 40;
 
     [Header("Aesthetic")]
-    [SerializeField] Transform _ballHolder;
-    [SerializeField] float _smoothing;
+    [SerializeField] protected Transform _ballHolder;
+    [SerializeField] protected float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
@@ -24,26 +23,42 @@ public class ShuttleCock : MonoBehaviour
 
     [Header("Componenets")]
     [SerializeField] AudioSource _source;
-    [SerializeField] Rigidbody _rb;
+    [SerializeField] protected Rigidbody _rb;
     bool _freeze;
-    float _squishTimer;
+    bool _waitForHit;
+    protected float _squishTimer;
     float _speed;
     float _magnitude;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
-        spawn = transform.position;
+        _spawn = transform.position;
 
         _speed = 1;
     }
 
+    private void Start() {
+        ResetShuttle();
+    }
+
     [ContextMenu("Reset Ball")]
-    public void ResetBall() {
-        transform.position = spawn;
+    public void ResetShuttle() {
+        _rb.isKinematic = true;
+        _waitForHit = true;
+        _rb.velocity = Vector3.zero;
+        transform.position = _spawn;
     }
 
 
-    void ProcessForce(Vector3 direction) {
+    void ProcessForce(Vector3 direction, bool slowDown) {
+        if (slowDown) {
+            _speed = _speed / 2;
+
+            if (_speed < 1) {
+                _speed = 1;
+            }
+        }
+
         _source.PlayOneShot(_testHit);
         _hit.Play();
 
@@ -59,50 +74,32 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Coroutine shootCoroutine;
-    public void Shoot(Vector3 distance) {
-        GameManager.Get().StunFrames(0.3f);
-        GameManager.Get().GetCameraShaker().SetShake(0.3f, 1.5f, true);
+    public virtual void Shoot(Vector3 distance, bool player, bool slowDown, FighterFilter filter) {
+        if (player) {
+            GameManager.Get().StunFrames(0.3f, filter);
+            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
+        }
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(distance));
+        shootCoroutine = StartCoroutine(ShootProccess(distance, slowDown));
     }
 
-    Vector3 spawn;
+    Vector3 _spawn;
     void Update() {
         _trail.emitting = _rb.velocity.magnitude > 40;
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
-            _rb.velocity = Vector3.zero;
-            //transform.position = _fighterDebug.transform.position + Vector3.right * 0.2f;
-            //Shoot(new Vector3(1f, 12f));
-            //Shoot(new Vector3(10f, 8f));
-            Shoot(new Vector3(-12f, 4f));
-            //Shoot(new Vector3(2f, 8f));
+            ResetShuttle();
         }
 
         _magnitude = _rb.velocity.magnitude;
 
         Vector3 velocity = _rb.velocity;
 
-        Vector3 scale = Vector3.one;
-        scale.x = Mathf.Clamp(velocity.magnitude * 0.15f, 1, 3);
-
-        //Negative Check
-        if (velocity.magnitude < 0) {
-            scale.x = Mathf.Clamp(scale.x, -1, -10);
-        }
-
-        transform.right = Vector3.Lerp(transform.right, velocity, Time.deltaTime * _smoothing);
-
-        if (_squishTimer <= 0) {
-            _ballHolder.localScale = scale;
-        }
-        else {
-            _squishTimer -= Time.deltaTime;
-        }
+        UpdateShuttleApperance(velocity);
 
         velocity.x = velocity.x * 0.9f;
 
@@ -114,6 +111,27 @@ public class ShuttleCock : MonoBehaviour
         if (_freeze) {
             _rb.velocity = Vector3.zero;
         }
+
+        ShuttleUpdate();
+    }
+
+    public virtual void UpdateShuttleApperance(Vector3 vel) {
+        Vector3 scale = Vector3.one;
+        scale.x = Mathf.Clamp(vel.magnitude * 0.15f, 1, 3);
+
+        //Negative Check
+        if (vel.magnitude < 0) {
+            scale.x = Mathf.Clamp(vel.magnitude * 0.15f, -1, -3);
+        }
+
+        transform.right = Vector3.Lerp(transform.right, vel, Time.deltaTime * _smoothing);
+
+        if (_squishTimer <= 0) {
+            _ballHolder.localScale = scale;
+        }
+        else {
+            _squishTimer -= Time.deltaTime;
+        }
     }
 
     void SquishBall() {
@@ -124,6 +142,10 @@ public class ShuttleCock : MonoBehaviour
             x = -0.8f;
         }
         _ballHolder.localScale = new Vector3(x, 1, 1);
+    }
+
+    public virtual void ShuttleUpdate() {
+
     }
 
     void OnWallHit(ContactPoint point, float force) {
@@ -159,8 +181,24 @@ public class ShuttleCock : MonoBehaviour
         Destroy(hit, 1);
     }
 
-    public float getSpeed() {
-        return _magnitude;
+    public float GetSpeedPercent() {
+        return _rb.velocity.magnitude / _maxSpeed;
+    }
+
+    public bool IsBallActive() {
+        return _waitForHit == false;
+    }
+
+    public bool IsHeadingRight() {
+        return _rb.velocity.x > 0;
+    }
+
+    public bool IsHeadingLeft() {
+        return _rb.velocity.x < 0;
+    }
+
+    public Vector3 GetVelocity() {
+        return _rb.velocity;
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -168,10 +206,13 @@ public class ShuttleCock : MonoBehaviour
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
     }
 
-    IEnumerator ShootProccess(Vector3 distance) {
+    IEnumerator ShootProccess(Vector3 distance, bool slowDown) {
         _freeze = true;
         yield return new WaitForSeconds(0.3f);
         _freeze = false;
-        ProcessForce(distance);
+        if (_waitForHit) {
+            _rb.isKinematic = false;
+        }
+        ProcessForce(distance, slowDown);
     }
 }

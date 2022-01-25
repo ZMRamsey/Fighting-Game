@@ -8,15 +8,15 @@ public enum InputState { none, player, ai};
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] InputState _state;
-    float _inputX;
+    public float _inputX;
 
-    bool _jumpInput;
-    bool _jumpHeld;
-    bool _smashInput;
-    bool _dropInput;
-    bool _driveInput;
-    bool _chipInput;
-    bool _specialInput;
+    public bool _jumpInput;
+    public bool _jumpHeld;
+    public bool _smashInput;
+    public bool _dropInput;
+    public bool _driveInput;
+    public bool _chipInput;
+    public bool _specialInput;
 
     void Update() {
         if (_state == InputState.player) {
@@ -34,10 +34,30 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = true;
             }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+            if (Keyboard.current.rightArrowKey.wasPressedThisFrame) {
+                _driveInput = true;
+            }
+
+            if (Keyboard.current.upArrowKey.wasPressedThisFrame) {
+                _dropInput = true;
+            }
+
+            if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
+
+            if (Keyboard.current.downArrowKey.wasPressedThisFrame) {
+                _chipInput = true;
+            }
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+                _specialInput = true;
+            }
         }
+    }
+
+    public InputState GetState() {
+        return _state;
     }
 
     public float GetInputX() {

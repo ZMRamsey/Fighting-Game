@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 701342031}
   - component: {fileID: 701342033}
   m_Layer: 5
-  m_Name: Mask Area
+  m_Name: MaskArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835987899}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
@@ -1016,10 +1016,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quoteText: {fileID: 1886784787}
-  text: The wheels on the bus go round and round. Round and round. Round and round.
-  index: 0
+  text: gregory, do you see the small vent on the floor? have you ever heard of among
+    us, gregory? you need to vent, i know it will be hard for you to be SUS but i
+    know you can do it gregory
   speed: 0.05
-  timer: 0
 --- !u!1 &1535505295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
