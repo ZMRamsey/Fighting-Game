@@ -6,7 +6,6 @@ public class AIBrain : MonoBehaviour
 {
     InputHandler _handler;
     [SerializeField] ShuttleCock _shuttle;
-    [SerializeField] Transform _debug;
     float tick;
 
     void Start() {
@@ -77,6 +76,5 @@ public class AIBrain : MonoBehaviour
             }
             tick = 0.0f;
         }
-        _debug.position = targetPosition;
     }
 }

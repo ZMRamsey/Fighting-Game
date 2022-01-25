@@ -7,6 +7,7 @@ public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
 {
+    [SerializeField] FighterFilter _filter;
     [Header("Moves")]
     [SerializeField] FighterMove _smashMove;
     [SerializeField] FighterMove _chipMove;
@@ -47,6 +48,7 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] Animator _animator;
+    [SerializeField] FighterUI _fighterUI;
     InputHandler _inputHandler;
     Rigidbody _rigidbody;
 
@@ -55,6 +57,10 @@ public abstract class FighterController : MonoBehaviour
         _inputHandler = GetComponent<InputHandler>();
 
         _canAttack = true;
+    }
+
+    public FighterFilter GetFilter() {
+        return _filter;
     }
 
     public void InitializeFighter() {
@@ -73,24 +79,20 @@ public abstract class FighterController : MonoBehaviour
 
     void FixedUpdate() {
 
-        if (_myStance == FighterStance.standing) {
-            OnGroundMovement();
-        }
+        if (!_freeze) {
+            if (_myStance == FighterStance.standing) {
+                OnGroundMovement();
+            }
 
-        if (_myStance == FighterStance.air || _myAction == FighterAction.jumping) {
-            OnAirMovement();
-        }
+            if (_myStance == FighterStance.air || _myAction == FighterAction.jumping) {
+                OnAirMovement();
+            }
 
+            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping) {
+                OnJump();
+                return;
+            }
 
-        if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping) {
-            OnJump();
-            return;
-        }
-
-        if (_freeze) {
-            _rigidbody.velocity = Vector3.zero;
-        }
-        else {
             _rigidbody.velocity = _controllerVelocity;
         }
     }
@@ -130,6 +132,8 @@ public abstract class FighterController : MonoBehaviour
         if(_commandMeter > 100) {
             _commandMeter = 100;
         }
+
+        _fighterUI.SetBarValue(GetMeter());
     }
 
     public float GetMeter() {
@@ -280,7 +284,7 @@ public abstract class FighterController : MonoBehaviour
     void KnockOut() {
     }
 
-    bool _wasGrounded;
+
     public bool IsGrounded() {
         if (_myAction == FighterAction.jumping) {
             return false;
@@ -288,13 +292,10 @@ public abstract class FighterController : MonoBehaviour
 
         var groundCheck = Physics.Raycast(transform.position, Vector3.down, out _groundHit, _height, _groundLayers);
 
-        if (groundCheck && !_wasGrounded) {
+        if (groundCheck && _myStance == FighterStance.air) {
             OnLand();
         }
 
-        _wasGrounded = groundCheck;
-
-        Debug.DrawLine(transform.position, transform.position + Vector3.down, Color.red, _height * 2);
         return groundCheck;
     }
 
@@ -317,7 +318,7 @@ public abstract class FighterController : MonoBehaviour
     Coroutine Stun;
     Vector3 _tempVelocity;
     IEnumerator StunFrame(float time) {
-        _tempVelocity = _rigidbody.velocity;
+        _tempVelocity = _controllerVelocity;
         _freeze = true;
         _animator.speed = 0;
         _rigidbody.isKinematic = true;
@@ -325,7 +326,7 @@ public abstract class FighterController : MonoBehaviour
         _freeze = false;
         _rigidbody.isKinematic = false;
         _animator.speed = 1;
-        _rigidbody.velocity = _tempVelocity;
+        _rigidbody.velocity = _controllerVelocity;
         if (IsGrounded()) {
             _canJump = true;
         }
