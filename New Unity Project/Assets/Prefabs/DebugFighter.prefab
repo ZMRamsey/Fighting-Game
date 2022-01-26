@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1819731410}
   - component: {fileID: 1819731412}
   - component: {fileID: 1819731411}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: _ShockwaveMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4838,7 +4838,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4875,7 +4875,7 @@ GameObject:
   - component: {fileID: 6562146948648770721}
   - component: {fileID: 6212882350678304784}
   - component: {fileID: 8599455794781427620}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: HitImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9702,7 +9702,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -9825,7 +9825,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8449722441595079345}
-  - component: {fileID: 8449722441595079350}
+  - component: {fileID: 6363412359886692071}
   - component: {fileID: 8449722441595079344}
   - component: {fileID: 8449722441595079347}
   - component: {fileID: 8449722441595079357}
@@ -9856,7 +9856,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8449722441595079350
+--- !u!114 &6363412359886692071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9865,9 +9865,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8449722441595079351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7335d0fc168d1ad4f9ef4ce8fae5d443, type: 3}
+  m_Script: {fileID: 11500000, guid: a3d2df053d358964ca865a692d461454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _filter: 0
   _smashMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -9909,6 +9910,8 @@ MonoBehaviour:
   _impact: {fileID: 6212882350678304784}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 8449722441626646050}
+  _fighterUI: {fileID: 0}
+  _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
 --- !u!114 &8449722441595079344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9922,6 +9925,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 1
+  _inputX: 0
+  _jumpInput: 0
+  _jumpHeld: 0
+  _smashInput: 0
+  _dropInput: 0
+  _driveInput: 0
+  _chipInput: 0
+  _specialInput: 0
 --- !u!54 &8449722441595079347
 Rigidbody:
   m_ObjectHideFlags: 0

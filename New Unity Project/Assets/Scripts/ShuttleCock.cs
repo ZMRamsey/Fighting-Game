@@ -22,7 +22,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] AudioClip _testHit;
 
     [Header("Componenets")]
-    [SerializeField] AudioSource _source;
+    [SerializeField] protected AudioSource _source;
     [SerializeField] protected Rigidbody _rb;
     bool _freeze;
     bool _waitForHit;
@@ -42,11 +42,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     [ContextMenu("Reset Ball")]
-    public void ResetShuttle() {
+    public virtual void ResetShuttle() {
         _rb.isKinematic = true;
         _waitForHit = true;
         _rb.velocity = Vector3.zero;
-        transform.position = _spawn;
+        _speed = 1;
     }
 
 
@@ -84,16 +84,12 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(distance, slowDown));
+        shootCoroutine = StartCoroutine(ShootProccess(distance, slowDown, false, 0.3f));
     }
 
     Vector3 _spawn;
     void Update() {
         _trail.emitting = _rb.velocity.magnitude > 40;
-
-        if (Keyboard.current.rKey.wasPressedThisFrame) {
-            ResetShuttle();
-        }
 
         _magnitude = _rb.velocity.magnitude;
 
@@ -206,13 +202,27 @@ public class ShuttleCock : MonoBehaviour
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
     }
 
-    IEnumerator ShootProccess(Vector3 distance, bool slowDown) {
+    public void FreezeShuttle() {
+        if (shootCoroutine != null) {
+            StopCoroutine(shootCoroutine);
+        }
+
+        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, false, true, 1.0f));
+    }
+
+    IEnumerator ShootProccess(Vector3 distance, bool slowDown, bool resetVelocity, float time) {
+        var vel = _rb.velocity;
         _freeze = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(time);
         _freeze = false;
         if (_waitForHit) {
             _rb.isKinematic = false;
         }
-        ProcessForce(distance, slowDown);
+        if (resetVelocity) {
+            _rb.velocity = vel;
+        }
+        else {
+            ProcessForce(distance, slowDown);
+        }
     }
 }

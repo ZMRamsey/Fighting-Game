@@ -37,23 +37,25 @@ public class AIBrain : MonoBehaviour
 
             _handler._jumpHeld = transform.position.y < _shuttle.transform.position.y;
 
-            if ((_shuttle.transform.position.y < targetPosition.y && _shuttle.transform.position.y > 1.2f)  || _shuttle.transform.position.y > 6.8f) {
-                _handler._jumpInput = true;
-            }
-            else {
-                _handler._jumpInput = false;
+            if (_shuttle.GetSpeedPercent() != 0) {
+                if ((_shuttle.transform.position.y < targetPosition.y && _shuttle.transform.position.y > 1.2f) || _shuttle.transform.position.y > 6.8f) {
+                    _handler._jumpInput = true;
+                }
+                else {
+                    _handler._jumpInput = false;
+                }
             }
 
 
-            if (Vector3.Distance(transform.position, targetPosition) < _shuttle.GetVelocity().magnitude / 4) {
+            if (Vector3.Distance(transform.position, targetPosition) <  5 + (_shuttle.GetVelocity().magnitude / 4)) {
                 int rand = Random.Range(0, 3);
                 int rndDec = 0;
 
-                if (rand == 2 && _shuttle.transform.position.y > 1.2f) {
+                if (rand == 2 && _shuttle.transform.position.y > 1.2f && _shuttle.GetSpeedPercent() > 0.1f) {
                     _handler._chipInput = true;
                 }
                 else {
-                    if (transform.position.y < 1.2f) {
+                    if (transform.position.y > 1.2f) {
                         rndDec = Random.Range(0, 2);
                         if (rndDec == 1) {
                             _handler._smashInput = true;
