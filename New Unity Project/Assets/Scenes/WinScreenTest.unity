@@ -1403,6 +1403,8 @@ MonoBehaviour:
   _winnerName: {fileID: 302640602}
   _character: {fileID: 283423759}
   _quote: {fileID: 1488226949}
+  winnerName: 0
+  loserName: 1
 --- !u!4 &1862993465
 Transform:
   m_ObjectHideFlags: 0

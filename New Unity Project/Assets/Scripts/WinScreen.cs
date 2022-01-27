@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,11 @@ public class WinScreen : MonoBehaviour
     [SerializeField] GameObject _winnerName;
     [SerializeField] GameObject _character;
     [SerializeField] GameObject _quote;
+    public enum players { Danny, RNB };
+    [SerializeField] players winnerName;
+    [SerializeField] players loserName;
+    TextMeshProUGUI quoteText;
+    string text;
 
     public void Start()
     {
@@ -17,7 +23,6 @@ public class WinScreen : MonoBehaviour
         _winnerName.SetActive(false);
         _character.SetActive(false);
         _quote.SetActive(false);
-
     }
 
     public void showWinScreen()
@@ -45,6 +50,7 @@ public class WinScreen : MonoBehaviour
 
     public void showQuote()
     {
+        SetQuoteText(winnerName, loserName);
         _quote.SetActive(true);
     }
 
@@ -54,5 +60,24 @@ public class WinScreen : MonoBehaviour
         {
             showWinScreen();
         }
+    }
+
+    public void SetQuoteText(players winner, players loser)
+    {
+        switch (winner)
+        {
+            case players.Danny:
+                switch (loser)
+                {
+                    case players.RNB:
+                        text = "haha rekt skid";
+                        break;
+                }
+                break;
+            default:
+                text = "oops";
+                break;
+        }
+        _quote.GetComponent<TextMeshProUGUI>().text = text;
     }
 }
