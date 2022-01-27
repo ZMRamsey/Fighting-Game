@@ -9,6 +9,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] ShotType _shotType;
     [SerializeField] GameObject _character;
     bool _coolDown = true;
+    bool _sCoolDown = true;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
-        if (_coolDown)
+        if (_coolDown || (!_coolDown && collision.transform.GetComponent<SubWoofer>() && _sCoolDown))
         {
             var ball = collision.transform.GetComponent<ShuttleCock>();
             if (ball != null)
@@ -58,6 +59,10 @@ public class Hitbox : MonoBehaviour
                         break;
                 }
             }
+            if (!_coolDown)
+            {
+                _sCoolDown = false;
+            }
             _coolDown = false;
         }
     }
@@ -69,5 +74,10 @@ public class Hitbox : MonoBehaviour
     public void ResetCD()
     {
         _coolDown = true;
+    }
+
+    public void ResetSCD()
+    {
+        _sCoolDown = true;
     }
 }
