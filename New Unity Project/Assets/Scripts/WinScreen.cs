@@ -5,13 +5,13 @@ using TMPro;
 
 using UnityEngine.InputSystem;
 
+public enum players { Danny, RNB };
 public class WinScreen : MonoBehaviour
 {
     [SerializeField] GameObject _winner;
     [SerializeField] GameObject _winnerName;
     [SerializeField] GameObject _character;
     [SerializeField] GameObject _quote;
-    public enum players { Danny, RNB };
     [SerializeField] players winnerName;
     [SerializeField] players loserName;
     TextMeshProUGUI quoteText;
@@ -72,12 +72,30 @@ public class WinScreen : MonoBehaviour
                     case players.RNB:
                         text = "haha rekt skid";
                         break;
+
+                    default:
+                        text = "musta been a mirror match";
+                        break;
                 }
                 break;
+
+            case players.RNB:
+                switch (loser)
+                {
+                    case players.Danny:
+                    text = "imagine not being called Hunter. loser";
+                    break;
+
+                    default:
+                        text = "musta been a mirror match";
+                        break;
+                }
+                break;
+
             default:
                 text = "oops";
                 break;
         }
-        _quote.GetComponent<TextMeshProUGUI>().text = text;
+        _quote.GetComponent<Scroller>().text = text;
     }
 }
