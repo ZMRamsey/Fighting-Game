@@ -60,6 +60,10 @@ public class InputHandler : MonoBehaviour
         return _state;
     }
 
+    public void SetInputState(InputState state) {
+        _state = state;
+    }
+
     public float GetInputX() {
         return _inputX;
     }

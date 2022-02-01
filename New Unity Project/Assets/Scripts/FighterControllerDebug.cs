@@ -6,10 +6,11 @@ using TMPro;
 
 public class FighterControllerDebug : MonoBehaviour
 {
+    [SerializeField] FighterFilter _filter;
     [SerializeField] float _smoother = 0.05f;
-    [SerializeField] FighterController _controller;
+    FighterController _controller;
     [SerializeField] TextMeshProUGUI _UIDebug;
-    [SerializeField] InputHandler _handler;
+    InputHandler _handler;
     [SerializeField] RectTransform _movementDebugPoint;
     [SerializeField] Sprite[] _driveBtnState;
     [SerializeField] Sprite[] _dropBtnState;
@@ -22,8 +23,18 @@ public class FighterControllerDebug : MonoBehaviour
 
     float inputY;
 
-    void Update()
-    {
+    private void Start() {
+        if (_filter == FighterFilter.one) {
+            _controller = GameManager.Get().GetFighterOne();
+        }
+        else {
+            _controller = GameManager.Get().GetFighterTwo();
+        }
+
+        _handler = _controller.GetComponent<InputHandler>();
+    }
+
+    void Update() {
         string debugText = $"Fighter Stance = <color=red>{_controller.GetFighterStance()}</color> \n" +
             $"Fighter Action = <color=red>{_controller.GetFighterAction()}</color> \n" +
             $"Fighter Meter = <color=red>{_controller.GetMeter() * 100}</color>% \n";
@@ -40,7 +51,7 @@ public class FighterControllerDebug : MonoBehaviour
         x = Mathf.Lerp(x, _handler.GetInputX() * 65f, _smoother);
         y = Mathf.Lerp(y, inputY * 65f, _smoother);
 
-        _movementDebugPoint.anchoredPosition = new Vector3(-x , y, 0);
+        _movementDebugPoint.anchoredPosition = new Vector3(-x, y, 0);
     }
 
 }

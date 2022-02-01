@@ -5,10 +5,11 @@ using UnityEngine;
 public class AIBrain : MonoBehaviour
 {
     InputHandler _handler;
-    [SerializeField] ShuttleCock _shuttle;
+    ShuttleCock _shuttle;
     float tick;
 
     void Start() {
+        _shuttle = GameManager.Get().GetShuttle();
         _handler = GetComponent<InputHandler>();
     }
 
