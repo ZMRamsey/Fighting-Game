@@ -48,7 +48,7 @@ public class AIBrain : MonoBehaviour
             }
 
 
-            if (Vector3.Distance(transform.position, targetPosition) <  5 + (_shuttle.GetVelocity().magnitude / 4)) {
+            if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
                 int rand = Random.Range(0, 3);
                 int rndDec = 0;
 

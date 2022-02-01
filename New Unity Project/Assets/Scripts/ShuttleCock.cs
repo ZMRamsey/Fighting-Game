@@ -14,6 +14,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] float _squishThreshold = 0.1f;
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
+    [SerializeField] ParticleSystem _trailParticle;
     [SerializeField] TrailRenderer _trail;
 
     [Header("Audio")]
@@ -70,7 +71,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = targetVelocity;
 
-        _speed++;
+        _speed+= 0.5f;
     }
 
     Coroutine shootCoroutine;
@@ -88,8 +89,20 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Vector3 _spawn;
+    bool isPlaying;
     void Update() {
-        _trail.emitting = _rb.velocity.magnitude > 40;
+        if(_rb.velocity.magnitude > 40) {
+            if (!isPlaying) {
+                _trailParticle.Play();
+                isPlaying = true;
+            }
+        }
+        else {
+            if (isPlaying) {
+                _trailParticle.Stop();
+                isPlaying = false;
+            }
+        }
 
         _magnitude = _rb.velocity.magnitude;
 

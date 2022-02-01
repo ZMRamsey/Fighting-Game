@@ -100,7 +100,7 @@ public abstract class FighterController : MonoBehaviour
                 OnAirMovement();
             }
 
-            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping) {
+            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack) {
                 OnJump();
                 return;
             }
@@ -116,6 +116,10 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnGroundMovement() {
         var xCalculation = _inputHandler.GetInputX();
+
+        if (!_canAttack) {
+            xCalculation = 0f;
+        }
 
         AdjustControllerHeight();
 
