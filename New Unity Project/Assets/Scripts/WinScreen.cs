@@ -5,32 +5,24 @@ using TMPro;
 
 using UnityEngine.InputSystem;
 
-public enum players { Danny, RNB };
 public class WinScreen : MonoBehaviour
 {
     [SerializeField] GameObject _winner;
-    [SerializeField] GameObject _winnerName;
+    [SerializeField] GameObject _winnerNameO;
+    [SerializeField] TextMeshProUGUI _winnerNameT;
+    [SerializeField] TextMeshProUGUI _score;
     [SerializeField] GameObject _character;
     [SerializeField] GameObject _quote;
-    [SerializeField] players winnerName;
-    [SerializeField] players loserName;
-    TextMeshProUGUI quoteText;
+    //public string winnerName;
     string text;
 
-    public void Start()
-    {
-        _winner.SetActive(false);
-        _winnerName.SetActive(false);
-        _character.SetActive(false);
-        _quote.SetActive(false);
-    }
 
-    public void showWinScreen()
+    public void showWinScreen(string winfighter, string losefighter)
     {
         showWinner();
-        showWinnerName();
+        showWinnerName(winfighter);
         showCharacter();
-        showQuote();
+        showQuote(winfighter, losefighter);
     }
 
     public void showWinner()
@@ -38,9 +30,12 @@ public class WinScreen : MonoBehaviour
         _winner.SetActive(true);
     }
 
-    public void showWinnerName()
+    public void showWinnerName(string winnerName)
     {
-        _winnerName.SetActive(true);
+        //winnerName = FindObjectOfType<GameManager>().GetComponent<GameSettings>().GetFighterOneProfile().GetName();
+        _winnerNameT.text = winnerName.ToUpper();
+        _score.text = "Round 1: 11 - 8\nRound 2: 7 - 11\nRound 3: 11 - 6"; //+ FindObjectOfType<GameManager>().GetComponent<GameSettings>().GetFighterOneProfile().GetR1Score()"";
+        _winnerNameO.SetActive(true);
     }
 
     public void showCharacter()
@@ -48,9 +43,9 @@ public class WinScreen : MonoBehaviour
         _character.SetActive(true);
     }
 
-    public void showQuote()
+    public void showQuote(string winner, string loser)
     {
-        SetQuoteText(winnerName, loserName);
+        SetQuoteText(winner, loser);
         _quote.SetActive(true);
     }
 
@@ -58,18 +53,18 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.IsPressed())
         {
-            showWinScreen();
+            showWinScreen("Danny", "Hunter Blaze");
         }
     }
 
-    public void SetQuoteText(players winner, players loser)
+    public void SetQuoteText(string winner, string loser)
     {
         switch (winner)
         {
-            case players.Danny:
+            case "Danny":
                 switch (loser)
                 {
-                    case players.RNB:
+                    case "Hunter Blaze":
                         text = "haha rekt skid";
                         break;
 
@@ -79,10 +74,10 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case players.RNB:
+            case "Hunter Blaze":
                 switch (loser)
                 {
-                    case players.Danny:
+                    case "Danny":
                     text = "imagine not being called Hunter. loser";
                     break;
 
