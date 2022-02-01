@@ -6,7 +6,7 @@ using TMPro;
 public class Scroller : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI quoteText;
-    [SerializeField] string text;
+    [SerializeField] public string text;
     [SerializeField] float speed;
 
     int index;

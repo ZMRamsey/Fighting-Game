@@ -29,6 +29,7 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
+    [SerializeField] SpriteRenderer _renderer;
     [SerializeField] float _stretchSpeed;
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
@@ -60,6 +61,11 @@ public abstract class FighterController : MonoBehaviour
 
     void Start() {
         InitializeFighter();
+        _fighterUI = GameManager.Get().GetFighterTab(_filter).GetUI();
+    }
+
+    public void SetFilter(FighterFilter filter) {
+        _filter = filter;
     }
 
     public FighterFilter GetFilter() {
@@ -67,6 +73,8 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void InitializeFighter() {
+        _renderer.flipX = _filter == FighterFilter.one;
+
         _commandMeter = 0.0f;
         _canJump = true;
         _canAttack = true;
