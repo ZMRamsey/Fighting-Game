@@ -34,14 +34,18 @@ public class InputHandler : MonoBehaviour
 
             //_jumpHeld = Keyboard.current.wKey.isPressed;
 
-            if (_jumpInput)
-            {
-                if (_wasJumping)
-                {
-                    _jumpHeld = true;
-                    Debug.Log("Jump Held");
-                }
-            }
+            //if (_jumpInput)
+            //{
+            //    if (_wasJumping)
+            //    {
+            //        _jumpHeld = true;
+            //        Debug.Log("Jump Held");
+            //    }
+            //}
+            //else
+            //{
+            //    _jumpHeld = false;
+            //}
 
             //if (Keyboard.current.wKey.wasPressedThisFrame) {
             //    _jumpInput = true;
@@ -75,6 +79,11 @@ public class InputHandler : MonoBehaviour
             _specialInput = false;
             _jumpInput = false;
         }
+    }
+
+    public void SetInputState(InputState state)
+    {
+        _state = state;
     }
 
     public InputState GetState()
@@ -161,21 +170,39 @@ public class InputHandler : MonoBehaviour
 
     public void SpecialShot(InputAction.CallbackContext context)
     {
-        _specialInput = true;
+        if (context.ReadValueAsButton()) { _specialInput = true; }
+        else { _specialInput = false; }
     }
 
     public void JumpPress(InputAction.CallbackContext context)
     {
-        _jumpInput = true;
+        if (context.duration > 0.5f)
+        {
+            _jumpInput = true;
+            _jumpHeld = true;
+        }
+        else
+        {
+            _jumpInput = true;
+        }
     }
 
     public void MoveLeft(InputAction.CallbackContext context)
     {
-        _inputX = -1.0f;
+        _inputX = 1.0f;
     }
 
     public void MoveRight(InputAction.CallbackContext context)
     {
-        _inputX = 1.0f;
+        _inputX = -1.0f;
+    }
+
+    public Vector3 GetInput() {
+        float y = 0;
+        if (_jumpHeld) {
+            y = 1;
+        }
+
+        return new Vector3(GetInputX(), y, 0);
     }
 }
