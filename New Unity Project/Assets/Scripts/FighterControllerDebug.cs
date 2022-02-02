@@ -37,7 +37,9 @@ public class FighterControllerDebug : MonoBehaviour
     void Update() {
         string debugText = $"Fighter Stance = <color=red>{_controller.GetFighterStance()}</color> \n" +
             $"Fighter Action = <color=red>{_controller.GetFighterAction()}</color> \n" +
-            $"Fighter Meter = <color=red>{_controller.GetMeter() * 100}</color>% \n";
+            $"Fighter Meter = <color=red>{_controller.GetMeter() * 100}</color>% \n" +
+            $"Fighter Can Attack = <color=blue>{_controller.CanAttack()}</color> \n" +
+             $"Fighter Speed = <color=red>{(int)_controller.GetComponent<Rigidbody>().velocity.magnitude}</color> \n";
 
         _UIDebug.text = debugText;
 
