@@ -30,8 +30,8 @@ public class SubWoofer : ShuttleCock
         base.ResetShuttle();
     }
 
-    public override void Shoot(Vector3 distance, bool player, bool slowDown, FighterFilter filter) {
-        base.Shoot(distance, player, slowDown, filter);
+    public override void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter) {
+        base.Shoot(distance, movementInfluence, player, slowDown, filter);
         _rb.AddTorque(distance, ForceMode.Impulse);
     }
 

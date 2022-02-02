@@ -67,6 +67,15 @@ public class InputHandler : MonoBehaviour
         _state = state;
     }
 
+    public Vector3 GetInput() {
+        float y = 0;
+        if (_jumpHeld) {
+            y = 1;
+        }
+
+        return new Vector3(GetInputX(), y, 0);
+    }
+
     public float GetInputX() {
         return _inputX;
     }

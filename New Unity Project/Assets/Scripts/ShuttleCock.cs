@@ -51,7 +51,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
 
-    void ProcessForce(Vector3 direction, bool slowDown) {
+    void ProcessForce(Vector3 direction, Vector3 movementInfluence, bool slowDown) {
         if (slowDown) {
             _speed = _speed / 2;
 
@@ -67,7 +67,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 targetVelocity = direction * _speed;
+        Vector3 targetVelocity = (movementInfluence + direction) * _speed;
 
         _rb.velocity = targetVelocity;
 
@@ -75,7 +75,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Coroutine shootCoroutine;
-    public virtual void Shoot(Vector3 distance, bool player, bool slowDown, FighterFilter filter) {
+    public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter) {
         if (player) {
             GameManager.Get().StunFrames(0.3f, filter);
             GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
@@ -85,7 +85,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(distance, slowDown, false, 0.3f));
+        shootCoroutine = StartCoroutine(ShootProccess(distance, movementInfluence, slowDown, false, 0.3f));
     }
 
     Vector3 _spawn;
@@ -220,10 +220,10 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, false, true, 1.0f));
+        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, 1.0f));
     }
 
-    IEnumerator ShootProccess(Vector3 distance, bool slowDown, bool resetVelocity, float time) {
+    IEnumerator ShootProccess(Vector3 distance, Vector3 movementInfluence, bool slowDown, bool resetVelocity, float time) {
         var vel = _rb.velocity;
         _freeze = true;
         yield return new WaitForSeconds(time);
@@ -235,7 +235,7 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(distance, slowDown);
+            ProcessForce(distance, movementInfluence, slowDown);
         }
     }
 }

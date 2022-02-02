@@ -38,23 +38,24 @@ public class Hitbox : MonoBehaviour
 
                 _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
 
+                InputHandler handler = _self.GetComponent<InputHandler>();
                 //Play shot type depending on button pressed
                 switch (_shotType)
                 {
                     case ShotType.chip:
-                        ball.Shoot(new Vector3(1f * facing, 2f), true, true, _self.GetFilter());
+                        ball.Shoot(new Vector3(1f * facing, 2f), handler.GetInput(), true, true, _self.GetFilter());
                         break;
 
                     case ShotType.drive:
-                        ball.Shoot(new Vector3(12f * facing, 3f), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(12f * facing, 3f), handler.GetInput(), true, false, _self.GetFilter());
                         break;
 
                     case ShotType.drop:
-                        ball.Shoot(new Vector3(6f * facing, 6f), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(6f * facing, 6f), handler.GetInput(), true, false, _self.GetFilter());
                         break;
 
                     case ShotType.smash:
-                        ball.Shoot(new Vector3(16f * facing, -2f), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(16f * facing, -2f), handler.GetInput(), true, false, _self.GetFilter());
                         break;
 
                     default:
