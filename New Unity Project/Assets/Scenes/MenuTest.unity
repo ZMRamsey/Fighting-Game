@@ -5669,6 +5669,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turningRate: 10
+  playMenu: {fileID: 1899366558}
+  optionsMenu: {fileID: 732210204}
+  mainMenu: {fileID: 1459696464}
+  backgroundPanel: {fileID: 1317604968}
+  optionsMenuBG: {fileID: 21300000, guid: 57a4089517027014e9de0fa07b6bc9cc, type: 3}
 --- !u!212 &1588688801
 SpriteRenderer:
   m_ObjectHideFlags: 0

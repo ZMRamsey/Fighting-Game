@@ -1,85 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class rotaterCircle : MonoBehaviour
 {
     public float turningRate = 0.75f;
     int sceneIndex = 0;
+    float _rotatorConstant = 0.0f;
 
     public GameObject playMenu;
     public GameObject optionsMenu;
+    public GameObject mainMenu;
+
+    public GameObject backgroundPanel;
+    public Sprite optionsMenuBG;
 
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
 
-    public void rotateToPlay()
+    void loadSelectedMenu()
     {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-        sceneIndex = 0;
+        if (sceneIndex == 0)
+        {
+            playMenu.SetActive(true);
+            mainMenu.SetActive(false);
+            backgroundPanel.GetComponent<Image>().sprite = optionsMenuBG;
+        }
+        else if(sceneIndex == 1)
+        {
+            optionsMenu.SetActive(true);
+            mainMenu.SetActive(false);
+        }
+        else if (sceneIndex == 2)
+        {
+            Application.Quit();
+        }
     }
-    public void rotateToOptions()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 30.0f);
-        sceneIndex = 1;
-    }
-    public void rotateToQuit()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 60.0f);
-        sceneIndex = 2;
-    }
-
-    public void rotateToPlay2()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
-        sceneIndex = 0;
-    }
-    public void rotateToOptions2()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 120.0f);
-        sceneIndex = 1;
-    }
-    public void rotateToQuit2()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 150.0f);
-        sceneIndex = 2;
-    }
-
-    public void rotateToPlay3()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
-        sceneIndex = 0;
-    }
-    public void rotateToOptions3()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 210.0f);
-        sceneIndex = 1;
-    }
-    public void rotateToQuit3()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 240.0f);
-        sceneIndex = 2;
-    }
-
-    public void rotateToPlay4()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 270.0f);
-        sceneIndex = 0;
-    }
-    public void rotateToOptions4()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 300.0f);
-        sceneIndex = 1;
-    }
-    public void rotateToQuit4()
-    {
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, 330.0f);
-        sceneIndex = 2;
-    }
-
-
 
     private void Update()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.5f);
+        if (Keyboard.current.wKey.wasPressedThisFrame)
+        {
+            _rotatorConstant += 30.0f;
+            sceneIndex +=1;
+            if(sceneIndex > 2)
+            {
+                sceneIndex = 0;
+            }
+        }
+        else if (Keyboard.current.sKey.wasPressedThisFrame)
+        {
+            _rotatorConstant -= 30.0f;
+            sceneIndex -=1;
+            if(sceneIndex < 0)
+            {
+                sceneIndex = 2;
+            }
+        }
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame){
+            loadSelectedMenu();
+        }
+        _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.25f);
     }
 }
