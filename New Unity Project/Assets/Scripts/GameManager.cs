@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip _superSFX;
     [SerializeField] AudioSource _music;
     [SerializeField] UIFader _screenFader;
+    [SerializeField] GameObject _debugCanvas;
     AudioSource _source;
     float _rotateTarget;
 
@@ -67,6 +68,10 @@ public class GameManager : MonoBehaviour
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
             SetUpGame();
+        }
+
+        if (Keyboard.current.f10Key.wasPressedThisFrame) {
+            _debugCanvas.SetActive(!_debugCanvas.activeSelf);
         }
     }
 

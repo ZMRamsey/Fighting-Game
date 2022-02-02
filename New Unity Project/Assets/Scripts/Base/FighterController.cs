@@ -109,11 +109,6 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-    void ResetAction() {
-        _myAction = FighterAction.none;
-    }
-
-
     public virtual void OnGroundMovement() {
         var xCalculation = _inputHandler.GetInputX();
 
@@ -134,13 +129,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void ResetAttack() {
-        if (_canAttack) {
-            return;
-        }
-
         _canAttack = true;
-
-        ResetAction();
     }
 
     void AddMeter(float value) {
@@ -189,7 +178,6 @@ public abstract class FighterController : MonoBehaviour
 
         _animator.SetTrigger("land");
         _canJump = true;
-        _canAttack = true;
 
         ResetAttack();
     }
@@ -234,7 +222,7 @@ public abstract class FighterController : MonoBehaviour
                 velocityY *= _jumpFalloff;
             }
             else {
-                ResetAction();
+                _myAction = FighterAction.none;
             }
         }
 
