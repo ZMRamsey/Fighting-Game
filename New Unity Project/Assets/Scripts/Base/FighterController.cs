@@ -361,4 +361,8 @@ public abstract class FighterController : MonoBehaviour
         }
         StopCoroutine(Stun);
     }
+
+    public bool CanAttack() {
+        return _canAttack;
+    }
 }

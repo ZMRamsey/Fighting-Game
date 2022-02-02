@@ -28540,6 +28540,7 @@ MonoBehaviour:
   _superSFX: {fileID: 8300000, guid: af412dc5c539a1f4ba81c5f78573454e, type: 3}
   _music: {fileID: 282428885}
   _screenFader: {fileID: 50402524}
+  _debugCanvas: {fileID: 756198046}
 --- !u!114 &1744718070
 MonoBehaviour:
   m_ObjectHideFlags: 0
