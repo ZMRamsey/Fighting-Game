@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     void InitializeGame() {
         GameObject fOneObject = Instantiate(_settings.GetFighterOneProfile().GetPrefab(), _fighterOne.GetSpawn(), Quaternion.identity);
-        GameObject fTwoObject = Instantiate(_settings.GetFighterTwoProfile().GetPrefab(), _fighterOne.GetSpawn(), Quaternion.identity);
+        GameObject fTwoObject = Instantiate(_settings.GetFighterTwoProfile().GetPrefab(), _fighterTwo.GetSpawn(), Quaternion.identity);
 
         _fighterOne.SetControler(fOneObject.GetComponent<FighterController>());
         _fighterTwo.SetControler(fTwoObject.GetComponent<FighterController>());

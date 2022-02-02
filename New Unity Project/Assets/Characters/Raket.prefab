@@ -9957,24 +9957,28 @@ MonoBehaviour:
     _shotType: 3
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
   _chipMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 0
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
   _driveMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 1
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
   _dropMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 2
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _groundLayers:
     serializedVersion: 2

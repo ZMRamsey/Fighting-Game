@@ -26,6 +26,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _jumpForce;
     [SerializeField] float _fallMultiplier;
     [SerializeField] float _jumpFalloff;
+    float _failSafeAttack;
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
@@ -290,11 +291,19 @@ public abstract class FighterController : MonoBehaviour
             OnSuperMechanic();
             GameManager.Get().OnSpecial();
         }
+
+        if(_failSafeAttack > 0) {
+            _failSafeAttack -= Time.deltaTime;
+            if(_failSafeAttack <= 0) {             
+                ResetAttack();
+            }
+        }
     }
 
     void UpdateMove() {
         _hitboxes.SetType(_currentMove.GetType());
         _animator.SetTrigger(_currentMove.GetPath());
+        _failSafeAttack = _currentMove.GetClip().length;
     }
 
     public virtual void ProcessHitRegister(HitRegister register) {
@@ -357,7 +366,7 @@ public abstract class FighterController : MonoBehaviour
         _rigidbody.velocity = _controllerVelocity;
         if (IsGrounded()) {
             _canJump = true;
-            _canAttack = true;
+            ResetAttack();
         }
         StopCoroutine(Stun);
     }

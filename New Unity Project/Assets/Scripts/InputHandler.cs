@@ -30,8 +30,11 @@ public class InputHandler : MonoBehaviour
 
             _jumpHeld = Keyboard.current.wKey.isPressed;
 
-            if (Keyboard.current.wKey.wasPressedThisFrame) {
+            if (Keyboard.current.wKey.isPressed) {
                 _jumpInput = true;
+            }
+            else {
+                _jumpInput = false;
             }
 
             if (Keyboard.current.rightArrowKey.wasPressedThisFrame) {
