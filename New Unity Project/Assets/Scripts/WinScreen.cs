@@ -9,18 +9,29 @@ public class WinScreen : MonoBehaviour
 {
     [SerializeField] GameObject _winner;
     [SerializeField] GameObject _winnerNameO;
-    [SerializeField] TextMeshProUGUI _winnerNameT;
+    [SerializeField] TextMeshProUGUI _winnerName;
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] GameObject _character;
     [SerializeField] GameObject _quote;
     //public string winnerName;
     string text;
 
+    public void Awake()
+    {
+        //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
+        _winnerName.text = "Danny";
+        int[,] scores = ScoreManager.Get().GetScores();
+        int index = ScoreManager.Get().GetCurrentRound() - 1;
+        for (int i = 0; i < ScoreManager.Get().GetCurrentRound(); i++)
+        {
+            _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
+        }
+    }
 
     public void showWinScreen(string winfighter, string losefighter)
     {
         showWinner();
-        showWinnerName(winfighter);
+        showWinnerName();
         showCharacter();
         showQuote(winfighter, losefighter);
     }
@@ -30,11 +41,8 @@ public class WinScreen : MonoBehaviour
         _winner.SetActive(true);
     }
 
-    public void showWinnerName(string winnerName)
+    public void showWinnerName()
     {
-        //winnerName = FindObjectOfType<GameManager>().GetComponent<GameSettings>().GetFighterOneProfile().GetName();
-        _winnerNameT.text = winnerName.ToUpper();
-        _score.text = "Round 1: 11 - 8\nRound 2: 7 - 11\nRound 3: 11 - 6"; //+ FindObjectOfType<GameManager>().GetComponent<GameSettings>().GetFighterOneProfile().GetR1Score()"";
         _winnerNameO.SetActive(true);
     }
 

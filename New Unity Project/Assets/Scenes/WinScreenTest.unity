@@ -691,11 +691,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Round 1: 11 - 7
-
-    Round 2: 8 - 11
-
-    Round 3: 11 - 6'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1380,6 +1376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1862993465}
   - component: {fileID: 1862993464}
+  - component: {fileID: 1862993466}
   m_Layer: 0
   m_Name: WinScreenManager
   m_TagString: Untagged
@@ -1401,7 +1398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winner: {fileID: 176086342}
   _winnerNameO: {fileID: 302640602}
-  _winnerNameT: {fileID: 1780014344}
+  _winnerName: {fileID: 1780014344}
   _score: {fileID: 916037273}
   _character: {fileID: 283423759}
   _quote: {fileID: 1488226949}
@@ -1419,6 +1416,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862993466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862993463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6e815475ea88e4a89fe920b5d23ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1886784785
 GameObject:
   m_ObjectHideFlags: 0

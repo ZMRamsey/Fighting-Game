@@ -17,12 +17,14 @@ public class Hurtbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.GetComponent<ShuttleCock>())
+        var hurt = collision.gameObject.GetComponent<ShuttleCock>();
+        if (hurt != null)
         {
             if (collision.gameObject.GetComponent<ShuttleCock>().GetSpeedPercent() > .7f)
             {
-                Debug.Log("ouchie");
-                //GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
+                //Debug.Log("ouchie");
+                GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
+                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString());
             }
             else
             {
