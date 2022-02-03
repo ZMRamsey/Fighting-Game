@@ -74,10 +74,10 @@ public class GameManager : MonoBehaviour
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001)
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle._freeze)
         {
             string scorer = "one";
-            if (_shuttle.transform.position.x < 0)
+            if (_shuttle.transform.position.x > 0)
             {
                 scorer = "two";
             }
