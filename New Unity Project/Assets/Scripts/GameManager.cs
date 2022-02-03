@@ -73,6 +73,17 @@ public class GameManager : MonoBehaviour
         if (Keyboard.current.f10Key.wasPressedThisFrame) {
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
         }
+
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001)
+        {
+            string scorer = "one";
+            if (_shuttle.transform.position.x < 0)
+            {
+                scorer = "two";
+            }
+            ScoreManager.Get().UpdateScore(scorer);
+            SetUpGame();
+        }
     }
 
     void SetUpGame() {

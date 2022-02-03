@@ -36,6 +36,10 @@ public class ScoreManager : MonoBehaviour
         }
         _scores[_roundIndex, scorerN]++;
         Debug.Log("Round " + (_roundIndex+1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+        if (_scores[_roundIndex, scorerN] == 11)
+        {
+            NextRound();
+        }
     }
 
     void NextRound()
