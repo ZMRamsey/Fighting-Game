@@ -85,13 +85,17 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
+        if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
+            GameManager.Get().OnImpactFrame(0.1f);
+        }
+
         shootCoroutine = StartCoroutine(ShootProccess(distance, movementInfluence, slowDown, false, 0.3f));
     }
 
     Vector3 _spawn;
     bool isPlaying;
     void Update() {
-        if(_rb.velocity.magnitude > 40) {
+        if(_rb.velocity.magnitude > (_maxSpeed / 2)) {
             if (!isPlaying) {
                 _trailParticle.Play();
                 isPlaying = true;

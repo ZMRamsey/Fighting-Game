@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource _music;
     [SerializeField] UIFader _screenFader;
     [SerializeField] GameObject _debugCanvas;
+    [SerializeField] GameObject _impactFrame;
     AudioSource _source;
     float _rotateTarget;
 
@@ -120,6 +121,23 @@ public class GameManager : MonoBehaviour
         }
 
         stageCoroutine = StartCoroutine(StageFlash(1));
+    }
+
+    Coroutine impactCoroutine;
+    public void OnImpactFrame(float time) {
+        if (impactCoroutine != null) {
+            StopCoroutine(impactCoroutine);
+        }
+
+        impactCoroutine = StartCoroutine(ImpactFrameProcess(time));
+    }
+
+    IEnumerator ImpactFrameProcess(float time) {
+        _impactFrame.gameObject.SetActive(true);
+        _stageCamera.SetActive(false);
+        yield return new WaitForSeconds(time);
+        _impactFrame.gameObject.SetActive(false);
+        _stageCamera.SetActive(true);
     }
 
     public void StunFrames(float timer, FighterFilter filter) {

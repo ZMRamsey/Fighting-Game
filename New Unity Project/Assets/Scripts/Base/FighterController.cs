@@ -35,6 +35,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
     [SerializeField] ParticleSystem _impact;
+    [SerializeField] ParticleSystem _impactFrame;
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
@@ -142,6 +143,7 @@ public abstract class FighterController : MonoBehaviour
 
         _fighterUI.SetBarValue(GetMeter());
     }
+
 
     void ResetMeter() {
         _commandMeter = 0;
@@ -316,7 +318,6 @@ public abstract class FighterController : MonoBehaviour
         _impact.transform.position = point;
         _impact.Play();
     }
-
 
     void KnockOut() {
     }
