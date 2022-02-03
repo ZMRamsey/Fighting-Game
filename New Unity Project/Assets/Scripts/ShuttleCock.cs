@@ -25,7 +25,7 @@ public class ShuttleCock : MonoBehaviour
     [Header("Componenets")]
     [SerializeField] protected AudioSource _source;
     [SerializeField] protected Rigidbody _rb;
-    bool _freeze;
+    public bool _freeze;
     bool _waitForHit;
     protected float _squishTimer;
     float _speed;
