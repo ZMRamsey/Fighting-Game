@@ -15,6 +15,7 @@ public class rotaterCircle : MonoBehaviour
     public GameObject mainMenu;
 
     public GameObject backgroundPanel;
+    public Sprite playMenuBG;
     public Sprite optionsMenuBG;
 
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
@@ -25,10 +26,11 @@ public class rotaterCircle : MonoBehaviour
         {
             playMenu.SetActive(true);
             mainMenu.SetActive(false);
-            backgroundPanel.GetComponent<Image>().sprite = optionsMenuBG;
+            backgroundPanel.GetComponent<Image>().sprite = playMenuBG;
         }
         else if(sceneIndex == 1)
         {
+            backgroundPanel.GetComponent<Image>().sprite = optionsMenuBG;
             optionsMenu.SetActive(true);
             mainMenu.SetActive(false);
         }
