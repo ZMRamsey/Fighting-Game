@@ -8,18 +8,9 @@ public class ScoreManager : MonoBehaviour
     protected int[,] _scores = {{0,0},{0,0},{0,0}};
     protected int _roundIndex = 0;
 
-    //public int _roundIndex;
-    //public int _p1r1s;
-    //public int _p2r1s;
-    //public int _p1r2s;
-    //public int _p2r2s;
-    //public int _p1r3s;
-    //public int _p2r3s;
-
     void Awake()
     {
         _instance = this;
-        //_scores = new int[,] {{_p1r1s,_p2r1s},{ _p1r2s,_p2r2s},{ _p1r3s,_p2r3s}};
     }
 
     public static ScoreManager Get()
@@ -44,7 +35,10 @@ public class ScoreManager : MonoBehaviour
 
     void NextRound()
     {
-        _roundIndex++;
+        if (_roundIndex != 3)
+        {
+            _roundIndex++;
+        }
     }
 
     public int[,] GetScores()
