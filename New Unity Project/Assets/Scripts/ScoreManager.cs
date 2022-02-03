@@ -35,7 +35,7 @@ public class ScoreManager : MonoBehaviour
 
     void NextRound()
     {
-        if (_roundIndex != 3)
+        if (_roundIndex != 2)
         {
             _roundIndex++;
         }
