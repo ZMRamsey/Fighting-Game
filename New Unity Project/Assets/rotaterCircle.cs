@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class rotatorCircle : MonoBehaviour
+public class rotaterCircle : MonoBehaviour
 {
     public float turningRate = 0.75f;
     int sceneIndex = 0;
