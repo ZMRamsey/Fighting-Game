@@ -8,7 +8,7 @@ public class optionsRotatorCircle : MonoBehaviour
 {
     public float turningRate = 0.75f;
     int sceneIndex = 0;
-    int subSceneIndex = 0;
+    int subSceneIndex = 4;
     float _rotatorConstant = 0.0f;
 
     bool _hasGoneUp = false;
@@ -20,6 +20,7 @@ public class optionsRotatorCircle : MonoBehaviour
 
     public GameObject[] subMenus;
     public GameObject[] subMenuOptions;
+    public GameObject[] subMenuSelections;
 
     public GameObject mainMenu;
     public GameObject optionsMenu;
@@ -50,13 +51,21 @@ public class optionsRotatorCircle : MonoBehaviour
 
     void SubMenuMoveUp()
     {
-        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        if(subSceneIndex == 0)
+        {
+            subMenuSelections[0].GetComponent<FullScreenRotator>().enabled = true;
+        }
     }
     void SubMenuMoveDown()
     {
-        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex-1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        if (subSceneIndex != 0)
+        {
+            subMenuSelections[0].GetComponent<FullScreenRotator>().enabled = false;
+        }
     }
 
     void WrapAroundToPlay()
@@ -79,15 +88,21 @@ public class optionsRotatorCircle : MonoBehaviour
         if(_isControllingSubMenu == false)
         {
             subSceneIndex = 0;
-            subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            subMenuSelections[0].GetComponent<FullScreenRotator>().enabled = true;
+
+
+            subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
             _isControllingSubMenu = true;
         }
     }
     void controlSelectionWheel()
     {
         _isControllingSubMenu = false;
+
+        subMenuSelections[0].GetComponent<FullScreenRotator>().enabled = false;
+
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        subSceneIndex = 0;
+        subSceneIndex = 4;
     }
 
     void ReturnToMenu()
@@ -95,6 +110,7 @@ public class optionsRotatorCircle : MonoBehaviour
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
         backgroundPanel.GetComponent<Image>().sprite = mainMenuBG;
+        subSceneIndex = 4;
     }
 
     void highlightSelectedOption()
@@ -120,11 +136,15 @@ public class optionsRotatorCircle : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            controlSubMenu();
+            if (sceneIndex != 2)
+            {
+                controlSubMenu();
+            }
+            
         }
-        else if (Keyboard.current.dKey.wasPressedThisFrame)
+        else if (Keyboard.current.zKey.wasPressedThisFrame)
         {
             controlSelectionWheel();
         }
