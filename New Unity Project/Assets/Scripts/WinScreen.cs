@@ -5,6 +5,7 @@ using TMPro;
 
 using UnityEngine.InputSystem;
 
+public enum player { danny, hunter, raket};
 public class WinScreen : MonoBehaviour
 {
     [SerializeField] GameObject _winner;
@@ -15,6 +16,9 @@ public class WinScreen : MonoBehaviour
     [SerializeField] GameObject _quote;
     //public string winnerName;
     string text;
+
+    public player winner;
+    public player loser;
 
     public int _roundIndex;
     public int _p1r1;
@@ -31,7 +35,7 @@ public class WinScreen : MonoBehaviour
         ScoreManager.Get().SetScores(newScores);
 
         //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
-        _winnerName.text = "Danny";
+        _winnerName.text = winner.ToString().ToUpper();
         int[,] scores = ScoreManager.Get().GetScores();
         //for (int i = 0; i < ScoreManager.Get().GetCurrentRound(); i++)
         for (int i = 0; i < _roundIndex + 1; i++)
@@ -40,7 +44,7 @@ public class WinScreen : MonoBehaviour
         }
     }
 
-    public void showWinScreen(string winfighter, string losefighter)
+    public void showWinScreen(player winfighter, player losefighter)
     {
         showWinner();
         showWinnerName();
@@ -63,7 +67,7 @@ public class WinScreen : MonoBehaviour
         _character.SetActive(true);
     }
 
-    public void showQuote(string winner, string loser)
+    public void showQuote(player winner, player loser)
     {
         SetQuoteText(winner, loser);
         _quote.SetActive(true);
@@ -73,19 +77,23 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.IsPressed())
         {
-            showWinScreen("Danny", "Hunter Blaze");
+            showWinScreen(winner, loser);
         }
     }
 
-    public void SetQuoteText(string winner, string loser)
+    public void SetQuoteText(player winner, player loser)
     {
         switch (winner)
         {
-            case "Danny":
+            case player.danny:
                 switch (loser)
                 {
-                    case "Hunter Blaze":
-                        text = "haha rekt skid";
+                    case player.hunter:
+                        text = "friendship or something, idk";
+                        break;
+
+                    case player.raket:
+                        text = "you were fun to play, let's do this again";
                         break;
 
                     default:
@@ -94,12 +102,33 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Hunter Blaze":
+            case player.hunter:
                 switch (loser)
                 {
-                    case "Danny":
-                    text = "imagine not being called Hunter. loser";
-                    break;
+                    case player.danny:
+                        text = "something about tennis or being a dick, idk";
+                        break;
+
+                    case player.raket:
+                        text = "im just a bad person";
+                        break;
+
+                    default:
+                        text = "musta been a mirror match";
+                        break;
+                }
+                break;
+
+            case player.raket:
+                switch (loser)
+                {
+                    case player.danny:
+                        text = "GGWP";
+                        break;
+
+                    case player.hunter:
+                        text = "tennis is garbage kid";
+                        break;
 
                     default:
                         text = "musta been a mirror match";

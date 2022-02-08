@@ -39,7 +39,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (_roundIndex != 2)
         {
-            Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player" + DecideRoundWinner().ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+            Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + DecideRoundWinner().ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
             _roundIndex++;
         }
     }

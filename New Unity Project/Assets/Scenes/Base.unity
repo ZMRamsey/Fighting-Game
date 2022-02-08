@@ -28835,6 +28835,7 @@ MonoBehaviour:
   _screenFader: {fileID: 50402524}
   _debugCanvas: {fileID: 756198046}
   _impactFrame: {fileID: 1552257717}
+  _serveSpeed: 7.22
 --- !u!114 &1744718070
 MonoBehaviour:
   m_ObjectHideFlags: 0

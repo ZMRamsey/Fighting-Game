@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     float _rotateTarget;
     int _rally;
     FighterFilter _lastHit = FighterFilter.both;
+    public float _serveSpeed = 7.5f;
 
     public static GameManager Get() {
         return _instance;
@@ -196,7 +197,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (_rally == 0)
         {
-            _shuttle.Shoot(new Vector3(0f, 10f, 0f), new Vector3(), false, false, FighterFilter.both);
+            _shuttle.Shoot(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new Vector3(), false, false, FighterFilter.both);
         }
     }
 
