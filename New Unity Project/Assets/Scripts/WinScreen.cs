@@ -16,14 +16,26 @@ public class WinScreen : MonoBehaviour
     //public string winnerName;
     string text;
 
+    public int _roundIndex;
+    public int _p1r1;
+    public int _p2r1;
+    public int _p1r2;
+    public int _p2r2;
+    public int _p1r3;
+    public int _p2r3;
+
+
     public void Awake()
     {
+        int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
+        ScoreManager.Get().SetScores(newScores);
+
         //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
         _winnerName.text = "Danny";
         int[,] scores = ScoreManager.Get().GetScores();
-        int index = ScoreManager.Get().GetCurrentRound() - 1;
-        for (int i = 0; i < ScoreManager.Get().GetCurrentRound(); i++)
-        {
+        //for (int i = 0; i < ScoreManager.Get().GetCurrentRound(); i++)
+        for (int i = 0; i < _roundIndex + 1; i++)
+            {
             _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
         }
     }

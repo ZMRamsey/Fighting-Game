@@ -46,6 +46,11 @@ public class ScoreManager : MonoBehaviour
         return _scores;
     }
 
+    public void SetScores(int[,] newScores)
+    {
+        _scores = newScores; 
+    }
+
     public int GetCurrentRound()
     {
         return _roundIndex+1;
