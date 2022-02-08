@@ -70,26 +70,36 @@ public class optionsRotatorCircle : MonoBehaviour
     void SubMenuMoveUp()
     {
         //Test code for Audio options
-        //if(sceneIndex == 0)
-        //{
-        //    subSceneIndex = 0;
-        //}
-        //else if(subSceneIndex == 1)
-        //{
-        //    subSceneIndex = 3;
-        //}
+        if(sceneIndex == 0)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
+            subMenuSelections[subSceneIndex + 1].GetComponent<FullScreenRotator>().enabled = false;
+        }
+        else if (sceneIndex == 1)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<Audio_Value_Changer>().enabled = true;
+            subMenuSelections[subSceneIndex+1].GetComponent<Audio_Value_Changer>().enabled = false;
+        }
 
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
-        subMenuSelections[subSceneIndex+1].GetComponent<FullScreenRotator>().enabled = false;
+        
     }
     void SubMenuMoveDown()
     {
+        if (sceneIndex == 0)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
+            subMenuSelections[subSceneIndex - 1].GetComponent<FullScreenRotator>().enabled = false;
+        }
+        else if (sceneIndex == 1)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<Audio_Value_Changer>().enabled = true;
+            subMenuSelections[subSceneIndex - 1].GetComponent<Audio_Value_Changer>().enabled = false;
+        }
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex-1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
-        subMenuSelections[subSceneIndex-1].GetComponent<FullScreenRotator>().enabled = false;
+        
     }
 
     void WrapAroundToPlay()
@@ -119,7 +129,7 @@ public class optionsRotatorCircle : MonoBehaviour
             else if(sceneIndex == 1)
             {
                 subSceneIndex = 3;
-                subMenuSelections[3].GetComponent<FullScreenRotator>().enabled = true;
+                subMenuSelections[3].GetComponent<Audio_Value_Changer>().enabled = true;
             }
             subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
             _isControllingSubMenu = true;
@@ -129,10 +139,11 @@ public class optionsRotatorCircle : MonoBehaviour
     {
         _isControllingSubMenu = false;
 
-        for(int i = 0; i<subMenuSelections.Length; i++)
+        for(int i = 0; i<3; i++)
         {
             subMenuSelections[i].GetComponent<FullScreenRotator>().enabled = false;
         }
+
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         subSceneIndex = 10;
     }
