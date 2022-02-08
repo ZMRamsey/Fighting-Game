@@ -127,7 +127,6 @@ public abstract class FighterController : MonoBehaviour
 
     public void ResetHitbox() {
         _hitboxes.ResetCD();
-        _hitboxes.ResetSCD();
     }
 
     public void ResetAttack() {

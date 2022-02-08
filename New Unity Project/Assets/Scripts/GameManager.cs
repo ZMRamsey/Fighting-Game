@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _impactFrame;
     AudioSource _source;
     float _rotateTarget;
+    int _rally;
+    FighterFilter _lastHit = FighterFilter.both;
 
     public static GameManager Get() {
         return _instance;
@@ -102,7 +104,17 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
-        _shuttle.transform.position = _shuttleSpawn;
+        if (ScoreManager.Get().GetLastScorer() == 0)
+        {
+            _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
+        }
+        else
+        {
+            _shuttle.transform.position = new Vector3(_shuttleSpawn.x - 5, _shuttleSpawn.y, _shuttleSpawn.z);
+        }
+        _rally = 0;
+        //_shuttle.transform.position = _shuttleSpawn;
+        StartCoroutine("ServeTimer");
     }
 
     public Shaker GetCameraShaker() {
@@ -177,5 +189,34 @@ public class GameManager : MonoBehaviour
         }
 
         return _fighterTwo;
+    }
+
+    IEnumerator ServeTimer()
+    {
+        yield return new WaitForSeconds(1);
+        if (_rally == 0)
+        {
+            _shuttle.Shoot(new Vector3(0f, 10f, 0f), new Vector3(), false, false, FighterFilter.both);
+        }
+    }
+
+    public void IncreaseRally()
+    {
+        _rally++;
+    }
+
+    public void SetLastHitter(FighterFilter hitter)
+    {
+        _lastHit = hitter;
+    }
+
+    public FighterFilter GetLastHit()
+    {
+        return _lastHit;
+    }
+
+    public int GetCurrentRally()
+    {
+        return _rally;
     }
 }

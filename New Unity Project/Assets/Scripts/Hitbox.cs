@@ -9,10 +9,8 @@ public class Hitbox : MonoBehaviour
     FighterController _self;
     [SerializeField] ShotType _shotType;
     [SerializeField] GameObject _character;
-    bool _coolDown = true;
-    bool _sCoolDown = true;
 
-    List<GameObject> cooldowns = new List<GameObject>();
+    public List<GameObject> cooldowns = new List<GameObject>();
 
     private void Awake()
     {
@@ -63,62 +61,15 @@ public class Hitbox : MonoBehaviour
                         break;
                 }
             }
+            if (_self.GetFilter() != GameManager.Get().GetLastHit())
+            {
+                GameManager.Get().IncreaseRally();
+                GameManager.Get().SetLastHitter(_self.GetFilter());
+                //Debug.Log("Rally:" + GameManager.Get()._rally + " - Last Hit By:" + GameManager.Get().GetLastHit().ToString());
+            }
             cooldowns.Add(collision.gameObject);
         }
     }
-
-    //Leaving this for the meantime just incase the new version isnt working
-
-    //private void OnTriggerEnter(Collider collision)
-    //{
-    //    if (collision.transform == _self.transform)
-    //    {
-    //        return;
-    //    }
-    //    if (_coolDown || (!_coolDown && collision.transform.GetComponent<SubWoofer>() && _sCoolDown))
-    //    {
-    //        var ball = collision.transform.GetComponent<ShuttleCock>();
-    //        if (ball != null)
-    //        {
-    //            float facing = 1;
-    //            if (_character.GetComponent<SpriteRenderer>().flipX)
-    //            {
-    //                facing = -1;
-    //            }
-
-    //            _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
-
-    //            //Play shot type depending on button pressed
-    //            switch (_shotType)
-    //            {
-    //                case ShotType.chip:
-    //                    ball.Shoot(new Vector3(1f * facing, 2f), true, true, _self.GetFilter());
-    //                    break;
-
-    //                case ShotType.drive:
-    //                    ball.Shoot(new Vector3(12f * facing, 3f), true, false, _self.GetFilter());
-    //                    break;
-
-    //                case ShotType.drop:
-    //                    ball.Shoot(new Vector3(6f * facing, 6f), true, false, _self.GetFilter());
-    //                    break;
-
-    //                case ShotType.smash:
-    //                    ball.Shoot(new Vector3(16f * facing, -2f), true, false, _self.GetFilter());
-    //                    break;
-
-    //                default:
-    //                    Debug.Log("Fuccy Wuccy Has Occurred");
-    //                    break;
-    //            }
-    //        }
-    //        if (!_coolDown)
-    //        {
-    //            _sCoolDown = false;
-    //        }
-    //        _coolDown = false;
-    //    }
-    //}
 
     public void SetType(ShotType type) {
         _shotType = type;
@@ -126,12 +77,6 @@ public class Hitbox : MonoBehaviour
 
     public void ResetCD()
     {
-        //_coolDown = true;
         cooldowns.Clear();
-    }
-
-    public void ResetSCD()
-    {
-        //_sCoolDown = true;
     }
 }
