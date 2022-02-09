@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
     static ScoreManager _instance;
     protected int[,] _scores = {{0,0},{0,0},{0,0}};
     protected int _roundIndex = 0;
+    protected int _lastScorer = 0;
 
     void Awake()
     {
@@ -31,12 +32,14 @@ public class ScoreManager : MonoBehaviour
         {
             NextRound();
         }
+        SetLastScorer(scorerN);
     }
 
     void NextRound()
     {
         if (_roundIndex != 2)
         {
+            Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + DecideRoundWinner().ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
             _roundIndex++;
         }
     }
@@ -46,8 +49,33 @@ public class ScoreManager : MonoBehaviour
         return _scores;
     }
 
+    public void SetScores(int[,] newScores)
+    {
+        _scores = newScores; 
+    }
+
     public int GetCurrentRound()
     {
         return _roundIndex+1;
+    }
+
+    private void SetLastScorer(int scorer)
+    {
+        _lastScorer = scorer;
+    }
+
+    public int GetLastScorer()
+    {
+        return _lastScorer;
+    }
+
+    public FighterFilter DecideRoundWinner()
+    {
+        FighterFilter winner = FighterFilter.one;
+        if (GetScores()[GetCurrentRound() - 1,1] > GetScores()[GetCurrentRound() - 1, 0])
+        {
+            winner = FighterFilter.two;
+        }
+        return winner;
     }
 }

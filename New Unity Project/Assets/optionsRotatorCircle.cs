@@ -8,8 +8,14 @@ public class optionsRotatorCircle : MonoBehaviour
 {
     public float turningRate = 0.75f;
     int sceneIndex = 0;
-    int subSceneIndex = 0;
+    int subSceneIndex = 10;
     float _rotatorConstant = 0.0f;
+
+    int firstOption = 0;
+    int lastOption = 2;
+
+    //Display Options
+    int resIndex = 0;
 
     bool _hasGoneUp = false;
     bool _hasGoneDown = false;
@@ -20,6 +26,7 @@ public class optionsRotatorCircle : MonoBehaviour
 
     public GameObject[] subMenus;
     public GameObject[] subMenuOptions;
+    public GameObject[] subMenuSelections;
 
     public GameObject mainMenu;
     public GameObject optionsMenu;
@@ -48,15 +55,51 @@ public class optionsRotatorCircle : MonoBehaviour
         _hasGoneDown = false;
     }
 
+    //Change system for audio usage
+    void ChangeToAudio()
+    {
+        firstOption = 3;
+        lastOption = 5;
+    }
+    void ChangeToDisplay()
+    {
+        firstOption = 0;
+        lastOption = 2;
+    }
+
     void SubMenuMoveUp()
     {
-        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        //Test code for Audio options
+        if(sceneIndex == 0)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
+            subMenuSelections[subSceneIndex + 1].GetComponent<FullScreenRotator>().enabled = false;
+        }
+        else if (sceneIndex == 1)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<Audio_Value_Changer>().enabled = true;
+            subMenuSelections[subSceneIndex+1].GetComponent<Audio_Value_Changer>().enabled = false;
+        }
+
+        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        
     }
     void SubMenuMoveDown()
     {
-        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        if (sceneIndex == 0)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<FullScreenRotator>().enabled = true;
+            subMenuSelections[subSceneIndex - 1].GetComponent<FullScreenRotator>().enabled = false;
+        }
+        else if (sceneIndex == 1)
+        {
+            subMenuSelections[subSceneIndex].GetComponent<Audio_Value_Changer>().enabled = true;
+            subMenuSelections[subSceneIndex - 1].GetComponent<Audio_Value_Changer>().enabled = false;
+        }
+        subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex-1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        
     }
 
     void WrapAroundToPlay()
@@ -78,16 +121,31 @@ public class optionsRotatorCircle : MonoBehaviour
     {
         if(_isControllingSubMenu == false)
         {
-            subSceneIndex = 0;
-            subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            if(sceneIndex == 0)
+            {
+                subSceneIndex = 0;
+                subMenuSelections[0].GetComponent<FullScreenRotator>().enabled = true;
+            }
+            else if(sceneIndex == 1)
+            {
+                subSceneIndex = 3;
+                subMenuSelections[3].GetComponent<Audio_Value_Changer>().enabled = true;
+            }
+            subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
             _isControllingSubMenu = true;
         }
     }
     void controlSelectionWheel()
     {
         _isControllingSubMenu = false;
+
+        for(int i = 0; i<3; i++)
+        {
+            subMenuSelections[i].GetComponent<FullScreenRotator>().enabled = false;
+        }
+
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        subSceneIndex = 0;
+        subSceneIndex = 10;
     }
 
     void ReturnToMenu()
@@ -95,6 +153,9 @@ public class optionsRotatorCircle : MonoBehaviour
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
         backgroundPanel.GetComponent<Image>().sprite = mainMenuBG;
+        subSceneIndex = 4;
+        sceneIndex = 0;
+        ChangeToDisplay();
     }
 
     void highlightSelectedOption()
@@ -116,15 +177,29 @@ public class optionsRotatorCircle : MonoBehaviour
             subMenus[0].SetActive(false);
         }
         subMenus[sceneIndex].SetActive(true);
+
+        //WIP
+        if(sceneIndex == 0)
+        {
+            ChangeToDisplay();
+        }
+        else if(sceneIndex == 1)
+        {
+            ChangeToAudio();
+        }
     }
 
     private void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            controlSubMenu();
+            if (sceneIndex != 2)
+            {
+                controlSubMenu();
+            }
+            
         }
-        else if (Keyboard.current.dKey.wasPressedThisFrame)
+        else if (Keyboard.current.zKey.wasPressedThisFrame)
         {
             controlSelectionWheel();
         }
@@ -167,9 +242,9 @@ public class optionsRotatorCircle : MonoBehaviour
             if (Keyboard.current.wKey.wasPressedThisFrame)
             {
                 subSceneIndex -= 1;
-                if(subSceneIndex < 0)
+                if(subSceneIndex < firstOption)
                 {
-                    subSceneIndex = 0;
+                    subSceneIndex = firstOption;
                 }
                 else
                 {
@@ -179,9 +254,9 @@ public class optionsRotatorCircle : MonoBehaviour
             else if (Keyboard.current.sKey.wasPressedThisFrame)
             {
                 subSceneIndex += 1;
-                if (subSceneIndex > 2)
+                if (subSceneIndex > lastOption)
                 {
-                    subSceneIndex = 2;
+                    subSceneIndex = lastOption;
                 }
                 else
                 {
