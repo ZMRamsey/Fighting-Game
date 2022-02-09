@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class optionsRotatorCircle : MonoBehaviour
 {
+    public moveMenus men;
+
     public float turningRate = 0.75f;
     int sceneIndex = 0;
     int subSceneIndex = 10;
@@ -23,6 +25,8 @@ public class optionsRotatorCircle : MonoBehaviour
     bool _hasWrappedAroundToQuit = false;
     bool _isControllingSubMenu = false;
 
+    bool _returnSelected = false;
+
 
     public GameObject[] subMenus;
     public GameObject[] subMenuOptions;
@@ -37,7 +41,39 @@ public class optionsRotatorCircle : MonoBehaviour
 
     public Sprite mainMenuBG;
 
+    public GameObject[] mainMenuAssets;
+    public GameObject[] optionsMenuAssets;
+
+    public GameObject mainMenuScript;
+    public GameObject optionsScript;
+
+    Vector3 mainDesiredPos = new Vector3(2055.5352f, 310.5f, 90f);
+
+    Vector3 optionsDesiredPos = new Vector3(625.0707f, 310.5f, 90f);
+
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
+
+    void PanToMenu()
+    {
+        men._movingToOptions = false;
+        men._movingToMain = true;
+
+    }
+
+    void Start()
+    {
+        Debug.Log("Options Active");
+        mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
+        _returnSelected = false;
+    }
+
+    void SlideToMainMenu()
+    {
+        mainDesiredPos = new Vector3(620.8455f, 310.5f, 90f);
+        optionsDesiredPos = new Vector3(-813.8442f, 310.5f, 90f);
+        _returnSelected = true;
+        
+    }
 
     void MoveUp()
     {
@@ -191,6 +227,7 @@ public class optionsRotatorCircle : MonoBehaviour
 
     private void Update()
     {
+        mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             if (sceneIndex != 2)
@@ -232,7 +269,7 @@ public class optionsRotatorCircle : MonoBehaviour
             {
                 if (sceneIndex == 2)
                 {
-                    ReturnToMenu();
+                    PanToMenu();
                 }
             }
 
@@ -265,6 +302,46 @@ public class optionsRotatorCircle : MonoBehaviour
             }
         }
         highlightSelectedOption();
+
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    mainMenuAssets[i].transform.position = Vector3.MoveTowards(backgroundPanel.transform.position, mainDesiredPos, 800f * Time.deltaTime);
+        //    optionsMenuAssets[i].transform.position = Vector3.MoveTowards(optionsMenuAssets[0].transform.position, optionsDesiredPos, 800f * Time.deltaTime);
+        //}
+
+        //if (_returnSelected)
+        //{
+        //    //if (backgroundPanel.transform.position.x < -750)
+        //    //{
+        //    //    for (int i = 0; i < 2; i++)
+        //    //    {
+        //    //        optionsMenuAssets[i].SetActive(false);
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    for (int i = 0; i < 2; i++)
+        //    //    {
+        //    //        optionsMenuAssets[i].SetActive(true);
+        //    //    }
+        //    //}
+
+        //    if (mainMenuAssets[0].transform.position.x < 630)
+        //    {
+        //        //for (int i = 0; i < 2; i++)
+        //        //{
+        //        //    optionsMenuAssets[i].SetActive(false);
+        //        //}
+        //        mainMenuScript.GetComponent<rotaterCircle>().enabled = true;
+
+        //        Debug.Log("Returned Back");
+        //    }
+        //    //for (int i = 0; i < 2; i++)
+        //    //{
+        //    //    optionsMenuAssets[i].SetActive(true);
+        //    //}
+        //}
+
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.25f);
     }
