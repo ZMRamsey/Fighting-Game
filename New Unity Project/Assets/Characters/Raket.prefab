@@ -14773,6 +14773,7 @@ GameObject:
   - component: {fileID: 4874520954667380374}
   - component: {fileID: 7974140882237405888}
   - component: {fileID: 4874520954667380375}
+  - component: {fileID: 8223740252825536706}
   - component: {fileID: 4874520954667380372}
   - component: {fileID: 4874520954667380378}
   - component: {fileID: 4874520954667380373}
@@ -14854,6 +14855,7 @@ MonoBehaviour:
   _fallMultiplier: 12
   _jumpFalloff: 0.9
   _controllerScaler: {fileID: 4874520953764879583}
+  _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}
   _stretchSpeed: 4
   _source: {fileID: 4874520954667380378}
@@ -14861,6 +14863,8 @@ MonoBehaviour:
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
   _impact: {fileID: 6980052365574868023}
   _impactFrame: {fileID: 3168012337785043981}
+  _jumpDust: {fileID: 0}
+  _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
@@ -14886,6 +14890,21 @@ MonoBehaviour:
   _driveInput: 0
   _chipInput: 0
   _specialInput: 0
+--- !u!114 &8223740252825536706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4874520954667380368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b7638542ff3f347a7fe33e7cfce436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 4874520954698666500}
+  _afterImageDelay: 0.05
+  _afterImageActive: 0
 --- !u!54 &4874520954667380372
 Rigidbody:
   m_ObjectHideFlags: 0

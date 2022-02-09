@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public enum FighterAction { none, attacking, jumping, dead };
+public enum FighterAction { none, attacking, dashing, jumping, dead };
 public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
@@ -30,12 +31,15 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
+    [SerializeField] FighterEffects _effects;
     [SerializeField] SpriteRenderer _renderer;
     [SerializeField] float _stretchSpeed;
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
     [SerializeField] ParticleSystem _impact;
     [SerializeField] ParticleSystem _impactFrame;
+    [SerializeField] ParticleSystem _jumpDust;
+    [SerializeField] ParticleSystem _jumpLand;
 
     [Header("Controller Values")]
     [SerializeField] Vector3 _controllerVelocity;
@@ -44,6 +48,8 @@ public abstract class FighterController : MonoBehaviour
     bool _canJump;
     bool _canAttack;
     bool _freeze;
+    bool _isDashing;
+    float _lastTapAxis;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -86,8 +92,14 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
+        if (Keyboard.current.shiftKey.wasPressedThisFrame && !_isDashing) {
+            _lastTapAxis = _inputHandler.GetInputX();
+            OnDash();
+        }
+
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
+        _animator.SetFloat("xInput", _controllerVelocity.x);
 
     }
 
@@ -98,7 +110,7 @@ public abstract class FighterController : MonoBehaviour
                 OnGroundMovement();
             }
 
-            if (_myStance == FighterStance.air || _myAction == FighterAction.jumping) {
+            if ((_myStance == FighterStance.air || _myAction == FighterAction.jumping)) {
                 OnAirMovement();
             }
 
@@ -107,20 +119,28 @@ public abstract class FighterController : MonoBehaviour
                 return;
             }
 
+            if(_isDashing) {
+                _rigidbody.AddForce(new Vector3(_lastTapAxis, 0,0) * 25, ForceMode.Impulse);
+            }
+
             _rigidbody.velocity = _controllerVelocity;
         }
     }
 
+    float xCalculation = 0.0f;
     public virtual void OnGroundMovement() {
-        var xCalculation = _inputHandler.GetInputX();
 
-        if (!_canAttack) {
-            xCalculation = 0f;
+        if (_canAttack) {
+            xCalculation = _inputHandler.GetInputX();
+            xCalculation *= _speed;
+        }
+        else {
+            xCalculation = xCalculation * 0.8f;
         }
 
         AdjustControllerHeight();
 
-        xCalculation *= _speed;
+        xCalculation = Mathf.Clamp(xCalculation, -_speed, _speed);
 
         _controllerVelocity = new Vector3(xCalculation, _yVelocity, 0);
     }
@@ -133,6 +153,7 @@ public abstract class FighterController : MonoBehaviour
     public void ResetAttack() {
         _canAttack = true;
     }
+
 
     void AddMeter(float value) {
         _commandMeter += value;
@@ -179,6 +200,15 @@ public abstract class FighterController : MonoBehaviour
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
         _source.PlayOneShot(_jumpDownSFX);
 
+        if(_jumpLand != null) {
+            _jumpLand.transform.position = _groundHit.point;
+            _jumpLand.Play();
+        }
+
+        if(_myAction == FighterAction.dashing) {
+            _myAction = FighterAction.none;
+        }
+
         _animator.SetTrigger("land");
         _canJump = true;
 
@@ -190,6 +220,21 @@ public abstract class FighterController : MonoBehaviour
 
         if (_canAttack) {
             _animator.SetTrigger("jump");
+        }
+
+        if(_jumpDust != null) {
+            _jumpDust.transform.position = _groundHit.point;
+            if(_controllerVelocity.x > 0) {
+                _jumpDust.transform.eulerAngles = new Vector3(0, 0, 330);
+            }
+            else if (_controllerVelocity.x < 0) {
+                _jumpDust.transform.eulerAngles = new Vector3(0, 0, 30);
+            }
+            else {
+                _jumpDust.transform.eulerAngles = Vector3.zero;
+            }
+
+            _jumpDust.Play();
         }
 
         _source.PlayOneShot(_jumpUpSFX);
@@ -239,8 +284,30 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnDash() {
-
+        if(_myAction == FighterAction.dashing) {
+            return;
+        }
+        StartCoroutine(DashProcess());
     }
+
+    IEnumerator DashProcess() {
+       // _myAction = FighterAction.dashing;
+        _canJump = false;
+        _effects.SetAfterImage();
+        _isDashing = true;
+        yield return new WaitForSeconds(0.1f);
+        _effects.DisableAfterImage();
+        _isDashing = false;
+        //if (_myAction == FighterAction.dashing) {
+        //    _myAction = FighterAction.none;
+        //}
+
+        if (IsGrounded()) {
+            _canJump = true;
+        }
+    }
+
+
 
     public virtual void ProcessInput() {
         if (IsGrounded()) {
@@ -248,6 +315,10 @@ public abstract class FighterController : MonoBehaviour
         }
         else {
             _myStance = FighterStance.air;
+        }
+
+        if (_freeze) {
+            return;
         }
 
         if (_inputHandler.GetSmash() && _canAttack) {

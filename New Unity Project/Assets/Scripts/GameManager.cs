@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator StageFlash(float time) {
-        _music.pitch = 0.8f;
+        _music.pitch = -1f;
         _canvasObject.SetActive(true);
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
