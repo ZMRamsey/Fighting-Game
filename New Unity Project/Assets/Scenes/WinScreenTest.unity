@@ -1444,6 +1444,8 @@ MonoBehaviour:
   _score: {fileID: 916037273}
   _character: {fileID: 283423759}
   _quote: {fileID: 1488226949}
+  winner: 2
+  loser: 1
   _roundIndex: 2
   _p1r1: 11
   _p2r1: 7
