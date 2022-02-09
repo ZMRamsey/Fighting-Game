@@ -41,19 +41,19 @@ public class Hitbox : MonoBehaviour
                 switch (_shotType)
                 {
                     case ShotType.chip:
-                        ball.Shoot(new Vector3(1f * facing, 2f), handler.GetInput(), true, true, _self.GetFilter());
+                        ball.Shoot(new Vector3(1f * facing, 2f), handler.GetInput(), true, true, _self.GetFilter(), _self);
                         break;
 
                     case ShotType.drive:
-                        ball.Shoot(new Vector3(12f * facing, 3f), handler.GetInput(), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(12f * facing, 3f), handler.GetInput(), true, false, _self.GetFilter(), _self);
                         break;
 
                     case ShotType.drop:
-                        ball.Shoot(new Vector3(6f * facing, 6f), handler.GetInput(), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(6f * facing, 6f), handler.GetInput(), true, false, _self.GetFilter(), _self);
                         break;
 
                     case ShotType.smash:
-                        ball.Shoot(new Vector3(16f * facing, -2f), handler.GetInput(), true, false, _self.GetFilter());
+                        ball.Shoot(new Vector3(16f * facing, -2f), handler.GetInput(), true, false, _self.GetFilter(), _self);
                         break;
 
                     default:

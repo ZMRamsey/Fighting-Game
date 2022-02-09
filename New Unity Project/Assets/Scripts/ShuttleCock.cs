@@ -25,6 +25,8 @@ public class ShuttleCock : MonoBehaviour
     [Header("Componenets")]
     [SerializeField] protected AudioSource _source;
     [SerializeField] protected Rigidbody _rb;
+    FighterController _owner;
+
     public bool _freeze;
     bool _waitForHit;
     protected float _squishTimer;
@@ -71,7 +73,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = targetVelocity;
 
-        _speed+= 0.5f;
+        _speed += 0.5f;
     }
 
     Coroutine shootCoroutine;
@@ -92,10 +94,19 @@ public class ShuttleCock : MonoBehaviour
         shootCoroutine = StartCoroutine(ShootProccess(distance, movementInfluence, slowDown, false, 0.3f));
     }
 
+    public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter, FighterController owner) {
+        SetOwner(owner);
+        Shoot(distance, movementInfluence, player, slowDown, filter);
+    }
+
+    public FighterController GetOwner() {
+        return _owner;
+    }
+
     Vector3 _spawn;
     bool isPlaying;
     void Update() {
-        if(_rb.velocity.magnitude > (_maxSpeed / 2)) {
+        if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
             if (!isPlaying) {
                 _trailParticle.Play();
                 isPlaying = true;
@@ -240,6 +251,23 @@ public class ShuttleCock : MonoBehaviour
         }
         else {
             ProcessForce(distance, movementInfluence, slowDown);
+        }
+    }
+
+    public void SetOwner(FighterController owner)
+    {
+        _owner = owner;
+        if (owner.GetFilter() == FighterFilter.one)
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
+        }
+        else if (owner.GetFilter() == FighterFilter.two)
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
+        }
+        else
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.gray);
         }
     }
 }

@@ -81,11 +81,18 @@ public class GameManager : MonoBehaviour
         if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle._freeze)
         {
             string scorer = "one";
-            if (_shuttle.transform.position.x > 0)
+            if (_shuttle.transform.position.x < 0)
             {
                 scorer = "two";
             }
             ScoreManager.Get().UpdateScore(scorer);
+            SetUpGame();
+        }
+
+        if (_fighterOne.GetController().GetFighterAction() == FighterAction.dead || _fighterTwo.GetController().GetFighterAction() == FighterAction.dead)
+        {
+            _fighterOne.GetController().SetFighterAction(FighterAction.none);
+            _fighterTwo.GetController().SetFighterAction(FighterAction.none);
             SetUpGame();
         }
     }
@@ -108,10 +115,12 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
+            _shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
         else
         {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x - 5, _shuttleSpawn.y, _shuttleSpawn.z);
+            _shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
         _rally = 0;
         //_shuttle.transform.position = _shuttleSpawn;
@@ -167,7 +176,7 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator StageFlash(float time) {
-        _music.pitch = 0.8f;
+        _music.pitch = -1f;
         _canvasObject.SetActive(true);
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
