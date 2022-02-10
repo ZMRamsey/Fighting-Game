@@ -117,7 +117,6 @@ public class GameManager : MonoBehaviour
             _fighterOne.GetController().SetFighterAction(FighterAction.none);
             _fighterTwo.GetController().SetFighterAction(FighterAction.none);
             KOEvent();
-            SetUpGame();
         }
     }
 
@@ -239,7 +238,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(4f);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
-
+        SetUpGame();
         KOCoroutine = null;
     }
 
