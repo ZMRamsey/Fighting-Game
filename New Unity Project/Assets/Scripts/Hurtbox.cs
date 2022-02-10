@@ -23,12 +23,13 @@ public class Hurtbox : MonoBehaviour
             if (hurt.GetSpeedPercent() >= .7f)
             {
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
+                hurt.Bounce(collision.transform.position);
                 ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString());
                 GameManager.Get().KOEvent();
             }
             else if (hurt.GetSpeedPercent() >= .3f)
             {
-                Debug.Log("Sonic_Spring_Noise.MP3");
+                //Debug.Log("Sonic_Spring_Noise.MP3");
                 transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
                 //hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
                 hurt.Bounce(collision.transform.position);
@@ -37,7 +38,7 @@ public class Hurtbox : MonoBehaviour
             }
             else
             {
-                Debug.Log("We Tech Those");
+                //Debug.Log("We Tech Those");
             }
         }
     }
