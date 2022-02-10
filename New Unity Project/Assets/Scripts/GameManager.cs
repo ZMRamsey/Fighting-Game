@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
         {
             _fighterOne.GetController().SetFighterAction(FighterAction.none);
             _fighterTwo.GetController().SetFighterAction(FighterAction.none);
+            KOEvent();
             SetUpGame();
         }
     }
