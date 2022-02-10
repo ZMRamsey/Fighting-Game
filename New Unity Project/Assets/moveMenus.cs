@@ -6,6 +6,9 @@ public class moveMenus : MonoBehaviour
 {
 
     public GameObject obj;
+    public MenuRacketRotator rot;
+
+
     Vector3 diff = new Vector3(1.0f,0f,0f);
 
 
@@ -37,15 +40,18 @@ public class moveMenus : MonoBehaviour
 
         if (_movingToOptions && !_movingToMain)
         {
-            obj.transform.position = Vector3.MoveTowards(obj.transform.position, optionsMenuPos, 800f * Time.deltaTime);
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, optionsMenuPos, 1600f * Time.deltaTime);
+            rot._rotatorConstant = 180.0f;
         }
         else if (_movingToMain && !_movingToOptions)
         {
-            obj.transform.position = Vector3.MoveTowards(obj.transform.position, mainMenuPos, 800f * Time.deltaTime);
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, mainMenuPos, 1600f * Time.deltaTime);
+            rot._rotatorConstant = 0.0f;
         }
         else if (!_movingToOptions && !_movingToMain)
         {
-            obj.transform.position = Vector3.MoveTowards(obj.transform.position, defPos, 800f * Time.deltaTime);
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, defPos, 1600f * Time.deltaTime);
+            rot._rotatorConstant = 0.0f;
         }
 
         if (obj.transform.position == optionsMenuPos)
