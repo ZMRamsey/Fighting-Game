@@ -26,6 +26,12 @@ public class GameEventManager : MonoBehaviour
         return _racketSuper;
     }
 
+    public void DisableAll() {
+        _impactFlash.DisableScreen();
+        _darkness.DisableScreen();
+        _racketSuper.DisableScreen();
+    }
+
     
 }
 

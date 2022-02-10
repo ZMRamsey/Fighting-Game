@@ -223,6 +223,8 @@ public class GameManager : MonoBehaviour
             StopCoroutine(impactCoroutine);
         }
 
+        _eventManager.DisableAll();
+
         KOCoroutine = StartCoroutine(KOProcess());
     }
 
