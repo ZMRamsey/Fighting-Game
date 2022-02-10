@@ -5,10 +5,21 @@ using UnityEngine;
 public class GameEventManager : MonoBehaviour
 {
     [SerializeField] GameEvent _impactFlash;
+    [SerializeField] GameEvent _darkness;
+
+    [Header("Supers")]
+    [SerializeField] GameEvent _dannySuper;
+    [SerializeField] GameEvent _hunterSuper;
     [SerializeField] GameEvent _racketSuper;
+    [SerializeField] GameEvent _esmeSuper;
+    [SerializeField] GameEvent _gansSuper;
 
     public GameEvent GetImpactFlash() {
         return _impactFlash;
+    }
+
+    public GameEvent GetDarkness() {
+        return _darkness;
     }
 
     public GameEvent GetRacketSuper() {
