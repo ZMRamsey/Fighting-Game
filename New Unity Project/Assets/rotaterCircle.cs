@@ -6,9 +6,13 @@ using UnityEngine.InputSystem;
 
 public class rotaterCircle : MonoBehaviour
 {
+    public moveMenus men;
+
     public float turningRate = 0.75f;
     int sceneIndex = 0;
     float _rotatorConstant = 0.0f;
+
+    bool _optionsSelected = false;
 
     public GameObject playMenu;
     public GameObject optionsMenu;
@@ -18,7 +22,37 @@ public class rotaterCircle : MonoBehaviour
     public Sprite playMenuBG;
     public Sprite optionsMenuBG;
 
+    public GameObject[] mainMenuAssets;
+    public GameObject[] optionsMenuAssets;
+
+    public GameObject optionsScript;
+    public GameObject menuScript;
+
+    Vector3 mainDesiredPos = new Vector3(620.8455f, 310.5f, 90f);
+    Vector3 finalPos = new Vector3(1926.31f, 0f , 0f);
+
+    Vector3 optionsDesiredPos = new Vector3(-813.8442f, 310.5f, 90f);
+
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
+
+    void PanToOptions()
+    {
+        men._movingToOptions = true;
+        men._movingToMain = false;
+    }
+
+    void Start()
+    {
+        Debug.Log("Main Active");
+        optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
+        _optionsSelected = false;
+    }
+    //void SlideToOptions()
+    //{
+    //    mainDesiredPos = new Vector3(2055.5352f, 310.5f, 90f);
+    //    optionsDesiredPos = new Vector3(750.0707f, 310.5f, 90f);
+    //    _optionsSelected = true;
+    //}
 
     void loadSelectedMenu()
     {
@@ -30,9 +64,11 @@ public class rotaterCircle : MonoBehaviour
         }
         else if(sceneIndex == 1)
         {
-            backgroundPanel.GetComponent<Image>().sprite = optionsMenuBG;
-            optionsMenu.SetActive(true);
-            mainMenu.SetActive(false);
+            //backgroundPanel.GetComponent<Image>().sprite = optionsMenuBG;
+            //optionsMenu.SetActive(true);
+            //mainMenu.SetActive(false);
+            //SlideToOptions();
+            PanToOptions();
         }
         else if (sceneIndex == 2)
         {
@@ -42,28 +78,77 @@ public class rotaterCircle : MonoBehaviour
 
     private void Update()
     {
+        //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
         if (Keyboard.current.wKey.wasPressedThisFrame)
         {
-            _rotatorConstant += 30.0f;
-            sceneIndex +=1;
-            if(sceneIndex > 2)
+            if (!_optionsSelected)
             {
-                sceneIndex = 0;
+                _rotatorConstant += 30.0f;
+                sceneIndex += 1;
+                if (sceneIndex > 2)
+                {
+                    sceneIndex = 0;
+                }
             }
+            
         }
         else if (Keyboard.current.sKey.wasPressedThisFrame)
         {
-            _rotatorConstant -= 30.0f;
-            sceneIndex -=1;
-            if(sceneIndex < 0)
+            if (!_optionsSelected)
             {
-                sceneIndex = 2;
+                _rotatorConstant -= 30.0f;
+                sceneIndex -= 1;
+                if (sceneIndex < 0)
+                {
+                    sceneIndex = 2;
+                }
             }
         }
         else if (Keyboard.current.spaceKey.wasPressedThisFrame){
-            loadSelectedMenu();
+            if (!_optionsSelected)
+            {
+                loadSelectedMenu();
+            }
+            
         }
+
+        //Move/Slide Main Menu Settings
+        //for(int i = 0; i < 2; i++)
+        //{
+        //    mainMenuAssets[i].transform.position = Vector3.MoveTowards(backgroundPanel.transform.position, mainDesiredPos, 800f * Time.deltaTime);
+        //    optionsMenuAssets[i].transform.position = Vector3.MoveTowards(optionsMenuAssets[0].transform.position, optionsDesiredPos, 800f * Time.deltaTime);
+        //}
+        ////Disable Main Menu Assets when moved and at final position
+        //if (_optionsSelected)
+        //{
+        //    //if (backgroundPanel.transform.position.x > 2050)
+        //    //{
+        //    //    for (int i = 0; i < 2; i++)
+        //    //    {
+        //    //        mainMenuAssets[i].SetActive(false);
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    for (int i = 0; i < 2; i++)
+        //    //    {
+        //    //        mainMenuAssets[i].SetActive(true);
+        //    //    }
+        //    //}
+
+        //    if (optionsMenuAssets[0].transform.position.x > 600)
+        //    {
+        //        optionsScript.GetComponent<optionsRotatorCircle>().enabled = true;
+        //        Debug.Log("Sent");
+        //    }
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.25f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.5f);
+
     }
-}
+
+
+
+
+
+        
+    }

@@ -18,16 +18,25 @@ public class Hurtbox : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         var hurt = collision.gameObject.GetComponent<ShuttleCock>();
-        if (hurt != null)
+        if (hurt != null && (hurt.GetOwner() != transform.root.GetComponent<FighterController>()))
         {
-            if (collision.gameObject.GetComponent<ShuttleCock>().GetSpeedPercent() > .7f)
+            if (hurt.GetSpeedPercent() >= .7f)
             {
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString());
+                transform.root.GetComponent<FighterController>().SetFighterAction(FighterAction.dead);
+            }
+            else if (hurt.GetSpeedPercent() >= .3f)
+            {
+                Debug.Log("Sonic_Spring_Noise.MP3");
+                transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
+                hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
+                transform.root.GetComponent<FighterController>().ReduceMeter(5f);
+                hurt.SetOwner(transform.root.GetComponent<FighterController>());
             }
             else
             {
-
+                Debug.Log("We Tech Those");
             }
         }
     }

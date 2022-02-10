@@ -95,7 +95,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter, FighterController owner) {
-        _owner = owner;
+        SetOwner(owner);
         Shoot(distance, movementInfluence, player, slowDown, filter);
     }
 
@@ -251,6 +251,23 @@ public class ShuttleCock : MonoBehaviour
         }
         else {
             ProcessForce(distance, movementInfluence, slowDown);
+        }
+    }
+
+    public void SetOwner(FighterController owner)
+    {
+        _owner = owner;
+        if (owner.GetFilter() == FighterFilter.one)
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
+        }
+        else if (owner.GetFilter() == FighterFilter.two)
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
+        }
+        else
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.gray);
         }
     }
 }

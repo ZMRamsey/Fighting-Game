@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScore(string scorer)
     {
         int scorerN = 0;
-        if (scorer == "two")
+        if (scorer == "one")
         {
             scorerN = 1;
         }

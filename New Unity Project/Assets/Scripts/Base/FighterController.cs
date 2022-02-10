@@ -164,6 +164,18 @@ public abstract class FighterController : MonoBehaviour
         _fighterUI.SetBarValue(GetMeter());
     }
 
+    public void ReduceMeter(float value)
+    {
+        _commandMeter -= value;
+
+        if (_commandMeter < 0)
+        {
+            _commandMeter = 0;
+        }
+
+        _fighterUI.SetBarValue(GetMeter());
+    }
+
 
     void ResetMeter() {
         _commandMeter = 0;
@@ -444,5 +456,15 @@ public abstract class FighterController : MonoBehaviour
 
     public bool CanAttack() {
         return _canAttack;
+    }
+
+    public void SetFighterAction(FighterAction action)
+    {
+        _myAction = action;
+    }
+
+    public void SetFighterStance(FighterStance stance)
+    {
+        _myStance = stance;
     }
 }
