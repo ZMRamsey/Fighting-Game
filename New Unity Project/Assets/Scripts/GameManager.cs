@@ -62,11 +62,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        fOneObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterOneDevice());
+        fTwoObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterTwoDevice());
+
         _fighterOne.GetController().SetFilter(FighterFilter.one);
         _fighterTwo.GetController().SetFilter(FighterFilter.two);
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
+
+      
     }
 
     private void Start() {

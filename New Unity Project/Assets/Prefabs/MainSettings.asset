@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fighterOne: {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
   _fighterTwo: {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
-  _fighterOneState: 1
-  _fighterTwoState: 3
+  _fighterOneDevice:
+    _inputState: 1
+  _fighterTwoDevice:
+    _inputState: 1

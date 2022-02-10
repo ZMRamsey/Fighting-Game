@@ -43,6 +43,7 @@ public class GameSettings : ScriptableObject
     }
 }
 
+[System.Serializable]
 public class PlayerDevice
 {
     [SerializeField] Gamepad _controller;
@@ -59,5 +60,15 @@ public class PlayerDevice
 
     public Keyboard GetKeyboard() {
         return _keyboard;
+    }
+
+    public void SetGamepad(Gamepad pad) {
+        _controller = pad;
+        _keyboard = null;
+    }
+
+    public void SetKeyboard(Keyboard board) {
+        _keyboard = board;
+        _controller = null;
     }
 }

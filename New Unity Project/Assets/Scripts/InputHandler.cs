@@ -8,7 +8,7 @@ public enum InputState { none, player, ai, controller};
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] InputState _state;
-    Gamepad current;
+    PlayerDevice _playerDevice;
     public float _inputX;
 
     public bool _jumpInput;
@@ -19,62 +19,66 @@ public class InputHandler : MonoBehaviour
     public bool _chipInput;
     public bool _specialInput;
 
+    public void SetDevice(PlayerDevice device) {
+        _playerDevice = device;
+    }
+
     void Update() {
-        if (_state == InputState.player) {
+        if (_playerDevice != null && _playerDevice.GetKeyboard() != null) {
             
             _inputX = 0.0f;
-            if (Keyboard.current.aKey.IsPressed()) {
+            if (_playerDevice.GetKeyboard().aKey.IsPressed()) {
                 _inputX = 1;
             }
-            if (Keyboard.current.dKey.IsPressed()) {
+            if (_playerDevice.GetKeyboard().dKey.IsPressed()) {
                 _inputX = -1;
             }
 
-            _jumpHeld = Keyboard.current.wKey.isPressed;
+            _jumpHeld = _playerDevice.GetKeyboard().wKey.isPressed;
 
-            if (Keyboard.current.wKey.isPressed) {
+            if (_playerDevice.GetKeyboard().wKey.isPressed) {
                 _jumpInput = true;
             }
             else {
                 _jumpInput = false;
             }
 
-            if (Keyboard.current.rightArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame) {
                 _driveInput = true;
             }
 
-            if (Keyboard.current.upArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().upArrowKey.wasPressedThisFrame) {
                 _dropInput = true;
             }
 
-            if (Keyboard.current.leftArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().leftArrowKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
 
-            if (Keyboard.current.downArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame) {
                 _chipInput = true;
             }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().spaceKey.wasPressedThisFrame) {
                 _specialInput = true;
             }
         }
 
-        if (_state == InputState.controller)
+        if (_playerDevice != null && _playerDevice.GetGamepad() != null)
         {
             _inputX = 0.0f;
-            if (Gamepad.current.leftStick.left.ReadValue() > 0 || Gamepad.current.dpad.left.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.left.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.left.isPressed)
             {
                 _inputX = 1;
             }
-            if (Gamepad.current.leftStick.right.ReadValue() > 0 || Gamepad.current.dpad.right.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.right.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.right.isPressed)
             {
                 _inputX = -1;
             }
 
-            _jumpHeld = Gamepad.current.leftStick.up.ReadValue() > 0 || Gamepad.current.dpad.up.isPressed;
+            _jumpHeld = _playerDevice.GetGamepad().leftStick.up.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.up.isPressed;
 
-            if (Gamepad.current.leftStick.up.ReadValue() > 0 || Gamepad.current.dpad.up.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.up.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.up.isPressed)
             {
                 _jumpInput = true;
             }
@@ -83,27 +87,27 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (Gamepad.current.buttonEast.wasPressedThisFrame)
+            if (_playerDevice.GetGamepad().buttonEast.wasPressedThisFrame)
             {
                 _driveInput = true;
             }
 
-            if (Gamepad.current.buttonNorth.wasPressedThisFrame)
+            if (_playerDevice.GetGamepad().buttonNorth.wasPressedThisFrame)
             {
                 _dropInput = true;
             }
 
-            if (Gamepad.current.buttonWest.wasPressedThisFrame)
+            if (_playerDevice.GetGamepad().buttonWest.wasPressedThisFrame)
             {
                 _smashInput = true;
             }
 
-            if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+            if (_playerDevice.GetGamepad().buttonSouth.wasPressedThisFrame)
             {
                 _chipInput = true;
             }
 
-            if (Gamepad.current.rightTrigger.wasPressedThisFrame)
+            if (_playerDevice.GetGamepad().rightTrigger.wasPressedThisFrame)
             {
                 _specialInput = true;
             }
