@@ -112,12 +112,12 @@ public class GameManager : MonoBehaviour
             SetUpGame();
         }
 
-        if (_fighterOne.GetController().GetFighterAction() == FighterAction.dead || _fighterTwo.GetController().GetFighterAction() == FighterAction.dead)
-        {
-            _fighterOne.GetController().SetFighterAction(FighterAction.none);
-            _fighterTwo.GetController().SetFighterAction(FighterAction.none);
-            KOEvent();
-        }
+        //if (_fighterOne.GetController().GetFighterAction() == FighterAction.dead || _fighterTwo.GetController().GetFighterAction() == FighterAction.dead)
+        //{
+        //    _fighterOne.GetController().SetFighterAction(FighterAction.none);
+        //    _fighterTwo.GetController().SetFighterAction(FighterAction.none);
+        //    KOEvent();
+        //}
     }
 
     void SetUpGame() {
