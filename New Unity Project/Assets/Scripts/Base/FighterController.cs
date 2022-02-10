@@ -8,7 +8,7 @@ public enum FighterStance { standing, air, blow };
 public enum FighterState { inControl, restricted };
 public abstract class FighterController : MonoBehaviour
 {
-    [SerializeField] FighterFilter _filter;
+    [SerializeField] protected FighterFilter _filter;
     [Header("Moves")]
     [SerializeField] FighterMove _smashMove;
     [SerializeField] FighterMove _chipMove;
@@ -373,7 +373,6 @@ public abstract class FighterController : MonoBehaviour
             UpdateMove();
             ResetMeter();
             OnSuperMechanic();
-            GameManager.Get().OnSpecial();
         }
 
         if(_failSafeAttack > 0) {

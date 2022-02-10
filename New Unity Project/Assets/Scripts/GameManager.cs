@@ -14,21 +14,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] ShuttleCock _shuttle;
     [SerializeField] Vector3 _shuttleSpawn;
     [SerializeField] Transform _speedRotator;
-    [SerializeField] GameObject _canvasObject;
     [SerializeField] GameObject _stageCamera;
     [SerializeField] AudioClip _superSFX;
     [SerializeField] AudioSource _music;
     [SerializeField] UIFader _screenFader;
     [SerializeField] GameObject _debugCanvas;
-    [SerializeField] GameObject _impactFrame;
+    [SerializeField] GameEventManager _eventManager;
     AudioSource _source;
     float _rotateTarget;
     int _rally;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
+    [SerializeField] bool _spinDown;
+
     public static GameManager Get() {
         return _instance;
+    }
+
+    public GameEventManager GetEventManager() {
+        return _eventManager;
     }
 
     void Awake()
@@ -78,6 +83,24 @@ public class GameManager : MonoBehaviour
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
         }
 
+        if (Keyboard.current.f11Key.wasPressedThisFrame) {
+            StartCoroutine(KOEvent());
+        }
+
+
+        if (_spinDown) {
+            _music.pitch *= 0.99f;
+        }
+        else {
+            if (_music.pitch < 1 && stageCoroutine == null) {
+                _music.pitch += Time.deltaTime;
+
+                if (_music.pitch > 1) {
+                    _music.pitch = 1;
+                }
+            }
+        }
+
         if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle._freeze)
         {
             string scorer = "one";
@@ -102,7 +125,6 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stageCoroutine);
         }
 
-        _canvasObject.SetActive(false);
         _stageCamera.SetActive(true);
         _music.pitch = 1f;
 
@@ -132,7 +154,7 @@ public class GameManager : MonoBehaviour
     }
 
     Coroutine stageCoroutine;
-    public void OnSpecial() {
+    public void OnSpecial(GameEvent gEvent, FighterFilter filter) {
         StunFrames(1f, FighterFilter.both);
         _shuttle.FreezeShuttle();
         _source.PlayOneShot(_superSFX);
@@ -142,7 +164,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stageCoroutine);
         }
 
-        stageCoroutine = StartCoroutine(StageFlash(1));
+        stageCoroutine = StartCoroutine(StageFlash(1, gEvent, filter));
     }
 
     Coroutine impactCoroutine;
@@ -155,10 +177,10 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator ImpactFrameProcess(float time) {
-        _impactFrame.gameObject.SetActive(true);
+        _eventManager.GetImpactFlash().EnableScreen();
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
-        _impactFrame.gameObject.SetActive(false);
+        _eventManager.GetImpactFlash().DisableScreen();
         _stageCamera.SetActive(true);
     }
 
@@ -175,14 +197,25 @@ public class GameManager : MonoBehaviour
         return _shuttle;
     }
 
-    IEnumerator StageFlash(float time) {
+    IEnumerator StageFlash(float time, GameEvent gEvent, FighterFilter filter) {
+        gEvent.SetOrientation(filter);
         _music.pitch = -1f;
-        _canvasObject.SetActive(true);
+        gEvent.EnableScreen();
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
-        _canvasObject.SetActive(false);
+        gEvent.DisableScreen();
         _stageCamera.SetActive(true);
         _music.pitch = 1f;
+        StopCoroutine(stageCoroutine);
+    }
+
+    IEnumerator KOEvent() {
+        _spinDown = true;
+        //_canvasObject.SetActive(true);
+        _stageCamera.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        //_canvasObject.SetActive(false);
+        _stageCamera.SetActive(true);
     }
 
     public FighterController GetFighterOne() {

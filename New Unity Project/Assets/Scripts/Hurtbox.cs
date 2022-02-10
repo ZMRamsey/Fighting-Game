@@ -30,7 +30,8 @@ public class Hurtbox : MonoBehaviour
             {
                 Debug.Log("Sonic_Spring_Noise.MP3");
                 transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
-                hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
+                //hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
+                hurt.Bounce(collision.transform.position);
                 transform.root.GetComponent<FighterController>().ReduceMeter(5f);
                 hurt.SetOwner(transform.root.GetComponent<FighterController>());
             }

@@ -46,6 +46,9 @@ public class ShuttleCock : MonoBehaviour
 
     [ContextMenu("Reset Ball")]
     public virtual void ResetShuttle() {
+        if(shootCoroutine != null) {
+            StopCoroutine(shootCoroutine);
+        }
         _rb.isKinematic = true;
         _waitForHit = true;
         _rb.velocity = Vector3.zero;
@@ -97,6 +100,11 @@ public class ShuttleCock : MonoBehaviour
     public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter, FighterController owner) {
         SetOwner(owner);
         Shoot(distance, movementInfluence, player, slowDown, filter);
+    }
+
+    public void Bounce(Vector3 hitPoint) {
+        _speed = 1;
+        ProcessForce(new Vector3(1,1,0), Vector3.one, false);
     }
 
     public FighterController GetOwner() {

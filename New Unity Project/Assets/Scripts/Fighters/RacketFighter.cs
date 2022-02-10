@@ -8,6 +8,8 @@ public class RacketFighter : FighterController
     GameObject _subWooferObject;
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter);
+
         _subWooferObject.SetActive(true);
         _subWooferObject.GetComponent<SubWoofer>().ResetShuttle();
         _subWooferObject.transform.position = transform.position;

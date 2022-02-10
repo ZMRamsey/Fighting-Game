@@ -18083,6 +18083,7 @@ GameObject:
   - component: {fileID: 1531375505}
   - component: {fileID: 1531375504}
   - component: {fileID: 1531375503}
+  - component: {fileID: 1531375507}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -18172,6 +18173,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1531375507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531375502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3f7c069d7f7cf4da0d2ac8ac4589c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _impactFlash:
+    _screen: {fileID: 1552257717}
+  _racketSuper:
+    _screen: {fileID: 857568465}
 --- !u!1 &1535596402
 GameObject:
   m_ObjectHideFlags: 0
@@ -23961,14 +23978,14 @@ MonoBehaviour:
   _shuttle: {fileID: 1768378424}
   _shuttleSpawn: {x: 0, y: 7, z: 0}
   _speedRotator: {fileID: 1033106888}
-  _canvasObject: {fileID: 857568465}
   _stageCamera: {fileID: 1897574291}
   _superSFX: {fileID: 8300000, guid: af412dc5c539a1f4ba81c5f78573454e, type: 3}
   _music: {fileID: 282428885}
   _screenFader: {fileID: 50402524}
   _debugCanvas: {fileID: 756198046}
-  _impactFrame: {fileID: 1552257717}
+  _eventManager: {fileID: 1531375507}
   _serveSpeed: 7.5
+  _spinDown: 0
 --- !u!114 &1744718070
 MonoBehaviour:
   m_ObjectHideFlags: 0
