@@ -17,4 +17,4 @@ MonoBehaviour:
   _fighterOneDevice:
     _inputState: 1
   _fighterTwoDevice:
-    _inputState: 1
+    _inputState: 0

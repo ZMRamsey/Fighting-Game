@@ -54,6 +54,10 @@ public class PlayerDevice
         return _inputState;
     }
 
+    public void SetInputState(InputState state) {
+        _inputState = state;
+    }
+
     public Gamepad GetGamepad() {
         return _controller;
     }
