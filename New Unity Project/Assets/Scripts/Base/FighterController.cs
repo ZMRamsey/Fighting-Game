@@ -92,7 +92,7 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
-        if ((Keyboard.current.shiftKey.wasPressedThisFrame || Gamepad.current.leftTrigger.isPressed) && !_isDashing) {
+        if ((Keyboard.current.shiftKey.wasPressedThisFrame || Gamepad.current.leftTrigger.wasPressedThisFrame) && !_isDashing) {
             _lastTapAxis = _inputHandler.GetInputX();
             OnDash();
         }
