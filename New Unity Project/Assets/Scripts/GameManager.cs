@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (Keyboard.current.f11Key.wasPressedThisFrame) {
-            StartCoroutine(KOEvent());
+            KOEvent();
         }
 
 
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         }
 
         _stageCamera.SetActive(true);
-        _music.pitch = 1f;
+        _spinDown = false;
 
         _screenFader.SetAlpha(1);
 
@@ -209,13 +209,37 @@ public class GameManager : MonoBehaviour
         StopCoroutine(stageCoroutine);
     }
 
-    IEnumerator KOEvent() {
+    Coroutine KOCoroutine;
+    public void KOEvent() {
+        if(KOCoroutine != null) {
+            return;
+        }
+
+        if (stageCoroutine != null) {
+            StopCoroutine(stageCoroutine);
+        }
+
+        if (impactCoroutine != null) {
+            StopCoroutine(impactCoroutine);
+        }
+
+        KOCoroutine = StartCoroutine(KOProcess());
+    }
+
+    IEnumerator KOProcess() {
         _spinDown = true;
-        //_canvasObject.SetActive(true);
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        _eventManager.GetDarkness().EnableScreen();
         _stageCamera.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        //_canvasObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.2f);
+        _eventManager.GetDarkness().DisableScreen();
         _stageCamera.SetActive(true);
+        yield return new WaitForSecondsRealtime(4f);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        KOCoroutine = null;
     }
 
     public FighterController GetFighterOne() {
