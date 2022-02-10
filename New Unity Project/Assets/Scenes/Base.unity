@@ -18265,7 +18265,7 @@ MonoBehaviour:
   _impactFlash:
     _screen: {fileID: 1552257717}
   _darkness:
-    _screen: {fileID: 0}
+    _screen: {fileID: 467244582}
   _dannySuper:
     _screen: {fileID: 0}
   _hunterSuper:
