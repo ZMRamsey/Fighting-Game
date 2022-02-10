@@ -8,6 +8,7 @@ public enum InputState { none, player, ai, controller};
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] InputState _state;
+    Gamepad current;
     public float _inputX;
 
     public bool _jumpInput;
@@ -20,6 +21,7 @@ public class InputHandler : MonoBehaviour
 
     void Update() {
         if (_state == InputState.player) {
+            
             _inputX = 0.0f;
             if (Keyboard.current.aKey.IsPressed()) {
                 _inputX = 1;

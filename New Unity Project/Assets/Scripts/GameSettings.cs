@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "GameSettings", menuName = "Badminton/GameSettings", order = 1)]
 public class GameSettings : ScriptableObject
 {
     [SerializeField] FighterProfile _fighterOne;
     [SerializeField] FighterProfile _fighterTwo;
-    [SerializeField] InputState _fighterOneState;
-    [SerializeField] InputState _fighterTwoState;
+    [SerializeField] PlayerDevice _fighterOneDevice;
+    [SerializeField] PlayerDevice _fighterTwoDevice;
 
     public FighterProfile GetFighterOneProfile() {
         return _fighterOne;
@@ -25,26 +26,38 @@ public class GameSettings : ScriptableObject
         _fighterTwo = profile;
     }
 
-    public void SetPVP() {
-        _fighterOneState = InputState.player;
-        _fighterTwoState = InputState.player;
-    }
-
-    public void SetPVA() {
-        _fighterOneState = InputState.player;
-        _fighterTwoState = InputState.ai;
-    }
-
-    public void SetPVD() {
-        _fighterOneState = InputState.player;
-        _fighterTwoState = InputState.none;
-    }
-
     public InputState GetFighterOneState() {
-        return _fighterOneState;
+        return _fighterOneDevice.GetInputState();
     }
 
     public InputState GetFighterTwoState() {
-        return _fighterTwoState;
+        return _fighterTwoDevice.GetInputState();
+    }
+
+    public PlayerDevice GetFighterOneDevice() {
+        return _fighterOneDevice;
+    }
+
+    public PlayerDevice GetFighterTwoDevice() {
+        return _fighterTwoDevice;
+    }
+}
+
+public class PlayerDevice
+{
+    [SerializeField] Gamepad _controller;
+    [SerializeField] Keyboard _keyboard;
+    [SerializeField] InputState _inputState;
+
+    public InputState GetInputState() {
+        return _inputState;
+    }
+
+    public Gamepad GetGamepad() {
+        return _controller;
+    }
+
+    public Keyboard GetKeyboard() {
+        return _keyboard;
     }
 }
