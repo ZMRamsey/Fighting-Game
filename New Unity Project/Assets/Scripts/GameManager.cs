@@ -54,8 +54,12 @@ public class GameManager : MonoBehaviour
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {
                 fTwoObject.AddComponent<AIBrain>();
+                fTwoObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
             }
-            fTwoObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
+            else if (_settings.GetFighterTwoState() == InputState.controller)
+            {
+                fTwoObject.GetComponent<InputHandler>().SetInputState(InputState.controller);
+            }
         }
 
         _fighterOne.GetController().SetFilter(FighterFilter.one);
@@ -109,6 +113,7 @@ public class GameManager : MonoBehaviour
                 scorer = "two";
             }
             ScoreManager.Get().UpdateScore(scorer);
+            Debug.Log("GroundOut");
             SetUpGame();
         }
 

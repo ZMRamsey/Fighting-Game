@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum InputState { none, player, ai};
+public enum InputState { none, player, ai, controller};
 
 public class InputHandler : MonoBehaviour
 {
@@ -54,6 +54,55 @@ public class InputHandler : MonoBehaviour
             }
 
             if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+                _specialInput = true;
+            }
+        }
+
+        if (_state == InputState.controller)
+        {
+            _inputX = 0.0f;
+            if (Gamepad.current.leftStick.left.ReadValue() > 0 || Gamepad.current.dpad.left.isPressed)
+            {
+                _inputX = 1;
+            }
+            if (Gamepad.current.leftStick.right.ReadValue() > 0 || Gamepad.current.dpad.right.isPressed)
+            {
+                _inputX = -1;
+            }
+
+            _jumpHeld = Gamepad.current.leftStick.up.ReadValue() > 0 || Gamepad.current.dpad.up.isPressed;
+
+            if (Gamepad.current.leftStick.up.ReadValue() > 0 || Gamepad.current.dpad.up.isPressed)
+            {
+                _jumpInput = true;
+            }
+            else
+            {
+                _jumpInput = false;
+            }
+
+            if (Gamepad.current.buttonEast.wasPressedThisFrame)
+            {
+                _driveInput = true;
+            }
+
+            if (Gamepad.current.buttonNorth.wasPressedThisFrame)
+            {
+                _dropInput = true;
+            }
+
+            if (Gamepad.current.buttonWest.wasPressedThisFrame)
+            {
+                _smashInput = true;
+            }
+
+            if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+            {
+                _chipInput = true;
+            }
+
+            if (Gamepad.current.rightTrigger.wasPressedThisFrame)
+            {
                 _specialInput = true;
             }
         }
