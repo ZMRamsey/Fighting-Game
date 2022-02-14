@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum InputState { none, player, ai, controller};
+public enum InputState { none, player, ai};
 
 public class InputHandler : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class InputHandler : MonoBehaviour
     public bool _driveInput;
     public bool _chipInput;
     public bool _specialInput;
+    public bool _dashInput;
 
     public void SetDevice(PlayerDevice device) {
         _playerDevice = device;
@@ -36,11 +37,16 @@ public class InputHandler : MonoBehaviour
 
             _jumpHeld = _playerDevice.GetKeyboard().wKey.isPressed;
 
+
             if (_playerDevice.GetKeyboard().wKey.isPressed) {
                 _jumpInput = true;
             }
             else {
                 _jumpInput = false;
+            }
+
+            if (_playerDevice.GetKeyboard().shiftKey.wasPressedThisFrame) {
+                _dashInput = true;
             }
 
             if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame) {
@@ -85,6 +91,10 @@ public class InputHandler : MonoBehaviour
             else
             {
                 _jumpInput = false;
+            }
+
+            if (_playerDevice.GetGamepad().rightTrigger.wasPressedThisFrame) {
+                _dashInput = true;
             }
 
             if (_playerDevice.GetGamepad().buttonEast.wasPressedThisFrame)
@@ -176,6 +186,12 @@ public class InputHandler : MonoBehaviour
     public bool GetSpecial() {
         var temp = _specialInput;
         _specialInput = false;
+        return temp;
+    }
+
+    public bool GetDash() {
+        var temp = _dashInput;
+        _dashInput = false;
         return temp;
     }
 }

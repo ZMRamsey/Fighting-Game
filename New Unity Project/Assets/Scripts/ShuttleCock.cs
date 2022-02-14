@@ -18,9 +18,9 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] TrailRenderer _trail;
 
     [Header("Audio")]
+    [SerializeField] AudioSource _windSource;
     [SerializeField] AudioClip[] _initialImpact;
     [SerializeField] AudioClip[] _ricochets;
-    [SerializeField] AudioClip _testHit;
 
     [Header("Componenets")]
     [SerializeField] protected AudioSource _source;
@@ -65,7 +65,6 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        _source.PlayOneShot(_testHit);
         _hit.Play();
 
         SquishBall();
@@ -102,9 +101,9 @@ public class ShuttleCock : MonoBehaviour
         Shoot(distance, movementInfluence, player, slowDown, filter);
     }
 
-    public void Bounce(Vector3 hitPoint) {
+    public void Bounce(float axis) {
         _speed = 1;
-        ProcessForce(new Vector3(1,1,0), Vector3.one, false);
+        ProcessForce(new Vector3(axis,1,0), Vector3.one, false);
     }
 
     public FighterController GetOwner() {
@@ -113,6 +112,7 @@ public class ShuttleCock : MonoBehaviour
 
     Vector3 _spawn;
     bool isPlaying;
+    float volume;
     void Update() {
         if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
             if (!isPlaying) {
@@ -125,6 +125,17 @@ public class ShuttleCock : MonoBehaviour
                 _trailParticle.Stop();
                 isPlaying = false;
             }
+        }
+
+        if (_windSource != null) {
+            if (GetSpeedPercent() > 0.2f) {
+                volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
+            }
+            else {
+                volume = Mathf.Lerp(volume, 0, Time.deltaTime * 10);
+            }
+
+           _windSource.volume = volume;
         }
 
         _magnitude = _rb.velocity.magnitude;
@@ -181,17 +192,18 @@ public class ShuttleCock : MonoBehaviour
     }
 
     void OnWallHit(ContactPoint point, float force) {
+        volume = 0;
         if (force > 80) {
-            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2.5f, true);
+            GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
         }
         else if (force > 50) {
-            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
+            GameManager.Get().GetStageShaker().SetShake(0.1f, 2f, true);
         }
         else if (force > 20) {
-            GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
+            GameManager.Get().GetStageShaker().SetShake(0.1f, 1.5f, true);
         }
         else {
-            GameManager.Get().GetCameraShaker().SetShake(0.1f, 0.5f, true);
+            GameManager.Get().GetStageShaker().SetShake(0.1f, 0.5f, true);
         }
 
         float calc = _magnitude / _initialImpact.Length;
@@ -238,12 +250,22 @@ public class ShuttleCock : MonoBehaviour
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
     }
 
-    public void FreezeShuttle() {
+    public void FreezeShuttle(float timer) {
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, 1.0f));
+        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, timer));
+    }
+
+    private void OnCollisionStay(Collision collision) {
+        _rb.velocity *= 0.9f;
+    }
+
+    public void Reverse() {
+        Vector3 vel = _rb.velocity;
+        vel.x = -vel.x;
+        _rb.velocity = vel;
     }
 
     IEnumerator ShootProccess(Vector3 distance, Vector3 movementInfluence, bool slowDown, bool resetVelocity, float time) {

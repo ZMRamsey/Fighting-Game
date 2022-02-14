@@ -37,6 +37,7 @@ public class Hitbox : MonoBehaviour
                 _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
 
                 InputHandler handler = _self.GetComponent<InputHandler>();
+                float y = 0;
                 //Play shot type depending on button pressed
                 switch (_shotType)
                 {
@@ -53,7 +54,10 @@ public class Hitbox : MonoBehaviour
                         break;
 
                     case ShotType.smash:
-                        ball.Shoot(new Vector3(16f * facing, -2f), handler.GetInput(), true, false, _self.GetFilter(), _self);
+                        if (!_self.IsGrounded()) {
+                            y = -2f;
+                        }
+                        ball.Shoot(new Vector3(16f * facing, y), handler.GetInput(), true, false, _self.GetFilter(), _self);
                         break;
 
                     default:

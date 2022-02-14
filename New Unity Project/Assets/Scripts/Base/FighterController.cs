@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum FighterAction { none, attacking, dashing, jumping, dead };
+public enum FighterAction { none, attacking, dashing, jumping };
 public enum FighterStance { standing, air, blow };
-public enum FighterState { inControl, restricted };
+public enum FighterState { inControl, restricted, dead };
 public abstract class FighterController : MonoBehaviour
 {
     [SerializeField] protected FighterFilter _filter;
@@ -36,6 +36,10 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _stretchSpeed;
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
+    [SerializeField] AudioClip[] _hitSounds;
+    [SerializeField] AudioClip[] _damageSounds;
+    [SerializeField] AudioClip[] _swingSounds;
+
     [SerializeField] ParticleSystem _impact;
     [SerializeField] ParticleSystem _impactFrame;
     [SerializeField] ParticleSystem _jumpDust;
@@ -82,6 +86,9 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void InitializeFighter() {
         _renderer.flipX = _filter == FighterFilter.one;
+        _animator.SetLayerWeight(1, 0);
+
+        _myState = FighterState.inControl;
 
         _commandMeter = 0.0f;
         _canJump = true;
@@ -92,14 +99,21 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
-        if ((Keyboard.current.shiftKey.wasPressedThisFrame || Gamepad.current.leftTrigger.wasPressedThisFrame) && !_isDashing) {
+        if (_inputHandler.GetDash() && !_isDashing) {
             _lastTapAxis = _inputHandler.GetInputX();
             OnDash();
         }
 
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
-        _animator.SetFloat("xInput", _controllerVelocity.x);
+
+        var xAnim = _controllerVelocity.x;
+
+        if (_renderer.flipX) {
+            xAnim = -xAnim;
+        }
+
+        _animator.SetFloat("xInput", xAnim);
 
     }
 
@@ -114,23 +128,42 @@ public abstract class FighterController : MonoBehaviour
                 OnAirMovement();
             }
 
-            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack) {
+            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
                 OnJump();
                 return;
             }
 
-            if(_isDashing) {
-                _rigidbody.AddForce(new Vector3(_lastTapAxis, 0,0) * 25, ForceMode.Impulse);
+            if (_isDashing) {
+                _rigidbody.AddForce(new Vector3(_lastTapAxis, 0, 0) * 25, ForceMode.Impulse);
             }
 
             _rigidbody.velocity = _controllerVelocity;
         }
     }
 
+    public void KO() {
+        _myState = FighterState.dead;
+        _animator.Rebind();
+        _animator.SetLayerWeight(1, 1);
+
+        if(_damageSounds.Length > 0) {
+            _source.PlayOneShot(_damageSounds[Random.Range(0, _damageSounds.Length)], 1.5f);
+        }
+
+
+        if (_filter == FighterFilter.one) {
+            _controllerVelocity = new Vector3(30, 3, 0);
+        }
+        else {
+            _controllerVelocity = new Vector3(-30, 3, 0);
+        }
+        print("SET");
+    }
+
     float xCalculation = 0.0f;
     public virtual void OnGroundMovement() {
 
-        if (_canAttack) {
+        if (_canAttack && _myState == FighterState.inControl) {
             xCalculation = _inputHandler.GetInputX();
             xCalculation *= _speed;
         }
@@ -164,12 +197,10 @@ public abstract class FighterController : MonoBehaviour
         _fighterUI.SetBarValue(GetMeter());
     }
 
-    public void ReduceMeter(float value)
-    {
+    public void ReduceMeter(float value) {
         _commandMeter -= value;
 
-        if (_commandMeter < 0)
-        {
+        if (_commandMeter < 0) {
             _commandMeter = 0;
         }
 
@@ -206,17 +237,29 @@ public abstract class FighterController : MonoBehaviour
         _yVelocity = result.y;
     }
 
+    private void OnCollisionEnter(Collision collision) {
+        if(_myState == FighterState.dead) {
+            if (_filter == FighterFilter.one) {
+                _controllerVelocity = new Vector3(-15, 3, 0);
+            }
+            else {
+                _controllerVelocity = new Vector3(15, 3, 0);
+            }
+            _rigidbody.velocity = _controllerVelocity;
+        }
+    }
+
     public virtual void OnLand() {
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
         _source.PlayOneShot(_jumpDownSFX);
 
-        if(_jumpLand != null) {
+        if (_jumpLand != null) {
             _jumpLand.transform.position = _groundHit.point;
             _jumpLand.Play();
         }
 
-        if(_myAction == FighterAction.dashing) {
+        if (_myAction == FighterAction.dashing) {
             _myAction = FighterAction.none;
         }
 
@@ -233,9 +276,9 @@ public abstract class FighterController : MonoBehaviour
             _animator.SetTrigger("jump");
         }
 
-        if(_jumpDust != null) {
+        if (_jumpDust != null) {
             _jumpDust.transform.position = _groundHit.point;
-            if(_controllerVelocity.x > 0) {
+            if (_controllerVelocity.x > 0) {
                 _jumpDust.transform.eulerAngles = new Vector3(0, 0, 330);
             }
             else if (_controllerVelocity.x < 0) {
@@ -257,7 +300,9 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnAttack() {
-
+        if (_swingSounds.Length > 0) {
+            _source.PlayOneShot(_swingSounds[Random.Range(0, _swingSounds.Length)], 1.75f);
+        }
     }
 
     public virtual void OnAirMovement() {
@@ -287,22 +332,23 @@ public abstract class FighterController : MonoBehaviour
 
         var xCalculation = _inputHandler.GetInputX();
 
-        _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 5);
-
-        velocityX = Mathf.Clamp(velocityX, -5f, 5f);
+        if (_myState == FighterState.inControl) {
+            _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 5);
+            velocityX = Mathf.Clamp(velocityX, -5f, 5f);
+        }
 
         _controllerVelocity = new Vector3(velocityX, velocityY, 0);
     }
 
     public virtual void OnDash() {
-        if(_myAction == FighterAction.dashing) {
+        if (_myAction == FighterAction.dashing) {
             return;
         }
         StartCoroutine(DashProcess());
     }
 
     IEnumerator DashProcess() {
-       // _myAction = FighterAction.dashing;
+        // _myAction = FighterAction.dashing;
         _canJump = false;
         _effects.SetAfterImage();
         _isDashing = true;
@@ -328,7 +374,7 @@ public abstract class FighterController : MonoBehaviour
             _myStance = FighterStance.air;
         }
 
-        if (_freeze) {
+        if (_freeze || _myState == FighterState.dead) {
             return;
         }
 
@@ -375,22 +421,19 @@ public abstract class FighterController : MonoBehaviour
             OnSuperMechanic();
         }
 
-        if(_failSafeAttack > 0) {
+        if (_failSafeAttack > 0) {
             _failSafeAttack -= Time.deltaTime;
-            if(_failSafeAttack <= 0) {             
+            if (_failSafeAttack <= 0) {
                 ResetAttack();
             }
         }
     }
 
     void UpdateMove() {
+        OnAttack();
         _hitboxes.SetType(_currentMove.GetType());
         _animator.SetTrigger(_currentMove.GetPath());
         _failSafeAttack = _currentMove.GetClip().length;
-    }
-
-    public virtual void ProcessHitRegister(HitRegister register) {
-        KnockOut();
     }
 
     public virtual void OnSuccessfulHit(Vector3 point) {
@@ -398,9 +441,10 @@ public abstract class FighterController : MonoBehaviour
         _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();
-    }
 
-    void KnockOut() {
+        if (_hitSounds.Length > 0) {
+            _source.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Length)], 0.5f);
+        }
     }
 
 
@@ -457,13 +501,11 @@ public abstract class FighterController : MonoBehaviour
         return _canAttack;
     }
 
-    public void SetFighterAction(FighterAction action)
-    {
+    public void SetFighterAction(FighterAction action) {
         _myAction = action;
     }
 
-    public void SetFighterStance(FighterStance stance)
-    {
+    public void SetFighterStance(FighterStance stance) {
         _myStance = stance;
     }
 }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] FighterTab _fighterOne;
     [SerializeField] FighterTab _fighterTwo;
     [SerializeField] Shaker _cameraShaker;
+    [SerializeField] Shaker _stageShaker;
     [SerializeField] ShuttleCock _shuttle;
     [SerializeField] Vector3 _shuttleSpawn;
     [SerializeField] Transform _speedRotator;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIFader _screenFader;
     [SerializeField] GameObject _debugCanvas;
     [SerializeField] GameEventManager _eventManager;
+    GameEvent _lastSuperEvent;
     AudioSource _source;
     float _rotateTarget;
     int _rally;
@@ -56,14 +58,20 @@ public class GameManager : MonoBehaviour
                 fTwoObject.AddComponent<AIBrain>();
                 fTwoObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
             }
-            else if (_settings.GetFighterTwoState() == InputState.controller)
-            {
-                fTwoObject.GetComponent<InputHandler>().SetInputState(InputState.controller);
-            }
+        }
+        else {
+            fTwoObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterTwoDevice());
         }
 
-        fOneObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterOneDevice());
-        fTwoObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterTwoDevice());
+        if (_settings.GetFighterOneState() != InputState.player) {
+            if (_settings.GetFighterTwoState() == InputState.ai) {
+                fOneObject.AddComponent<AIBrain>();
+                fOneObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
+            }
+        }
+        else {
+            fOneObject.GetComponent<InputHandler>().SetDevice(_settings.GetFighterOneDevice());
+        }
 
         _fighterOne.GetController().SetFilter(FighterFilter.one);
         _fighterTwo.GetController().SetFilter(FighterFilter.two);
@@ -135,6 +143,10 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stageCoroutine);
         }
 
+        if (_lastSuperEvent != null) {
+            _lastSuperEvent.DisableScreen();
+        }
+
         _stageCamera.SetActive(true);
         _spinDown = false;
 
@@ -144,6 +156,11 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
+
+        _fighterOne.GetController().InitializeFighter();
+        _fighterTwo.GetController().InitializeFighter();
+
+
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
@@ -163,10 +180,14 @@ public class GameManager : MonoBehaviour
         return _cameraShaker;
     }
 
+    public Shaker GetStageShaker() {
+        return _stageShaker;
+    }
+
     Coroutine stageCoroutine;
     public void OnSpecial(GameEvent gEvent, FighterFilter filter) {
         StunFrames(1f, FighterFilter.both);
-        _shuttle.FreezeShuttle();
+        _shuttle.FreezeShuttle(1.0f);
         _source.PlayOneShot(_superSFX);
 
 
@@ -192,6 +213,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         _eventManager.GetImpactFlash().DisableScreen();
         _stageCamera.SetActive(true);
+        stageCoroutine = null;
     }
 
     public void StunFrames(float timer, FighterFilter filter) {
@@ -211,12 +233,13 @@ public class GameManager : MonoBehaviour
         gEvent.SetOrientation(filter);
         _music.pitch = -1f;
         gEvent.EnableScreen();
+        _lastSuperEvent = gEvent;
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
         gEvent.DisableScreen();
         _stageCamera.SetActive(true);
         _music.pitch = 1f;
-        StopCoroutine(stageCoroutine);
+        stageCoroutine = null;
     }
 
     Coroutine KOCoroutine;
@@ -239,17 +262,24 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator KOProcess() {
-        _spinDown = true;
-        Time.timeScale = 0.2f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
         _eventManager.GetDarkness().EnableScreen();
         _stageCamera.SetActive(false);
+
+        _fighterOne.GetController().StunController(1f);
+        _fighterTwo.GetController().StunController(1f);
+
+        _shuttle.FreezeShuttle(1.0f);
+        _spinDown = true;
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
         yield return new WaitForSecondsRealtime(0.2f);
         _eventManager.GetDarkness().DisableScreen();
         _stageCamera.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+        yield return new WaitForSecondsRealtime(4f);
         SetUpGame();
         KOCoroutine = null;
     }
