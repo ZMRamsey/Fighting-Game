@@ -93,7 +93,7 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (_playerDevice.GetGamepad().rightTrigger.wasPressedThisFrame) {
+            if (_playerDevice.GetGamepad().leftTrigger.wasPressedThisFrame) {
                 _dashInput = true;
             }
 
