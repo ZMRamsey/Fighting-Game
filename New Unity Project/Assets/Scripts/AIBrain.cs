@@ -98,7 +98,7 @@ public class AIBrain : MonoBehaviour
     }
 
     bool IsBallAbovePlayer() {
-        return _shuttle.transform.position.y > 5;
+        return _shuttle.transform.position.y > 3;
     }
 
     bool InHittingRange() {
