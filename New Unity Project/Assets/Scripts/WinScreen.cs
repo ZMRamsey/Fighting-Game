@@ -8,11 +8,11 @@ using UnityEngine.InputSystem;
 public enum player { danny, hunter, raket, esme, ganz};
 public class WinScreen : MonoBehaviour
 {
+    [SerializeField] GameObject _character;
     [SerializeField] GameObject _winner;
     [SerializeField] GameObject _winnerNameO;
     [SerializeField] TextMeshProUGUI _winnerName;
     [SerializeField] TextMeshProUGUI _score;
-    [SerializeField] GameObject _character;
     [SerializeField] GameObject _quote;
     //public string winnerName;
     string text;
