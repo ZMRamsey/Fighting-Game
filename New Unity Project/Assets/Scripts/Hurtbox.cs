@@ -26,17 +26,17 @@ public class Hurtbox : MonoBehaviour
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 hurt.Bounce(axis);
                 transform.root.GetComponent<FighterController>().KO();
-                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString());
+                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString(), "KO");
                 GameManager.Get().KOEvent();
             }
-            else if (hurt.GetSpeedPercent() >= .3f) {
-                //Debug.Log("Sonic_Spring_Noise.MP3");
-                transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
-                //hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
-                hurt.Bounce(axis*2);
-                transform.root.GetComponent<FighterController>().ReduceMeter(5f);
-                hurt.SetOwner(transform.root.GetComponent<FighterController>());
-            }
+            //else if (hurt.GetSpeedPercent() >= .3f) {
+            //    //Debug.Log("Sonic_Spring_Noise.MP3");
+            //    transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
+            //    //hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
+            //    hurt.Bounce(axis*2);
+            //    transform.root.GetComponent<FighterController>().ReduceMeter(5f);
+            //    hurt.SetOwner(transform.root.GetComponent<FighterController>());
+            //}
             else {
                 //Debug.Log("We Tech Those");
             }

@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         return _instance;
     }
 
-    public void UpdateScore(string scorer)
+    public void UpdateScore(string scorer, string method)
     {
         int scorerN = 0;
         if (scorer == "one")
@@ -27,7 +27,7 @@ public class ScoreManager : MonoBehaviour
             scorerN = 1;
         }
         _scores[_roundIndex, scorerN]++;
-        Debug.Log("Round " + (_roundIndex+1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+        Debug.Log("Round " + (_roundIndex+1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
         if (_scores[_roundIndex, scorerN] == 11)
         {
             NextRound();

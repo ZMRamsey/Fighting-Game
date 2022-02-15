@@ -118,15 +118,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle._freeze)
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle._freeze && KOCoroutine == null)
         {
             string scorer = "one";
             if (_shuttle.transform.position.x < 0)
             {
                 scorer = "two";
             }
-            ScoreManager.Get().UpdateScore(scorer);
-            Debug.Log("GroundOut");
+            ScoreManager.Get().UpdateScore(scorer, "GroundOut");
             SetUpGame();
         }
 
@@ -160,6 +159,8 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().InitializeFighter();
         _fighterTwo.GetController().InitializeFighter();
 
+        _fighterOne.GetUI().SetBarValue(0.0f);
+        _fighterTwo.GetUI().SetBarValue(0.0f);
 
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
@@ -172,6 +173,7 @@ public class GameManager : MonoBehaviour
             _shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
         _rally = 0;
+        SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;
         StartCoroutine("ServeTimer");
     }

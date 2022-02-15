@@ -7,12 +7,16 @@ using UnityEngine.InputSystem;
 public class OptionsMenuManager : MonoBehaviour
 {
     int _selectionIndex = 0;
+    int _confirmedIndex = 0;
     bool _hasGoneRight = false;
     bool _hasGoneLeft = false;
 
     //public GameObject[] characters;
     public GameObject[] buttons;
     public GameObject[] characters;
+    public Sprite[] sprites;
+
+    public GameObject[] ConfirmedCharacters;
 
     public Sprite spriteDeselected;
     public Sprite spriteSelected;
@@ -22,7 +26,28 @@ public class OptionsMenuManager : MonoBehaviour
     public int objNum;
     public int objCount;
 
-    public int _maxCharacters = 4;
+    public int _maxCharacters = 6;
+
+    void SelectHighlightedCharacter()
+    {
+        ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_selectionIndex];
+        ConfirmedCharacters[_confirmedIndex].SetActive(true);
+        _confirmedIndex++;
+        if(_confirmedIndex > 1)
+        {
+            _confirmedIndex = 1;
+        }
+    }
+
+    void DeselectCharacter()
+    {
+        ConfirmedCharacters[_confirmedIndex].SetActive(false);
+        _confirmedIndex--;
+        if (_confirmedIndex < 0)
+        {
+            _confirmedIndex = 0;
+        }
+    }
 
     void HighlightSelectedCharacter()
     {
@@ -42,13 +67,13 @@ public class OptionsMenuManager : MonoBehaviour
             buttons[_selectionIndex-1].GetComponent<Image>().sprite = spriteDeselected;
         }
 
-        if(_selectionIndex == 2)
+        if(_selectionIndex == 3)
         {
-            buttons[2].GetComponent<Image>().sprite = randSelected;
+            buttons[3].GetComponent<Image>().sprite = randSelected;
         }
         else
         {
-            buttons[2].GetComponent<Image>().sprite = randDeSelected;
+            buttons[3].GetComponent<Image>().sprite = randDeSelected;
         }
         
     }
@@ -91,6 +116,14 @@ public class OptionsMenuManager : MonoBehaviour
                 _selectionIndex = _maxCharacters;
                 NotMove();
             }
+        }
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            SelectHighlightedCharacter();
+        }
+        else if (Keyboard.current.zKey.wasPressedThisFrame)
+        {
+            DeselectCharacter();
         }
         HighlightSelectedCharacter();
     }
