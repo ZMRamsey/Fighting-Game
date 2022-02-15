@@ -35,8 +35,8 @@ public class moveMenus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("X: " + obj.transform.position.x);
-        Debug.Log("Y: " + obj.transform.position.y);
+        //Debug.Log("X: " + obj.transform.position.x);
+        //Debug.Log("Y: " + obj.transform.position.y);
 
         if (_movingToOptions && !_movingToMain)
         {
