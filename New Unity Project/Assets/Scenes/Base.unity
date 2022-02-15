@@ -25556,6 +25556,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_Gym
       objectReference: {fileID: 0}
+    - target: {fileID: 8539188134880785382, guid: f8e2837433a23bc458ec8d6978d8a131, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9064227560509729116, guid: f8e2837433a23bc458ec8d6978d8a131, type: 3}
       propertyPath: m_RootOrder
       value: 1
