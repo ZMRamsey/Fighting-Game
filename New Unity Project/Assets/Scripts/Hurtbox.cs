@@ -26,7 +26,7 @@ public class Hurtbox : MonoBehaviour
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 hurt.Bounce(axis);
                 transform.root.GetComponent<FighterController>().KO();
-                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString());
+                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString(), "KO");
                 GameManager.Get().KOEvent();
             }
             else if (hurt.GetSpeedPercent() >= .3f) {
