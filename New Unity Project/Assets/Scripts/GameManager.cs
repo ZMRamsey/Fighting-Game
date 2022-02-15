@@ -126,7 +126,6 @@ public class GameManager : MonoBehaviour
                 scorer = "two";
             }
             ScoreManager.Get().UpdateScore(scorer, "GroundOut");
-            Debug.Log("GroundOut");
             SetUpGame();
         }
 
