@@ -42,7 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Time: 4
-    - _Opacity: 0
+    - _Opacity: 1
     m_Colors:
     - Tiling: {r: 12, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

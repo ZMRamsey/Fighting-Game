@@ -447,6 +447,7 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnSuccessfulHit(Vector3 point) {
         AddMeter(12);
+        //AddMeter(12 / GameManager.Get().GetSuccessive());
         _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();

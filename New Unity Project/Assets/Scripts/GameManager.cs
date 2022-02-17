@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     AudioSource _source;
     float _rotateTarget;
     int _rally;
+    int _successive = 1;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (_settings.GetFighterOneState() != InputState.player) {
-            if (_settings.GetFighterTwoState() == InputState.ai) {
+            if (_settings.GetFighterOneState() == InputState.ai) {
                 fOneObject.AddComponent<AIBrain>();
                 fOneObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
             }
@@ -320,6 +321,12 @@ public class GameManager : MonoBehaviour
     public void IncreaseRally()
     {
         _rally++;
+        _successive = 1;
+    }
+
+    public void SuccessiveHit()
+    {
+        _successive++;
     }
 
     public void SetLastHitter(FighterFilter hitter)
@@ -335,5 +342,10 @@ public class GameManager : MonoBehaviour
     public int GetCurrentRally()
     {
         return _rally;
+    }
+
+    public int GetSuccessive()
+    {
+        return _successive;
     }
 }

@@ -32,6 +32,7 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
+    float jail;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -301,4 +302,23 @@ public class ShuttleCock : MonoBehaviour
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.gray);
         }
     }
+
+    //public void JailSpeed()
+    //{
+    //    if(jail == 0)
+    //    {
+    //        jail = _rb.velocity.magnitude;
+    //        Debug.Log("Jailed at: " + jail);
+    //    }
+    //}
+
+    //public void UnJailSpeed()
+    //{
+    //    if(jail != 0)
+    //    {
+    //        _rb.velocity *= jail;
+    //        jail = 0;
+    //        Debug.Log("UnJailed to " + _rb.velocity.magnitude);
+    //    }
+    //}
 }
