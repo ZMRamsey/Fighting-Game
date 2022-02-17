@@ -10,6 +10,7 @@ public class OptionsMenuManager : MonoBehaviour
     int _confirmedIndex = 0;
     bool _hasGoneRight = false;
     bool _hasGoneLeft = false;
+    int _randSelection = 0;
 
     //public GameObject[] characters;
     public GameObject[] buttons;
@@ -30,8 +31,17 @@ public class OptionsMenuManager : MonoBehaviour
 
     void SelectHighlightedCharacter()
     {
-        ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_selectionIndex];
-        ConfirmedCharacters[_confirmedIndex].SetActive(true);
+        if(_selectionIndex == 3)
+        {
+            _randSelection = Random.Range(0, 7);
+            ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_randSelection];
+            ConfirmedCharacters[_confirmedIndex].SetActive(true);
+        }
+        else
+        {
+            ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_selectionIndex];
+            ConfirmedCharacters[_confirmedIndex].SetActive(true);
+        }
         _confirmedIndex++;
         if(_confirmedIndex > 1)
         {
