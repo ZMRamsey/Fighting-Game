@@ -164,6 +164,10 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetUI().SetBarValue(0.0f);
         _fighterTwo.GetUI().SetBarValue(0.0f);
 
+        _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,0]);
+        _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,1]);
+
+
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
@@ -246,7 +250,7 @@ public class GameManager : MonoBehaviour
         stageCoroutine = null;
     }
 
-    Coroutine KOCoroutine;
+    public Coroutine KOCoroutine;
     public void KOEvent() {
         if(KOCoroutine != null) {
             return;
