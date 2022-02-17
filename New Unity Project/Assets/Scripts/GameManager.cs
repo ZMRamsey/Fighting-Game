@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum FighterFilter { one, two, both};
 public class GameManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     AudioSource _source;
     float _rotateTarget;
     int _rally;
+    int _successive = 1;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
@@ -47,11 +49,12 @@ public class GameManager : MonoBehaviour
     }
 
     void InitializeGame() {
+
         GameObject fOneObject = Instantiate(_settings.GetFighterOneProfile().GetPrefab(), _fighterOne.GetSpawn(), Quaternion.identity);
         GameObject fTwoObject = Instantiate(_settings.GetFighterTwoProfile().GetPrefab(), _fighterTwo.GetSpawn(), Quaternion.identity);
 
-        _fighterOne.SetControler(fOneObject.GetComponent<FighterController>());
-        _fighterTwo.SetControler(fTwoObject.GetComponent<FighterController>());
+        _fighterOne.SetUpFighter(fOneObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
+        _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
 
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {
@@ -64,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (_settings.GetFighterOneState() != InputState.player) {
-            if (_settings.GetFighterTwoState() == InputState.ai) {
+            if (_settings.GetFighterOneState() == InputState.ai) {
                 fOneObject.AddComponent<AIBrain>();
                 fOneObject.GetComponent<InputHandler>().SetInputState(InputState.ai);
             }
@@ -162,6 +165,10 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetUI().SetBarValue(0.0f);
         _fighterTwo.GetUI().SetBarValue(0.0f);
 
+        _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,0]);
+        _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,1]);
+
+
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
@@ -244,7 +251,7 @@ public class GameManager : MonoBehaviour
         stageCoroutine = null;
     }
 
-    Coroutine KOCoroutine;
+    public Coroutine KOCoroutine;
     public void KOEvent() {
         if(KOCoroutine != null) {
             return;
@@ -314,6 +321,12 @@ public class GameManager : MonoBehaviour
     public void IncreaseRally()
     {
         _rally++;
+        _successive = 1;
+    }
+
+    public void SuccessiveHit()
+    {
+        _successive++;
     }
 
     public void SetLastHitter(FighterFilter hitter)
@@ -329,5 +342,10 @@ public class GameManager : MonoBehaviour
     public int GetCurrentRally()
     {
         return _rally;
+    }
+
+    public int GetSuccessive()
+    {
+        return _successive;
     }
 }

@@ -73,18 +73,18 @@ public class InputHandler : MonoBehaviour
         if (_playerDevice != null && _playerDevice.GetGamepad() != null)
         {
             _inputX = 0.0f;
-            if (_playerDevice.GetGamepad().leftStick.left.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.left.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.left.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.left.isPressed)
             {
                 _inputX = 1;
             }
-            if (_playerDevice.GetGamepad().leftStick.right.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.right.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.right.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.right.isPressed)
             {
                 _inputX = -1;
             }
 
-            _jumpHeld = _playerDevice.GetGamepad().leftStick.up.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.up.isPressed;
+            _jumpHeld = _playerDevice.GetGamepad().leftStick.up.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.up.isPressed;
 
-            if (_playerDevice.GetGamepad().leftStick.up.ReadValue() > 0 || _playerDevice.GetGamepad().dpad.up.isPressed)
+            if (_playerDevice.GetGamepad().leftStick.up.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.up.isPressed)
             {
                 _jumpInput = true;
             }

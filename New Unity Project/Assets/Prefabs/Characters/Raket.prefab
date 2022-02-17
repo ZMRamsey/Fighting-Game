@@ -14861,6 +14861,9 @@ MonoBehaviour:
   _source: {fileID: 4874520954667380378}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
+  _hitSounds: []
+  _damageSounds: []
+  _swingSounds: []
   _impact: {fileID: 6980052365574868023}
   _impactFrame: {fileID: 3168012337785043981}
   _jumpDust: {fileID: 0}
@@ -14890,6 +14893,7 @@ MonoBehaviour:
   _driveInput: 0
   _chipInput: 0
   _specialInput: 0
+  _dashInput: 0
 --- !u!114 &8223740252825536706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15118,7 +15122,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94e9b7a752103ce458204d77d63c4337, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32415a1b4af6d974da114769ef663449, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -15207,3 +15211,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shotType: 3
   _character: {fileID: 4874520954698666502}
+  cooldowns: []

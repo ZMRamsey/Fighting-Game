@@ -32,6 +32,7 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
+    float jail;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -114,6 +115,7 @@ public class ShuttleCock : MonoBehaviour
     bool isPlaying;
     float volume;
     void Update() {
+
         if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
             if (!isPlaying) {
                 _trailParticle.Play();
@@ -192,7 +194,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     void OnWallHit(ContactPoint point, float force) {
-        volume = 0;
+        volume =0;
         if (force > 80) {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
         }
@@ -300,4 +302,23 @@ public class ShuttleCock : MonoBehaviour
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.gray);
         }
     }
+
+    //public void JailSpeed()
+    //{
+    //    if(jail == 0)
+    //    {
+    //        jail = _rb.velocity.magnitude;
+    //        Debug.Log("Jailed at: " + jail);
+    //    }
+    //}
+
+    //public void UnJailSpeed()
+    //{
+    //    if(jail != 0)
+    //    {
+    //        _rb.velocity *= jail;
+    //        jail = 0;
+    //        Debug.Log("UnJailed to " + _rb.velocity.magnitude);
+    //    }
+    //}
 }

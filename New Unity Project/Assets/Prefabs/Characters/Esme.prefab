@@ -24617,6 +24617,9 @@ MonoBehaviour:
   _source: {fileID: 4874520954667380378}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
+  _hitSounds: []
+  _damageSounds: []
+  _swingSounds: []
   _impact: {fileID: 6980052365574868023}
   _impactFrame: {fileID: 3168012337785043981}
   _jumpDust: {fileID: 5721181606051324333}
@@ -24646,6 +24649,7 @@ MonoBehaviour:
   _driveInput: 0
   _chipInput: 0
   _specialInput: 0
+  _dashInput: 0
 --- !u!114 &4528345394989312034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24893,7 +24897,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4874520954698666502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0fe0eace720e79e47880d41b603f6e52, type: 2}
   m_CullingMode: 0
