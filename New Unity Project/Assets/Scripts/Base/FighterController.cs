@@ -86,6 +86,14 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void InitializeFighter() {
         _renderer.flipX = _filter == FighterFilter.one;
+
+        if(_filter == FighterFilter.one) {
+            _source.panStereo = -0.5f;
+        }
+        else {
+            _source.panStereo = 0.5f;
+        }
+
         _animator.SetLayerWeight(1, 0);
 
         _myState = FighterState.inControl;
@@ -141,7 +149,7 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-    public void KO() {
+    public void KO(Vector3 velocity) {
         _myState = FighterState.dead;
         _animator.Rebind();
         _animator.SetLayerWeight(1, 1);
@@ -151,12 +159,13 @@ public abstract class FighterController : MonoBehaviour
         }
 
 
-        if (_filter == FighterFilter.one) {
-            _controllerVelocity = new Vector3(30, 3, 0);
-        }
-        else {
-            _controllerVelocity = new Vector3(-30, 3, 0);
-        }
+        _controllerVelocity = velocity;
+        //if (_filter == FighterFilter.one) {
+        //    _controllerVelocity = new Vector3(30, 3, 0);
+        //}
+        //else {
+        //    _controllerVelocity = new Vector3(-30, 3, 0);
+        //}
         print("SET");
     }
 

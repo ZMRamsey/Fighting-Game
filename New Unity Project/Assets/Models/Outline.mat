@@ -78,7 +78,7 @@ Material:
     m_Ints: []
     m_Floats:
     - OutlineThickness: 15
-    - Thickness: 0.0234
+    - Thickness: 0.0228
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1

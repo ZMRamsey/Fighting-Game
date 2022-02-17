@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum FighterFilter { one, two, both};
 public class GameManager : MonoBehaviour
@@ -47,11 +48,12 @@ public class GameManager : MonoBehaviour
     }
 
     void InitializeGame() {
+
         GameObject fOneObject = Instantiate(_settings.GetFighterOneProfile().GetPrefab(), _fighterOne.GetSpawn(), Quaternion.identity);
         GameObject fTwoObject = Instantiate(_settings.GetFighterTwoProfile().GetPrefab(), _fighterTwo.GetSpawn(), Quaternion.identity);
 
-        _fighterOne.SetControler(fOneObject.GetComponent<FighterController>());
-        _fighterTwo.SetControler(fTwoObject.GetComponent<FighterController>());
+        _fighterOne.SetUpFighter(fOneObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
+        _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
 
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {

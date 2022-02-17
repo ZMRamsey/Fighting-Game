@@ -114,6 +114,7 @@ public class ShuttleCock : MonoBehaviour
     bool isPlaying;
     float volume;
     void Update() {
+
         if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
             if (!isPlaying) {
                 _trailParticle.Play();
@@ -192,7 +193,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     void OnWallHit(ContactPoint point, float force) {
-        volume = 0;
+        volume =0;
         if (force > 80) {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
         }

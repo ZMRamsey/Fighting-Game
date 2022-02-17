@@ -10,6 +10,7 @@ public class Shaker : MonoBehaviour
     float _shakeDecay = 0.01f;
     [SerializeField] float _shakeDuration = 0;
     [SerializeField] bool _ignoreScaling;
+    [SerializeField] bool _disablePosition, _disableRotation;
 
     public bool shake;
 
@@ -40,8 +41,12 @@ public class Shaker : MonoBehaviour
                 originRotation.z + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur,
                 originRotation.w + Random.Range(-_shakeIntensity, _shakeIntensity) * .1f * dur);
             _shakeDuration -= Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * _dampen);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * _dampen);
+            if (!_disablePosition) {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * _dampen);
+            }
+            if (!_disableRotation) {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * _dampen);
+            }
         }
         else {
             transform.localPosition = Vector3.Lerp(transform.localPosition, originPosition, Time.deltaTime * 4);
