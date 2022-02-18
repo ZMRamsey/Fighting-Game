@@ -172,13 +172,15 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
-            _shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
+            //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
         else
         {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x - 5, _shuttleSpawn.y, _shuttleSpawn.z);
-            _shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
+            //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
+        _shuttle.SetOwner(FighterFilter.both);
+
         _rally = 0;
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;

@@ -29339,12 +29339,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffb360e48d48724aa80a95f67127fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 80
+  _maxSpeed: 100
   _trailActiveOnPercent: 0.3
   _windActiveOnPercent: 0.3
-  _killActiveOnPercent: 0.5
+  _killActiveOnPercent: 0.7
   _bouncesBeforeSpeedLoss: 2
-  _canKillOnMaxSpeed: 1
+  _canKillOnPercentSpeed: 1
+  _gainPerHit: 0.1
   _ballHolder: {fileID: 6655499866484820711}
   _smoothing: 4
   _squishThreshold: 0.1

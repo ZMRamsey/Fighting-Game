@@ -16,13 +16,14 @@ public class Hurtbox : MonoBehaviour
     private void OnTriggerEnter(Collider collision) {
 
         var hurt = collision.gameObject.GetComponent<ShuttleCock>();
-        if (hurt != null && (hurt.GetOwner() != transform.root.GetComponent<FighterController>())) {
+        if (hurt != null && hurt.GetOwner() != null && (hurt.GetFilter() == FighterFilter.both || hurt.GetOwner() != transform.root.GetComponent<FighterController>())) {
             float axis = -3;
             if(hurt.GetOwner() && hurt.GetOwner().GetFilter() == FighterFilter.one) {
                 axis = 3;
             }
 
             if (hurt.CanKill() && GameManager.Get().KOCoroutine == null) {
+                print("test4" + hurt.GetFilter());
                 Vector3 prevVelocity = hurt.GetComponent<Rigidbody>().velocity;
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 hurt.Bounce(axis);

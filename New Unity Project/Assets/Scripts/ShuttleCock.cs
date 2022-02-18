@@ -12,6 +12,7 @@ public class ShuttleCock : MonoBehaviour
     [Range(0.0f, 1.0f)] [SerializeField] float _killActiveOnPercent;
     [SerializeField] int _bouncesBeforeSpeedLoss;
     [SerializeField] bool _canKillOnPercentSpeed;
+    [SerializeField] float _gainPerHit = 0.25f;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
@@ -34,6 +35,7 @@ public class ShuttleCock : MonoBehaviour
     FighterController _owner;
 
     [Header("Stats")]
+    FighterFilter _filter;
     bool _frozen;
     bool _waitForHit;
     protected float _squishTimer;
@@ -82,9 +84,13 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = targetVelocity;
 
-        _speed += 0.5f;
+        _speed += _gainPerHit;
 
         _bouncesSinceShoot = 0;
+    }
+
+    public FighterFilter GetFilter() {
+        return _filter;
     }
 
     Coroutine shootCoroutine;
@@ -124,7 +130,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public bool CanKill() {
-        return _canKillOnPercentSpeed && GetSpeedPercent() > _killActiveOnPercent;
+        return _canKillOnPercentSpeed && GetSpeedPercent() >= _killActiveOnPercent;
     }
 
     bool isPlaying;
@@ -223,7 +229,7 @@ public class ShuttleCock : MonoBehaviour
         _bouncesSinceShoot++;
 
         if(_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
-            _speed -= 0.5f;
+            _speed -= _gainPerHit;
         }
 
         volume =0;
@@ -292,6 +298,12 @@ public class ShuttleCock : MonoBehaviour
         shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, timer));
     }
 
+    void FixedUpdate() {
+        //if (_bouncesSinceShoot < _bouncesBeforeSpeedLoss) {
+        //    _rb.velocity = _speed * 10 * (_rb.velocity.normalized);
+        //}
+    }
+
     void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
     }
@@ -327,16 +339,17 @@ public class ShuttleCock : MonoBehaviour
         SetOwner(owner.GetFilter());
     }
 
-    void SetOwner(FighterFilter owner) {
-        if (owner == FighterFilter.one) {
+    public void SetOwner(FighterFilter owner) {
+        _filter = owner;
+
+        if (_filter == FighterFilter.one) {
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
-        else if (owner == FighterFilter.two) {
+        else if (_filter == FighterFilter.two) {
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
         else {
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.yellow);
-            _owner = null;
         }
     }
 
