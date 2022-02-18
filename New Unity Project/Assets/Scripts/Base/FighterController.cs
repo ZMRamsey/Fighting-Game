@@ -54,6 +54,7 @@ public abstract class FighterController : MonoBehaviour
     bool _freeze;
     bool _isDashing;
     float _lastTapAxis;
+    float _meterPenaltyTimer;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -104,6 +105,17 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void Update() {
+        if (IsGrounded()) {
+            if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
+                _meterPenaltyTimer += Time.deltaTime;
+                print("test");
+                if (_meterPenaltyTimer > 0.1f) {
+                    ReduceMeter(1);
+                    _meterPenaltyTimer = 0;
+                }
+            }
+        }
+
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 

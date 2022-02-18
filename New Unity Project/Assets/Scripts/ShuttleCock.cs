@@ -7,15 +7,21 @@ public class ShuttleCock : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] float _maxSpeed = 40;
+    [Range(0.0f, 1.0f)] [SerializeField] float _trailActiveOnPercent;
+    [Range(0.0f, 1.0f)] [SerializeField] float _windActiveOnPercent;
+    [Range(0.0f, 1.0f)] [SerializeField] float _killActiveOnPercent;
+    [SerializeField] int _bouncesBeforeSpeedLoss;
+    [SerializeField] bool _canKillOnPercentSpeed;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
     [SerializeField] protected float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
+
+    [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
     [SerializeField] ParticleSystem _trailParticle;
-    [SerializeField] TrailRenderer _trail;
 
     [Header("Audio")]
     [SerializeField] AudioSource _windSource;
@@ -23,20 +29,22 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] AudioClip[] _ricochets;
 
     [Header("Componenets")]
-    [SerializeField] protected AudioSource _source;
-    [SerializeField] protected Rigidbody _rb;
+    protected AudioSource _source;
+    protected Rigidbody _rb;
     FighterController _owner;
 
-    public bool _freeze;
+    [Header("Stats")]
+    bool _frozen;
     bool _waitForHit;
     protected float _squishTimer;
     float _speed;
     float _magnitude;
     float jail;
+    int _bouncesSinceShoot;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
-        _spawn = transform.position;
+        _source = GetComponent<AudioSource>();
 
         _speed = 1;
     }
@@ -58,12 +66,10 @@ public class ShuttleCock : MonoBehaviour
 
 
     void ProcessForce(Vector3 direction, Vector3 movementInfluence, bool slowDown) {
-        if (slowDown) {
-            _speed = _speed / 2;
+        float processedSpeed = _speed;
 
-            if (_speed < 1) {
-                _speed = 1;
-            }
+        if (slowDown) {
+            processedSpeed = 2;
         }
 
         _hit.Play();
@@ -72,11 +78,13 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 targetVelocity = (movementInfluence + direction) * _speed;
+        Vector3 targetVelocity = (movementInfluence + direction) * processedSpeed;
 
         _rb.velocity = targetVelocity;
 
         _speed += 0.5f;
+
+        _bouncesSinceShoot = 0;
     }
 
     Coroutine shootCoroutine;
@@ -111,26 +119,43 @@ public class ShuttleCock : MonoBehaviour
         return _owner;
     }
 
-    Vector3 _spawn;
+    public bool IsFrozen() {
+        return _frozen;
+    }
+
+    public bool CanKill() {
+        return _canKillOnPercentSpeed && GetSpeedPercent() > _killActiveOnPercent;
+    }
+
     bool isPlaying;
     float volume;
     void Update() {
 
-        if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
-            if (!isPlaying) {
+        if (GetSpeedPercent() > _trailActiveOnPercent) {
+            if (!isPlaying && _trailParticle) {
                 _trailParticle.Play();
                 isPlaying = true;
             }
         }
         else {
-            if (isPlaying) {
+            if (isPlaying && _trailParticle) {
                 _trailParticle.Stop();
                 isPlaying = false;
             }
         }
 
+        float pos = Mathf.Clamp(transform.position.x, -5, 5);
+        float vol = pos / 5;
+        vol = Mathf.Clamp(vol, -0.5f, 0.5f);
+
+        _source.spatialBlend = vol;
+
         if (_windSource != null) {
-            if (GetSpeedPercent() > 0.2f) {
+
+            _windSource.spatialBlend = vol;
+            
+
+            if (GetSpeedPercent() > _windActiveOnPercent) {
                 volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
             }
             else {
@@ -153,7 +178,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = tempVel;
 
-        if (_freeze) {
+        if (_frozen) {
             _rb.velocity = Vector3.zero;
         }
 
@@ -193,7 +218,14 @@ public class ShuttleCock : MonoBehaviour
 
     }
 
+ 
     void OnWallHit(ContactPoint point, float force) {
+        _bouncesSinceShoot++;
+
+        if(_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
+            _speed -= 0.5f;
+        }
+
         volume =0;
         if (force > 80) {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
@@ -260,11 +292,13 @@ public class ShuttleCock : MonoBehaviour
         shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, timer));
     }
 
-    private void OnCollisionStay(Collision collision) {
+    void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
     }
 
     public void Reverse() {
+        SetOwner(FighterFilter.both);
+
         Vector3 vel = _rb.velocity;
         vel.x = -vel.x;
         _rb.velocity = vel;
@@ -272,9 +306,9 @@ public class ShuttleCock : MonoBehaviour
 
     IEnumerator ShootProccess(Vector3 distance, Vector3 movementInfluence, bool slowDown, bool resetVelocity, float time) {
         var vel = _rb.velocity;
-        _freeze = true;
+        _frozen = true;
         yield return new WaitForSeconds(time);
-        _freeze = false;
+        _frozen = false;
         if (_waitForHit) {
             _rb.isKinematic = false;
         }
@@ -289,17 +323,20 @@ public class ShuttleCock : MonoBehaviour
     public void SetOwner(FighterController owner)
     {
         _owner = owner;
-        if (owner.GetFilter() == FighterFilter.one)
-        {
+
+        SetOwner(owner.GetFilter());
+    }
+
+    void SetOwner(FighterFilter owner) {
+        if (owner == FighterFilter.one) {
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
-        else if (owner.GetFilter() == FighterFilter.two)
-        {
+        else if (owner == FighterFilter.two) {
             transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
-        else
-        {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.gray);
+        else {
+            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.yellow);
+            _owner = null;
         }
     }
 

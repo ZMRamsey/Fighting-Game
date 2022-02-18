@@ -60,6 +60,7 @@ public class FighterUI : MonoBehaviour
     }
 
     public void SetBarValue(float value) {
+        float oldValue = _targetAmount;
         _targetAmount = value;
 
         if (_targetAmount >= 1) {
@@ -74,7 +75,7 @@ public class FighterUI : MonoBehaviour
             _fill.color = Color.white;
         }
 
-        if (value > 0) {
+        if (_targetAmount > oldValue) {
             _arrowPosBar.material.SetFloat("_Opacity", 1);
             _positiveTimer = 0.5f;
         }
