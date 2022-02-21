@@ -82,6 +82,9 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
 
+        _shuttle.SetOwner(_fighterOne.GetController());
+        _shuttle.SetOwner(FighterFilter.both);
+
       
     }
 

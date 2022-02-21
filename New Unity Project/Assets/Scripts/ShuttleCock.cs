@@ -311,7 +311,7 @@ public class ShuttleCock : MonoBehaviour
     public void Reverse() {
         SetOwner(FighterFilter.both);
 
-        Vector3 vel = _rb.velocity;
+        Vector3 vel = _rb.velocity * 4;
         vel.x = -vel.x;
         _rb.velocity = vel;
     }

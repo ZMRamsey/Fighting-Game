@@ -23,7 +23,6 @@ public class Hurtbox : MonoBehaviour
             }
 
             if (hurt.CanKill() && GameManager.Get().KOCoroutine == null) {
-                print("test4" + hurt.GetFilter());
                 Vector3 prevVelocity = hurt.GetComponent<Rigidbody>().velocity;
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 hurt.Bounce(axis);

@@ -129,7 +129,7 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
-        if (_inputHandler.GetDash() && !_isDashing) {
+        if (_inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
             _lastTapAxis = _inputHandler.GetInputX();
             OnDash();
         }
