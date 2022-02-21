@@ -44,10 +44,13 @@ public class ShuttleCock : MonoBehaviour
     float jail;
     int _bouncesSinceShoot;
 
+    float chargedForce;
+    float chargeTimer;
+
     void Awake() {
         _rb = GetComponent<Rigidbody>();
         _source = GetComponent<AudioSource>();
-
+        chargedForce = 0.1f;
         _speed = 1;
     }
 
@@ -67,11 +70,22 @@ public class ShuttleCock : MonoBehaviour
     }
 
 
-    void ProcessForce(Vector3 direction, Vector3 movementInfluence, bool slowDown) {
+    void ProcessForce(Vector3 direction, Vector3 movementInfluence, float charge, bool slowDown) {
         float processedSpeed = _speed;
+        float chargedAmount = charge;
 
         if (slowDown) {
             processedSpeed = 2;
+        }
+
+        if(chargedAmount <= 0.2f)
+        {
+            chargedAmount = 0.2f;
+            processedSpeed = 0.8f;
+        }
+        else
+        {
+            chargedAmount = 1;
         }
 
         _hit.Play();
@@ -79,8 +93,9 @@ public class ShuttleCock : MonoBehaviour
         SquishBall();
 
         _rb.velocity = Vector3.zero;
+        Vector3 proceDir = direction * Mathf.Clamp(chargedAmount, 0.2f, 1f);
 
-        Vector3 targetVelocity = (movementInfluence + direction) * processedSpeed;
+        Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
 
         _rb.velocity = targetVelocity;
 
@@ -118,7 +133,7 @@ public class ShuttleCock : MonoBehaviour
 
     public void Bounce(float axis) {
         _speed = 1;
-        ProcessForce(new Vector3(axis,1,0), Vector3.one, false);
+        ProcessForce(new Vector3(axis,1,0), Vector3.one, 1, false);
     }
 
     public FighterController GetOwner() {
@@ -136,6 +151,15 @@ public class ShuttleCock : MonoBehaviour
     bool isPlaying;
     float volume;
     void Update() {
+
+        if (_frozen)
+        {
+            if (_owner.GetComponent<InputHandler>().GetCharge())
+            {
+                chargeTimer += Time.deltaTime;
+                chargedForce = Mathf.Clamp(chargeTimer, 0f, 0.3f) / 0.3f;
+            }
+        }
 
         if (GetSpeedPercent() > _trailActiveOnPercent) {
             if (!isPlaying && _trailParticle) {
@@ -328,8 +352,11 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(distance, movementInfluence, slowDown);
+            ProcessForce(distance, movementInfluence, chargedForce, slowDown);
         }
+
+        chargedForce = 0.1f;
+        chargeTimer = 0f;
     }
 
     public void SetOwner(FighterController owner)

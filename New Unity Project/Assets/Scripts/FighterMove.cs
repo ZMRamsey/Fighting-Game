@@ -11,6 +11,7 @@ public class FighterMove
     [SerializeField] float _frames;
     [SerializeField] float _hitFrame;
     [SerializeField] AnimationClip _clip;
+    [SerializeField] Vector3 _hitDirection;
 
     public string GetPath() {
         return _animationPath;
@@ -34,5 +35,10 @@ public class FighterMove
 
     public AnimationClip GetClip() {
         return _clip;
+    }
+
+    public Vector3 GetHitDirection()
+    {
+        return _hitDirection;
     }
 }

@@ -14824,6 +14824,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 16, y: -2, z: 0}
   _chipMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -14831,6 +14832,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 1, y: 2, z: 0}
   _driveMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -14838,6 +14840,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 12, y: 3, z: 0}
   _dropMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -14845,6 +14848,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 3, y: 8, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
   _groundLayers:
     serializedVersion: 2
@@ -14909,6 +14913,7 @@ MonoBehaviour:
   _chipInput: 0
   _specialInput: 0
   _dashInput: 0
+  _chargeInput: 0
 --- !u!114 &8223740252825536706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15224,6 +15229,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e059bb09c3c47084c89b4497b49fba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shotType: 3
+  _currentMove:
+    _animationPath: 
+    _clipName: 
+    _shotType: 0
+    _frames: 0
+    _hitFrame: 0
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _character: {fileID: 4874520954698666502}
   cooldowns: []

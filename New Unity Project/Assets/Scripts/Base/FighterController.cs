@@ -115,10 +115,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void Update() {
+
         if (IsGrounded()) {
             if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
                 _meterPenaltyTimer += Time.deltaTime;
-                print("test");
                 if (_meterPenaltyTimer > 0.1f) {
                     ReduceMeter(1);
                     _meterPenaltyTimer = 0;
@@ -465,7 +465,7 @@ public abstract class FighterController : MonoBehaviour
 
     void UpdateMove() {
         OnAttack();
-        _hitboxes.SetType(_currentMove.GetType());
+        _hitboxes.SetMove(_currentMove);
         _animator.SetTrigger(_currentMove.GetPath());
         _failSafeAttack = _currentMove.GetClip().length;
     }

@@ -19,6 +19,7 @@ public class InputHandler : MonoBehaviour
     public bool _chipInput;
     public bool _specialInput;
     public bool _dashInput;
+    public bool _chargeInput;
 
     public void SetDevice(PlayerDevice device) {
         _playerDevice = device;
@@ -67,6 +68,15 @@ public class InputHandler : MonoBehaviour
 
             if (_playerDevice.GetKeyboard().spaceKey.wasPressedThisFrame) {
                 _specialInput = true;
+            }
+
+            if(_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
+            {
+                _chargeInput = true;
+            }
+            else
+            {
+                _chargeInput = false;
             }
         }
 
@@ -120,6 +130,15 @@ public class InputHandler : MonoBehaviour
             if (_playerDevice.GetGamepad().rightTrigger.wasPressedThisFrame)
             {
                 _specialInput = true;
+            }
+
+            if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed || _playerDevice.GetGamepad().buttonSouth.isPressed)
+            {
+                _chargeInput = true;
+            }
+            else
+            {
+                _chargeInput = false;
             }
         }
     }
@@ -193,5 +212,10 @@ public class InputHandler : MonoBehaviour
         var temp = _dashInput;
         _dashInput = false;
         return temp;
+    }
+
+    public bool GetCharge()
+    {
+        return _chargeInput;
     }
 }

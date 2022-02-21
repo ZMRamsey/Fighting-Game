@@ -37,15 +37,7 @@ public class AIBrain : MonoBehaviour
 
             _handler._jumpInput = IsOnMySide() && IsBallAbovePlayer();
 
-            //if (_shuttle.GetSpeedPercent() != 0) {
-            //    if ((_shuttle.transform.position.y < targetPosition.y && _shuttle.transform.position.y > 1.2f) || _shuttle.transform.position.y > 6.8f) {
-            //        _handler._jumpInput = true;
-            //    }
-            //    else {
-            //        _handler._jumpInput = false;
-            //    }
-            //}
-
+            _handler._chargeInput = true;
 
             if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
                 int rand = Random.Range(0, 3);
