@@ -2476,6 +2476,8 @@ RectTransform:
   - {fileID: 212658227}
   - {fileID: 520868038}
   - {fileID: 1899366559}
+  - {fileID: 579594399}
+  - {fileID: 1539397932}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4456,12 +4458,21 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579594398}
+<<<<<<< Updated upstream
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1899366559}
   m_RootOrder: 15
+=======
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 358939856}
+  m_RootOrder: 3
+>>>>>>> Stashed changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10064,6 +10075,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539397931}
+<<<<<<< Updated upstream
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -10074,6 +10086,18 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 692.0002, y: -424}
+=======
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 358939856}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 692, y: -424}
+>>>>>>> Stashed changes
   m_SizeDelta: {x: 315.6704, y: 130.7859}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539397933
@@ -12882,6 +12906,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8eb3020392b204390549445d1d8da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectionIndex: 0
+  _confirmedIndex: 0
+  _isReady: 0
+  _isSelectingMap: 0
   buttons:
   - {fileID: 1031486686}
   - {fileID: 195565284}
@@ -12906,9 +12934,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1be7017086766cf43a9d6fbac7cf54aa, type: 3}
   - {fileID: 21300000, guid: 47560a67a8943e84480a36bda18d4a30, type: 3}
   - {fileID: 21300000, guid: 4438dfc654c20264f8634465aad39011, type: 3}
+  man: {fileID: 2007779278}
   ConfirmedCharacters:
   - {fileID: 2013458525}
   - {fileID: 1794240701}
+  readyButtons:
+  - {fileID: 550071594}
+  - {fileID: 455489077}
+  RuleSetMenu: {fileID: 510418973}
   spriteDeselected: {fileID: 21300000, guid: 4bc0331491e9a8146b888e6a6a6fbfb6, type: 3}
   spriteSelected: {fileID: 21300000, guid: 862a2d572f251774daaad2870d63f79c, type: 3}
   randSelected: {fileID: 21300000, guid: a61647b8a3b08b849a8f28e2d183f2ab, type: 3}
@@ -12958,8 +12991,11 @@ RectTransform:
   - {fileID: 455489078}
   - {fileID: 2007779277}
   - {fileID: 735057869}
+<<<<<<< Updated upstream
   - {fileID: 579594399}
   - {fileID: 1539397932}
+=======
+>>>>>>> Stashed changes
   m_Father: {fileID: 358939856}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13778,7 +13814,11 @@ SpriteRenderer:
   m_Size: {x: 11.5, y: 5.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+<<<<<<< Updated upstream
   m_WasSpriteAssigned: 0
+=======
+  m_WasSpriteAssigned: 1
+>>>>>>> Stashed changes
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1986615965
@@ -14300,6 +14340,7 @@ MonoBehaviour:
   rightMap: {fileID: 21300000, guid: 34714f99cde5a954eb0b603efea88b8d, type: 3}
   _moveAside: 0
   _moveToInit: 0
+<<<<<<< Updated upstream
   _hasGoneLeft: 0
   _hasGoneRight: 0
   _mapSelected: 0
@@ -14318,6 +14359,8 @@ MonoBehaviour:
   _RuleBTNSFinal: {x: 620.8455, y: 318.6927, z: 90}
   _MapPreviewInit: {x: 608.9289, y: 1000.5408, z: 0}
   _MapPreviewFinal: {x: 608.9289, y: 447.5408, z: 0}
+=======
+>>>>>>> Stashed changes
 --- !u!1 &2009595727
 GameObject:
   m_ObjectHideFlags: 0
