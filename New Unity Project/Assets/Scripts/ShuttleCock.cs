@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class ShuttleCock : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] float _maxSpeed = 40;
+    [SerializeField] float _maxSpeed;
     [Range(0.0f, 1.0f)] [SerializeField] float _trailActiveOnPercent;
     [Range(0.0f, 1.0f)] [SerializeField] float _windActiveOnPercent;
     [Range(0.0f, 1.0f)] [SerializeField] float _killActiveOnPercent;

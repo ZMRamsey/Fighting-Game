@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeedPercent(), Time.deltaTime * 12);
-        _speedRotator.eulerAngles = -Vector3.Lerp(new Vector3(0,0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
+        _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0,0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
             SetUpGame();
