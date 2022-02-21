@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ServeTimer()
     {
         yield return new WaitForSeconds(1);
-        if (_rally == 0)
+        if (_rally == 0 && _successive == 0)
         {
             _shuttle.Shoot(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new Vector3(), false, false, FighterFilter.both);
         }

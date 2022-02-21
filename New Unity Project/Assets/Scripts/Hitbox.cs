@@ -59,7 +59,7 @@ public class Hitbox : MonoBehaviour
                     dir.y = 0.5f;
                 }
 
-                ball.Shoot(dir, handler.GetInput(), true, true, _self.GetFilter(), _self);
+                ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
 
                 //Play shot type depending on button pressed
                 //switch (_shotType)
