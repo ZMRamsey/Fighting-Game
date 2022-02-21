@@ -37,3 +37,8 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.log
+New Unity Project/Assets/Shaders/Mat_F1_Neg.mat
+New Unity Project/Assets/Shaders/Mat_F1_Pos.mat
+New Unity Project/Assets/Shaders/Mat_F2_Neg.mat
+New Unity Project/Assets/Shaders/Mat_F2_Pos.mat
+New Unity Project/UserSettings/EditorUserSettings.asset
