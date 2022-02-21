@@ -13,6 +13,7 @@ public class WinScreen : MonoBehaviour
     [SerializeField] GameObject _winnerNameO;
     [SerializeField] TextMeshProUGUI _winnerName;
     [SerializeField] TextMeshProUGUI _score;
+    [SerializeField] TextMeshProUGUI _winnerNumber;
     [SerializeField] GameObject _quote;
     //public string winnerName;
     string text;
@@ -36,8 +37,12 @@ public class WinScreen : MonoBehaviour
 
         //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
         _winnerName.text = winner.ToString().ToUpper();
+        _winnerNumber.text = "P1";
+        if (ScoreManager.Get().DecideGameWinner() == FighterFilter.two)
+        {
+            _winnerNumber.text = "P2";
+        }
         int[,] scores = ScoreManager.Get().GetScores();
-        //for (int i = 0; i < ScoreManager.Get().GetCurrentRound(); i++)
         for (int i = 0; i < _roundIndex + 1; i++)
             {
             _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
@@ -118,7 +123,7 @@ public class WinScreen : MonoBehaviour
                         break;
 
                     case player.raket:
-                        text = "placeholder.txt";
+                        text = "No damn explosives near the face, I’ve got a photo shoot tomorrow and I’m not risking the money-maker";
                         break;
 
                     case player.esme:
@@ -126,7 +131,7 @@ public class WinScreen : MonoBehaviour
                         break;
 
                     case player.ganz:
-                        text = "placeholder.txt";
+                        text = "I’ve got to get a new agent, I’m playing against weirdos now. What are you, a chicken or something?";
                         break;
 
                     default:
@@ -139,23 +144,23 @@ public class WinScreen : MonoBehaviour
                 switch (loser)
                 {
                     case player.danny:
-                        text = "placeholder.txt";
+                        text = "BORING! Mix it up a bit, it’s like playing against my grandad";
                         break;
 
                     case player.hunter:
-                        text = "placeholder.txt";
+                        text = "Nice job boomer, shouldn’t you have retired already?";
                         break;
 
                     case player.esme:
-                        text = "placeholder.txt";
+                        text = "Are you doing that with holograms? Drones? Strings? Whatever, my racquet is still better";
                         break;
 
                     case player.ganz:
-                        text = "placeholder.txt";
+                        text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets";
                         break;
 
                     default:
-                        text = "placeholder.txt";
+                        text = "Wait, I didn’t make a cloning machine. I call dibs on being the original";
                         break;
                 }
                 break;
@@ -164,7 +169,7 @@ public class WinScreen : MonoBehaviour
                 switch (loser)
                 {
                     case player.danny:
-                        text = "placeholder.txt";
+                        text = "You might be good at the sport, but you’re out of your depth with us";
                         break;
 
                     case player.hunter:
@@ -172,11 +177,11 @@ public class WinScreen : MonoBehaviour
                         break;
 
                     case player.raket:
-                        text = "tennis is garbage kid";
+                        text = "I’m sorry Racket, but I need you out of my way for good this time.";
                         break;
 
                     case player.ganz:
-                        text = "tennis is garbage kid";
+                        text = "Your emotions, I can feel them so strong. What happened to you?";
                         break;
 
                     default:
@@ -189,7 +194,7 @@ public class WinScreen : MonoBehaviour
                 switch (loser)
                 {
                     case player.danny:
-                        text = "placeholder.txt";
+                        text = "HONK (Your fighting spirit can only take you so far, true badminton prowess comes from intellect and invention)";
                         break;
 
                     case player.hunter:

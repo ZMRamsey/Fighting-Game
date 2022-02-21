@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     AudioSource _source;
     float _rotateTarget;
     int _rally;
-    int _successive = 1;
+    int _successive = 0;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
@@ -175,16 +175,19 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Get().GetLastScorer() == 0)
         {
             _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
+            _shuttle.SetOwner(_fighterOne.GetController());
             //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
         else
         {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x - 5, _shuttleSpawn.y, _shuttleSpawn.z);
+            _shuttle.SetOwner(_fighterTwo.GetController());
             //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
         }
         _shuttle.SetOwner(FighterFilter.both);
 
         _rally = 0;
+        //_successive = 0;
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;
         StartCoroutine("ServeTimer");
@@ -332,6 +335,11 @@ public class GameManager : MonoBehaviour
     public void SuccessiveHit()
     {
         _successive++;
+    }
+
+    public void ResetSuccessive()
+    {
+        _successive = 0;
     }
 
     public void SetLastHitter(FighterFilter hitter)

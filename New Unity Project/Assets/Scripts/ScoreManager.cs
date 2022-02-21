@@ -33,6 +33,7 @@ public class ScoreManager : MonoBehaviour
             NextRound();
         }
         SetLastScorer(scorerN);
+        GameManager.Get().ResetSuccessive();
     }
 
     void NextRound()
@@ -73,6 +74,17 @@ public class ScoreManager : MonoBehaviour
     {
         FighterFilter winner = FighterFilter.one;
         if (GetScores()[GetCurrentRound() - 1,1] > GetScores()[GetCurrentRound() - 1, 0])
+        {
+            winner = FighterFilter.two;
+        }
+        return winner;
+    }
+
+    //One round system
+    public FighterFilter DecideGameWinner()
+    {
+        FighterFilter winner = FighterFilter.one;
+        if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0])
         {
             winner = FighterFilter.two;
         }

@@ -219,7 +219,9 @@ public abstract class FighterController : MonoBehaviour
     }
 
 
-    void AddMeter(float value) {
+    void AddMeter(float value)
+    {
+        //Debug.Log("Meter Gain: " + value);
         _commandMeter += value;
 
         if (_commandMeter > 100) {
@@ -471,8 +473,9 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnSuccessfulHit(Vector3 point) {
-        AddMeter(12);
-        //AddMeter(12 / GameManager.Get().GetSuccessive());
+        //AddMeter(12);
+        AddMeter(12 / GameManager.Get().GetSuccessive());
+        //Debug.Log("Successive: " + GameManager.Get().GetSuccessive() + " - Meter Gain: " + 12 / GameManager.Get().GetSuccessive());
         _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();
