@@ -135,8 +135,9 @@ public abstract class FighterController : MonoBehaviour
         }
 
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
-        _animator.SetBool("running", IsGrounded() && _inputHandler.GetInputX() != 0);
+        _animator.SetBool("running", IsGrounded() && _inputHandler.GetInputX() != 0 && Mathf.Abs(_rigidbody.velocity.magnitude) > 1);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
+
 
         var xAnim = _controllerVelocity.x;
 

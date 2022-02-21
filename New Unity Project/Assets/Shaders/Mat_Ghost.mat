@@ -55,8 +55,8 @@ Material:
     m_Floats:
     - OverlaySpeed: 0.05
     m_Colors:
-    - ColorOne: {r: 1, g: 0, b: 0, a: 0}
+    - ColorOne: {r: 1, g: 0.03199654, b: 0, a: 0}
     - ColorThree: {r: 1, g: 1, b: 1, a: 0}
-    - ColorTwo: {r: 0.5002738, g: 0, b: 0.754717, a: 0}
+    - ColorTwo: {r: 0.5337143, g: 0.3247597, b: 0.7735849, a: 0}
     - Tiling: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []

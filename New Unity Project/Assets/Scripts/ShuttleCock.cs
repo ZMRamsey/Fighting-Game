@@ -78,10 +78,10 @@ public class ShuttleCock : MonoBehaviour
             processedSpeed = 2;
         }
 
-        if(chargedAmount <= 0.2f)
+        if(charge <= 0.2f)
         {
-            chargedAmount = 0.2f;
-            processedSpeed = 0.8f;
+            processedSpeed = 2f;
+            chargedAmount = 0.6f;
         }
         else
         {
@@ -94,7 +94,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
         Vector3 proceDir = direction * Mathf.Clamp(chargedAmount, 0.2f, 1f);
-
+        print(processedSpeed);
         Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
 
         _rb.velocity = targetVelocity;
@@ -119,7 +119,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        if (_rb.velocity.magnitude > (_maxSpeed / 2)) {
+        if (GetSpeedPercent() >= _killActiveOnPercent) {
             GameManager.Get().OnImpactFrame(0.1f);
         }
 
@@ -203,10 +203,10 @@ public class ShuttleCock : MonoBehaviour
 
         velocity.x = velocity.x * 0.9f;
 
-        var tempVel = _rb.velocity;
-        tempVel = Vector3.ClampMagnitude(tempVel, _maxSpeed);
+        //var tempVel = _rb.velocity;
+        //tempVel = Vector3.ClampMagnitude(tempVel, _maxSpeed);
 
-        _rb.velocity = tempVel;
+        //_rb.velocity = tempVel;
 
         if (_frozen) {
             _rb.velocity = Vector3.zero;
