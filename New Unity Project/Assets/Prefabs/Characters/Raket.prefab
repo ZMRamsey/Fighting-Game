@@ -14861,9 +14861,24 @@ MonoBehaviour:
   _source: {fileID: 4874520954667380378}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
-  _hitSounds: []
-  _damageSounds: []
-  _swingSounds: []
+  _hitSounds:
+  - {fileID: 8300000, guid: 9b53b50bc9551dc4c90ef574717e2e41, type: 3}
+  - {fileID: 8300000, guid: c83356b0121d8564bab19626d7f14542, type: 3}
+  - {fileID: 8300000, guid: 455498123f15ed247a790a0835b8f33b, type: 3}
+  - {fileID: 8300000, guid: ce387894d4550c142845a8d21f06db16, type: 3}
+  _damageSounds:
+  - {fileID: 8300000, guid: 994d68a4b1b06ad49bff5aaa39f2363a, type: 3}
+  _swingSounds:
+  - {fileID: 8300000, guid: 206ea55499eceef45bc5318ec0b745f9, type: 3}
+  - {fileID: 8300000, guid: 9d6e84057ab59b54a82cdaaadb6aa347, type: 3}
+  - {fileID: 8300000, guid: 6bc7fb6b374974c498ef22bb76061047, type: 3}
+  - {fileID: 8300000, guid: 1ae3cde99abfdc745adb3a52de3f96f6, type: 3}
+  _leftFootSounds:
+  - {fileID: 8300000, guid: bae40a80957c60e478963f7b0617fd40, type: 3}
+  - {fileID: 8300000, guid: 26845b02455333d4c825eedb68da50ec, type: 3}
+  _rightFootSounds:
+  - {fileID: 8300000, guid: d9f301596c9466e41875928bf8edeba3, type: 3}
+  - {fileID: 8300000, guid: 969cbcbb10ceb2d45bbb9c5f2b769ec3, type: 3}
   _impact: {fileID: 6980052365574868023}
   _impactFrame: {fileID: 3168012337785043981}
   _jumpDust: {fileID: 0}
@@ -15122,7 +15137,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 32415a1b4af6d974da114769ef663449, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9fe79cfaf8b3e944881ec99fd0ad86b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

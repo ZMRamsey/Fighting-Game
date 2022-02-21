@@ -8,6 +8,9 @@ public class SubWoofer : ShuttleCock
     [SerializeField] float _subWooferThreshold;
     [SerializeField] ParticleSystem _explosion;
     [SerializeField] AudioClip _explosionSND;
+    [SerializeField] Sprite[] _sprites;
+    [SerializeField] SpriteRenderer _renderer;
+    float _timeBetweenBeeps;
     float subWooferTimer;
     bool _isActive;
     public override void UpdateShuttleApperance(Vector3 vel) {
@@ -35,9 +38,24 @@ public class SubWoofer : ShuttleCock
         _rb.AddTorque(distance, ForceMode.Impulse);
     }
 
+    bool _tick;
     public override void ShuttleUpdate() {
         subWooferTimer += Time.deltaTime;
-        if(subWooferTimer > _subWooferThreshold) {
+        _timeBetweenBeeps += Time.deltaTime;
+
+        if (_timeBetweenBeeps > 0.25f) {
+            _tick = !_tick;
+
+            if (_tick) {
+                _renderer.sprite = _sprites[0];
+            }
+            else {
+                _renderer.sprite = _sprites[1];
+            }
+            _timeBetweenBeeps = 0;
+        }
+
+        if (subWooferTimer > _subWooferThreshold) {
             Explode();
         }
     }
@@ -56,7 +74,7 @@ public class SubWoofer : ShuttleCock
         _explosion.Play();
         _explosion.transform.SetParent(null);
         _explosion.transform.position = transform.position;
-        _source.PlayOneShot(_explosionSND);
+        GetComponent<AudioSource>().PlayOneShot(_explosionSND, 1.5f);
         GameManager.Get().GetCameraShaker().SetShake(1.1f, 4, false);
         ResetShuttle();
         gameObject.SetActive(false);

@@ -39,6 +39,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] AudioClip[] _hitSounds;
     [SerializeField] AudioClip[] _damageSounds;
     [SerializeField] AudioClip[] _swingSounds;
+    [SerializeField] AudioClip[] _leftFootSounds;
+    [SerializeField] AudioClip[] _rightFootSounds;
 
     [SerializeField] ParticleSystem _impact;
     [SerializeField] ParticleSystem _impactFrame;
@@ -75,6 +77,14 @@ public abstract class FighterController : MonoBehaviour
     void Start() {
         InitializeFighter();
         _fighterUI = GameManager.Get().GetFighterTab(_filter).GetUI();
+    }
+
+    public void PlayLeftFoot() {
+        _source.PlayOneShot(_leftFootSounds[Random.Range(0, _leftFootSounds.Length)], 1f);
+    }
+
+    public void PlayRightFoot() {
+        _source.PlayOneShot(_rightFootSounds[Random.Range(0, _rightFootSounds.Length)], 1f);
     }
 
     public void SetFilter(FighterFilter filter) {
@@ -125,6 +135,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
+        _animator.SetBool("running", IsGrounded() && _inputHandler.GetInputX() != 0);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
         var xAnim = _controllerVelocity.x;
@@ -278,6 +289,8 @@ public abstract class FighterController : MonoBehaviour
         if (_jumpLand != null) {
             _jumpLand.transform.position = _groundHit.point;
             _jumpLand.Play();
+            PlayLeftFoot();
+            PlayRightFoot();
         }
 
         if (_myAction == FighterAction.dashing) {

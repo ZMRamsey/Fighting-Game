@@ -154,11 +154,11 @@ public class ShuttleCock : MonoBehaviour
         float vol = pos / 5;
         vol = Mathf.Clamp(vol, -0.5f, 0.5f);
 
-        _source.spatialBlend = vol;
+        _source.panStereo = vol;
 
         if (_windSource != null) {
 
-            _windSource.spatialBlend = vol;
+            _windSource.panStereo = vol;
             
 
             if (GetSpeedPercent() > _windActiveOnPercent) {

@@ -15,4 +15,12 @@ public class FighterAnimator : MonoBehaviour
         _controller.ResetHitbox();
         _controller.ResetAttack();
     }
+
+    public void PlayLeftFoot() {
+        _controller.PlayLeftFoot();
+    }
+
+    public void PlayRightFoot() {
+        _controller.PlayRightFoot();
+    }
 }
