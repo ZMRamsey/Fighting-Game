@@ -42,7 +42,11 @@ Material:
     m_Ints: []
     m_Floats:
     - Time: -2
+<<<<<<< Updated upstream
     - _Opacity: -0.0006907509
+=======
+    - _Opacity: -0.00092030445
+>>>>>>> Stashed changes
     m_Colors:
     - Tiling: {r: 12, g: 0.65, b: 0, a: 0}
   m_BuildTextureStacks: []

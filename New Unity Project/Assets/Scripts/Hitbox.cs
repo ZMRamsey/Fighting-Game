@@ -34,6 +34,18 @@ public class Hitbox : MonoBehaviour
                     facing = -1;
                 }
 
+                //if (_self.GetFilter() != GameManager.Get().GetLastHit())
+                //Debug.Log("Current Owner: " + ball.GetOwner());
+                if (_self != ball.GetOwner())
+                {
+                    GameManager.Get().IncreaseRally();
+                    //GameManager.Get().SetLastHitter(_self.GetFilter());
+                }
+                else
+                {
+                    GameManager.Get().SuccessiveHit();
+                }
+
                 _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
 
                 InputHandler handler = _self.GetComponent<InputHandler>();
@@ -79,16 +91,6 @@ public class Hitbox : MonoBehaviour
                 //        Debug.Log("Fuccy Wuccy Has Occurred");
                 //        break;
                 //}
-            }
-            if (_self.GetFilter() != GameManager.Get().GetLastHit())
-            {
-                GameManager.Get().IncreaseRally();
-                GameManager.Get().SetLastHitter(_self.GetFilter());
-                //Debug.Log("Rally:" + GameManager.Get()._rally + " - Last Hit By:" + GameManager.Get().GetLastHit().ToString());
-            }
-            else
-            {
-                //GameManager.Get().SuccessiveHit();
             }
             cooldowns.Add(collision.gameObject);
         }
