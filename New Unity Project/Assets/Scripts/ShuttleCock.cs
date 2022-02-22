@@ -380,6 +380,11 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
+    public void SetBounciness(int value)
+    {
+        _bouncesBeforeSpeedLoss = value;
+    }
+
     //public void JailSpeed()
     //{
     //    if(jail == 0)

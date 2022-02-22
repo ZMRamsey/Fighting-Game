@@ -49,6 +49,7 @@ public class Hitbox : MonoBehaviour
                 _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
 
                 InputHandler handler = _self.GetComponent<InputHandler>();
+                
 
                 float xFace = _currentMove.GetHitDirection().x * facing;
                 Vector3 dir = _currentMove.GetHitDirection();
@@ -58,6 +59,12 @@ public class Hitbox : MonoBehaviour
                 {
                     dir.y = 0.5f;
                 }
+
+                //ball.SetBounciness(2);
+                //if (_currentMove.GetType() == ShotType.chip)
+                //{
+                //    ball.SetBounciness(0);
+                //}
 
                 ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
 
