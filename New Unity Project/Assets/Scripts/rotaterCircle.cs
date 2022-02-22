@@ -79,7 +79,7 @@ public class rotaterCircle : MonoBehaviour
     private void Update()
     {
         //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
         {
             if (!_optionsSelected)
             {
@@ -92,7 +92,7 @@ public class rotaterCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.sKey.wasPressedThisFrame)
+        else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
         {
             if (!_optionsSelected)
             {
@@ -104,7 +104,8 @@ public class rotaterCircle : MonoBehaviour
                 }
             }
         }
-        else if (Keyboard.current.spaceKey.wasPressedThisFrame){
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
             if (!_optionsSelected)
             {
                 loadSelectedMenu();

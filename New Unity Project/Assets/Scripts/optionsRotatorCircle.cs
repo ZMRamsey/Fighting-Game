@@ -228,7 +228,7 @@ public class optionsRotatorCircle : MonoBehaviour
     private void Update()
     {
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame  || Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             if (sceneIndex != 2)
             {
@@ -236,14 +236,14 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.zKey.wasPressedThisFrame)
+        else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
         {
             controlSelectionWheel();
         }
 
         if (_isControllingSubMenu == false)
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame)
+            if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
             {
                 _rotatorConstant -= 30.0f;
                 sceneIndex += 1;
@@ -254,7 +254,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     WrapAroundToPlay();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame)
+            else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
             {
                 _rotatorConstant += 30.0f;
                 sceneIndex -= 1;
@@ -265,7 +265,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     WrapAroundToQuit();
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
                 if (sceneIndex == 2)
                 {
@@ -276,7 +276,7 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         else
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame)
+            if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
             {
                 subSceneIndex -= 1;
                 if(subSceneIndex < firstOption)
@@ -288,7 +288,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame)
+            else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
             {
                 subSceneIndex += 1;
                 if (subSceneIndex > lastOption)

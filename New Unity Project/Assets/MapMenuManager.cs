@@ -174,7 +174,7 @@ public class MapMenuManager : MonoBehaviour
         {
             if (!_mapSelected)
             {
-                if (Keyboard.current.aKey.wasPressedThisFrame)
+                if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
                 {
                     _rSelectionIndex -= 1;
                     MoveLeft();
@@ -184,7 +184,7 @@ public class MapMenuManager : MonoBehaviour
                         NotMove();
                     }
                 }
-                else if (Keyboard.current.dKey.wasPressedThisFrame)
+                else if (Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
                 {
                     _rSelectionIndex += 1;
                     MoveRight();
@@ -196,17 +196,17 @@ public class MapMenuManager : MonoBehaviour
                 }
                 HighlightSelectedMap();
 
-                if (Keyboard.current.zKey.wasPressedThisFrame)
+                if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
                 {
                     _moveAside = false;
                     opMan.ControlCharacterSelection();
                 }
             }
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
                 SelectHighlightedMap();
             }
-            else if (Keyboard.current.zKey.wasPressedThisFrame)
+            else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 DeselectHighlightedMenu();
             }
