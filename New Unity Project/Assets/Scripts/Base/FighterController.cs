@@ -119,7 +119,7 @@ public abstract class FighterController : MonoBehaviour
         if (IsGrounded()) {
             if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
                 _meterPenaltyTimer += Time.deltaTime;
-                if (_meterPenaltyTimer > 0.1f) {
+                if (_meterPenaltyTimer > 0.1f && GameManager.Get().KOCoroutine == null) {
                     ReduceMeter(1);
                     _meterPenaltyTimer = 0;
                 }

@@ -388,6 +388,16 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
+    public void increaseBounces()
+    {
+        _bouncesBeforeSpeedLoss++;
+        print("Bounces: " + _bouncesBeforeSpeedLoss);
+    }
+
+    public void resetBounces()
+    {
+        _bouncesBeforeSpeedLoss = 2;
+    }
     //public void JailSpeed()
     //{
     //    if(jail == 0)

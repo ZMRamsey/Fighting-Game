@@ -18765,6 +18765,7 @@ GameObject:
   - component: {fileID: 1315896168}
   - component: {fileID: 1315896170}
   - component: {fileID: 1315896169}
+  - component: {fileID: 1315896171}
   m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
@@ -18843,7 +18844,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 100
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18888,6 +18889,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315896167}
   m_CullTransparentMesh: 1
+--- !u!95 &1315896171
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315896167}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 179f544665fb74f459dd4aa16f6caaf0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1332670931
 GameObject:
   m_ObjectHideFlags: 0
@@ -25313,8 +25333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fdbe9e84733342bec985eea44fe38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMinutes: 5
+  startMinutes: 0.6
   currentTimeText: {fileID: 1315896169}
+  anim: {fileID: 1315896171}
 --- !u!1 &1755116885
 GameObject:
   m_ObjectHideFlags: 0

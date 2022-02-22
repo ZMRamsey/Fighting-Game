@@ -8,15 +8,17 @@ using TMPro;
 public class TimerManager : MonoBehaviour
 {
     bool timerActive = false;
-    [SerializeField] float currentTime = 300;
+    float currentTime;
+    bool redFlag = false;
     [SerializeField] float startMinutes;
     public TextMeshProUGUI currentTimeText;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         timerActive = true;
-        //currentTime = startMinutes * 60;
+        currentTime = startMinutes * 60;
     }
 
     // Update is called once per frame
@@ -32,11 +34,22 @@ public class TimerManager : MonoBehaviour
             }
 
             currentTimeText.text = currentTime.ToString().Split('.')[0];
+            if (currentTimeText.text == "30" && !redFlag)
+            {
+                redTimer();
+            }
         }
         else
         {
             //currentTimeText.text = "Match Over!";
         }
+    }
+
+    private void redTimer()
+    {
+        currentTimeText.color = Color.red;
+        redFlag = true;
+        anim.enabled = true;
     }
 
     public void EndMatch()
