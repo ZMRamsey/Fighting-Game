@@ -14468,9 +14468,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stone Age tribes played an early form of badminton, but had not worked
-    out that it is better to use goose feathers for the shuttle rather than the whole
-    goose
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
   m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
@@ -14559,7 +14557,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738b3f90f04a5484c94cd0f34ad5b933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingFacts: []
+  _maxQuotes: 25
+  loadingFacts:
+  - Atlantis fell into the ocean after an unknown hero used a special move in a match
+    against Neptune
+  - The fastest serve ever recorded was Mach 1.4, and injured every observer
+  - "Danny Default\u2019s favourite flavour of ice cream is vanilla"
+  - Hunter Blaze owns a tiger named Hunter Jr who does not like him
+  - "Ganz\u2019s hatred of humanity comes from their use of goose feathers in old
+    shuttlecocks"
+  - Ganz was an ordinary goose who wandered onto a badminton court, where the cosmic
+    power changed his IQ from 3 to 300
+  - "Ganz does not endorse a genocide of humans, he just wants to be told he\u2019s
+    a very good goose"
+  - "Hunter\u2019s bionic arm brace is supposed to help his tennis elbow, but he
+    dials it up to 11 for added smash power"
+  - "Hunter is yet to be cancelled on social media despite overwhelming evidence
+    that he\u2019s a terrible person"
+  - During the Super Badminton World Final, the players generate enough energy to
+    power an entire city from one court
+  - "Ganz\u2019s favourite snack is bread. His favourite bread is granary."
+  - Thomas Badminton wrote the rules of modern badminton in 1621
+  - The Badminton Incident of 2022 was the first recorded incident of a special move
+    in modern history
+  - Many unlicensed badminton players use underground black market courts
+  - "If Racket can\u2019t find her racquet, she just builds a new one. She\u2019s
+    on her 17th"
+  - Rome would host badminton matches in the colosseum if they ran out of gladiators
+  - Hunter has dressed as himself for the last 4 Halloweens
+  - Racket has never successfully made it through airport security with the number
+    of rockets she carries
+  - Esme only uses her psychic powers to get free coffees when she really needs it,
+    but she also has a caffeine addiction
+  - "Hunter\u2019s longest relationship lasted for 2 months"
+  - Hunter only gets photos taken from one side because his bionic arm makes his
+    muscles look bigger
+  - Stone Age tribes played an early form of badminton, but had not worked out that
+    it is better to use goose feathers for the shuttle rather than the whole goose
+  - NASA has studied a number of potential Space Shuttlecocks that could be served
+    into space by a giant badminton racket instead of using rockets
+  - Stonehenge is believed to be an ancient badminton arena, but the nets between
+    the stones have been lost to time
+  - The most common injury in badminton competitions is Achilles Tendonitis. The
+    second most common injury is impalement from supersonic shuttlecocks
 --- !u!1 &1967877734
 GameObject:
   m_ObjectHideFlags: 0
