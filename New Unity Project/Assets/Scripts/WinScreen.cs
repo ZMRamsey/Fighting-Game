@@ -15,6 +15,7 @@ public class WinScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _winnerNumber;
     [SerializeField] GameObject _quote;
+    [SerializeField] AudioSource epicGamerVictoryRoyal;
     //public string winnerName;
     string text;
 
@@ -51,6 +52,7 @@ public class WinScreen : MonoBehaviour
 
     public void showWinScreen(player winfighter, player losefighter)
     {
+        epicGamerVictoryRoyal.Play();
         showWinner();
         showWinnerName();
         showCharacter();
