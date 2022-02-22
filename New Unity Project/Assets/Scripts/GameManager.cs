@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum FighterFilter { one, two, both};
@@ -374,9 +375,12 @@ public class GameManager : MonoBehaviour
         string p1Name = _settings.GetFighterOneProfile().GetName();
         string p2Name = _settings.GetFighterTwoProfile().GetName();
 
-        StatPrinter printer = new StatPrinter();
+        //StatPrinter printer = new StatPrinter();
 
-        printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
+        //printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
+
+        //Open end screen
+        SceneManager.LoadScene(sceneName: "WinScreenTest");
 
     }
 }

@@ -57,7 +57,11 @@ public class StatPrinter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        champArray = new ChampStats[5] { Danny, Hunter, Esme, Racket, Ganz };
+        champArray[0] = Danny;
+        champArray[1] = Hunter;
+        champArray[2] = Esme;
+        champArray[3] = Racket;
+        champArray[4] = Ganz;
     }
 
     public void RecordGame(float length, int[,] scores, int roundsp1, int roundsp2, string p1, string p2)
@@ -216,7 +220,7 @@ public class ChampStats : MonoBehaviour
 
     public void GetStatsFromCSV()
     {
-        string[] champStatHolder = File.ReadAllLines("Assets/Balancing/CharacterStats.csv");
+        string[] champStatHolder = File.ReadAllLines("Assets/Balancing/CharacterStats.csv"); //FormatException: Input string was not in a correct format.
         string[] statArray = champStatHolder[champID].Split(',');
 
         winRate = float.Parse(statArray[1]);
