@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     float _rotateTarget;
     int _rally;
     int _successive = 0;
+    int _targetRally = 10;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
@@ -195,7 +196,8 @@ public class GameManager : MonoBehaviour
         _shuttle.SetOwner(FighterFilter.both);
 
         _rally = 0;
-        //_successive = 0;
+        _targetRally = 10;
+        _shuttle.resetBounces();
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;
         StartCoroutine("ServeTimer");
@@ -338,6 +340,11 @@ public class GameManager : MonoBehaviour
     {
         _rally++;
         _successive = 1;
+        if (_rally == _targetRally)
+        {
+            _shuttle.increaseBounces();
+            _targetRally += 10;
+        }
     }
 
     public void SuccessiveHit()
