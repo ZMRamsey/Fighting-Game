@@ -380,9 +380,12 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
-    public void SetBounciness(int value)
+    public void SetBounciness(float value)
     {
-        _bouncesBeforeSpeedLoss = value;
+        if (transform.root.GetComponent<SphereCollider>()) 
+        {
+            transform.root.GetComponent<SphereCollider>().material.bounciness = value;
+        }
     }
 
     //public void JailSpeed()
