@@ -12,6 +12,8 @@ public class OptionsMenuManager : MonoBehaviour
     bool _hasGoneLeft = false;
     int _randSelection = 0;
 
+    string _selectedCharacter;
+
     public bool _isReady = false;
     public bool _isSelectingMap = false;
 
@@ -170,6 +172,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (!_isSelectingMap)
         {
+            Debug.Log(""+System.DateTime.Now);
             if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
             {
                 _selectionIndex -= 1;
