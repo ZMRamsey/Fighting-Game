@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum player { danny, hunter, raket, esme, ganz};
 public class WinScreen : MonoBehaviour
@@ -31,13 +32,20 @@ public class WinScreen : MonoBehaviour
     public int _p2r3;
 
 
+    public Sprite Danny;
+    public Sprite Hunter;
+    public Sprite Esme;
+    public Sprite Racket;
+    public Sprite Ganz;
+    public Image imageHolder;
+
     public void Awake()
     {
         int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
         ScoreManager.Get().SetScores(newScores);
 
         //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
-        _winnerName.text = winner.ToString().ToUpper();
+        //_winnerName.text = winner.ToString().ToUpper();
         _winnerNumber.text = "P1";
         if (ScoreManager.Get().DecideGameWinner() == FighterFilter.two)
         {
@@ -48,6 +56,101 @@ public class WinScreen : MonoBehaviour
             {
             _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
         }
+
+        string win = ScoreManager.Get().playerOne;
+        string lose = ScoreManager.Get().playerTwo;
+        player winnerPlayer = player.danny;
+        player loserPlayer = player.danny;
+
+        switch (win)
+        {
+            case "":
+                //No champ
+                break;
+
+            case "Danny": //Danny
+                winnerPlayer = player.danny;
+                break;
+
+            case "Hunter": //Hunter
+                winnerPlayer = player.hunter;
+                break;
+
+            case "Esme": //Esme
+                winnerPlayer = player.esme;
+                break;
+
+            case "Racket": //Racket
+                winnerPlayer = player.raket;
+                break;
+
+            case "Ganz": //Ganz
+                winnerPlayer = player.ganz;
+                break;
+        }
+
+        switch (lose)
+        {
+            case "":
+                //No champ
+                break;
+
+            case "Danny": //Danny
+                loserPlayer = player.danny;
+                break;
+
+            case "Hunter": //Hunter
+                loserPlayer = player.hunter;
+                break;
+
+            case "Esme": //Esme
+                loserPlayer = player.esme;
+                break;
+
+            case "Racket": //Racket
+                loserPlayer = player.raket;
+                break;
+
+            case "Ganz": //Ganz
+                loserPlayer = player.ganz;
+                break;
+        }
+
+        GetMatchData(winnerPlayer, loserPlayer, ScoreManager.Get().gameOver.ToString());
+    }
+
+    public void GetMatchData(player winfighter, player losefighter, string winner)
+    {
+        _winnerName.text = winfighter.ToString().ToUpper();
+        _winnerNumber.text = winner;
+
+        switch (winfighter)
+        {
+            case player.danny:
+                imageHolder.sprite = Danny;
+                break;
+
+            case player.hunter:
+                imageHolder.sprite = Hunter;
+                break;
+
+            case player.esme:
+                imageHolder.sprite = Esme;
+                break;
+
+            case player.raket:
+                imageHolder.sprite = Racket;
+                break;
+
+            case player.ganz:
+                imageHolder.sprite = Ganz;
+                break;
+        }
+
+        showWinner();
+        showWinnerName();
+        showQuote(winfighter, losefighter);
+        showCharacter();
     }
 
     public void showWinScreen(player winfighter, player losefighter)
@@ -84,7 +187,8 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.IsPressed())
         {
-            showWinScreen(winner, loser);
+            //showWinScreen(winner, loser);
+            GetMatchData(winner, loser, "P1");
         }
     }
 

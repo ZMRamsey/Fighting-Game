@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviour
         _shuttle.SetOwner(_fighterOne.GetController());
         _shuttle.SetOwner(FighterFilter.both);
 
+        ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
+
       
     }
 
@@ -388,8 +390,13 @@ public class GameManager : MonoBehaviour
 
         //printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
 
+        //Save data
+
+        //FindObjectOfType<ResultsHolderScript>().SetData(p1Name, p2Name, ScoreManager.Get().gameOver.ToString());
+
         //Open end screen
         SceneManager.LoadScene(sceneName: "WinScreenTest");
+        
 
     }
 }

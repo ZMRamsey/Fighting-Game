@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
     protected int _p1Wins = 0;
     protected int _p2Wins = 0;
     public FighterFilter gameOver = FighterFilter.both;
+    public string playerOne;
+    public string playerTwo;
 
     void Awake()
     {
@@ -88,6 +90,12 @@ public class ScoreManager : MonoBehaviour
     public int GetLastScorer()
     {
         return _lastScorer;
+    }
+
+    public void SetPlayerTypes(string player1, string player2)
+    {
+        playerOne = player1;
+        playerTwo = player2;
     }
 
     public FighterFilter DecideRoundWinner()
