@@ -329,6 +329,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ServeTimer()
     {
+        _rally = 0; 
+        _successive = 0;
         yield return new WaitForSeconds(1);
         if (_rally == 0 && _successive == 0)
         {
