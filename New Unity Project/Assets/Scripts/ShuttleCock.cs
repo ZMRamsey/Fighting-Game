@@ -94,7 +94,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
         Vector3 proceDir = direction * Mathf.Clamp(chargedAmount, 0.2f, 1f);
-        print(processedSpeed);
+        //print(processedSpeed);
         Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
 
         _rb.velocity = targetVelocity;
@@ -380,6 +380,24 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
+    public void SetBounciness(float value)
+    {
+        if (transform.root.GetComponent<SphereCollider>()) 
+        {
+            transform.root.GetComponent<SphereCollider>().material.bounciness = value;
+        }
+    }
+
+    public void increaseBounces()
+    {
+        _bouncesBeforeSpeedLoss++;
+        print("Bounces: " + _bouncesBeforeSpeedLoss);
+    }
+
+    public void resetBounces()
+    {
+        _bouncesBeforeSpeedLoss = 2;
+    }
     //public void JailSpeed()
     //{
     //    if(jail == 0)

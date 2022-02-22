@@ -12,25 +12,33 @@ public class OptionsMenuManager : MonoBehaviour
     bool _hasGoneLeft = false;
     int _randSelection = 0;
 
+    string _selectedCharacter;
+
     public bool _isReady = false;
     public bool _isSelectingMap = false;
+
+    public MapMenuManager man;
+
+    public GameObject[] readyButtons;
+
+    public GameObject RuleSetMenu;
+
+    public GameObject opMenu;
+    public GameObject mMenu;
+    public GameObject bg;
 
     //public GameObject[] characters;
     public GameObject[] buttons;
     public GameObject[] characters;
     public Sprite[] sprites;
 
-    public MapMenuManager man;
-
     public GameObject[] ConfirmedCharacters;
-    public GameObject[] readyButtons;
-
-    public GameObject RuleSetMenu;
 
     public Sprite spriteDeselected;
     public Sprite spriteSelected;
     public Sprite randSelected;
     public Sprite randDeSelected;
+    public Sprite mBG;
 
     public int objNum;
     public int objCount;
@@ -50,6 +58,7 @@ public class OptionsMenuManager : MonoBehaviour
             ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_selectionIndex];
             ConfirmedCharacters[_confirmedIndex].SetActive(true);
         }
+
         readyButtons[_confirmedIndex].SetActive(true);
         _confirmedIndex++;
 
@@ -62,10 +71,12 @@ public class OptionsMenuManager : MonoBehaviour
 
     void LoadRuleSetSelect()
     {
-        man._moveAside = true;
+
         characters[_selectionIndex].SetActive(false);
+        Debug.Log("Selection Index: " + _selectionIndex);
+        man._moveAside = true;
         _isSelectingMap = true;
-        if(_selectionIndex != 3)
+        if (_selectionIndex != 3)
         {
             buttons[_selectionIndex].GetComponent<Image>().sprite = spriteDeselected;
         }
@@ -73,8 +84,25 @@ public class OptionsMenuManager : MonoBehaviour
         {
             buttons[_selectionIndex].GetComponent<Image>().sprite = randDeSelected;
         }
-
         
+
+
+    }
+
+    public void ControlCharacterSelection()
+    {
+        _isSelectingMap = false;
+        _isReady = false;
+        _confirmedIndex = 1;
+        _hasGoneLeft = false;
+        _hasGoneRight = false;
+
+        //WIP
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    ConfirmedCharacters[i].SetActive(false);
+        //    readyButtons[i].SetActive(false);
+        //}
     }
 
     void DeselectCharacter()
@@ -85,22 +113,6 @@ public class OptionsMenuManager : MonoBehaviour
         if (_confirmedIndex < 0)
         {
             _confirmedIndex = 0;
-        }
-    }
-
-    public void ControlCharacterSelection()
-    {
-        _isSelectingMap = false;
-        _isReady = false;
-        _confirmedIndex = 0;
-        _hasGoneLeft = false;
-        _hasGoneRight = false;
-
-        //WIP
-        for(int i = 0; i < 2; i++)
-        {
-            ConfirmedCharacters[i].SetActive(false);
-            readyButtons[i].SetActive(false);
         }
     }
 
@@ -117,14 +129,9 @@ public class OptionsMenuManager : MonoBehaviour
             characters[_selectionIndex-1].SetActive(false);
             buttons[_selectionIndex-1].GetComponent<Image>().sprite = spriteDeselected;
         }
-        else
-        {
-            buttons[_selectionIndex].GetComponent<Image>().sprite = spriteSelected;
-        }
 
         characters[_selectionIndex].SetActive(true);
         buttons[_selectionIndex].GetComponent<Image>().sprite = spriteSelected;
-
 
         if (_selectionIndex == 3)
         {
@@ -153,12 +160,20 @@ public class OptionsMenuManager : MonoBehaviour
         _hasGoneRight = false;
     }
 
+    void ReturnToMain()
+    {
+        opMenu.SetActive(false);
+        mMenu.SetActive(true);
+        bg.GetComponent<Image>().sprite = mBG;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (!_isSelectingMap)
         {
-            if (Keyboard.current.aKey.wasPressedThisFrame)
+            
+            if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
             {
                 _selectionIndex -= 1;
                 MoveLeft();
@@ -168,7 +183,7 @@ public class OptionsMenuManager : MonoBehaviour
                     NotMove();
                 }
             }
-            else if (Keyboard.current.dKey.wasPressedThisFrame)
+            else if (Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
             {
                 _selectionIndex += 1;
                 MoveRight();
@@ -178,16 +193,24 @@ public class OptionsMenuManager : MonoBehaviour
                     NotMove();
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
                 SelectHighlightedCharacter();
             }
-            else if (Keyboard.current.zKey.wasPressedThisFrame)
+            else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
             {
-                Debug.Log("" + _confirmedIndex);
-                DeselectCharacter();
+                if(_confirmedIndex == 0)
+                {
+                    ReturnToMain();
+                }
+                else
+                {
+                    DeselectCharacter();
+                }
+                
             }
-            else if (!_isReady)
+            
+            if (!_isReady)
             {
                 HighlightSelectedCharacter();
             }
@@ -196,6 +219,11 @@ public class OptionsMenuManager : MonoBehaviour
             {
                 LoadRuleSetSelect();
             }
+            HighlightSelectedCharacter();
+        }
+        else
+        {
+            characters[_selectionIndex].SetActive(false);
         }
         
     }

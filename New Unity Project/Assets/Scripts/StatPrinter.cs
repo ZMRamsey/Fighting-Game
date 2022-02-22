@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class StatPrinter : MonoBehaviour
 {
-    public ChampStats Danny = new ChampStats(1);
-    public ChampStats Hunter = new ChampStats(2);
-    public ChampStats Esme = new ChampStats(3);
-    public ChampStats Racket = new ChampStats(4);
-    public ChampStats Ganz = new ChampStats(5);
+    public ChampStats Danny = new ChampStats(1, "Danny");
+    public ChampStats Hunter = new ChampStats(2, "Hunter");
+    public ChampStats Esme = new ChampStats(3, "Esme");
+    public ChampStats Racket = new ChampStats(4, "Racket");
+    public ChampStats Ganz = new ChampStats(5, "Ganz");
+
+    ChampStats[] champArray = new ChampStats[5];
 
     //GAME
     float gameLength;
@@ -55,14 +57,47 @@ public class StatPrinter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        champArray[0] = Danny;
+        champArray[1] = Hunter;
+        champArray[2] = Esme;
+        champArray[3] = Racket;
+        champArray[4] = Ganz;
     }
 
-    void RecordGame(float length, int score1, int score2)
+    public void RecordGame(float length, int[,] scores, int roundsp1, int roundsp2, string p1, string p2)
     {
         gameLength = length;
-        this.score1 = score1;
-        this.score2 = score2;
+        int p1victory;
+
+        if (roundsp1 > roundsp2) { p1victory = 1; }
+        else { p1victory = 0; }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (p1 == champArray[i].champName)
+            {
+                champArray[i].SetPickRate(true);
+                champArray[i].UpdateData(p1victory, p2);
+            }
+            else
+            {
+                champArray[i].SetPickRate(false);
+            }
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (p2 == champArray[i].champName)
+            {
+                champArray[i].SetPickRate(true);
+                champArray[i].UpdateData(p1victory, p1);
+            }
+            else
+            {
+                champArray[i].SetPickRate(true);
+            }
+        }
+
 
         PrintToCSV();
     }
@@ -102,6 +137,7 @@ public class StatPrinter : MonoBehaviour
 
 public class ChampStats : MonoBehaviour
 {
+    public string champName;
     int champID;
     float winRate;
     float winRateDanny;
@@ -118,9 +154,10 @@ public class ChampStats : MonoBehaviour
     float overallChip;
     float overallDrop;
 
-    public ChampStats(int champNo)
+    public ChampStats(int champNo, string name)
     {
         champID = champNo;
+        champName = name;
         GetStatsFromCSV();
     }
 
@@ -129,33 +166,38 @@ public class ChampStats : MonoBehaviour
         return (currentRate + result) / 2;
     }
 
-    public void SetWinRate(int result, int champ)
+    public void UpdateData(int victory, string opponent)
+    {
+        SetWinRate(victory, opponent);
+    }
+
+    public void SetWinRate(int result, string champ)
     {
         winRate = RateCalc(winRate, result);
 
         switch (champ)
         {
-            case 0:
+            case "":
                 //No champ
                 break;
 
-            case 1: //Danny
+            case "Danny": //Danny
                 winRateDanny = RateCalc(winRateDanny, result);
                 break;
 
-            case 2: //Hunter
+            case "Hunter": //Hunter
                 winRateHunter = RateCalc(winRateHunter, result);
                 break;
 
-            case 3: //Esme
+            case "Esme": //Esme
                 winRateEsme = RateCalc(winRateEsme, result);
                 break;
 
-            case 4: //Racket
+            case "Racket": //Racket
                 winRateRacket = RateCalc(winRateRacket, result);
                 break;
 
-            case 5: //Ganz
+            case "Ganz": //Ganz
                 winRateGanz = RateCalc(winRateGanz, result);
                 break;
         }
@@ -178,7 +220,7 @@ public class ChampStats : MonoBehaviour
 
     public void GetStatsFromCSV()
     {
-        string[] champStatHolder = File.ReadAllLines("Assets/Balancing/CharacterStats.csv");
+        string[] champStatHolder = File.ReadAllLines("Assets/Balancing/CharacterStats.csv"); //FormatException: Input string was not in a correct format.
         string[] statArray = champStatHolder[champID].Split(',');
 
         winRate = float.Parse(statArray[1]);
@@ -199,7 +241,7 @@ public class ChampStats : MonoBehaviour
 
     public string GetPrintout()
     {
-        string printout = "Danny," + winRate + "," + winRateDanny + "," + winRateHunter + "," + winRateEsme + "," + winRateRacket + "," + winRateGanz + "," + pickRate + "0,0,"
+        string printout = champName + "," + winRate + "," + winRateDanny + "," + winRateHunter + "," + winRateEsme + "," + winRateRacket + "," + winRateGanz + "," + pickRate + "0,0,"
             + highSpeedPoints + "," + overallSmash + "," + overallDrive + "," + overallChip + "," + overallDrop;
 
         return printout;

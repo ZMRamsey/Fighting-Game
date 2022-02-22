@@ -12,11 +12,11 @@ public class FullScreenRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
         {
             _rotatorConstant += 180.0f;
         }
-        else if (Keyboard.current.dKey.wasPressedThisFrame)
+        else if (Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
         {
             _rotatorConstant -= 180.0f;
         }

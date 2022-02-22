@@ -28,6 +28,9 @@ public class rotaterCircle : MonoBehaviour
     public GameObject optionsScript;
     public GameObject menuScript;
 
+    //Test Start
+    //Test End
+
     Vector3 mainDesiredPos = new Vector3(620.8455f, 310.5f, 90f);
     Vector3 finalPos = new Vector3(1926.31f, 0f , 0f);
 
@@ -79,7 +82,7 @@ public class rotaterCircle : MonoBehaviour
     private void Update()
     {
         //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
         {
             if (!_optionsSelected)
             {
@@ -92,7 +95,7 @@ public class rotaterCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.sKey.wasPressedThisFrame)
+        else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
         {
             if (!_optionsSelected)
             {
@@ -104,7 +107,8 @@ public class rotaterCircle : MonoBehaviour
                 }
             }
         }
-        else if (Keyboard.current.spaceKey.wasPressedThisFrame){
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
             if (!_optionsSelected)
             {
                 loadSelectedMenu();

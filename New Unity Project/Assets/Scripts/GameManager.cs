@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum FighterFilter { one, two, both};
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     float _rotateTarget;
     int _rally;
     int _successive = 0;
+    int _targetRally = 10;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
 
@@ -143,7 +145,14 @@ public class GameManager : MonoBehaviour
         //}
     }
 
-    void SetUpGame() {
+    void SetUpGame()
+    {
+
+        if (ScoreManager.Get().gameOver != FighterFilter.both)
+        {
+            EndGame();
+        }
+
         if (stageCoroutine != null) {
             StopCoroutine(stageCoroutine);
         }
@@ -187,7 +196,8 @@ public class GameManager : MonoBehaviour
         _shuttle.SetOwner(FighterFilter.both);
 
         _rally = 0;
-        //_successive = 0;
+        _targetRally = 10;
+        _shuttle.resetBounces();
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;
         StartCoroutine("ServeTimer");
@@ -319,6 +329,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ServeTimer()
     {
+        _rally = 0; 
+        _successive = 0;
         yield return new WaitForSeconds(1);
         if (_rally == 0 && _successive == 0)
         {
@@ -330,6 +342,11 @@ public class GameManager : MonoBehaviour
     {
         _rally++;
         _successive = 1;
+        if (_rally == _targetRally)
+        {
+            _shuttle.increaseBounces();
+            _targetRally += 10;
+        }
     }
 
     public void SuccessiveHit()
@@ -360,5 +377,19 @@ public class GameManager : MonoBehaviour
     public int GetSuccessive()
     {
         return _successive;
+    }
+
+    public void EndGame()
+    {
+        string p1Name = _settings.GetFighterOneProfile().GetName();
+        string p2Name = _settings.GetFighterTwoProfile().GetName();
+
+        //StatPrinter printer = new StatPrinter();
+
+        //printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
+
+        //Open end screen
+        SceneManager.LoadScene(sceneName: "WinScreenTest");
+
     }
 }
