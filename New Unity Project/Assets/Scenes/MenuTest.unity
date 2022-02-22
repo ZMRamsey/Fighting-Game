@@ -11917,7 +11917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 291}
+  m_AnchoredPosition: {x: 43.138, y: 282.4}
   m_SizeDelta: {x: -86.2763, y: -564.8052}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804653955
@@ -12882,6 +12882,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8eb3020392b204390549445d1d8da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectionIndex: 0
+  _confirmedIndex: 0
+  _isReady: 0
+  _isSelectingMap: 0
+  man: {fileID: 2007779278}
+  readyButtons:
+  - {fileID: 550071594}
+  - {fileID: 455489077}
+  RuleSetMenu: {fileID: 735057868}
+  opMenu: {fileID: 1899366558}
+  mMenu: {fileID: 1345440822}
+  bg: {fileID: 1317604968}
   buttons:
   - {fileID: 1031486686}
   - {fileID: 195565284}
@@ -12913,6 +12925,7 @@ MonoBehaviour:
   spriteSelected: {fileID: 21300000, guid: 862a2d572f251774daaad2870d63f79c, type: 3}
   randSelected: {fileID: 21300000, guid: a61647b8a3b08b849a8f28e2d183f2ab, type: 3}
   randDeSelected: {fileID: 21300000, guid: 5d2b123e728ede2449fb193692eb71d3, type: 3}
+  mBG: {fileID: 21300000, guid: b61095d8e6e529a4f85bf255ea0bd05c, type: 3}
   objNum: 0
   objCount: 0
   _maxCharacters: 6
@@ -13778,7 +13791,7 @@ SpriteRenderer:
   m_Size: {x: 11.5, y: 5.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1986615965
@@ -14294,30 +14307,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 34714f99cde5a954eb0b603efea88b8d, type: 3}
   randSelected: {fileID: 21300000, guid: a61647b8a3b08b849a8f28e2d183f2ab, type: 3}
   randDeselected: {fileID: 21300000, guid: 5d2b123e728ede2449fb193692eb71d3, type: 3}
-  spriteSelected: {fileID: 21300000, guid: 4bae10dc40ab2c94a9a243884d120d73, type: 3}
+  spriteSelected: {fileID: 21300000, guid: c534ecc3fabd558478e554e6952f458f, type: 3}
   spriteDeselected: {fileID: 21300000, guid: 26cd6eb0e1a834b458dd239a6a2b3d3b, type: 3}
   leftMap: {fileID: 21300000, guid: 2d8b30f0e59a7534b8c12c47e5391baa, type: 3}
   rightMap: {fileID: 21300000, guid: 34714f99cde5a954eb0b603efea88b8d, type: 3}
   _moveAside: 0
   _moveToInit: 0
-  _hasGoneLeft: 0
-  _hasGoneRight: 0
-  _mapSelected: 0
-  _rSelectionIndex: 0
-  _confirmedIndex: 0
-  _maxMaps: 2
-  _randSelection: 0
-  _selectedMap: 0
-  _C1Init: {x: 213.7393, y: 429.3754, z: 90}
-  _C2Init: {x: 1033.264, y: 429.3754, z: 90}
-  _C1Final: {x: 100.9844, y: 215.1673, z: 90}
-  _C2Final: {x: 1146.0189, y: 215.1673, z: 90}
-  _CBTNSInit: {x: 620.8455, y: 310.5, z: 90}
-  _CBTNSFinal: {x: 620.8455, y: -500, z: 90}
-  _RuleBTNSInit: {x: 620.8455, y: -500, z: 90}
-  _RuleBTNSFinal: {x: 620.8455, y: 318.6927, z: 90}
-  _MapPreviewInit: {x: 608.9289, y: 1000.5408, z: 0}
-  _MapPreviewFinal: {x: 608.9289, y: 447.5408, z: 0}
 --- !u!1 &2009595727
 GameObject:
   m_ObjectHideFlags: 0
@@ -15074,7 +15069,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26cd6eb0e1a834b458dd239a6a2b3d3b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1e6f1c517c366d45a27edab819f93c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
