@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,7 @@ public abstract class FighterController : MonoBehaviour
     bool _canAttack;
     bool _freeze;
     bool _isDashing;
+    bool _hasBounced;
     float _lastTapAxis;
     float _meterPenaltyTimer;
     RaycastHit _groundHit;
@@ -80,11 +82,15 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayLeftFoot() {
-        _source.PlayOneShot(_leftFootSounds[Random.Range(0, _leftFootSounds.Length)], 1f);
+        _source.PlayOneShot(_leftFootSounds[UnityEngine.Random.Range(0, _leftFootSounds.Length)], 1f);
+    }
+
+    public void PlaySound(AudioClip clip) {
+        _source.PlayOneShot(clip);
     }
 
     public void PlayRightFoot() {
-        _source.PlayOneShot(_rightFootSounds[Random.Range(0, _rightFootSounds.Length)], 1f);
+        _source.PlayOneShot(_rightFootSounds[UnityEngine.Random.Range(0, _rightFootSounds.Length)], 1f);
     }
 
     public void SetFilter(FighterFilter filter) {
@@ -112,6 +118,7 @@ public abstract class FighterController : MonoBehaviour
         _commandMeter = 0.0f;
         _canJump = true;
         _canAttack = true;
+        _hasBounced = false;
     }
 
     void Update() {
@@ -139,13 +146,15 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
 
-        var xAnim = _controllerVelocity.x;
+        Vector3 controllerVel = _controllerVelocity.normalized;
+        var xAnim = controllerVel.x;
 
         if (_renderer.flipX) {
             xAnim = -xAnim;
         }
 
         _animator.SetFloat("xInput", xAnim);
+        _animator.SetFloat("yInput", _rigidbody.velocity.y);
 
     }
 
@@ -177,9 +186,15 @@ public abstract class FighterController : MonoBehaviour
         _myState = FighterState.dead;
         _animator.Rebind();
         _animator.SetLayerWeight(1, 1);
+       
+        _animator.SetTrigger("KO");
+
+        if (IsGrounded()) {
+            _animator.SetTrigger("land");
+        }
 
         if(_damageSounds.Length > 0) {
-            _source.PlayOneShot(_damageSounds[Random.Range(0, _damageSounds.Length)], 1.5f);
+            _source.PlayOneShot(_damageSounds[UnityEngine.Random.Range(0, _damageSounds.Length)], 1.5f);
         }
 
 
@@ -273,7 +288,12 @@ public abstract class FighterController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if(_myState == FighterState.dead) {
+        if(_myState == FighterState.dead && !_hasBounced) {
+            _hasBounced = true;
+            GameManager.Get().StunFrames(0.1f, _filter);
+            GameManager.Get().GetCameraShaker().SetShake(0.2f, 5f, true);
+            GameManager.Get().GetStageShaker().SetShake(0.2f, 5f, true);
+
             if (_filter == FighterFilter.one) {
                 _controllerVelocity = new Vector3(-15, 3, 0);
             }
@@ -281,6 +301,7 @@ public abstract class FighterController : MonoBehaviour
                 _controllerVelocity = new Vector3(15, 3, 0);
             }
             _rigidbody.velocity = _controllerVelocity;
+            _animator.SetTrigger("wallBounce");
         }
     }
 
@@ -338,7 +359,7 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnAttack() {
         if (_swingSounds.Length > 0) {
-            _source.PlayOneShot(_swingSounds[Random.Range(0, _swingSounds.Length)], 1.75f);
+            _source.PlayOneShot(_swingSounds[UnityEngine.Random.Range(0, _swingSounds.Length)], 1.75f);
         }
     }
 
@@ -482,7 +503,7 @@ public abstract class FighterController : MonoBehaviour
         _impact.Play();
 
         if (_hitSounds.Length > 0) {
-            _source.PlayOneShot(_hitSounds[Random.Range(0, _hitSounds.Length)], 0.5f);
+            _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
         }
     }
 
