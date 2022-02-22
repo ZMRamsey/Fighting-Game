@@ -172,7 +172,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (!_isSelectingMap)
         {
-            Debug.Log(""+System.DateTime.Now);
+            
             if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
             {
                 _selectionIndex -= 1;
