@@ -59,6 +59,11 @@ public class OptionsMenuManager : MonoBehaviour
         }
     }
 
+    public void ControlCharacterSelection()
+    {
+
+    }
+
     void HighlightSelectedCharacter()
     {
         //characters[_selectionIndex].SetActive(true);
