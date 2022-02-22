@@ -94,7 +94,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
         Vector3 proceDir = direction * Mathf.Clamp(chargedAmount, 0.2f, 1f);
-        print(processedSpeed);
+        //print(processedSpeed);
         Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
 
         _rb.velocity = targetVelocity;
