@@ -143,7 +143,14 @@ public class GameManager : MonoBehaviour
         //}
     }
 
-    void SetUpGame() {
+    void SetUpGame()
+    {
+
+        if (ScoreManager.Get().gameOver != FighterFilter.both)
+        {
+            EndGame();
+        }
+
         if (stageCoroutine != null) {
             StopCoroutine(stageCoroutine);
         }
@@ -360,5 +367,16 @@ public class GameManager : MonoBehaviour
     public int GetSuccessive()
     {
         return _successive;
+    }
+
+    public void EndGame()
+    {
+        string p1Name = _settings.GetFighterOneProfile().GetName();
+        string p2Name = _settings.GetFighterTwoProfile().GetName();
+
+        StatPrinter printer = new StatPrinter();
+
+        printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
+
     }
 }

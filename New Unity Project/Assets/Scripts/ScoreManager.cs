@@ -8,6 +8,9 @@ public class ScoreManager : MonoBehaviour
     protected int[,] _scores = {{0,0},{0,0},{0,0}};
     protected int _roundIndex = 0;
     protected int _lastScorer = 0;
+    protected int _p1Wins = 0;
+    protected int _p2Wins = 0;
+    public FighterFilter gameOver = FighterFilter.both;
 
     void Awake()
     {
@@ -38,10 +41,26 @@ public class ScoreManager : MonoBehaviour
 
     void NextRound()
     {
-        if (_roundIndex != 2)
+        FighterFilter roundWinner = DecideRoundWinner();
+        Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + roundWinner.ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+
+        if (roundWinner == FighterFilter.one)
         {
-            Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + DecideRoundWinner().ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+            _p1Wins++;
+        }
+        else
+        {
+            _p2Wins++;
+        }
+
+        if ((_p1Wins < 2) && (_p2Wins < 2))
+        {
             _roundIndex++;
+        }
+        else
+        {
+            //End Game
+            gameOver = DecideThreeRoundWinner();
         }
     }
 
@@ -77,6 +96,22 @@ public class ScoreManager : MonoBehaviour
         {
             winner = FighterFilter.two;
         }
+        return winner;
+    }
+
+    public FighterFilter DecideThreeRoundWinner()
+    {
+        FighterFilter winner;
+
+        if (_p1Wins > _p2Wins)
+        {
+            winner = FighterFilter.one;
+        }
+        else
+        {
+            winner = FighterFilter.two;
+        }
+
         return winner;
     }
 
