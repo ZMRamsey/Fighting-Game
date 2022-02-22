@@ -11,6 +11,10 @@ public class TextLoadingController : MonoBehaviour
     float opac = 0;
     public TextMeshProUGUI loadingText;
 
+    //public GameObject fun;
+
+    int fadeoutCount = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +24,21 @@ public class TextLoadingController : MonoBehaviour
         {
             currentOpac *= -1;
         }
-        Debug.Log(currentOpac);
+
+        if(currentOpac < 0.1)
+        {
+            fadeoutCount += 1;
+            Debug.Log(fadeoutCount);
+        }
         loadingText.color = new Color(0f,0f,0f,currentOpac);
+
+        //
+        //fun.transform.Rotate(currentOpac, opac, currentOpac);
+        //
+
+        if (fadeoutCount > 900)
+        {
+            loadingText.text = "Continue";
+        }
     }
 }

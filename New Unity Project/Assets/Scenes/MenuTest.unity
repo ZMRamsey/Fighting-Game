@@ -10124,6 +10124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingText: {fileID: 174423316}
+  fun: {fileID: 1440529677}
 --- !u!1 &1317604968
 GameObject:
   m_ObjectHideFlags: 0
