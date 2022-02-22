@@ -61,6 +61,7 @@ public class ScoreManager : MonoBehaviour
         {
             //End Game
             gameOver = DecideThreeRoundWinner();
+            Debug.Log("The winner is " + gameOver.ToString());
         }
     }
 
