@@ -31,17 +31,24 @@ public class TimerManager : MonoBehaviour
             if (currentTime <= 0)
             {
                 timerActive = false;
+                anim.Play("OverTimer");
+                currentTimeText.text = "OVERTIME";
+                currentTimeText.fontSize = 60.0f;
+                
             }
 
-            currentTimeText.text = currentTime.ToString().Split('.')[0];
-            if (currentTimeText.text == "30" && !redFlag)
+            if (timerActive)
             {
-                redTimer();
+                currentTimeText.text = currentTime.ToString().Split('.')[0];
+                if (currentTimeText.text == "30" && !redFlag)
+                {
+                    redTimer();
+                }
             }
         }
-        else
+        if (!timerActive)
         {
-            //currentTimeText.text = "Match Over!";
+            print("Timeout");
         }
     }
 
