@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TextLoadingController : MonoBehaviour
 {
@@ -36,9 +37,13 @@ public class TextLoadingController : MonoBehaviour
         //fun.transform.Rotate(currentOpac, opac, currentOpac);
         //
 
-        if (fadeoutCount > 900)
+        if (fadeoutCount > 300)
         {
             loadingText.text = "Continue";
+        }
+        if(fadeoutCount > 300 && Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("InputTest");
         }
     }
 }
