@@ -234,7 +234,6 @@ public class MapMenuManager : MonoBehaviour
                 DeselectHighlightedMenu();
             }
 
-
         }
         
     }
