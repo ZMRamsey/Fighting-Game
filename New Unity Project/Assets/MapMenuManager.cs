@@ -14,6 +14,10 @@ public class MapMenuManager : MonoBehaviour
     public GameObject RMap;
     public GameObject RReady;
 
+    public GameObject loadingScreen;
+    public GameObject characterSelect;
+    public GameObject background;
+
     public OptionsMenuManager opMan;
 
     public GameObject[] buttons;
@@ -33,6 +37,7 @@ public class MapMenuManager : MonoBehaviour
     bool _hasGoneRight = false;
 
     bool _mapSelected = false;
+    bool _isReady = false;
 
     int _rSelectionIndex = 0;
     int _confirmedIndex = 0;
@@ -145,19 +150,27 @@ public class MapMenuManager : MonoBehaviour
         }
         RMap.GetComponent<Image>().sprite = maps[_selectedMap];
         ReadyUp();
-        _mapSelected = true;
     }
 
     void ReadyUp()
     {
         RReady.SetActive(true);
         _mapSelected = true;
+        _isReady = true;
     }
 
     void DeselectHighlightedMenu()
     {
         RReady.SetActive(false);
         _mapSelected = false;
+        _isReady = false;
+    }
+
+    void GoToLoadingMenu()
+    {
+        loadingScreen.SetActive(true);
+        characterSelect.SetActive(false);
+        background.SetActive(false);
     }
     void Update()
     {
@@ -202,16 +215,26 @@ public class MapMenuManager : MonoBehaviour
                     opMan.ControlCharacterSelection();
                 }
             }
+            
+            if (_isReady)
+            {
+                if(Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+                {
+                    GoToLoadingMenu();
+                }
+            }
+            
             if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
                 SelectHighlightedMap();
+                _isReady = true;
             }
             else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 DeselectHighlightedMenu();
             }
-            
-            
+
+
         }
         
     }
