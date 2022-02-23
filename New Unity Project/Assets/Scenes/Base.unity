@@ -16521,6 +16521,25 @@ MonoBehaviour:
   - {fileID: -5066523906300639224, guid: a0ffc622aa506ad4c9e476280357c0a1, type: 3}
   _renderer: {fileID: 685250573}
   _shaker: {fileID: 520492821}
+--- !u!95 &685250576
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685250571}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c9e2d59b89a04fa4d9cd27671189cb1f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &688937597
 GameObject:
   m_ObjectHideFlags: 0
@@ -25248,7 +25267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fdbe9e84733342bec985eea44fe38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMinutes: 5
+  startMinutes: 0.6
   currentTimeText: {fileID: 1315896169}
   anim: {fileID: 1315896171}
 --- !u!1 &1755116885

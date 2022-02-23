@@ -38,6 +38,7 @@ public class TimerManager : MonoBehaviour
     {
         timerActive = true;
         currentTime = startMinutes * 60;
+        currentTimeText.text = currentTime.ToString().Split('.')[0];
         anim.enabled = false;
         currentTimeText.fontSize = 100.0f;
         currentTimeText.color = textColor;

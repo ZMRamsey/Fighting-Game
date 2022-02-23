@@ -138,7 +138,7 @@ public class ScoreManager : MonoBehaviour
     public bool IsThereWinner()
     {
         bool winner = false;
-        if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0] != GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 1])
+        if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0] || GetScores()[GetCurrentRound() - 1, 0] > GetScores()[GetCurrentRound() - 1, 1])
         {
             winner = true;
         }
