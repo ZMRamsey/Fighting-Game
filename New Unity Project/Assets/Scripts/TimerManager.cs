@@ -7,18 +7,41 @@ using TMPro;
 
 public class TimerManager : MonoBehaviour
 {
+    static TimerManager _instance;
     bool timerActive = false;
     float currentTime;
     bool redFlag = false;
     [SerializeField] float startMinutes;
     public TextMeshProUGUI currentTimeText;
     public Animator anim;
+    protected Color textColor;
 
     // Start is called before the first frame update
     void Start()
     {
         timerActive = true;
         currentTime = startMinutes * 60;
+        textColor = currentTimeText.color;
+    }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
+    public static TimerManager Get()
+    {
+        return _instance;
+    } 
+
+    void ResetTimer()
+    {
+        timerActive = true;
+        currentTime = startMinutes * 60;
+        anim.enabled = false;
+        currentTimeText.fontSize = 100.0f;
+        currentTimeText.color = textColor;
+        redFlag = false;
     }
 
     // Update is called once per frame
@@ -31,17 +54,30 @@ public class TimerManager : MonoBehaviour
             if (currentTime <= 0)
             {
                 timerActive = false;
+                
             }
 
-            currentTimeText.text = currentTime.ToString().Split('.')[0];
-            if (currentTimeText.text == "30" && !redFlag)
+            if (timerActive)
             {
-                redTimer();
+                currentTimeText.text = currentTime.ToString().Split('.')[0];
+                if (currentTimeText.text == "30" && !redFlag)
+                {
+                    redTimer();
+                }
             }
         }
-        else
+        if (!timerActive && ScoreManager.Get().IsThereWinner())
         {
-            //currentTimeText.text = "Match Over!";
+            timerActive = true;
+            ScoreManager.Get().NextRound();
+            GameManager.Get().NewRoundNeeded(true);
+            ResetTimer();
+        }
+        if (!timerActive && !ScoreManager.Get().IsThereWinner())
+        {
+            anim.Play("OverTimer");
+            currentTimeText.text = "OVERTIME";
+            currentTimeText.fontSize = 60.0f;
         }
     }
 
@@ -50,12 +86,12 @@ public class TimerManager : MonoBehaviour
         currentTimeText.color = Color.red;
         redFlag = true;
         anim.enabled = true;
+        anim.Play("Timer");
     }
 
     public void EndMatch()
     {
     }
-
 
 
 }

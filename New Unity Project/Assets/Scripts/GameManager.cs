@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     int _targetRally = 10;
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
+    public bool needNewRound = false;
 
     [SerializeField] bool _spinDown;
 
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
         _shuttle.SetOwner(_fighterOne.GetController());
         _shuttle.SetOwner(FighterFilter.both);
 
+        //ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
+
       
     }
 
@@ -133,8 +136,15 @@ public class GameManager : MonoBehaviour
             {
                 scorer = "two";
             }
+            Debug.Log("About to call ground out");
             ScoreManager.Get().UpdateScore(scorer, "GroundOut");
             SetUpGame();
+        }
+
+        if (NewRound())
+        {
+            SetUpGame();
+            NewRoundNeeded(false);
         }
 
         //if (_fighterOne.GetController().GetFighterAction() == FighterAction.dead || _fighterTwo.GetController().GetFighterAction() == FighterAction.dead)
@@ -388,8 +398,23 @@ public class GameManager : MonoBehaviour
 
         //printer.RecordGame(0.0f, ScoreManager.Get().GetScores(), 1, 2, p1Name, p2Name);
 
+        //Save data
+
+        //FindObjectOfType<ResultsHolderScript>().SetData(p1Name, p2Name, ScoreManager.Get().gameOver.ToString());
+
         //Open end screen
         SceneManager.LoadScene(sceneName: "WinScreenTest");
+        
 
+    }
+
+    public bool NewRound()
+    {
+        return needNewRound;
+    }
+
+    public void NewRoundNeeded(bool needed)
+    {
+        needNewRound = needed;
     }
 }

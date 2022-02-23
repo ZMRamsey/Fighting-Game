@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
     protected int _p1Wins = 0;
     protected int _p2Wins = 0;
     public FighterFilter gameOver = FighterFilter.both;
+    public string playerOne;
+    public string playerTwo;
 
     void Awake()
     {
@@ -39,7 +41,7 @@ public class ScoreManager : MonoBehaviour
         GameManager.Get().ResetSuccessive();
     }
 
-    void NextRound()
+    public void NextRound()
     {
         FighterFilter roundWinner = DecideRoundWinner();
         Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + roundWinner.ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
@@ -90,6 +92,12 @@ public class ScoreManager : MonoBehaviour
         return _lastScorer;
     }
 
+    public void SetPlayerTypes(string player1, string player2)
+    {
+        playerOne = player1;
+        playerTwo = player2;
+    }
+
     public FighterFilter DecideRoundWinner()
     {
         FighterFilter winner = FighterFilter.one;
@@ -123,6 +131,16 @@ public class ScoreManager : MonoBehaviour
         if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0])
         {
             winner = FighterFilter.two;
+        }
+        return winner;
+    }
+
+    public bool IsThereWinner()
+    {
+        bool winner = false;
+        if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0] != GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 1])
+        {
+            winner = true;
         }
         return winner;
     }
