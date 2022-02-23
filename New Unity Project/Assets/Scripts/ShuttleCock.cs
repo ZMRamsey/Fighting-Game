@@ -312,6 +312,10 @@ public class ShuttleCock : MonoBehaviour
     private void OnCollisionEnter(Collision collision) {
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
+
+        if(collision.gameObject.layer == 14) {
+            collision.gameObject.GetComponent<StageNet>().NetHit(collision.relativeVelocity);
+        }
     }
 
     public void FreezeShuttle(float timer) {
