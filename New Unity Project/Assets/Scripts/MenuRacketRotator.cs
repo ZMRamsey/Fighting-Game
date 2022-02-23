@@ -15,6 +15,6 @@ public class MenuRacketRotator : MonoBehaviour
     void Update()
     {
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.3f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 200f * Time.deltaTime);
     }
 }

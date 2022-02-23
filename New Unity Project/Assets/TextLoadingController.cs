@@ -20,7 +20,7 @@ public class TextLoadingController : MonoBehaviour
     void Update()
     {
         currentOpac = Mathf.Cos(opac);
-        opac += 0.001f;
+        opac += 1f * Time.deltaTime;
         if(currentOpac < 0)
         {
             currentOpac *= -1;
@@ -37,7 +37,7 @@ public class TextLoadingController : MonoBehaviour
         //fun.transform.Rotate(currentOpac, opac, currentOpac);
         //
 
-        if (fadeoutCount > 300)
+        if (fadeoutCount > 15)
         {
             loadingText.text = "Continue";
         }
