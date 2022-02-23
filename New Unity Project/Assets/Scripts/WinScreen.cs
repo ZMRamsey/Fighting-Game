@@ -44,13 +44,6 @@ public class WinScreen : MonoBehaviour
         int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
         ScoreManager.Get().SetScores(newScores);
 
-        //_winnerName.text = GameManager.Get().GetComponent<GameSettings>().GetFighterOneProfile().GetName().ToUpper();
-        //_winnerName.text = winner.ToString().ToUpper();
-        _winnerNumber.text = "P1";
-        if (ScoreManager.Get().DecideGameWinner() == FighterFilter.two)
-        {
-            _winnerNumber.text = "P2";
-        }
         int[,] scores = ScoreManager.Get().GetScores();
         for (int i = 0; i < _roundIndex + 1; i++)
             {
@@ -80,7 +73,7 @@ public class WinScreen : MonoBehaviour
                 winnerPlayer = player.esme;
                 break;
 
-            case "Racket": //Racket
+            case "Raket": //Raket
                 winnerPlayer = player.raket;
                 break;
 
@@ -107,7 +100,7 @@ public class WinScreen : MonoBehaviour
                 loserPlayer = player.esme;
                 break;
 
-            case "Racket": //Racket
+            case "Raket": //Raket
                 loserPlayer = player.raket;
                 break;
 
@@ -116,13 +109,18 @@ public class WinScreen : MonoBehaviour
                 break;
         }
 
-        GetMatchData(winnerPlayer, loserPlayer, ScoreManager.Get().gameOver.ToString());
+        Debug.Log("Winner is " + winnerPlayer.ToString() + " and loser is " + loserPlayer.ToString());
+        GetMatchData(winnerPlayer, loserPlayer, ScoreManager.Get().gameOver);
     }
 
-    public void GetMatchData(player winfighter, player losefighter, string winner)
+    public void GetMatchData(player winfighter, player losefighter, FighterFilter winner)
     {
         _winnerName.text = winfighter.ToString().ToUpper();
-        _winnerNumber.text = winner;
+        string playerNum = "P2";
+
+        if (winner == FighterFilter.one) { playerNum = "P1"; }
+
+        _winnerNumber.text = playerNum;
 
         switch (winfighter)
         {
@@ -188,7 +186,7 @@ public class WinScreen : MonoBehaviour
         if (Keyboard.current.spaceKey.IsPressed())
         {
             //showWinScreen(winner, loser);
-            GetMatchData(winner, loser, "P1");
+            GetMatchData(winner, loser, FighterFilter.one);
         }
     }
 

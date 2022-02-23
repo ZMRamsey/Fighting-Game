@@ -80,11 +80,11 @@ public class MapMenuManager : MonoBehaviour
 
     void MoveAside()
     {
-        C1.transform.position = Vector3.MoveTowards(C1.transform.position,_C1Final, 1600f*Time.deltaTime);
-        C2.transform.position = Vector3.MoveTowards(C2.transform.position, _C2Final, 1600f * Time.deltaTime);
-        CSButtons.transform.position = Vector3.MoveTowards(CSButtons.transform.position, _CBTNSFinal, 5000f * Time.deltaTime);
-        RButtons.transform.position = Vector3.MoveTowards(RButtons.transform.position, _RuleBTNSFinal, 5000f * Time.deltaTime);
-        RMapPreview.transform.position = Vector3.MoveTowards(RMapPreview.transform.position, _MapPreviewFinal, 5000f * Time.deltaTime);
+        C1.transform.position = Vector3.MoveTowards(C1.transform.position,_C1Final, 160000f*Time.deltaTime);
+        C2.transform.position = Vector3.MoveTowards(C2.transform.position, _C2Final, 160000f * Time.deltaTime);
+        CSButtons.transform.position = Vector3.MoveTowards(CSButtons.transform.position, _CBTNSFinal, 500000f * Time.deltaTime);
+        RButtons.transform.position = Vector3.MoveTowards(RButtons.transform.position, _RuleBTNSFinal, 500000f * Time.deltaTime);
+        RMapPreview.transform.position = Vector3.MoveTowards(RMapPreview.transform.position, _MapPreviewFinal, 500000f * Time.deltaTime);
 
     }
     void MoveToInit()
@@ -233,7 +233,6 @@ public class MapMenuManager : MonoBehaviour
             {
                 DeselectHighlightedMenu();
             }
-
 
         }
         

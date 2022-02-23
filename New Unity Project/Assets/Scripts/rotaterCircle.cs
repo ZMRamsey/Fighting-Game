@@ -82,7 +82,7 @@ public class rotaterCircle : MonoBehaviour
     private void Update()
     {
         //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
-        if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
+        if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
         {
             if (!_optionsSelected)
             {
@@ -95,7 +95,7 @@ public class rotaterCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
+        else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
         {
             if (!_optionsSelected)
             {
@@ -107,7 +107,7 @@ public class rotaterCircle : MonoBehaviour
                 }
             }
         }
-        else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             if (!_optionsSelected)
             {
@@ -146,7 +146,7 @@ public class rotaterCircle : MonoBehaviour
         //        Debug.Log("Sent");
         //    }
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.5f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 100f *Time.deltaTime);
 
     }
 

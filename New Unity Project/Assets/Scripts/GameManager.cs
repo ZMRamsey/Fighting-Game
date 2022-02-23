@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
             SetUpGame();
         }
 
-        if (NewRound())
+        if (NewRound() && KOCoroutine == null)
         {
             SetUpGame();
             NewRoundNeeded(false);

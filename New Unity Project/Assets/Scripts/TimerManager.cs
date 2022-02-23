@@ -19,14 +19,14 @@ public class TimerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timerActive = true;
-        currentTime = startMinutes * 60;
-        textColor = currentTimeText.color;
     }
 
     private void Awake()
     {
         _instance = this;
+        timerActive = true;
+        currentTime = startMinutes * 60;
+        textColor = currentTimeText.color;
     }
 
     public static TimerManager Get()
@@ -38,6 +38,7 @@ public class TimerManager : MonoBehaviour
     {
         timerActive = true;
         currentTime = startMinutes * 60;
+        currentTimeText.text = currentTime.ToString().Split('.')[0];
         anim.enabled = false;
         currentTimeText.fontSize = 100.0f;
         currentTimeText.color = textColor;

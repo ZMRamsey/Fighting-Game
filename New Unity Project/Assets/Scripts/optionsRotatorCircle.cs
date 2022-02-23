@@ -7,10 +7,11 @@ using UnityEngine.InputSystem;
 public class optionsRotatorCircle : MonoBehaviour
 {
     public moveMenus men;
+    public FullScreenRotator fullRot;
 
     public float turningRate = 0.75f;
     int sceneIndex = 0;
-    int subSceneIndex = 10;
+    public int subSceneIndex = 10;
     float _rotatorConstant = 0.0f;
 
     int firstOption = 0;
@@ -65,6 +66,7 @@ public class optionsRotatorCircle : MonoBehaviour
         Debug.Log("Options Active");
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
         _returnSelected = false;
+        Screen.SetResolution(1920,1080,true);
     }
 
     void SlideToMainMenu()
@@ -119,7 +121,8 @@ public class optionsRotatorCircle : MonoBehaviour
 
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        
+        fullRot.qualArrSelector = 0;
+        fullRot.resolutionsArrSelector = 0;
     }
     void SubMenuMoveDown()
     {
@@ -135,7 +138,8 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex-1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        
+        fullRot.qualArrSelector = 0;
+        fullRot.resolutionsArrSelector = 0;
     }
 
     void WrapAroundToPlay()
@@ -228,7 +232,7 @@ public class optionsRotatorCircle : MonoBehaviour
     private void Update()
     {
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
-        if (Keyboard.current.spaceKey.wasPressedThisFrame  || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame  || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             if (sceneIndex != 2)
             {
@@ -236,14 +240,14 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
+        else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
         {
             controlSelectionWheel();
         }
 
         if (_isControllingSubMenu == false)
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
+            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
             {
                 _rotatorConstant -= 30.0f;
                 sceneIndex += 1;
@@ -254,7 +258,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     WrapAroundToPlay();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
+            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
             {
                 _rotatorConstant += 30.0f;
                 sceneIndex -= 1;
@@ -265,7 +269,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     WrapAroundToQuit();
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+            else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
             {
                 if (sceneIndex == 2)
                 {
@@ -276,7 +280,7 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         else
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame || Gamepad.current.leftStick.up.wasPressedThisFrame)
+            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
             {
                 subSceneIndex -= 1;
                 if(subSceneIndex < firstOption)
@@ -288,7 +292,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || Gamepad.current.leftStick.down.wasPressedThisFrame)
+            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
             {
                 subSceneIndex += 1;
                 if (subSceneIndex > lastOption)
@@ -343,6 +347,7 @@ public class optionsRotatorCircle : MonoBehaviour
         //}
 
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 0.25f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 100f * Time.deltaTime);
+        Debug.Log(subSceneIndex);
     }
 }
