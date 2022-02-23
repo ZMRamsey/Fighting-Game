@@ -19698,7 +19698,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 16, y: -2, z: 0}
+    _hitDirection: {x: 13, y: -5, z: 0}
   _chipMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -19706,7 +19706,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 1, y: 2, z: 0}
+    _hitDirection: {x: 0.1, y: 2, z: 0}
   _driveMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -19714,7 +19714,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 12, y: 3, z: 0}
+    _hitDirection: {x: 12, y: 0.5, z: 0}
   _dropMove:
     _animationPath: smash
     _clipName: Test_Shoot

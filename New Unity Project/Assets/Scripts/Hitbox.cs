@@ -55,11 +55,6 @@ public class Hitbox : MonoBehaviour
                 Vector3 dir = _currentMove.GetHitDirection();
                 dir.x = xFace;
 
-                if(_currentMove.GetType() == ShotType.smash && _self.IsGrounded())
-                {
-                    dir.y = 0.5f;
-                }
-
                 ball.SetBounciness(1);
                 if (_currentMove.GetType() == ShotType.chip)
                 {

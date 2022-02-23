@@ -72,20 +72,14 @@ public class ShuttleCock : MonoBehaviour
 
     void ProcessForce(Vector3 direction, Vector3 movementInfluence, float charge, bool slowDown) {
         float processedSpeed = _speed;
-        float chargedAmount = charge;
 
         if (slowDown) {
             processedSpeed = 2;
         }
 
-        if(charge <= 0.2f)
+        if(charge <= 0.4f)
         {
             processedSpeed = 2f;
-            chargedAmount = 0.6f;
-        }
-        else
-        {
-            chargedAmount = 1;
         }
 
         _hit.Play();
@@ -93,8 +87,9 @@ public class ShuttleCock : MonoBehaviour
         SquishBall();
 
         _rb.velocity = Vector3.zero;
-        Vector3 proceDir = direction * Mathf.Clamp(chargedAmount, 0.2f, 1f);
-        //print(processedSpeed);
+
+        Vector3 proceDir = direction;
+
         Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
 
         _rb.velocity = targetVelocity;
