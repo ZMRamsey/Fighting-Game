@@ -25267,7 +25267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fdbe9e84733342bec985eea44fe38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMinutes: 0.6
+  startMinutes: 0.1
   currentTimeText: {fileID: 1315896169}
   anim: {fileID: 1315896171}
 --- !u!1 &1755116885

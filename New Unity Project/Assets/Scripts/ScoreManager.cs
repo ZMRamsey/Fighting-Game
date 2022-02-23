@@ -18,6 +18,10 @@ public class ScoreManager : MonoBehaviour
     {
         _instance = this;
         DontDestroyOnLoad(this.gameObject);
+        if (GameManager.Get() != null)
+        {
+            SetPlayerTypes(GameManager.Get().GetFighterOne().name.Split('(')[0], GameManager.Get().GetFighterTwo().name.Split('(')[0]);
+        }
     }
 
     public static ScoreManager Get()
@@ -111,13 +115,9 @@ public class ScoreManager : MonoBehaviour
 
     public FighterFilter DecideThreeRoundWinner()
     {
-        FighterFilter winner;
+        FighterFilter winner = FighterFilter.one;
 
-        if (_p1Wins > _p2Wins)
-        {
-            winner = FighterFilter.one;
-        }
-        else
+        if (_p1Wins < _p2Wins)
         {
             winner = FighterFilter.two;
         }
@@ -139,7 +139,7 @@ public class ScoreManager : MonoBehaviour
     public bool IsThereWinner()
     {
         bool winner = false;
-        if (GetScores()[GetCurrentRound() - 1, 1] > GetScores()[GetCurrentRound() - 1, 0] || GetScores()[GetCurrentRound() - 1, 0] > GetScores()[GetCurrentRound() - 1, 1])
+        if (GetScores()[GetCurrentRound() - 1, 1] != GetScores()[GetCurrentRound() - 1, 0])
         {
             winner = true;
         }

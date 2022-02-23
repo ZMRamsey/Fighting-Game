@@ -73,7 +73,7 @@ public class WinScreen : MonoBehaviour
                 winnerPlayer = player.esme;
                 break;
 
-            case "Racket": //Racket
+            case "Raket": //Raket
                 winnerPlayer = player.raket;
                 break;
 
@@ -100,7 +100,7 @@ public class WinScreen : MonoBehaviour
                 loserPlayer = player.esme;
                 break;
 
-            case "Racket": //Racket
+            case "Raket": //Raket
                 loserPlayer = player.raket;
                 break;
 
@@ -109,16 +109,16 @@ public class WinScreen : MonoBehaviour
                 break;
         }
 
-        Debug.Log("Winner is " + winnerPlayer.ToString() + " and loser is " + winnerPlayer.ToString());
+        Debug.Log("Winner is " + winnerPlayer.ToString() + " and loser is " + loserPlayer.ToString());
         GetMatchData(winnerPlayer, loserPlayer, ScoreManager.Get().gameOver);
     }
 
     public void GetMatchData(player winfighter, player losefighter, FighterFilter winner)
     {
         _winnerName.text = winfighter.ToString().ToUpper();
-        string playerNum = "p2";
+        string playerNum = "P2";
 
-        if (winner == FighterFilter.one) { playerNum = "p1"; }
+        if (winner == FighterFilter.one) { playerNum = "P1"; }
 
         _winnerNumber.text = playerNum;
 
