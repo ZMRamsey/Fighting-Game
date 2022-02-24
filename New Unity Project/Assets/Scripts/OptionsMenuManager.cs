@@ -32,7 +32,13 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject[] characters;
     public Sprite[] sprites;
 
+    public Sprite[] esme;
+
+    int[] _selectedChar = new int[2];
+
     public GameObject[] ConfirmedCharacters;
+    public GameObject[] animatedCharactersLeft;
+    public GameObject[] animatedCharactersRight;
 
     public Sprite spriteDeselected;
     public Sprite spriteSelected;
@@ -47,17 +53,31 @@ public class OptionsMenuManager : MonoBehaviour
 
     void SelectHighlightedCharacter()
     {
-        if(_selectionIndex == 3)
+        if(_confirmedIndex == 0)
         {
-            _randSelection = Random.Range(0, 7);
-            ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_randSelection];
-            ConfirmedCharacters[_confirmedIndex].SetActive(true);
+            if (_selectionIndex == 3)
+            {
+                _randSelection = Random.Range(0, 7);
+                animatedCharactersLeft[_randSelection].SetActive(true);
+            }
+            else
+            {
+                animatedCharactersLeft[_selectionIndex].SetActive(true);
+            }
         }
         else
         {
-            ConfirmedCharacters[_confirmedIndex].GetComponent<Image>().sprite = sprites[_selectionIndex];
-            ConfirmedCharacters[_confirmedIndex].SetActive(true);
+            if (_selectionIndex == 3)
+            {
+                _randSelection = Random.Range(0, 7);
+                animatedCharactersRight[_randSelection].SetActive(true);
+            }
+            else
+            {
+                animatedCharactersRight[_selectionIndex].SetActive(true);
+            }
         }
+        
 
         readyButtons[_confirmedIndex].SetActive(true);
         _confirmedIndex++;
@@ -107,7 +127,31 @@ public class OptionsMenuManager : MonoBehaviour
 
     void DeselectCharacter()
     {
-        ConfirmedCharacters[_confirmedIndex].SetActive(false);
+        if(_confirmedIndex == 0)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                animatedCharactersLeft[i].SetActive(false);
+            }
+        }
+        else if(_confirmedIndex == 1)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                animatedCharactersRight[i].SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < 7; i++)
+        {
+            animatedCharactersRight[i].SetActive(false);
+            animatedCharactersLeft[i].SetActive(false);
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            readyButtons[i].SetActive(false);
+        }
         readyButtons[_confirmedIndex].SetActive(false);
         _confirmedIndex--;
         if (_confirmedIndex < 0)
@@ -220,11 +264,22 @@ public class OptionsMenuManager : MonoBehaviour
                 LoadRuleSetSelect();
             }
             HighlightSelectedCharacter();
+
+            
         }
         else
         {
             characters[_selectionIndex].SetActive(false);
         }
-        
+
+        //if (_selectedChar[0] == 1)
+        //{
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        Debug.Log(i);
+        //        ConfirmedCharacters[0].GetComponent<Image>().sprite = esme[i/2];
+        //    }
+        //}
+        Debug.Log(_confirmedIndex);
     }
 }
