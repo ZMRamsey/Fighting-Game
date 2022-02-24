@@ -44,6 +44,9 @@ public class ShuttleCock : MonoBehaviour
     float jail;
     int _bouncesSinceShoot;
 
+    GameObject target;
+    bool following;
+
     float chargedForce;
     float chargeTimer;
 
@@ -205,6 +208,12 @@ public class ShuttleCock : MonoBehaviour
 
         if (_frozen) {
             _rb.velocity = Vector3.zero;
+        }
+
+        if (following)
+        {
+            Vector3.Lerp(transform.position, target.gameObject.transform.position, 0.75f);
+            Debug.Log("Heading to player");
         }
 
         ShuttleUpdate();
@@ -397,22 +406,12 @@ public class ShuttleCock : MonoBehaviour
     {
         _bouncesBeforeSpeedLoss = 2;
     }
-    //public void JailSpeed()
-    //{
-    //    if(jail == 0)
-    //    {
-    //        jail = _rb.velocity.magnitude;
-    //        Debug.Log("Jailed at: " + jail);
-    //    }
-    //}
 
-    //public void UnJailSpeed()
-    //{
-    //    if(jail != 0)
-    //    {
-    //        _rb.velocity *= jail;
-    //        jail = 0;
-    //        Debug.Log("UnJailed to " + _rb.velocity.magnitude);
-    //    }
-    //}
+    public void followPlayer(GameObject player, bool follow)
+    {
+        target = player;
+        following = follow;
+    }
+
+    
 }

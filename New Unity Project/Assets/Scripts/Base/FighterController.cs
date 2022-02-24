@@ -15,6 +15,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _chipMove;
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
+    [SerializeField] float _grabTimer;
     //[SerializeField] FighterMove _specialMove;
     FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
@@ -57,8 +58,10 @@ public abstract class FighterController : MonoBehaviour
     bool _freeze;
     bool _isDashing;
     bool _hasBounced;
+    bool _holdingShuttle;
     float _lastTapAxis;
     float _meterPenaltyTimer;
+    float _grabbingTime;
     RaycastHit _groundHit;
 
     FighterAction _myAction;
@@ -179,6 +182,17 @@ public abstract class FighterController : MonoBehaviour
             }
 
             _rigidbody.velocity = _controllerVelocity;
+
+            _holdingShuttle = _hitboxes.HasShuttle();
+
+            if (_holdingShuttle)
+            {
+                _grabbingTime += 0.1f;
+            }
+            else
+            {
+                _grabbingTime = 0;
+            }
         }
     }
 
@@ -357,6 +371,7 @@ public abstract class FighterController : MonoBehaviour
         _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
     }
 
+    //Plays a swing sound for the attack
     public virtual void OnAttack() {
         if (_swingSounds.Length > 0) {
             _source.PlayOneShot(_swingSounds[UnityEngine.Random.Range(0, _swingSounds.Length)], 1.75f);
@@ -422,8 +437,7 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-
-
+    //Checks all input commands from InputHandler
     public virtual void ProcessInput() {
         if (IsGrounded()) {
             _myStance = FighterStance.standing;
@@ -460,12 +474,38 @@ public abstract class FighterController : MonoBehaviour
             UpdateMove();
         }
 
-        if (_inputHandler.GetChip() && _canAttack) {
-            _canAttack = false;
-            ResetHitbox();
+        if (_inputHandler.GetChip() && _canAttack)
+        {
+            if (_holdingShuttle) //Holding down grab while holding shuttle
+            {
+                //Move shuttle to player position
+                _canAttack = false;
+                _hitboxes.SetGrab(true);
+            }
+            else //Holding grab while not holding shuttle
+            {
+                //Scoop up shuttle
+                _canAttack = false;
+                _currentMove = _chipMove;
+                ResetHitbox();
+                _animator.SetTrigger(_currentMove.GetPath());
+                _hitboxes.SetMove(_currentMove);
+                _hitboxes.SetGrab(true);
+                _failSafeAttack = _currentMove.GetClip().length;
+            }
+        }
+        else
+        {
+            if (_holdingShuttle) //Releasing shuttle with chip
+            {
+                _hitboxes.SetGrab(false);
+                _holdingShuttle = false;
+                _canAttack = false;
+                ResetHitbox();
 
-            _currentMove = _chipMove;
-            UpdateMove();
+                _currentMove = _chipMove;
+                UpdateMove();
+            }
         }
 
 
@@ -506,7 +546,6 @@ public abstract class FighterController : MonoBehaviour
             _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
         }
     }
-
 
     public bool IsGrounded() {
         if (_myAction == FighterAction.jumping) {

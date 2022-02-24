@@ -9,6 +9,8 @@ public class Hitbox : MonoBehaviour
     FighterController _self;
     [SerializeField] FighterMove _currentMove;
     [SerializeField] GameObject _character;
+    bool grabbing;
+    bool hasBall;
 
     public List<GameObject> cooldowns = new List<GameObject>();
 
@@ -55,44 +57,27 @@ public class Hitbox : MonoBehaviour
                 Vector3 dir = _currentMove.GetHitDirection();
                 dir.x = xFace;
 
-                ball.SetBounciness(1);
-                if (_currentMove.GetType() == ShotType.chip)
+                if (!grabbing)
                 {
-                    ball.SetBounciness(0.2f);
+
+                    ball.SetBounciness(1);
+                    if (_currentMove.GetType() == ShotType.chip)
+                    {
+                        ball.SetBounciness(0.2f);
+                    }
+
+                    ball.followPlayer(_character, false);
+
+                    ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
                 }
-
-                ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
-
-                //Play shot type depending on button pressed
-                //switch (_shotType)
-                //{
-                //    case ShotType.chip:
-                //        ball.JailSpeed();
-                //        ball.Shoot(new Vector3(1f * facing, 2f), handler.GetInput(), true, true, _self.GetFilter(), _self);
-                //        break;
-
-                //    case ShotType.drive:
-                //        ball.Shoot(new Vector3(12f * facing, 3f), handler.GetInput(), true, false, _self.GetFilter(), _self);
-                //        ball.UnJailSpeed();
-                //        break;
-
-                //    case ShotType.drop:
-                //        ball.Shoot(new Vector3(6f * facing, 6f), handler.GetInput(), true, false, _self.GetFilter(), _self);
-                //        ball.UnJailSpeed();
-                //        break;
-
-                //    case ShotType.smash:
-                //        if (!_self.IsGrounded()) {
-                //            y = -2f;
-                //        }
-                //        ball.Shoot(new Vector3(16f * facing, y), handler.GetInput(), true, false, _self.GetFilter(), _self);
-                //        ball.UnJailSpeed();
-                //        break;
-
-                //    default:
-                //        Debug.Log("Fuccy Wuccy Has Occurred");
-                //        break;
-                //}
+                else
+                {
+                    ball.followPlayer(_character, true);
+                    Debug.Log("Following now");
+                    hasBall = true;
+                    //fuccy wuccy
+                }
+                
             }
             cooldowns.Add(collision.gameObject);
         }
@@ -102,8 +87,20 @@ public class Hitbox : MonoBehaviour
         _currentMove = move;
     }
 
+    public void SetGrab(bool grab)
+    {
+        grabbing = grab;
+    }
+
+    public bool HasShuttle()
+    {
+        return hasBall;
+    }
+
     public void ResetCD()
     {
         cooldowns.Clear();
+        hasBall = false;
+        
     }
 }

@@ -10,6 +10,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] InputState _state;
     PlayerDevice _playerDevice;
     public float _inputX;
+    public float _grabHoldTime;
 
     public bool _jumpInput;
     public bool _jumpHeld;
@@ -20,6 +21,8 @@ public class InputHandler : MonoBehaviour
     public bool _specialInput;
     public bool _dashInput;
     public bool _chargeInput;
+    public bool _grabInput;
+    public bool _chipHeld;
 
     public void SetDevice(PlayerDevice device) {
         _playerDevice = device;
@@ -62,21 +65,27 @@ public class InputHandler : MonoBehaviour
                 _smashInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame) {
-                _chipInput = true;
-            }
-
             if (_playerDevice.GetKeyboard().spaceKey.wasPressedThisFrame) {
                 _specialInput = true;
             }
 
-            if(_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
+            //if(_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
+            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
             {
                 _chargeInput = true;
             }
             else
             {
                 _chargeInput = false;
+            }
+
+            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame)
+            {
+                _chipInput = true;
+            }
+            else if (_playerDevice.GetKeyboard().downArrowKey.wasReleasedThisFrame)
+            {
+                _chipInput = false;
             }
         }
 
@@ -132,13 +141,23 @@ public class InputHandler : MonoBehaviour
                 _specialInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed || _playerDevice.GetGamepad().buttonSouth.isPressed)
+            //if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed || _playerDevice.GetGamepad().buttonSouth.isPressed)
+            if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed)
             {
                 _chargeInput = true;
             }
             else
             {
                 _chargeInput = false;
+            }
+
+            if (_playerDevice.GetGamepad().buttonSouth.isPressed)
+            {
+                _grabInput = true;
+            }
+            else
+            {
+                _grabInput = false;
             }
         }
     }
@@ -217,5 +236,10 @@ public class InputHandler : MonoBehaviour
     public bool GetCharge()
     {
         return _chargeInput;
+    }
+
+    public bool GetGrab()
+    {
+        return _grabInput;
     }
 }
