@@ -41,7 +41,7 @@ public class TextLoadingController : MonoBehaviour
         {
             loadingText.text = "Continue";
         }
-        if(fadeoutCount > 300 && Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        if(fadeoutCount > 300 && Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             SceneManager.LoadScene("InputTest");
         }

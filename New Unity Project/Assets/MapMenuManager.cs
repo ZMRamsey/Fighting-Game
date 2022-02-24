@@ -187,7 +187,7 @@ public class MapMenuManager : MonoBehaviour
         {
             if (!_mapSelected)
             {
-                if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
+                if (Keyboard.current.aKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.left.wasPressedThisFrame))
                 {
                     _rSelectionIndex -= 1;
                     MoveLeft();
@@ -197,7 +197,7 @@ public class MapMenuManager : MonoBehaviour
                         NotMove();
                     }
                 }
-                else if (Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
+                else if (Keyboard.current.dKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.right.wasPressedThisFrame))
                 {
                     _rSelectionIndex += 1;
                     MoveRight();
@@ -209,7 +209,7 @@ public class MapMenuManager : MonoBehaviour
                 }
                 HighlightSelectedMap();
 
-                if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
+                if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
                 {
                     _moveAside = false;
                     opMan.ControlCharacterSelection();
@@ -218,18 +218,18 @@ public class MapMenuManager : MonoBehaviour
             
             if (_isReady)
             {
-                if(Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+                if(Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
                     GoToLoadingMenu();
                 }
             }
             
-            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
             {
                 SelectHighlightedMap();
                 _isReady = true;
             }
-            else if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame)
+            else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
             {
                 DeselectHighlightedMenu();
             }
