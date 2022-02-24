@@ -393,6 +393,5 @@ public class optionsRotatorCircle : MonoBehaviour
 
         _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 100f * Time.deltaTime);
-        Debug.Log(subSceneIndex);
     }
 }
