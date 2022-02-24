@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class optionsRotatorCircle : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class optionsRotatorCircle : MonoBehaviour
     int firstOption = 0;
     int lastOption = 2;
 
+    //Confirm Selection(s)
+    public TextMeshProUGUI confirmText;
+    public GameObject confirmSelectionBox;
+    public bool _isConfirmingOptions;
+    public bool _hasConfirmedOptions;
+
     //Display Options
     int resIndex = 0;
 
@@ -27,7 +34,7 @@ public class optionsRotatorCircle : MonoBehaviour
     bool _isControllingSubMenu = false;
 
     bool _returnSelected = false;
-
+    bool _choicesConfirmed = false;
 
     public GameObject[] subMenus;
     public GameObject[] subMenuOptions;
@@ -175,6 +182,12 @@ public class optionsRotatorCircle : MonoBehaviour
             _isControllingSubMenu = true;
         }
     }
+
+    void ConfirmSettingsChoices()
+    {
+        confirmSelectionBox.SetActive(true);
+        _isConfirmingOptions = true;
+    }
     void controlSelectionWheel()
     {
         _isControllingSubMenu = false;
@@ -186,6 +199,7 @@ public class optionsRotatorCircle : MonoBehaviour
 
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         subSceneIndex = 10;
+        ConfirmSettingsChoices();
     }
 
     void ReturnToMenu()
@@ -229,6 +243,20 @@ public class optionsRotatorCircle : MonoBehaviour
         }
     }
 
+    void ResetOptions()
+    {
+        _isConfirmingOptions = false;
+        fullRot.fullscreenEnabled = true;
+        fullRot.resolutionsArrSelector = 0;
+        fullRot.qualArrSelector = 0;
+    }
+
+    void HasSelectedOptions()
+    {
+        confirmSelectionBox.SetActive(false);
+        _isConfirmingOptions = false;
+    }
+
     private void Update()
     {
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
@@ -247,35 +275,52 @@ public class optionsRotatorCircle : MonoBehaviour
 
         if (_isControllingSubMenu == false)
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+            if (!_isConfirmingOptions)
             {
-                _rotatorConstant -= 30.0f;
-                sceneIndex += 1;
-                MoveUp();
-                if (sceneIndex > 2)
+                if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
                 {
-                    sceneIndex = 0;
-                    WrapAroundToPlay();
+                    _rotatorConstant -= 30.0f;
+                    sceneIndex += 1;
+                    MoveUp();
+                    if (sceneIndex > 2)
+                    {
+                        sceneIndex = 0;
+                        WrapAroundToPlay();
+                    }
+                }
+                else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+                {
+                    _rotatorConstant += 30.0f;
+                    sceneIndex -= 1;
+                    MoveDown();
+                    if (sceneIndex < 0)
+                    {
+                        sceneIndex = 2;
+                        WrapAroundToQuit();
+                    }
+                }
+                else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                {
+                    if (sceneIndex == 2)
+                    {
+                        PanToMenu();
+                    }
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            else
             {
-                _rotatorConstant += 30.0f;
-                sceneIndex -= 1;
-                MoveDown();
-                if (sceneIndex < 0)
+                if(Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
-                    sceneIndex = 2;
-                    WrapAroundToQuit();
+                    _hasConfirmedOptions = true;
+                    HasSelectedOptions();
+                }
+                else if(Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+                {
+                    _hasConfirmedOptions = false;
+                    HasSelectedOptions();
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-            {
-                if (sceneIndex == 2)
-                {
-                    PanToMenu();
-                }
-            }
+            
 
         }
         else
