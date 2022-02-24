@@ -49,6 +49,7 @@ public class rotaterCircle : MonoBehaviour
         Debug.Log("Main Active");
         optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
         _optionsSelected = false;
+        Screen.SetResolution(1920, 1080, true);
     }
     //void SlideToOptions()
     //{
