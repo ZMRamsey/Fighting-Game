@@ -339,6 +339,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ServeTimer()
     {
+        TimerManager.Get().SetTimerState(false);
         _rally = 0; 
         _successive = 0;
         yield return new WaitForSeconds(1);
@@ -346,6 +347,7 @@ public class GameManager : MonoBehaviour
         {
             _shuttle.Shoot(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new Vector3(), false, false, FighterFilter.both);
         }
+        TimerManager.Get().SetTimerState(true);
     }
 
     public void IncreaseRally()
