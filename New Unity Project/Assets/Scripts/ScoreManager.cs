@@ -60,17 +60,22 @@ public class ScoreManager : MonoBehaviour
             _p2Wins++;
         }
 
-        if ((_p1Wins < 2) && (_p2Wins < 2))
-        {
-            _roundIndex++;
-            TimerManager.Get().ResetTimer();
-        }
-        else
-        {
-            //End Game
-            gameOver = DecideThreeRoundWinner();
-            Debug.Log("The winner is " + gameOver.ToString());
-        }
+        gameOver = DecideGameWinner();
+        Debug.Log("The winner is " + gameOver.ToString());
+
+        //if ((_p1Wins < 2) && (_p2Wins < 2))
+        //{
+        //    _roundIndex++;
+        //    TimerManager.Get().ResetTimer();
+        //}
+        //else
+        //{
+        //    //End Game
+        //    gameOver = DecideThreeRoundWinner();
+        //    Debug.Log("The winner is " + gameOver.ToString());
+        //}
+
+
     }
 
     public int[,] GetScores()
