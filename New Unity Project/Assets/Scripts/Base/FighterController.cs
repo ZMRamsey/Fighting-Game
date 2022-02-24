@@ -498,7 +498,7 @@ public abstract class FighterController : MonoBehaviour
         //AddMeter(12);
         AddMeter(12 / GameManager.Get().GetSuccessive());
         //Debug.Log("Successive: " + GameManager.Get().GetSuccessive() + " - Meter Gain: " + 12 / GameManager.Get().GetSuccessive());
-        _animator.Play(_smashMove.GetClipName(), 0, (1f / _smashMove.GetFrames()) * _smashMove.GetHitFrame());
+        _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();
 
