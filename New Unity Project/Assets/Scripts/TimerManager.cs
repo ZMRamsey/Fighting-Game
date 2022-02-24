@@ -26,6 +26,7 @@ public class TimerManager : MonoBehaviour
         _instance = this;
         timerActive = true;
         currentTime = startMinutes * 60;
+        currentTimeText.text = currentTime.ToString().Split('.')[0];
         textColor = currentTimeText.color;
     }
 
@@ -52,10 +53,10 @@ public class TimerManager : MonoBehaviour
         if (timerActive && GameManager.Get().KOCoroutine == null)
         {
             currentTime -= Time.deltaTime;
-            if (currentTime <= 0)
+            if (timerActive && currentTime <= 0)
             {
                 timerActive = false;
-                
+                currentTime = 0;
             }
 
             if (timerActive)
@@ -67,14 +68,14 @@ public class TimerManager : MonoBehaviour
                 }
             }
         }
-        if (!timerActive && ScoreManager.Get().IsThereWinner())
+        if (!timerActive && ScoreManager.Get().IsThereWinner() && currentTime == 0)
         {
             timerActive = true;
             ScoreManager.Get().NextRound();
             GameManager.Get().NewRoundNeeded(true);
             //ResetTimer();
         }
-        if (!timerActive && !ScoreManager.Get().IsThereWinner())
+        if (!timerActive && !ScoreManager.Get().IsThereWinner() && currentTime == 0)
         {
             anim.Play("OverTimer");
             currentTimeText.text = "OVERTIME";
@@ -94,5 +95,9 @@ public class TimerManager : MonoBehaviour
     {
     }
 
+    public void SetTimerState(bool state)
+    {
+        timerActive = state;
+    }
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -93,6 +94,10 @@ public class WinScreen : MonoBehaviour
 
     public void Update()
     {
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void SetQuoteText(string winner, string loser)

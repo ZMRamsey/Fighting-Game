@@ -9737,6 +9737,37 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &3285670767946953627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1540060562962152633}
+  m_Layer: 7
+  m_Name: Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1540060562962152633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285670767946953627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4874520955026096313}
+  m_Father: {fileID: 4874520954698666503}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3407787060656560429
 GameObject:
   m_ObjectHideFlags: 0
@@ -19489,7 +19520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4874520953764879582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: -0.37, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4874520954698666503}
@@ -19693,14 +19724,14 @@ MonoBehaviour:
   _filter: 0
   _smashMove:
     _animationPath: smash
-    _clipName: Test_Shoot
+    _clipName: Raket_Smash
     _shotType: 3
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _frames: 11
+    _hitFrame: 5
+    _clip: {fileID: 7400000, guid: 89212665f3b0b1540bd50248506a1b6b, type: 2}
     _hitDirection: {x: 13, y: -5, z: 0}
   _chipMove:
-    _animationPath: smash
+    _animationPath: drive
     _clipName: Test_Shoot
     _shotType: 0
     _frames: 15
@@ -19708,7 +19739,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 0.1, y: 2, z: 0}
   _driveMove:
-    _animationPath: smash
+    _animationPath: drive
     _clipName: Test_Shoot
     _shotType: 1
     _frames: 15
@@ -19716,7 +19747,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 12, y: 0.5, z: 0}
   _dropMove:
-    _animationPath: smash
+    _animationPath: drive
     _clipName: Test_Shoot
     _shotType: 2
     _frames: 15
@@ -19959,7 +19990,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
-  - {fileID: 4874520955026096313}
+  - {fileID: 1540060562962152633}
   m_Father: {fileID: 4874520953764879583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20076,7 +20107,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
-  m_Father: {fileID: 4874520954698666503}
+  m_Father: {fileID: 1540060562962152633}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4874520955026096319
