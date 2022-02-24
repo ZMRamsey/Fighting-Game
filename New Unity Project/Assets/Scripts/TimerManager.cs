@@ -34,7 +34,7 @@ public class TimerManager : MonoBehaviour
         return _instance;
     } 
 
-    void ResetTimer()
+    public void ResetTimer()
     {
         timerActive = true;
         currentTime = startMinutes * 60;
@@ -72,7 +72,7 @@ public class TimerManager : MonoBehaviour
             timerActive = true;
             ScoreManager.Get().NextRound();
             GameManager.Get().NewRoundNeeded(true);
-            ResetTimer();
+            //ResetTimer();
         }
         if (!timerActive && !ScoreManager.Get().IsThereWinner())
         {

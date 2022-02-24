@@ -417,4 +417,10 @@ public class GameManager : MonoBehaviour
     {
         needNewRound = needed;
     }
+
+    public GameSettings GetGameSettings()
+    {
+        return _settings;
+    }
+
 }

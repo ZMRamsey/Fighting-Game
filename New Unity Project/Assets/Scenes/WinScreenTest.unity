@@ -2509,8 +2509,6 @@ MonoBehaviour:
   _winnerNumber: {fileID: 1626761755}
   _quote: {fileID: 1488226949}
   epicGamerVictoryRoyal: {fileID: 1862993466}
-  winner: 4
-  loser: 3
   _roundIndex: 0
   _p1r1: 8
   _p2r1: 7
@@ -2521,7 +2519,7 @@ MonoBehaviour:
   Danny: {fileID: 21300000, guid: 6f85fc2889195e04d9b2adf3ff79d040, type: 3}
   Hunter: {fileID: 21300000, guid: fb0284e0658265d4ba24b2dfb67ad2bc, type: 3}
   Esme: {fileID: 21300000, guid: f23061acce49d3048849b10de59e52dc, type: 3}
-  Racket: {fileID: 21300000, guid: 359ae903b9ceef1468ba98d4b7bdaca9, type: 3}
+  Raket: {fileID: 21300000, guid: 359ae903b9ceef1468ba98d4b7bdaca9, type: 3}
   Ganz: {fileID: 21300000, guid: 4438dfc654c20264f8634465aad39011, type: 3}
   imageHolder: {fileID: 2138216661}
 --- !u!4 &1862993465

@@ -63,6 +63,7 @@ public class ScoreManager : MonoBehaviour
         if ((_p1Wins < 2) && (_p2Wins < 2))
         {
             _roundIndex++;
+            TimerManager.Get().ResetTimer();
         }
         else
         {
@@ -144,5 +145,15 @@ public class ScoreManager : MonoBehaviour
             winner = true;
         }
         return winner;
+    }
+
+    public FighterFilter GetLoser(FighterFilter winner)
+    {
+        FighterFilter loser = FighterFilter.one;
+        if (winner == FighterFilter.one)
+        {
+            loser = FighterFilter.two;
+        }
+        return loser;
     }
 }

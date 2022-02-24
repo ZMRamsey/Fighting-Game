@@ -18,6 +18,16 @@ public class GameSettings : ScriptableObject
         return _fighterTwo;
     }
 
+    public FighterProfile GetFighterProfile(FighterFilter filter)
+    {
+        FighterProfile profile = _fighterOne;
+        if (filter == FighterFilter.two)
+        {
+            profile = _fighterTwo;
+        }
+        return profile;
+    }
+
     public void SetFighterOneProfile(FighterProfile profile) {
         _fighterOne = profile;
     }
