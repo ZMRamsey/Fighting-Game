@@ -64,29 +64,6 @@ public class WinScreen : MonoBehaviour
         }
         _winnerNumber.text = playerNum;
 
-        //switch (winfighter)
-        //{
-        //    case "Danny":
-        //        imageHolder.sprite = Danny;
-        //        break;
-
-        //    case "Hunter":
-        //        imageHolder.sprite = Hunter;
-        //        break;
-
-        //    case "Esme":
-        //        imageHolder.sprite = Esme;
-        //        break;
-
-        //    case "Raket":
-        //        imageHolder.sprite = Racket;
-        //        break;
-
-        //    case "Ganz":
-        //        imageHolder.sprite = Ganz;
-        //        break;
-        //}
-
         showWinner();
         showWinnerName();
         showQuote(winfighter, losefighter);
@@ -157,7 +134,7 @@ public class WinScreen : MonoBehaviour
                         break;
 
                     case "Raket":
-                        text = "No damn explosives near the face, I’ve got a photo shoot tomorrow and I’m not risking the money-maker";
+                        text = "No damn explosives near the face, I’ve got a photo shoot tomorrow and I’m not risking the money-maker.";
                         break;
 
                     case "Esme":
@@ -179,7 +156,7 @@ public class WinScreen : MonoBehaviour
                 switch (loser)
                 {
                     case "Danny":
-                        text = "BORING! Mix it up a bit, it’s like playing against my grandad";
+                        text = "BORING! Mix it up a bit, it’s like playing against my grandad.";
                         break;
 
                     case "Hunter":
@@ -187,15 +164,15 @@ public class WinScreen : MonoBehaviour
                         break;
 
                     case "Esme":
-                        text = "Are you doing that with holograms? Drones? Strings? Whatever, my racquet is still better";
+                        text = "Are you doing that with holograms? Drones? Strings? Whatever, my racquet is still better.";
                         break;
 
                     case "Ganz":
-                        text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets";
+                        text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets.";
                         break;
 
                     default:
-                        text = "Wait, I didn’t make a cloning machine. I call dibs on being the original";
+                        text = "Wait, I didn’t make a cloning machine. I call dibs on being the original.";
                         break;
                 }
                 break;
@@ -205,7 +182,7 @@ public class WinScreen : MonoBehaviour
                 switch (loser)
                 {
                     case "Danny":
-                        text = "You might be good at the sport, but you’re out of your depth with us";
+                        text = "You might be good at the sport, but you’re out of your depth with us.";
                         break;
 
                     case "Hunter":
