@@ -50,8 +50,8 @@ public class WinScreen : MonoBehaviour
             _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
         }
 
-        string win = ScoreManager.Get().playerOne;
-        string lose = ScoreManager.Get().playerTwo;
+        string win = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
+        string lose = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();
         player winnerPlayer = player.danny;
         player loserPlayer = player.danny;
 
