@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour
     public FighterFilter gameOver = FighterFilter.both;
     public string playerOne;
     public string playerTwo;
+    [SerializeField] int _pointsToWin = 11;
 
     void Awake()
     {
@@ -38,7 +39,7 @@ public class ScoreManager : MonoBehaviour
         }
         _scores[_roundIndex, scorerN]++;
         Debug.Log("Round " + (_roundIndex+1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
-        if (_scores[_roundIndex, scorerN] == 11)
+        if (_scores[_roundIndex, scorerN] == _pointsToWin)
         {
             NextRound();
         }

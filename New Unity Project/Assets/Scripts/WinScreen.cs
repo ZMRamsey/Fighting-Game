@@ -20,6 +20,9 @@ public class WinScreen : MonoBehaviour
     [SerializeField] AudioSource epicGamerVictoryRoyal;
     string text;
 
+    string winner;
+    string loser;
+
     public int _roundIndex;
     public int _p1r1;
     public int _p2r1;
@@ -47,28 +50,25 @@ public class WinScreen : MonoBehaviour
             _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
         }
 
-        string win = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
-        string lose = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();
+        winner = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
+        loser = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();
 
-        Debug.Log("Winner is " + win + " and loser is " + lose);
-        GetMatchData(win, lose, ScoreManager.Get().gameOver);
+        Debug.Log("Winner is " + winner + " and loser is " + loser);
+        GetMatchData(ScoreManager.Get().gameOver);
     }
 
-    public void GetMatchData(string winfighter, string losefighter, FighterFilter winner)
+    public void GetMatchData(FighterFilter winnerFilter)
     {
-        _winnerName.text = winfighter.ToString().ToUpper();
+        _winnerName.text = winner;
 
         string playerNum = "P2";
-        if (winner == FighterFilter.one) 
+        if (winnerFilter == FighterFilter.one) 
         { 
             playerNum = "P1"; 
         }
         _winnerNumber.text = playerNum;
 
-        showWinner();
-        showWinnerName();
-        showQuote(winfighter, losefighter);
-        showCharacter();
+        StartCoroutine("DisplayPause");
     }
 
     public void showWinner()
@@ -86,9 +86,9 @@ public class WinScreen : MonoBehaviour
         _character.SetActive(true);
     }
 
-    public void showQuote(string winner, string loser)
+    public void showQuote()
     {
-        SetQuoteText(winner, loser);
+        SetQuoteText();
         _quote.SetActive(true);
     }
 
@@ -100,7 +100,7 @@ public class WinScreen : MonoBehaviour
         }
     }
 
-    public void SetQuoteText(string winner, string loser)
+    public void SetQuoteText()
     {
         switch (winner)
         {
@@ -239,5 +239,15 @@ public class WinScreen : MonoBehaviour
                 break;
         }
         _quote.GetComponent<Scroller>().text = text;
+    }
+
+    IEnumerator DisplayPause()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        showWinner();
+        showWinnerName();
+        showQuote();
+        showCharacter();
     }
 }
