@@ -39,6 +39,7 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject[] ConfirmedCharacters;
     public GameObject[] animatedCharactersLeft;
     public GameObject[] animatedCharactersRight;
+    public GameObject[] animatedCharactersCentre;
 
     public Sprite spriteDeselected;
     public Sprite spriteSelected;
@@ -92,7 +93,7 @@ public class OptionsMenuManager : MonoBehaviour
     void LoadRuleSetSelect()
     {
 
-        characters[_selectionIndex].SetActive(false);
+        animatedCharactersCentre[_selectionIndex].SetActive(false);
         Debug.Log("Selection Index: " + _selectionIndex);
         man._moveAside = true;
         _isSelectingMap = true;
@@ -165,16 +166,16 @@ public class OptionsMenuManager : MonoBehaviour
         //characters[_selectionIndex].SetActive(true);
         if(_hasGoneLeft == true)
         {
-            characters[_selectionIndex+1].SetActive(false);
+            animatedCharactersCentre[_selectionIndex+1].SetActive(false);
             buttons[_selectionIndex+1].GetComponent<Image>().sprite = spriteDeselected;
         }
         else if(_hasGoneRight == true)
         {
-            characters[_selectionIndex-1].SetActive(false);
+            animatedCharactersCentre[_selectionIndex-1].SetActive(false);
             buttons[_selectionIndex-1].GetComponent<Image>().sprite = spriteDeselected;
         }
 
-        characters[_selectionIndex].SetActive(true);
+        animatedCharactersCentre[_selectionIndex].SetActive(true);
         buttons[_selectionIndex].GetComponent<Image>().sprite = spriteSelected;
 
         if (_selectionIndex == 3)
@@ -263,7 +264,7 @@ public class OptionsMenuManager : MonoBehaviour
             {
                 LoadRuleSetSelect();
             }
-            HighlightSelectedCharacter();
+            //HighlightSelectedCharacter();
 
             
         }
