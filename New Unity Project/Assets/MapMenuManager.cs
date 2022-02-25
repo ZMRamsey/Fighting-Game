@@ -57,8 +57,8 @@ public class MapMenuManager : MonoBehaviour
     Vector3 _RuleBTNSInit = new Vector3(620.8455f, -500f, 90f);
     Vector3 _RuleBTNSFinal = new Vector3(620.8455f, 318.6927f, 90f);
 
-    Vector3 _MapPreviewInit = new Vector3(608.9289f, 1000.5408f, 0f);
-    Vector3 _MapPreviewFinal = new Vector3(608.9289f, 447.5408f, 0f);
+    Vector3 _MapPreviewInit = new Vector3(623.9289f, 1000.5408f, 0f);
+    Vector3 _MapPreviewFinal = new Vector3(623.9289f, 447.5408f, 0f);
 
 
     void MoveLeft()

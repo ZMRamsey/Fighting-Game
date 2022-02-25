@@ -60,11 +60,11 @@ public class FullScreenRotator : MonoBehaviour
                 }
             }
             resolutionText.text = resolutionsArr[resolutionsArrSelector];
-            //if(resolutionsArrSelector == 0)
+            //if (resolutionsArrSelector == 0)
             //{
             //    Screen.SetResolution(1920, 1080, fullscreenEnabled);
             //}
-            //else if(resolutionsArrSelector == 1)
+            //else if (resolutionsArrSelector == 1)
             //{
             //    Screen.SetResolution(1280, 720, fullscreenEnabled);
             //}
