@@ -281,6 +281,6 @@ public class OptionsMenuManager : MonoBehaviour
         //        ConfirmedCharacters[0].GetComponent<Image>().sprite = esme[i/2];
         //    }
         //}
-        Debug.Log(_confirmedIndex);
+        //Debug.Log(_confirmedIndex);
     }
 }
