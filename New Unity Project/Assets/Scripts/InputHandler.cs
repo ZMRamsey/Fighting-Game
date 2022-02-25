@@ -21,6 +21,8 @@ public class InputHandler : MonoBehaviour
     public bool _dashInput;
     public bool _chargeInput;
 
+    public bool _fallInput;
+
     public void SetDevice(PlayerDevice device) {
         _playerDevice = device;
     }
@@ -41,9 +43,15 @@ public class InputHandler : MonoBehaviour
 
             if (_playerDevice.GetKeyboard().wKey.isPressed) {
                 _jumpInput = true;
+                _fallInput = false;
             }
             else {
                 _jumpInput = false;
+            }
+
+            if (_playerDevice.GetKeyboard().sKey.wasPressedThisFrame)
+            {
+                _fallInput = true;
             }
 
             if (_playerDevice.GetKeyboard().shiftKey.wasPressedThisFrame) {
@@ -175,6 +183,13 @@ public class InputHandler : MonoBehaviour
 
         var temp = _jumpInput;
         _jumpInput = false;
+        return temp;
+    }
+
+    public bool GetFall()
+    {
+        var temp = _fallInput;
+        _fallInput = false;
         return temp;
     }
 

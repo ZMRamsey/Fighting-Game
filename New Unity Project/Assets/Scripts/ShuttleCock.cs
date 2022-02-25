@@ -41,7 +41,6 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
-    float jail;
     int _bouncesSinceShoot;
 
     float chargedForce;
