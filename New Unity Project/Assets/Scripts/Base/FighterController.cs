@@ -457,6 +457,10 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _smashMove;
             UpdateMove();
         }
+        else if (_inputHandler.GetSmash() && !_canAttack)
+        {
+            Debug.Log("Can't attack");
+        }
 
         if (_inputHandler.GetDrive() && _canAttack) {
             _canAttack = false;
@@ -464,6 +468,10 @@ public abstract class FighterController : MonoBehaviour
 
             _currentMove = _driveMove;
             UpdateMove();
+        }
+        else if (_inputHandler.GetDrive() && !_canAttack)
+        {
+            Debug.Log("Can't attack");
         }
 
         if (_inputHandler.GetDrop() && _canAttack) {
@@ -473,31 +481,25 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _dropMove;
             UpdateMove();
         }
-
-        if (_inputHandler.GetChip() && _canAttack)
+        else if (_inputHandler.GetDrop() && !_canAttack)
         {
-            if (_holdingShuttle) //Holding down grab while holding shuttle
-            {
-                //Move shuttle to player position
-                _canAttack = false;
-                _hitboxes.SetGrab(true);
-            }
-            else //Holding grab while not holding shuttle
-            {
-                //Scoop up shuttle
-                _canAttack = false;
-                _currentMove = _chipMove;
-                ResetHitbox();
-                _animator.SetTrigger(_currentMove.GetPath());
-                _hitboxes.SetMove(_currentMove);
-                _hitboxes.SetGrab(true);
-                _failSafeAttack = _currentMove.GetClip().length;
-            }
+            Debug.Log("Can't attack");
         }
-        else
+
+        if (_inputHandler.GetChip() && !_holdingShuttle && _canAttack)
         {
-            if (_holdingShuttle) //Releasing shuttle with chip
-            {
+            //Scoop up shuttle
+            _canAttack = false;
+            _currentMove = _chipMove;
+            ResetHitbox();
+            _animator.SetTrigger(_currentMove.GetPath());
+            _hitboxes.SetGrab(true);
+            _hitboxes.SetMove(_currentMove);
+            _holdingShuttle = _hitboxes.HasShuttle();
+            //_failSafeAttack = _currentMove.GetClip().length;
+        }
+        else if (!_inputHandler.GetChip() && !_canAttack && _holdingShuttle)
+        {
                 _hitboxes.SetGrab(false);
                 _holdingShuttle = false;
                 _canAttack = false;
@@ -505,7 +507,6 @@ public abstract class FighterController : MonoBehaviour
 
                 _currentMove = _chipMove;
                 UpdateMove();
-            }
         }
 
 

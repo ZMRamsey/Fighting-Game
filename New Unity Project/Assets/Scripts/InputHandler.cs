@@ -53,15 +53,15 @@ public class InputHandler : MonoBehaviour
                 _dashInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().lKey.wasPressedThisFrame) {
                 _driveInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().upArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().upArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().iKey.wasPressedThisFrame) {
                 _dropInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().leftArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().leftArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().jKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
 
@@ -69,8 +69,8 @@ public class InputHandler : MonoBehaviour
                 _specialInput = true;
             }
 
-            //if(_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
-            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
+            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed || _playerDevice.GetKeyboard().lKey.wasPressedThisFrame
+                || _playerDevice.GetKeyboard().iKey.wasPressedThisFrame || _playerDevice.GetKeyboard().jKey.wasPressedThisFrame)
             {
                 _chargeInput = true;
             }
@@ -79,11 +79,11 @@ public class InputHandler : MonoBehaviour
                 _chargeInput = false;
             }
 
-            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame)
+            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().kKey.wasPressedThisFrame)
             {
                 _chipInput = true;
             }
-            else if (_playerDevice.GetKeyboard().downArrowKey.wasReleasedThisFrame)
+            else if (_playerDevice.GetKeyboard().downArrowKey.wasReleasedThisFrame || _playerDevice.GetKeyboard().kKey.wasPressedThisFrame)
             {
                 _chipInput = false;
             }

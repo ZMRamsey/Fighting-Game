@@ -212,8 +212,8 @@ public class ShuttleCock : MonoBehaviour
 
         if (following)
         {
-            Vector3.Lerp(transform.position, target.gameObject.transform.position, 0.75f);
-            Debug.Log("Heading to player");
+            _rb.velocity = Vector3.zero;
+            transform.position = target.transform.position;
         }
 
         ShuttleUpdate();
