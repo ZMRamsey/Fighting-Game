@@ -49,6 +49,7 @@ public class WinScreen : MonoBehaviour
 
     public void Awake()
     {
+        winnerAnimation = RaketA;
         //int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
         //ScoreManager.Get().SetScores(newScores);
         int[,] scores = ScoreManager.Get().GetScores();
@@ -104,7 +105,7 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.enterKey.wasPressedThisFrame)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("InputTest");
         }
         winnerAnimation.SetActive(true);
         imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;

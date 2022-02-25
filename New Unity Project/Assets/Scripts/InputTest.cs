@@ -31,7 +31,7 @@ public class InputTest : MonoBehaviour
 
     public void SetPVAI() {
         _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
-        Application.LoadLevel(1);
+        Application.LoadLevel("Base");
     }
 
     public void SetPlayer(Keyboard keyboard) {
@@ -48,7 +48,7 @@ public class InputTest : MonoBehaviour
             _settings.GetFighterTwoDevice().SetKeyboard(keyboard);
             _settings.GetFighterTwoDevice().SetInputState(InputState.player);
             setPlayerTwo = true;
-            Application.LoadLevel(1);
+            Application.LoadLevel("Base");
             return;
         }
     }
@@ -68,7 +68,7 @@ public class InputTest : MonoBehaviour
             _settings.GetFighterTwoDevice().SetGamepad(gamepad);
             _settings.GetFighterTwoDevice().SetInputState(InputState.player);
             setPlayerTwo = true;
-            Application.LoadLevel(1);
+            Application.LoadLevel("Base");
             return;
         }
     }
