@@ -39,11 +39,18 @@ public class WinScreen : MonoBehaviour
     public Sprite Ganz;
     public Image imageHolder;
 
+    public GameObject winnerAnimation;
+
+    public GameObject DannyA;
+    public GameObject HunterA;
+    public GameObject EsmeA;
+    public GameObject RaketA;
+    public GameObject GanzA;
+
     public void Awake()
     {
         //int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
         //ScoreManager.Get().SetScores(newScores);
-
         int[,] scores = ScoreManager.Get().GetScores();
         //for (int i = 0; i < _roundIndex + 1; i++)
         //{
@@ -99,6 +106,8 @@ public class WinScreen : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+        winnerAnimation.SetActive(true);
+        imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void SetQuoteText()
@@ -106,7 +115,7 @@ public class WinScreen : MonoBehaviour
         switch (winner)
         {
             case "Danny":
-                imageHolder.sprite = Danny;
+                winnerAnimation = DannyA;
                 switch (loser)
                 {
                     case "Hunter":
@@ -132,7 +141,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Hunter":
-                imageHolder.sprite = Hunter;
+                winnerAnimation = HunterA;
                 switch (loser)
                 {
                     case "Danny":
@@ -158,7 +167,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Raket":
-                imageHolder.sprite = Raket;
+                winnerAnimation = RaketA;
                 switch (loser)
                 {
                     case "Danny":
@@ -184,7 +193,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Esme":
-                imageHolder.sprite = Esme;
+                winnerAnimation = EsmeA;
                 switch (loser)
                 {
                     case "Danny":
@@ -210,7 +219,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Ganz":
-                imageHolder.sprite = Ganz;
+                winnerAnimation = GanzA;
                 switch (loser)
                 {
                     case "Danny":
