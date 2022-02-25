@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
 
+        PerformCoinToss();
+
         _shuttle.SetOwner(_fighterOne.GetController());
         _shuttle.SetOwner(FighterFilter.both);
 
@@ -423,6 +425,12 @@ public class GameManager : MonoBehaviour
     public GameSettings GetGameSettings()
     {
         return _settings;
+    }
+
+    public void PerformCoinToss()
+    {
+        int rand = Random.Range(1, 100);
+        ScoreManager.Get().SetLastScorer(rand % 2);
     }
 
 }

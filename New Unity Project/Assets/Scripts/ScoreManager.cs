@@ -94,7 +94,7 @@ public class ScoreManager : MonoBehaviour
         return _roundIndex+1;
     }
 
-    private void SetLastScorer(int scorer)
+    public void SetLastScorer(int scorer)
     {
         _lastScorer = scorer;
     }
