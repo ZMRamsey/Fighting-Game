@@ -23,13 +23,13 @@ public class WinScreen : MonoBehaviour
     string winner;
     string loser;
 
-    public int _roundIndex;
-    public int _p1r1;
-    public int _p2r1;
-    public int _p1r2;
-    public int _p2r2;
-    public int _p1r3;
-    public int _p2r3;
+    //public int _roundIndex;
+    //public int _p1r1;
+    //public int _p2r1;
+    //public int _p1r2;
+    //public int _p2r2;
+    //public int _p1r3;
+    //public int _p2r3;
 
 
     public Sprite Danny;
@@ -41,14 +41,15 @@ public class WinScreen : MonoBehaviour
 
     public void Awake()
     {
-        int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
-        ScoreManager.Get().SetScores(newScores);
+        //int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
+        //ScoreManager.Get().SetScores(newScores);
 
         int[,] scores = ScoreManager.Get().GetScores();
-        for (int i = 0; i < _roundIndex + 1; i++)
-        {
-            _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
-        }
+        //for (int i = 0; i < _roundIndex + 1; i++)
+        //{
+        //    _score.text += "Round " + (i+1) + ": " + scores[i, 0] + " - " + scores[i, 1] + "\n";
+        //}
+        _score.text = "" + scores[0, 0] + " - " + scores[0, 1];
 
         winner = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
         loser = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();

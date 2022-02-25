@@ -230,7 +230,7 @@ MonoBehaviour:
   gameOver: 2
   playerOne: 
   playerTwo: 
-  _pointsToWin: 5
+  _pointsToWin: 11
 --- !u!4 &41621520
 Transform:
   m_ObjectHideFlags: 0
