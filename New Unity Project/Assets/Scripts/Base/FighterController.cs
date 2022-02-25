@@ -141,11 +141,6 @@ public abstract class FighterController : MonoBehaviour
             OnDash();
         }
 
-        if (CanFastFall() && _inputHandler.GetFall())
-        {
-            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 100);
-        }
-
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
         _animator.SetBool("running", IsGrounded() && _inputHandler.GetInputX() != 0 && Mathf.Abs(_rigidbody.velocity.magnitude) > 1);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
@@ -222,6 +217,11 @@ public abstract class FighterController : MonoBehaviour
         }
         else {
             xCalculation = xCalculation * 0.8f;
+        }
+
+        if (CanHahaFunny() && _inputHandler.GetCrouch())
+        {
+            print("nice");
         }
 
         AdjustControllerHeight();
@@ -391,6 +391,11 @@ public abstract class FighterController : MonoBehaviour
             else {
                 _myAction = FighterAction.none;
             }
+        }
+
+        if (CanFastFall() && _inputHandler.GetCrouch())
+        {
+            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 100);
         }
 
         var xCalculation = _inputHandler.GetInputX();
@@ -577,5 +582,10 @@ public abstract class FighterController : MonoBehaviour
     public bool CanFastFall()
     {
         return _myStance == FighterStance.air && _rigidbody.velocity.y < 0.1;
+    }
+
+    public bool CanHahaFunny()
+    {
+        return _myState != FighterState.dead && GameManager.Get().KOCoroutine != null;
     }
 }
