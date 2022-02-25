@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuTest.unity
     guid: 2b70f0233a04ab34eb24acca151e359d
   - enabled: 1
-    path: Assets/Scenes/Base.unity
-    guid: fcab26c06bd553e45b59816891ebf1c3
-  - enabled: 1
     path: Assets/Scenes/InputTest.unity
     guid: 3adfcf59b7ece29439a0b44430efd4c3
+  - enabled: 1
+    path: Assets/Scenes/Base.unity
+    guid: fcab26c06bd553e45b59816891ebf1c3
   - enabled: 0
     path: Assets/Scenes/MatthewTest.unity
     guid: 175e1b195476f784b8bf7b0f1e7f566b
