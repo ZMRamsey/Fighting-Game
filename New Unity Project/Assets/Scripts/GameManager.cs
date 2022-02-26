@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource _music;
     [SerializeField] UIFader _screenFader;
     [SerializeField] GameObject _debugCanvas;
+    [SerializeField] GameObject _debugCamera;
     [SerializeField] GameEventManager _eventManager;
     GameEvent _lastSuperEvent;
     AudioSource _source;
@@ -111,12 +112,8 @@ public class GameManager : MonoBehaviour
 
         if (Keyboard.current.f10Key.wasPressedThisFrame) {
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
+            _debugCamera.SetActive(_debugCanvas.activeSelf);
         }
-
-        if (Keyboard.current.f11Key.wasPressedThisFrame) {
-            KOEvent();
-        }
-
 
         if (_spinDown) {
             _music.pitch *= 0.99f;
