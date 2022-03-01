@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         GameObject fTwoObject = Instantiate(_settings.GetFighterTwoProfile().GetPrefab(), _fighterTwo.GetSpawn(), Quaternion.identity);
 
         _fighterOne.SetUpFighter(fOneObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
-        _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
+        _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterTwoProfile().GetName());
 
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {
@@ -180,8 +180,8 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
 
-        _fighterOne.GetController().InitializeFighter();
-        _fighterTwo.GetController().InitializeFighter();
+        _fighterOne.GetController().ResetFighter();
+        _fighterTwo.GetController().ResetFighter();
 
         _fighterOne.GetUI().SetBarValue(0.0f);
         _fighterTwo.GetUI().SetBarValue(0.0f);

@@ -7,6 +7,7 @@ public class FighterProfile : ScriptableObject
 {
     [SerializeField] string _fighterName;
     [SerializeField] GameObject _fighterPrefab;
+    [SerializeField] Material[] _fighterPalettes;
 
     public string GetName() {
         return _fighterName;
@@ -14,5 +15,9 @@ public class FighterProfile : ScriptableObject
 
     public GameObject GetPrefab() {
         return _fighterPrefab;
+    }
+    
+    public Material GetPallete(int ID) {
+        return _fighterPalettes[ID];
     }
 }

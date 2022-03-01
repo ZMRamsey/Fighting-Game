@@ -16,7 +16,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
     //[SerializeField] FighterMove _specialMove;
-    FighterMove _currentMove;
+    protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
 
     [Header("Base Settings")]
@@ -34,7 +34,7 @@ public abstract class FighterController : MonoBehaviour
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
     [SerializeField] FighterEffects _effects;
-    [SerializeField] SpriteRenderer _renderer;
+    [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] float _stretchSpeed;
     [SerializeField] AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
@@ -69,7 +69,7 @@ public abstract class FighterController : MonoBehaviour
     [Header("Components")]
     [SerializeField] Animator _animator;
     [SerializeField] FighterUI _fighterUI;
-    InputHandler _inputHandler;
+    protected InputHandler _inputHandler;
     Rigidbody _rigidbody;
 
     private void Awake() {
@@ -119,6 +119,10 @@ public abstract class FighterController : MonoBehaviour
             _source.panStereo = 0.5f;
         }
 
+        ResetFighter();
+    }
+
+    public void ResetFighter() {
         _animator.SetLayerWeight(1, 0);
 
         _myState = FighterState.inControl;
@@ -130,16 +134,16 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void Update() {
-
-        if (IsGrounded()) {
-            if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
-                _meterPenaltyTimer += Time.deltaTime;
-                if (_meterPenaltyTimer > 0.1f && GameManager.Get().KOCoroutine == null) {
-                    ReduceMeter(1);
-                    _meterPenaltyTimer = 0;
-                }
-            }
-        }
+        OnFighterUpdate();
+        //if (IsGrounded()) {
+        //    if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
+        //        _meterPenaltyTimer += Time.deltaTime;
+        //        if (_meterPenaltyTimer > 0.1f && GameManager.Get().KOCoroutine == null) {
+        //            ReduceMeter(1);
+        //            _meterPenaltyTimer = 0;
+        //        }
+        //    }
+        //}
 
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
@@ -150,8 +154,6 @@ public abstract class FighterController : MonoBehaviour
         }
 
         _animator.SetBool("grounded", _myStance == FighterStance.standing);
-        _animator.SetBool("running", IsGrounded() && _inputHandler.GetInputX() != 0);
-        _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
 
         Vector3 controllerVel = _controllerVelocity.normalized;
@@ -167,6 +169,9 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        _animator.SetBool("running", _myState == FighterState.inControl && IsGrounded() && _inputHandler.GetInputX() != 0);
+        _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
+
 
         if (!_freeze) {
             if (_myStance == FighterStance.standing) {
@@ -214,6 +219,10 @@ public abstract class FighterController : MonoBehaviour
         //    _controllerVelocity = new Vector3(-30, 3, 0);
         //}
         print("SET");
+    }
+
+    public virtual void OnFighterUpdate() {
+
     }
 
     float xCalculation = 0.0f;
@@ -403,7 +412,7 @@ public abstract class FighterController : MonoBehaviour
 
         if (CanFastFall() && _inputHandler.GetCrouch())
         {
-            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 100);
+            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 20);
         }
 
         var xCalculation = _inputHandler.GetInputX();
@@ -505,7 +514,7 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-    void UpdateMove() {
+    public virtual void UpdateMove() {
         OnAttack();
         _hitboxes.SetMove(_currentMove);
         _animator.SetTrigger(_currentMove.GetPath());

@@ -18,6 +18,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] protected Transform _ballHolder;
     [SerializeField] protected float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
+    [SerializeField] GameObject _wind;
 
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
@@ -59,7 +60,7 @@ public class ShuttleCock : MonoBehaviour
 
     [ContextMenu("Reset Ball")]
     public virtual void ResetShuttle() {
-        if(shootCoroutine != null) {
+        if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
         _rb.isKinematic = true;
@@ -76,8 +77,7 @@ public class ShuttleCock : MonoBehaviour
             processedSpeed = 2;
         }
 
-        if(charge <= 0.4f)
-        {
+        if (charge <= 0.4f) {
             processedSpeed = 2f;
         }
 
@@ -127,7 +127,7 @@ public class ShuttleCock : MonoBehaviour
 
     public void Bounce(float axis) {
         _speed = 1;
-        ProcessForce(new Vector3(axis,1,0), Vector3.one, 1, false);
+        ProcessForce(new Vector3(axis, 1, 0), Vector3.one, 1, false);
     }
 
     public FighterController GetOwner() {
@@ -146,13 +146,15 @@ public class ShuttleCock : MonoBehaviour
     float volume;
     void Update() {
 
-        if (_frozen)
-        {
-            if (_owner.GetComponent<InputHandler>().GetCharge())
-            {
+        if (_frozen) {
+            if (_owner.GetComponent<InputHandler>().GetCharge()) {
                 chargeTimer += Time.deltaTime;
                 chargedForce = Mathf.Clamp(chargeTimer, 0f, 0.3f) / 0.3f;
             }
+        }
+
+        if (_wind) {
+            _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
         }
 
         if (GetSpeedPercent() > _trailActiveOnPercent) {
@@ -177,7 +179,7 @@ public class ShuttleCock : MonoBehaviour
         if (_windSource != null) {
 
             _windSource.panStereo = vol;
-            
+
 
             if (GetSpeedPercent() > _windActiveOnPercent) {
                 volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
@@ -186,7 +188,7 @@ public class ShuttleCock : MonoBehaviour
                 volume = Mathf.Lerp(volume, 0, Time.deltaTime * 10);
             }
 
-           _windSource.volume = volume;
+            _windSource.volume = volume;
         }
 
         _magnitude = _rb.velocity.magnitude;
@@ -242,15 +244,15 @@ public class ShuttleCock : MonoBehaviour
 
     }
 
- 
+
     void OnWallHit(ContactPoint point, float force) {
         _bouncesSinceShoot++;
 
-        if(_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
+        if (_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
             _speed -= _gainPerHit;
         }
 
-        volume =0;
+        volume = 0;
         if (force > 80) {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
         }
@@ -307,8 +309,10 @@ public class ShuttleCock : MonoBehaviour
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
 
-        if(collision.gameObject.layer == 14) {
-            collision.gameObject.GetComponent<StageNet>().NetHit(collision.relativeVelocity);
+        if (collision.gameObject.GetComponent<StageNet>()) {
+            if (collision.gameObject.layer == 14) {
+                collision.gameObject.GetComponent<StageNet>().NetHit(collision.relativeVelocity);
+            }
         }
     }
 
@@ -357,8 +361,7 @@ public class ShuttleCock : MonoBehaviour
         chargeTimer = 0f;
     }
 
-    public void SetOwner(FighterController owner)
-    {
+    public void SetOwner(FighterController owner) {
         _owner = owner;
 
         SetOwner(owner.GetFilter());
@@ -378,22 +381,18 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
-    public void SetBounciness(float value)
-    {
-        if (transform.root.GetComponent<SphereCollider>()) 
-        {
+    public void SetBounciness(float value) {
+        if (transform.root.GetComponent<SphereCollider>()) {
             transform.root.GetComponent<SphereCollider>().material.bounciness = value;
         }
     }
 
-    public void increaseBounces()
-    {
+    public void increaseBounces() {
         _bouncesBeforeSpeedLoss++;
         print("Bounces: " + _bouncesBeforeSpeedLoss);
     }
 
-    public void resetBounces()
-    {
+    public void resetBounces() {
         _bouncesBeforeSpeedLoss = 2;
     }
     //public void JailSpeed()

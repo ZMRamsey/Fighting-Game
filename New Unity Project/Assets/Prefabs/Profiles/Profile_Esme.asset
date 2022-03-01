@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Profile_Esme
   m_EditorClassIdentifier: 
   _fighterName: Esme
-  _fighterPrefab: {fileID: 4874520954667380368, guid: b655a558776e69145b377bc02c28ee00, type: 3}
+  _fighterPrefab: {fileID: 4874520954667380368, guid: a6dd9c9e59e98e04e8745e34196ebafc, type: 3}
+  _fighterPalettes: []

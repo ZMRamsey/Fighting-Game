@@ -49,10 +49,7 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (_playerDevice.GetKeyboard().sKey.wasPressedThisFrame)
-            {
-                _crouchInput = true;
-            }
+            _crouchInput = _playerDevice.GetKeyboard().sKey.isPressed;
 
             if (_playerDevice.GetKeyboard().shiftKey.wasPressedThisFrame) {
                 _dashInput = true;
@@ -112,10 +109,7 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (_playerDevice.GetGamepad().leftStick.down.wasPressedThisFrame || _playerDevice.GetGamepad().dpad.down.wasPressedThisFrame)
-            {
-                _crouchInput = true;
-            }
+            _crouchInput = _playerDevice.GetGamepad().leftStick.down.isPressed || _playerDevice.GetGamepad().dpad.down.isPressed;
 
             if (_playerDevice.GetGamepad().leftTrigger.wasPressedThisFrame) {
                 _dashInput = true;
@@ -194,9 +188,7 @@ public class InputHandler : MonoBehaviour
 
     public bool GetCrouch()
     {
-        var temp = _crouchInput;
-        _crouchInput = false;
-        return temp;
+        return _crouchInput;
     }
 
     public bool GetSmash() {
