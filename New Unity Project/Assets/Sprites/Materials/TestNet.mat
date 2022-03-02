@@ -57,8 +57,9 @@ Material:
     m_Floats:
     - EdgeWidth: 1.46
     - FresnalStrength: 0
+    - MoveSpeed: 0.05
     - TextureScale: 0.13
-    - _CutoffHeight: 10.99
+    - _CutoffHeight: 40
     - _NoiseScale: 50
     - _NoiseStrength: 1
     m_Colors:

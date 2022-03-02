@@ -29349,6 +29349,7 @@ MonoBehaviour:
   _ballHolder: {fileID: 6655499866484820711}
   _smoothing: 4
   _squishThreshold: 0.1
+  _wind: {fileID: 0}
   _hit: {fileID: 1806418957}
   _wallHit: {fileID: 322338667}
   _trailParticle: {fileID: 680492715618811419}

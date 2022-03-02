@@ -10,14 +10,24 @@ public class EsmeFighter : FighterController
     GameObject _magicRaketObject;
     bool _ghostHitUsed;
     float _shieldTimer;
+    bool _timeStop;
+    float _timeStopTimer;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
         _shieldTimer = 0.0f;
+
         GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetEsmetSuper(), _filter);
 
         _netObject.SetActive(true);
+        //_timeStop = true;
+        //_timeStopTimer = 0.0f;
+        //FighterFilter filter = FighterFilter.one;
+        //if(GetFilter() == filter) {
+        //    filter = FighterFilter.two;
+        //}
 
+        //GameManager.Get().StunFrames(6.0f, filter);
     }
 
     public override void InitializeFighter() {
@@ -42,11 +52,22 @@ public class EsmeFighter : FighterController
 
         if (_netObject) {
             _shieldTimer += Time.deltaTime;
-            if (_shieldTimer > 5.0f) {
+            if (_shieldTimer > 8.0f) {
                 _netObject.SetActive(false);
                 _shieldTimer = 0.0f;
             }
         }
+
+        //if (_timeStop) {
+        //    _timeStopTimer += Time.deltaTime;
+        //    GameManager.Get().GetShuttle().ForceFreeze();
+        //    if (_timeStopTimer > 6.0f) {
+        //        GameManager.Get().GetShuttle().ForceUnfreeze();
+        //        _netObject.SetActive(false);
+        //        _timeStop = false;
+        //        _timeStopTimer = 0.0f;
+        //    }
+        //}
     }
 
     public override void UpdateMove() {

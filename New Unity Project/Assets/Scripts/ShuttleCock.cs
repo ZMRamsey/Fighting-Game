@@ -69,7 +69,7 @@ public class ShuttleCock : MonoBehaviour
         _speed = 1;
     }
 
-
+    Vector3 _lastShootForce;
     void ProcessForce(Vector3 direction, Vector3 movementInfluence, float charge, bool slowDown) {
         float processedSpeed = _speed;
 
@@ -94,6 +94,8 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = targetVelocity;
 
         _speed += _gainPerHit;
+
+        _lastShootForce = targetVelocity;
 
         _bouncesSinceShoot = 0;
     }
@@ -314,6 +316,12 @@ public class ShuttleCock : MonoBehaviour
                 collision.gameObject.GetComponent<StageNet>().NetHit(collision.relativeVelocity);
             }
         }
+
+        if (collision.gameObject.GetComponent<MagicNet>()) {
+            if (collision.gameObject.layer == 14) {
+                collision.gameObject.GetComponent<MagicNet>().OnHit();
+            }
+        }
     }
 
     public void FreezeShuttle(float timer) {
@@ -322,6 +330,17 @@ public class ShuttleCock : MonoBehaviour
         }
 
         shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, timer));
+    }
+
+    public void ForceFreeze() {
+        _rb.isKinematic = true;
+        _frozen = true;
+    }
+
+    public void ForceUnfreeze() {
+        _rb.isKinematic = false;
+        _frozen = false;
+        _rb.velocity = _lastShootForce;
     }
 
     void FixedUpdate() {

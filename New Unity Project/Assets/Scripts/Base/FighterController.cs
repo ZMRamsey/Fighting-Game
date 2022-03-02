@@ -36,7 +36,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterEffects _effects;
     [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] float _stretchSpeed;
-    [SerializeField] AudioSource _source;
+    [SerializeField] protected AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
     [SerializeField] AudioClip[] _hitSounds;
     [SerializeField] AudioClip[] _damageSounds;
