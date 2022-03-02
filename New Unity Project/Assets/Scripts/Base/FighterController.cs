@@ -58,6 +58,7 @@ public abstract class FighterController : MonoBehaviour
     bool _freeze;
     bool _isDashing;
     bool _hasBounced;
+    bool _grounded;
     float _lastTapAxis;
     float _meterPenaltyTimer;
     RaycastHit _groundHit;
@@ -145,6 +146,8 @@ public abstract class FighterController : MonoBehaviour
         //    }
         //}
 
+        _grounded = IsGrounded();
+
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
         ProcessInput();
 
@@ -169,7 +172,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        _animator.SetBool("running", _myState == FighterState.inControl && IsGrounded() && _inputHandler.GetInputX() != 0);
+        _animator.SetBool("running", _myState == FighterState.inControl && _grounded && _inputHandler.GetInputX() != 0);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
 
@@ -202,7 +205,7 @@ public abstract class FighterController : MonoBehaviour
        
         _animator.SetTrigger("KO");
 
-        if (IsGrounded()) {
+        if (_grounded) {
             _animator.SetTrigger("land");
         }
 
@@ -444,7 +447,7 @@ public abstract class FighterController : MonoBehaviour
         //    _myAction = FighterAction.none;
         //}
 
-        if (IsGrounded()) {
+        if (_grounded) {
             _canJump = true;
         }
     }
@@ -452,7 +455,7 @@ public abstract class FighterController : MonoBehaviour
 
 
     public virtual void ProcessInput() {
-        if (IsGrounded()) {
+        if (_grounded) {
             _myStance = FighterStance.standing;
         }
         else {
@@ -535,7 +538,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
 
-    public bool IsGrounded() {
+    bool IsGrounded() {
         if (_myAction == FighterAction.jumping) {
             return false;
         }
@@ -547,6 +550,10 @@ public abstract class FighterController : MonoBehaviour
         }
 
         return groundCheck;
+    }
+
+    public bool GetGrounded() {
+        return _grounded;
     }
 
     public FighterStance GetFighterStance() {
@@ -577,7 +584,7 @@ public abstract class FighterController : MonoBehaviour
         _rigidbody.isKinematic = false;
         _animator.speed = 1;
         _rigidbody.velocity = _controllerVelocity;
-        if (IsGrounded()) {
+        if (_grounded) {
             _canJump = true;
             ResetAttack();
         }

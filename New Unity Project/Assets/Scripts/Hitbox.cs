@@ -98,6 +98,7 @@ public class Hitbox : MonoBehaviour
         }
     }
 
+
     public void SetMove(FighterMove move) {
         _currentMove = move;
     }
