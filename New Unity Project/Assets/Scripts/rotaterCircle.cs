@@ -28,6 +28,8 @@ public class rotaterCircle : MonoBehaviour
     public GameObject optionsScript;
     public GameObject menuScript;
 
+    public GameObject playSubMenu;
+
     //Test Start
     //Test End
 
@@ -37,6 +39,11 @@ public class rotaterCircle : MonoBehaviour
     Vector3 optionsDesiredPos = new Vector3(-813.8442f, 310.5f, 90f);
 
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
+
+    void HighlightPlayButton()
+    {
+
+    }
 
     void PanToOptions()
     {
