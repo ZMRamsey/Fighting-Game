@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle.IsFrozen() && KOCoroutine == null)
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle.IsFrozen() && KOCoroutine == null && EndGameCoroutine == null)
         {
             string scorer = "one";
             if (_shuttle.transform.position.x < 0)
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
             SetUpGame();
         }
 
-        if (NewRound() && KOCoroutine == null)
+        if (NewRound() && KOCoroutine == null && EndGameCoroutine == null)
         {
             SetUpGame();
             NewRoundNeeded(false);
@@ -432,7 +432,7 @@ public class GameManager : MonoBehaviour
         return _successive;
     }
 
-    Coroutine EndGameCoroutine;
+    public Coroutine EndGameCoroutine;
     public void EndGame()
     {
         string p1Name = _settings.GetFighterOneProfile().GetName();
