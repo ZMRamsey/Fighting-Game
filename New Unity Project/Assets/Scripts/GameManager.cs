@@ -138,7 +138,6 @@ public class GameManager : MonoBehaviour
             {
                 scorer = "two";
             }
-            Debug.Log("About to call ground out");
             ScoreManager.Get().UpdateScore(scorer, "GroundOut");
             SetUpGame();
         }
@@ -210,6 +209,7 @@ public class GameManager : MonoBehaviour
         _rally = 0;
         _targetRally = 10;
         _shuttle.resetBounces();
+        TimerManager.Get().ResetPointTimer();
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;
         StartCoroutine("ServeTimer");
@@ -395,11 +395,12 @@ public class GameManager : MonoBehaviour
     {
         _rally++;
         _successive = 1;
-        if (_rally == _targetRally)
-        {
-            _shuttle.increaseBounces();
-            _targetRally += 10;
-        }
+
+        //if (_rally == _targetRally)
+        //{
+        //    _shuttle.increaseBounces();
+        //    _targetRally += 10;
+        //}
     }
 
     public void SuccessiveHit()

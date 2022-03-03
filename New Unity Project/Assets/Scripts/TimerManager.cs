@@ -15,6 +15,9 @@ public class TimerManager : MonoBehaviour
     public TextMeshProUGUI currentTimeText;
     public Animator anim;
     protected Color textColor;
+    private float currentPointTimer;
+    private int internalTarget;
+    [SerializeField] int targetTime = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +53,7 @@ public class TimerManager : MonoBehaviour
     void Update()
     {
 
-        if (timerActive && GameManager.Get().KOCoroutine == null)
+        if (timerActive && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null)
         {
             currentTime -= Time.deltaTime;
             if (timerActive && currentTime <= 0)
@@ -67,7 +70,16 @@ public class TimerManager : MonoBehaviour
                     redTimer();
                 }
             }
+
+            currentPointTimer += Time.deltaTime;
+            
+            if (GetCurrentPointTime() >= internalTarget)
+            {
+                GameManager.Get().GetShuttle().increaseBounces();
+                internalTarget += targetTime;
+            }
         }
+
         if (!timerActive && ScoreManager.Get().IsThereWinner() && currentTime == 0)
         {
             timerActive = true;
@@ -100,4 +112,14 @@ public class TimerManager : MonoBehaviour
         timerActive = state;
     }
 
+    private int GetCurrentPointTime()
+    {
+        return (int)Math.Floor(currentPointTimer);
+    }
+
+    public void ResetPointTimer()
+    {
+        currentPointTimer = 0;
+        internalTarget = targetTime;
+    }
 }
