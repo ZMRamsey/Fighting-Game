@@ -432,7 +432,7 @@ public class GameManager : MonoBehaviour
         return _successive;
     }
 
-    Coroutine EndGameCoroutine;
+    public Coroutine EndGameCoroutine;
     public void EndGame()
     {
         string p1Name = _settings.GetFighterOneProfile().GetName();
