@@ -124,6 +124,8 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void ResetFighter() {
+        OnSuperEnd(true);
+
         _animator.SetLayerWeight(1, 0);
 
         _myState = FighterState.inControl;
@@ -149,7 +151,9 @@ public abstract class FighterController : MonoBehaviour
         _grounded = IsGrounded();
 
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
-        ProcessInput();
+        if (_myState == FighterState.inControl) {
+            ProcessInput();
+        }
 
         if (_inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
             _lastTapAxis = _inputHandler.GetInputX();
@@ -202,26 +206,23 @@ public abstract class FighterController : MonoBehaviour
         _myState = FighterState.dead;
         _animator.Rebind();
         _animator.SetLayerWeight(1, 1);
-       
+
+        //if (_grounded) {
+        //    _animator.SetTrigger("land");
+        //}
+        //else {
+        //    _animator.SetTrigger("KO");
+        //}
+
         _animator.SetTrigger("KO");
+        _grounded = false;
 
-        if (_grounded) {
-            _animator.SetTrigger("land");
-        }
-
-        if(_damageSounds.Length > 0) {
+        if (_damageSounds.Length > 0) {
             _source.PlayOneShot(_damageSounds[UnityEngine.Random.Range(0, _damageSounds.Length)], 1.5f);
         }
 
-
+        OnJump();
         _controllerVelocity = velocity;
-        //if (_filter == FighterFilter.one) {
-        //    _controllerVelocity = new Vector3(30, 3, 0);
-        //}
-        //else {
-        //    _controllerVelocity = new Vector3(-30, 3, 0);
-        //}
-        print("SET");
     }
 
     public virtual void OnFighterUpdate() {
@@ -259,6 +260,23 @@ public abstract class FighterController : MonoBehaviour
         _canAttack = true;
     }
 
+    public void RemoveControl() {
+        if(_myState == FighterState.dead) {
+            return;
+        }
+        _myState = FighterState.restricted;
+    }
+
+    public void PlayWin() {
+        _animator.SetTrigger("win");
+    }
+
+    public void PlayLose() {
+        if (_myState == FighterState.dead) {
+            return;
+        }
+        _animator.SetTrigger("lose");
+    }
 
     void AddMeter(float value)
     {
@@ -295,6 +313,10 @@ public abstract class FighterController : MonoBehaviour
     public virtual void OnSuperMechanic() {
         _impact.transform.position = transform.position;
         _impact.Play();
+    }
+
+    public virtual void OnSuperEnd(bool instant) {
+
     }
 
     void AdjustControllerHeight() {

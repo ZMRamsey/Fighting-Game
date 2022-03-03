@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] bool _spinDown;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip _endGameSFX;
+
     public static GameManager Get() {
         return _instance;
     }
@@ -160,6 +163,7 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Get().gameOver != FighterFilter.both)
         {
             EndGame();
+            return;
         }
 
         if (stageCoroutine != null) {
@@ -174,7 +178,6 @@ public class GameManager : MonoBehaviour
         _spinDown = false;
 
         _screenFader.SetAlpha(1);
-
         _shuttle.ResetShuttle();
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
@@ -314,12 +317,49 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.2f);
         _eventManager.GetDarkness().DisableScreen();
         _stageCamera.SetActive(true);
-        yield return new WaitForSecondsRealtime(4f);
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
-        yield return new WaitForSecondsRealtime(4f);
+
+        if (ScoreManager.Get().gameOver != FighterFilter.both) {
+            yield return new WaitForSecondsRealtime(1f);
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+            yield return new WaitForSecondsRealtime(1f);
+        }
+        else {
+            yield return new WaitForSecondsRealtime(4f);
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+            yield return new WaitForSecondsRealtime(4f);
+        }
         SetUpGame();
         KOCoroutine = null;
+    }
+
+    IEnumerator EndGameProcess(FighterFilter winner, FighterFilter loser) {
+        var winController = _fighterOne.GetController();
+        var loseController = _fighterOne.GetController();
+
+        if (winner == FighterFilter.two) {
+            winController = _fighterTwo.GetController();
+        }
+
+        if (loser == FighterFilter.two) {
+            loseController = _fighterTwo.GetController();
+        }
+
+        winController.RemoveControl();
+        loseController.RemoveControl();
+
+        _source.PlayOneShot(_endGameSFX);
+        yield return new WaitForSecondsRealtime(0.5f);
+        winController.PlayWin();
+        loseController.PlayLose();
+
+        CameraContoller.Get().SetFocus(winController.transform);
+
+        yield return new WaitForSecondsRealtime(5f);
+        CameraContoller.Get().SetFocus(loseController.transform);
+        yield return new WaitForSecondsRealtime(5f);
+        SceneManager.LoadScene(sceneName: "WinScreenTest");
     }
 
     public FighterController GetFighterOne() {
@@ -392,6 +432,7 @@ public class GameManager : MonoBehaviour
         return _successive;
     }
 
+    Coroutine EndGameCoroutine;
     public void EndGame()
     {
         string p1Name = _settings.GetFighterOneProfile().GetName();
@@ -406,8 +447,12 @@ public class GameManager : MonoBehaviour
         //FindObjectOfType<ResultsHolderScript>().SetData(p1Name, p2Name, ScoreManager.Get().gameOver.ToString());
 
         //Open end screen
-        SceneManager.LoadScene(sceneName: "WinScreenTest");
-        
+        //SceneManager.LoadScene(sceneName: "WinScreenTest");
+
+        if (EndGameCoroutine == null) {
+            FighterFilter winner = ScoreManager.Get().DecideGameWinner();
+            EndGameCoroutine = StartCoroutine(EndGameProcess(winner, ScoreManager.Get().GetLoser(winner)));
+        }
 
     }
 

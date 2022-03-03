@@ -44,6 +44,16 @@ public class EsmeFighter : FighterController
         _ghostHitUsed = false;
     }
 
+    public override void OnSuperEnd(bool instant) {
+        if (instant) {
+
+        }
+
+        _netObject.SetActive(false);
+        _shieldTimer = 0.0f;
+    }
+
+
     public override void OnFighterUpdate() {
         base.OnFighterUpdate();
 
@@ -53,8 +63,7 @@ public class EsmeFighter : FighterController
         if (_netObject) {
             _shieldTimer += Time.deltaTime;
             if (_shieldTimer > 8.0f) {
-                _netObject.SetActive(false);
-                _shieldTimer = 0.0f;
+                OnSuperEnd(false);
             }
         }
 

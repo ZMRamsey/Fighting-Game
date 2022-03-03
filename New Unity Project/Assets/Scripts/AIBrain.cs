@@ -39,6 +39,7 @@ public class AIBrain : MonoBehaviour
 
             _handler._chargeInput = true;
 
+
             if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
                 int rand = Random.Range(0, 3);
                 int rndDec = 0;
@@ -48,9 +49,12 @@ public class AIBrain : MonoBehaviour
                 }
                 else {
                     if (transform.position.y > 1.2f) {
-                        rndDec = Random.Range(0, 2);
-                        if (rndDec == 1) {
+                        rndDec = Random.Range(0, 3);
+                        if (rndDec == 0) {
                             _handler._smashInput = true;
+                        }
+                        else if (rndDec == 1 && _controller.GetMeter() == 1) {
+                            _handler._specialInput = true;
                         }
                         else {
                             _handler._dropInput = true;

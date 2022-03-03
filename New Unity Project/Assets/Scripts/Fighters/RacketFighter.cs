@@ -16,6 +16,12 @@ public class RacketFighter : FighterController
 
     }
 
+    public override void OnSuperEnd(bool instant) {
+        if (instant && _subWooferObject != null) {
+            _subWooferObject.SetActive(false);
+        }
+    }
+
     public override void InitializeFighter() {
         base.InitializeFighter();
 

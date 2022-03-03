@@ -13,6 +13,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] int _bouncesBeforeSpeedLoss;
     [SerializeField] bool _canKillOnPercentSpeed;
     [SerializeField] float _gainPerHit = 0.25f;
+    [SerializeField] bool _canImpactFrame;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
@@ -23,6 +24,7 @@ public class ShuttleCock : MonoBehaviour
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
+    [SerializeField] ParticleSystem _impactFrameEffect;
     [SerializeField] ParticleSystem _trailParticle;
 
     [Header("Audio")]
@@ -115,8 +117,11 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        if (GetSpeedPercent() >= _killActiveOnPercent) {
+        if (GetSpeedPercent() >= _killActiveOnPercent && _canImpactFrame) {
             GameManager.Get().OnImpactFrame(0.1f);
+            if (_impactFrameEffect) {
+                _impactFrameEffect.Play();
+            }
         }
 
         shootCoroutine = StartCoroutine(ShootProccess(distance, movementInfluence, slowDown, false, 0.3f));
