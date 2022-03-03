@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class rotaterCircle : MonoBehaviour
 {
@@ -13,10 +14,21 @@ public class rotaterCircle : MonoBehaviour
     float _rotatorConstant = 0.0f;
 
     bool _optionsSelected = false;
+    bool _playSelected = false;
+    bool _readyToPlay = false;
+
+    int _playSubSceneIndex = 10;
+
+    int _firstOption = 0;
+    int _lastOption = 1;
+
+    public static int _PlayerOptionSelected = 0;
 
     public GameObject playMenu;
     public GameObject optionsMenu;
     public GameObject mainMenu;
+
+    public GameObject[] playMenuOptions;
 
     public GameObject backgroundPanel;
     public Sprite playMenuBG;
@@ -40,9 +52,9 @@ public class rotaterCircle : MonoBehaviour
 
     private Quaternion _targetRotation = Quaternion.Euler(0.0f,0.0f, 0.0f);
 
-    void HighlightPlayButton()
+    void ControlPlaySubMenu()
     {
-
+        
     }
 
     void PanToOptions()
@@ -87,75 +99,200 @@ public class rotaterCircle : MonoBehaviour
         }
     }
 
+    void controlSubMenu()
+    {
+        if (!_playSelected)
+        {
+            _playSubSceneIndex = 0;
+            playMenuOptions[_playSubSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+            _playSelected = true;
+        }
+    }
+
+    void controlSelectionWheel()
+    {
+        _playSelected = false;
+        playMenuOptions[_playSubSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        _playSubSceneIndex = 10;
+        _readyToPlay = false;
+    }
+
+    void SubMenuMoveUp()
+    {
+        //if(_playSubSceneIndex == 1)
+        //{
+            Debug.Log("Move up");
+            playMenuOptions[_playSubSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+            playMenuOptions[_playSubSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        //}
+    }
+
+    void SubMenuMoveDown()
+    {
+        //if (_playSubSceneIndex == 0)
+        //{
+            Debug.Log("Move down");
+            playMenuOptions[_playSubSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+            playMenuOptions[_playSubSceneIndex - 1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        //}
+    }
+
+    void PressPlay()
+    {
+        if(_playSubSceneIndex == 0)
+        {
+            _PlayerOptionSelected = 0;
+        }
+        else
+        {
+            _PlayerOptionSelected = 1;
+        }
+        SceneManager.LoadScene("InputTest");
+    }
+
     private void Update()
     {
-        //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
-        if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
-            if (!_optionsSelected)
+            if (sceneIndex == 0)
             {
-                _rotatorConstant += 30.0f;
-                sceneIndex += 1;
-                if (sceneIndex > 2)
+                controlSubMenu();
+            }
+
+        }
+        else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+        {
+            controlSelectionWheel();
+        }
+
+        if (sceneIndex == 0)
+        {
+            playSubMenu.SetActive(true);
+        }
+        else
+        {
+            playSubMenu.SetActive(false);
+        }
+
+        if (!_playSelected)
+        {
+            _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 100f * Time.deltaTime);
+            
+            
+            //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
+            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+            {
+                if (!_optionsSelected)
                 {
-                    sceneIndex = 0;
+                    _rotatorConstant += 30.0f;
+                    sceneIndex += 1;
+                    if (sceneIndex > 2)
+                    {
+                        sceneIndex = 0;
+                    }
+                }
+
+            }
+            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            {
+                if (!_optionsSelected)
+                {
+                    _rotatorConstant -= 30.0f;
+                    sceneIndex -= 1;
+                    if (sceneIndex < 0)
+                    {
+                        sceneIndex = 2;
+                    }
                 }
             }
-            
-        }
-        else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
-        {
-            if (!_optionsSelected)
+            else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
             {
-                _rotatorConstant -= 30.0f;
-                sceneIndex -= 1;
-                if (sceneIndex < 0)
+                if (!_optionsSelected)
                 {
-                    sceneIndex = 2;
+                    loadSelectedMenu();
+                }
+
+            }
+
+            //Move/Slide Main Menu Settings
+            //for(int i = 0; i < 2; i++)
+            //{
+            //    mainMenuAssets[i].transform.position = Vector3.MoveTowards(backgroundPanel.transform.position, mainDesiredPos, 800f * Time.deltaTime);
+            //    optionsMenuAssets[i].transform.position = Vector3.MoveTowards(optionsMenuAssets[0].transform.position, optionsDesiredPos, 800f * Time.deltaTime);
+            //}
+            ////Disable Main Menu Assets when moved and at final position
+            //if (_optionsSelected)
+            //{
+            //    //if (backgroundPanel.transform.position.x > 2050)
+            //    //{
+            //    //    for (int i = 0; i < 2; i++)
+            //    //    {
+            //    //        mainMenuAssets[i].SetActive(false);
+            //    //    }
+            //    //}
+            //    //else
+            //    //{
+            //    //    for (int i = 0; i < 2; i++)
+            //    //    {
+            //    //        mainMenuAssets[i].SetActive(true);
+            //    //    }
+            //    //}
+
+            //    if (optionsMenuAssets[0].transform.position.x > 600)
+            //    {
+            //        optionsScript.GetComponent<optionsRotatorCircle>().enabled = true;
+            //        Debug.Log("Sent");
+            //    }
+            
+
+        }
+        else
+        {
+            if (_readyToPlay)
+            {
+                Debug.Log("Play 2");
+                if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                {
+                    //PressPlay();
+                    loadSelectedMenu();
                 }
             }
-        }
-        else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-        {
-            if (!_optionsSelected)
+            _readyToPlay = true;
+            Debug.Log(_playSubSceneIndex);
+            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
             {
-                loadSelectedMenu();
+                _playSubSceneIndex -= 1;
+                if (_playSubSceneIndex < _firstOption)
+                {
+                    _playSubSceneIndex = _firstOption;
+                }
+                else
+                {
+                    SubMenuMoveUp();
+                }
             }
-            
+            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            {
+                _playSubSceneIndex += 1;
+                if (_playSubSceneIndex > _lastOption)
+                {
+                    _playSubSceneIndex = _lastOption;
+                }
+                else
+                {
+                    SubMenuMoveDown();
+                }
+            }
+           
+
         }
 
-        //Move/Slide Main Menu Settings
-        //for(int i = 0; i < 2; i++)
-        //{
-        //    mainMenuAssets[i].transform.position = Vector3.MoveTowards(backgroundPanel.transform.position, mainDesiredPos, 800f * Time.deltaTime);
-        //    optionsMenuAssets[i].transform.position = Vector3.MoveTowards(optionsMenuAssets[0].transform.position, optionsDesiredPos, 800f * Time.deltaTime);
-        //}
-        ////Disable Main Menu Assets when moved and at final position
-        //if (_optionsSelected)
-        //{
-        //    //if (backgroundPanel.transform.position.x > 2050)
-        //    //{
-        //    //    for (int i = 0; i < 2; i++)
-        //    //    {
-        //    //        mainMenuAssets[i].SetActive(false);
-        //    //    }
-        //    //}
-        //    //else
-        //    //{
-        //    //    for (int i = 0; i < 2; i++)
-        //    //    {
-        //    //        mainMenuAssets[i].SetActive(true);
-        //    //    }
-        //    //}
 
-        //    if (optionsMenuAssets[0].transform.position.x > 600)
-        //    {
-        //        optionsScript.GetComponent<optionsRotatorCircle>().enabled = true;
-        //        Debug.Log("Sent");
-        //    }
-        _targetRotation = Quaternion.Euler(0.0f, 0.0f, _rotatorConstant);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, 100f *Time.deltaTime);
 
+
+
+        //If player is currently controlling play sub menu options
 
     }
 
