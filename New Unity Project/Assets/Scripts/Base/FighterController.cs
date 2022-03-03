@@ -106,14 +106,14 @@ public abstract class FighterController : MonoBehaviour
     public virtual void InitializeFighter() {
         _renderer.flipX = _filter == FighterFilter.one;
 
-        if(_filter == FighterFilter.one) {
+        if (_filter == FighterFilter.one) {
             _hitboxFlipper.localScale = new Vector3(1, 1, 1);
         }
         else {
             _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
         }
 
-        if(_filter == FighterFilter.one) {
+        if (_filter == FighterFilter.one) {
             _source.panStereo = -0.5f;
         }
         else {
@@ -151,9 +151,9 @@ public abstract class FighterController : MonoBehaviour
         _grounded = IsGrounded();
 
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
-        if (_myState == FighterState.inControl) {
-            ProcessInput();
-        }
+
+        ProcessInput();
+
 
         if (_inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
             _lastTapAxis = _inputHandler.GetInputX();
@@ -240,8 +240,7 @@ public abstract class FighterController : MonoBehaviour
             xCalculation = xCalculation * 0.8f;
         }
 
-        if (CanHahaFunny() && _inputHandler.GetCrouch())
-        {
+        if (CanHahaFunny() && _inputHandler.GetCrouch()) {
             print("nice");
         }
 
@@ -261,7 +260,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void RemoveControl() {
-        if(_myState == FighterState.dead) {
+        if (_myState == FighterState.dead) {
             return;
         }
         _myState = FighterState.restricted;
@@ -278,8 +277,7 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetTrigger("lose");
     }
 
-    void AddMeter(float value)
-    {
+    void AddMeter(float value) {
         //Debug.Log("Meter Gain: " + value);
         _commandMeter += value;
 
@@ -335,7 +333,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if(_myState == FighterState.dead && !_hasBounced) {
+        if (_myState == FighterState.dead && !_hasBounced) {
             _hasBounced = true;
             GameManager.Get().StunFrames(0.1f, _filter);
             GameManager.Get().GetCameraShaker().SetShake(0.2f, 5f, true);
@@ -435,8 +433,7 @@ public abstract class FighterController : MonoBehaviour
             }
         }
 
-        if (CanFastFall() && _inputHandler.GetCrouch())
-        {
+        if (CanFastFall() && _inputHandler.GetCrouch()) {
             _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 20);
         }
 
@@ -484,7 +481,7 @@ public abstract class FighterController : MonoBehaviour
             _myStance = FighterStance.air;
         }
 
-        if (_freeze || _myState == FighterState.dead) {
+        if (_freeze || _myState != FighterState.inControl) {
             return;
         }
 
@@ -625,13 +622,11 @@ public abstract class FighterController : MonoBehaviour
         _myStance = stance;
     }
 
-    public bool CanFastFall()
-    {
+    public bool CanFastFall() {
         return _myStance == FighterStance.air && _rigidbody.velocity.y < 0.1;
     }
 
-    public bool CanHahaFunny()
-    {
+    public bool CanHahaFunny() {
         return _myState != FighterState.dead && GameManager.Get().KOCoroutine != null;
     }
 }
