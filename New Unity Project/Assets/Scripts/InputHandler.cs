@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour
     public float _inputX;
 
     public bool _jumpInput;
+    public bool _jumpExtraInput;
     public bool _jumpHeld;
     public bool _smashInput;
     public bool _dropInput;
@@ -47,6 +48,10 @@ public class InputHandler : MonoBehaviour
             }
             else {
                 _jumpInput = false;
+            }
+
+            if (_playerDevice.GetKeyboard().wKey.wasPressedThisFrame) {
+                _jumpExtraInput = true;
             }
 
             _crouchInput = _playerDevice.GetKeyboard().sKey.isPressed;
@@ -183,6 +188,17 @@ public class InputHandler : MonoBehaviour
 
         var temp = _jumpInput;
         _jumpInput = false;
+        return temp;
+    }
+
+    public bool GetDoubleJump(bool can) {
+        if (!can) {
+            _jumpExtraInput = false;
+            return false;
+        }
+
+        var temp = _jumpExtraInput;
+        _jumpExtraInput = false;
         return temp;
     }
 

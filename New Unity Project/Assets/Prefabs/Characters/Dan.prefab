@@ -24580,6 +24580,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _chipMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -24587,6 +24588,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _driveMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -24594,6 +24596,7 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _dropMove:
     _animationPath: smash
     _clipName: Test_Shoot
@@ -24601,12 +24604,15 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
+  _hitboxFlipper: {fileID: 0}
   _speed: 14
   _height: 2
+  _meterIncreaseValue: 0
   _jumpForce: 40
   _fallMultiplier: 12
   _jumpFalloff: 0.9
@@ -24629,6 +24635,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6bc7fb6b374974c498ef22bb76061047, type: 3}
   - {fileID: 8300000, guid: 9d6e84057ab59b54a82cdaaadb6aa347, type: 3}
   - {fileID: 8300000, guid: 206ea55499eceef45bc5318ec0b745f9, type: 3}
+  _leftFootSounds: []
+  _rightFootSounds: []
   _impact: {fileID: 6980052365574868023}
   _impactFrame: {fileID: 3168012337785043981}
   _jumpDust: {fileID: 5721181606051324333}
@@ -24659,6 +24667,8 @@ MonoBehaviour:
   _chipInput: 0
   _specialInput: 0
   _dashInput: 0
+  _chargeInput: 0
+  _crouchInput: 0
 --- !u!114 &4528345394989312034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24687,7 +24697,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!82 &4874520954667380378
@@ -24846,6 +24856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581d1ffc3eec94d4780e66c74afc5096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _KOEffects: {fileID: 0}
 --- !u!212 &4874520954698666500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24974,7 +24985,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e059bb09c3c47084c89b4497b49fba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shotType: 3
+  _currentMove:
+    _animationPath: 
+    _clipName: 
+    _shotType: 0
+    _frames: 0
+    _hitFrame: 0
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _character: {fileID: 4874520954698666502}
   cooldowns: []
 --- !u!1 &6193888805169198848

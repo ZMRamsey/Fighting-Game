@@ -61,7 +61,9 @@ public class Hitbox : MonoBehaviour
                     ball.SetBounciness(0.2f);
                 }
 
-                ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
+                var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+                ball.Shoot(hiMes, _self);
 
                 //Play shot type depending on button pressed
                 //switch (_shotType)

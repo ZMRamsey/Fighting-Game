@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Fighter", menuName = "Badminton/FighterProfile", order = 1)]
+[System.Serializable]
 public class FighterProfile : ScriptableObject
 {
     [SerializeField] string _fighterName;

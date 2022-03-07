@@ -19781,7 +19781,7 @@ MonoBehaviour:
     _frames: 11
     _hitFrame: 5
     _clip: {fileID: 7400000, guid: 89212665f3b0b1540bd50248506a1b6b, type: 2}
-    _hitDirection: {x: 13, y: -5, z: 0}
+    _hitDirection: {x: 12, y: -6, z: 0}
   _chipMove:
     _animationPath: drive
     _clipName: Test_Shoot
@@ -19805,17 +19805,27 @@ MonoBehaviour:
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 6, y: 6, z: 0}
+    _hitDirection: {x: 6, y: 8, z: 0}
+  _superMove:
+    _animationPath: super
+    _clipName: Raket_Super
+    _shotType: 2
+    _frames: 12
+    _hitFrame: 0
+    _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
+    _hitDirection: {x: 15, y: 8, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
+  _hitType: 2
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
   _hitboxFlipper: {fileID: 1540060562962152633}
   _speed: 14
   _height: 2
-  _jumpForce: 40
+  _meterIncreaseValue: 16
+  _jumpForce: 50
   _fallMultiplier: 12
-  _jumpFalloff: 0.9
+  _jumpFalloff: 0.89
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}
@@ -19901,7 +19911,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!82 &4874520954667380378

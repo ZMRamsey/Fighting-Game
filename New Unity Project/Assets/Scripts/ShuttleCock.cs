@@ -29,7 +29,7 @@ public class ShuttleCock : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] AudioSource _windSource;
-    [SerializeField] AudioClip[] _initialImpact;
+    [SerializeField] ShuttleCockSound _soundManager;
     [SerializeField] AudioClip[] _ricochets;
 
     [Header("Componenets")]
@@ -39,15 +39,16 @@ public class ShuttleCock : MonoBehaviour
 
     [Header("Stats")]
     FighterFilter _filter;
+    bool _canGimic;
+    VelocityInfluence _influence;
     bool _frozen;
     bool _waitForHit;
     protected float _squishTimer;
     float _speed;
     float _magnitude;
-    int _bouncesSinceShoot;
-
     float chargedForce;
     float chargeTimer;
+    int _bouncesSinceShoot;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -57,30 +58,52 @@ public class ShuttleCock : MonoBehaviour
     }
 
     private void Start() {
-        ResetShuttle();
+        ResetShuttle(true);
     }
 
     [ContextMenu("Reset Ball")]
-    public virtual void ResetShuttle() {
+    public virtual void ResetShuttle(bool freeze) {
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
-        _rb.isKinematic = true;
-        _waitForHit = true;
+
+        if (freeze) {
+            _rb.isKinematic = true;
+            _waitForHit = true;
+        }
+        else {
+            _rb.isKinematic = false;
+        }
+
+        _frozen = false;
+
         _rb.velocity = Vector3.zero;
         _speed = 1;
     }
 
     Vector3 _lastShootForce;
-    void ProcessForce(Vector3 direction, Vector3 movementInfluence, float charge, bool slowDown) {
-        float processedSpeed = _speed;
+    Vector3 _lastShootDirection;
+    public void ProcessForce(HitMessage message, float charge) {
+        _canGimic = !message.muteVelocity && charge <= 0.4f;
 
-        if (slowDown) {
+        float processedSpeed = _speed;
+        _acceleration = 0;
+        _accelerationTimer = 0;
+        _lastShootDirection = message.direction;
+
+        if (message.muteVelocity) {
             processedSpeed = 2;
         }
 
         if (charge <= 0.4f) {
             processedSpeed = 2f;
+        }
+
+        if (message.influence.type == InfluenceType.overtime) {
+            _influence = message.influence;
+        }
+        else {
+            _influence = new VelocityInfluence();
         }
 
         _hit.Play();
@@ -89,9 +112,15 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 proceDir = direction;
+        Vector3 proceDir = message.direction;
 
-        Vector3 targetVelocity = (movementInfluence + proceDir) * processedSpeed;
+        Vector3 targetVelocity = proceDir * processedSpeed;
+
+        if (message.influence.type == InfluenceType.instant) {
+            targetVelocity = (message.influence.velocity + proceDir) * processedSpeed;
+        }
+
+        _rb.isKinematic = false;
 
         _rb.velocity = targetVelocity;
 
@@ -107,9 +136,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     Coroutine shootCoroutine;
-    public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter) {
-        if (player) {
-            GameManager.Get().StunFrames(0.3f, filter);
+    public virtual void Shoot(HitMessage message) {
+        transform.right = message.direction.normalized;
+
+        if (message.isPlayer) {
+            GameManager.Get().StunFrames(0.3f, message.sender);
             GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
         }
 
@@ -124,17 +155,18 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(distance, movementInfluence, slowDown, false, 0.3f));
+        shootCoroutine = StartCoroutine(ShootProccess(message, false, 0.3f));
     }
 
-    public virtual void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter, FighterController owner) {
+    public virtual void Shoot(HitMessage message, FighterController owner) {
         SetOwner(owner);
-        Shoot(distance, movementInfluence, player, slowDown, filter);
+        Shoot(message);
     }
 
     public void Bounce(float axis) {
         _speed = 1;
-        ProcessForce(new Vector3(axis, 1, 0), Vector3.one, 1, false);
+        var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both);
+        ProcessForce(hitMes, 1);
     }
 
     public FighterController GetOwner() {
@@ -154,7 +186,7 @@ public class ShuttleCock : MonoBehaviour
     void Update() {
 
         if (_frozen) {
-            if (_owner.GetComponent<InputHandler>().GetCharge()) {
+            if (_owner && _owner.GetComponent<InputHandler>().GetCharge()) {
                 chargeTimer += Time.deltaTime;
                 chargedForce = Mathf.Clamp(chargeTimer, 0f, 0.3f) / 0.3f;
             }
@@ -181,11 +213,11 @@ public class ShuttleCock : MonoBehaviour
         float vol = pos / 5;
         vol = Mathf.Clamp(vol, -0.5f, 0.5f);
 
-        _source.panStereo = vol;
+        _source.panStereo = -vol;
 
         if (_windSource != null) {
 
-            _windSource.panStereo = vol;
+            _windSource.panStereo = -vol;
 
 
             if (GetSpeedPercent() > _windActiveOnPercent) {
@@ -252,7 +284,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
 
-    void OnWallHit(ContactPoint point, float force) {
+    void OnWallHit(ContactPoint point, float force, string tag) {
         _bouncesSinceShoot++;
 
         if (_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
@@ -273,13 +305,13 @@ public class ShuttleCock : MonoBehaviour
             GameManager.Get().GetStageShaker().SetShake(0.1f, 0.5f, true);
         }
 
-        float calc = _magnitude / _initialImpact.Length;
+        //float calc = _magnitude / _initialImpact.Length;
 
 
-        int con = (int)calc;
-        con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
+        //int con = (int)calc;
+        //con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
 
-        _source.PlayOneShot(_initialImpact[con]);
+        _source.PlayOneShot(_soundManager.GetClip(tag), 2f);
 
         if (force > 20) {
             _source.PlayOneShot(_ricochets[Random.Range(0, _ricochets.Length)]);
@@ -313,8 +345,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
+        _acceleration = 0;
+        _influence = new VelocityInfluence();
+
         SquishBall();
-        OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude);
+        OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
 
         if (collision.gameObject.GetComponent<StageNet>()) {
             if (collision.gameObject.layer == 14) {
@@ -334,7 +369,8 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(Vector3.zero, Vector3.zero, false, true, timer));
+        var hitMes = new HitMessage(Vector3.zero, new VelocityInfluence(), false, FighterFilter.current);
+        shootCoroutine = StartCoroutine(ShootProccess(hitMes, true, timer));
     }
 
     public void ForceFreeze() {
@@ -348,10 +384,18 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = _lastShootForce;
     }
 
+    float _acceleration;
+    float _accelerationTimer;
     void FixedUpdate() {
         //if (_bouncesSinceShoot < _bouncesBeforeSpeedLoss) {
         //    _rb.velocity = _speed * 10 * (_rb.velocity.normalized);
         //}
+
+        if (_influence != null && _canGimic && _influence.type == InfluenceType.overtime && !_frozen && _accelerationTimer < 1f) {
+            _accelerationTimer += Time.deltaTime;
+            _acceleration += Time.deltaTime;
+            _rb.velocity += _influence.velocity * _acceleration;
+        }
     }
 
     void OnCollisionStay(Collision collision) {
@@ -366,7 +410,7 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = vel;
     }
 
-    IEnumerator ShootProccess(Vector3 distance, Vector3 movementInfluence, bool slowDown, bool resetVelocity, float time) {
+    IEnumerator ShootProccess(HitMessage message, bool resetVelocity, float time) {
         var vel = _rb.velocity;
         _frozen = true;
         yield return new WaitForSeconds(time);
@@ -378,7 +422,7 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(distance, movementInfluence, chargedForce, slowDown);
+            ProcessForce(message, chargedForce);
         }
 
         chargedForce = 0.1f;
@@ -438,3 +482,4 @@ public class ShuttleCock : MonoBehaviour
     //    }
     //}
 }
+

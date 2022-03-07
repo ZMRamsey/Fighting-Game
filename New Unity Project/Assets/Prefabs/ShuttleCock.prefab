@@ -24302,7 +24302,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -34189,6 +34189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6655499867361194829}
   - component: {fileID: 6655499867361194826}
+  - component: {fileID: 7996597527670195213}
   - component: {fileID: 6655499867361194830}
   - component: {fileID: 6655499867361194828}
   - component: {fileID: 6655499867361194831}
@@ -34237,7 +34238,7 @@ MonoBehaviour:
   _killActiveOnPercent: 0.33
   _bouncesBeforeSpeedLoss: 2
   _canKillOnPercentSpeed: 1
-  _gainPerHit: 0.5
+  _gainPerHit: 0.25
   _canImpactFrame: 1
   _ballHolder: {fileID: 6655499866484820711}
   _smoothing: 4
@@ -34248,16 +34249,44 @@ MonoBehaviour:
   _impactFrameEffect: {fileID: 3827603213450363731}
   _trailParticle: {fileID: 680492715618811419}
   _windSource: {fileID: 1311307399}
-  _initialImpact:
-  - {fileID: 8300000, guid: c04da31d4c8675e48ae56019ef447b25, type: 3}
-  - {fileID: 8300000, guid: 910207f3c0d725948ba26da3d7a841e5, type: 3}
-  - {fileID: 8300000, guid: c650fa0274f351f4596a08ef2b0e0ec1, type: 3}
-  - {fileID: 8300000, guid: 3c5940472a7b1ef41bbf628f585dcebc, type: 3}
-  - {fileID: 8300000, guid: 229f6900baa19664b9127cd4ac7b50ee, type: 3}
+  _soundManager: {fileID: 7996597527670195213}
   _ricochets:
   - {fileID: 8300000, guid: a515a928aaf60a344ac48ab5435f98dd, type: 3}
   - {fileID: 8300000, guid: 7c2ab8110913ba549a63dec9de60048f, type: 3}
   - {fileID: 8300000, guid: 57dde67896170474bac227e86b649f0b, type: 3}
+--- !u!114 &7996597527670195213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6655499867361194827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66bffa6549ba3942bcac9a3736755a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sounds:
+  - _tag: 
+    _clips:
+    - {fileID: 8300000, guid: 0ced1e296ed35c6479955b52636c2a7c, type: 3}
+    - {fileID: 8300000, guid: dce5a54283876744b8f5276708856933, type: 3}
+    - {fileID: 8300000, guid: 391471e3e4f92f94888e93aa19e1145b, type: 3}
+    - {fileID: 8300000, guid: 30ee8dd09745dd34fb572c1ee731be3f, type: 3}
+    - {fileID: 8300000, guid: 1e2077f1ed8f1ea43ad93e0f11de8bc3, type: 3}
+    - {fileID: 8300000, guid: 540770de399aead4b811c4ceaf30f02c, type: 3}
+    - {fileID: 8300000, guid: ad528efa3cb32d34dbf7a8c06c4837d8, type: 3}
+    - {fileID: 8300000, guid: ea10900d1fc004042ba3e4d9e2acf6e4, type: 3}
+    - {fileID: 8300000, guid: 4c66a1886eb6d4545b80dea8fea8ab3c, type: 3}
+    - {fileID: 8300000, guid: 0dd491ca11d8f794cb79e6c3e04b3c64, type: 3}
+  - _tag: net
+    _clips:
+    - {fileID: 8300000, guid: 30b3aeec2e44ae743a9ff349e8fc60c4, type: 3}
+    - {fileID: 8300000, guid: edda71dea5fc2cf42baac158a63ff593, type: 3}
+    - {fileID: 8300000, guid: c1218ea5fc0447b45a8bd46e6b98a02e, type: 3}
+    - {fileID: 8300000, guid: d7768e05653816a47a2aa6a08e466af0, type: 3}
+    - {fileID: 8300000, guid: 0e641d20ac64363438b5aebcb72878dd, type: 3}
+    - {fileID: 8300000, guid: 58986232c25abc44ca170b6f00331084, type: 3}
 --- !u!82 &6655499867361194830
 AudioSource:
   m_ObjectHideFlags: 0
@@ -34367,7 +34396,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!135 &6655499867361194831
@@ -34432,7 +34461,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -34551,7 +34580,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 200
+      scalar: 400
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -35359,7 +35388,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 35
+        scalar: 60
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -38501,14 +38530,14 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 2
-      scalar: 1
+      scalar: 12
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.9556491
-          value: 1
+          time: 0.70857877
+          value: 0.90769196
           inSlope: -13.00002
           outSlope: -13.00002
           tangentMode: 0
@@ -38531,7 +38560,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.9275333
+          time: 0.6967594
           value: 1
           inSlope: 0
           outSlope: 0

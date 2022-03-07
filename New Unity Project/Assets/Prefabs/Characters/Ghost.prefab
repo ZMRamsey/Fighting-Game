@@ -9867,8 +9867,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e059bb09c3c47084c89b4497b49fba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shotType: 3
+  _currentMove:
+    _animationPath: 
+    _clipName: 
+    _shotType: 0
+    _frames: 0
+    _hitFrame: 0
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _character: {fileID: 6440253435529467741}
+  cooldowns: []
 --- !u!1 &6440253435529467741
 GameObject:
   m_ObjectHideFlags: 0
@@ -9915,6 +9923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581d1ffc3eec94d4780e66c74afc5096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _KOEffects: {fileID: 0}
 --- !u!212 &6440253435529467743
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10045,40 +10054,59 @@ MonoBehaviour:
     _shotType: 3
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _chipMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 0
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _driveMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 1
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _dropMove:
     _animationPath: smash
     _clipName: Test_Shoot
     _shotType: 2
     _frames: 15
     _hitFrame: 8
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 6440253435353581029}
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
+  _hitboxFlipper: {fileID: 0}
   _speed: 10
   _height: 2
+  _meterIncreaseValue: 0
   _jumpForce: 40
   _fallMultiplier: 12
   _jumpFalloff: 0.9
   _controllerScaler: {fileID: 6440253436740016516}
+  _effects: {fileID: 0}
   _renderer: {fileID: 6440253435529467743}
   _stretchSpeed: 4
   _source: {fileID: 6440253435561356225}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
   _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
+  _hitSounds: []
+  _damageSounds: []
+  _swingSounds: []
+  _leftFootSounds: []
+  _rightFootSounds: []
   _impact: {fileID: 8798773901343394156}
+  _impactFrame: {fileID: 0}
+  _jumpDust: {fileID: 0}
+  _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 6440253435529467742}
   _fighterUI: {fileID: 0}
@@ -10104,6 +10132,9 @@ MonoBehaviour:
   _driveInput: 0
   _chipInput: 0
   _specialInput: 0
+  _dashInput: 0
+  _chargeInput: 0
+  _crouchInput: 0
 --- !u!54 &6440253435561356239
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10117,7 +10148,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!82 &6440253435561356225

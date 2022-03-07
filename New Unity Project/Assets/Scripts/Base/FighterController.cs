@@ -15,15 +15,18 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _chipMove;
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
-    //[SerializeField] FighterMove _specialMove;
+    [SerializeField] protected FighterMove _superMove;
     protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
+    [SerializeField] InfluenceType _hitType;
 
     [Header("Base Settings")]
     [SerializeField] LayerMask _groundLayers;
     [SerializeField] Transform _hitboxFlipper;
     [SerializeField] float _speed;
     [SerializeField] float _height;
+    [SerializeField] float _meterIncreaseValue;
+    [SerializeField] int _maxJumps;
 
     [Header("Air Settings")]
     [SerializeField] float _jumpForce;
@@ -53,19 +56,20 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
+    float _lastTapAxis;
+    float _meterPenaltyTimer;
+    int _currentJumps;
     bool _canJump;
-    bool _canAttack;
+    protected bool _canAttack;
     bool _freeze;
     bool _isDashing;
     bool _hasBounced;
     bool _grounded;
-    float _lastTapAxis;
-    float _meterPenaltyTimer;
     RaycastHit _groundHit;
 
-    FighterAction _myAction;
-    FighterStance _myStance;
-    FighterState _myState;
+    protected FighterAction _myAction;
+    protected FighterStance _myStance;
+    protected FighterState _myState;
 
     [Header("Components")]
     [SerializeField] Animator _animator;
@@ -103,6 +107,10 @@ public abstract class FighterController : MonoBehaviour
         return _filter;
     }
 
+    public InfluenceType GetHitType() {
+        return _hitType;
+    }
+
     public virtual void InitializeFighter() {
         _renderer.flipX = _filter == FighterFilter.one;
 
@@ -131,6 +139,7 @@ public abstract class FighterController : MonoBehaviour
         _myState = FighterState.inControl;
 
         _commandMeter = 0.0f;
+        _currentJumps = 0;
         _canJump = true;
         _canAttack = true;
         _hasBounced = false;
@@ -189,6 +198,11 @@ public abstract class FighterController : MonoBehaviour
                 OnAirMovement();
             }
 
+            if (_inputHandler.GetDoubleJump(!_canJump && !_grounded && _currentJumps < _maxJumps) && _canAttack && _myState == FighterState.inControl) {
+                OnJump();
+                return;
+            }
+
             if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
                 OnJump();
                 return;
@@ -216,6 +230,7 @@ public abstract class FighterController : MonoBehaviour
 
         _animator.SetTrigger("KO");
         _grounded = false;
+
 
         if (_damageSounds.Length > 0) {
             _source.PlayOneShot(_damageSounds[UnityEngine.Random.Range(0, _damageSounds.Length)], 1.5f);
@@ -313,6 +328,10 @@ public abstract class FighterController : MonoBehaviour
         _impact.Play();
     }
 
+    public virtual void OnSuperEvent() {
+
+    }
+
     public virtual void OnSuperEnd(bool instant) {
 
     }
@@ -333,7 +352,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (_myState == FighterState.dead && !_hasBounced) {
+        if (_myState == FighterState.dead && !_hasBounced && !_grounded) {
             _hasBounced = true;
             GameManager.Get().StunFrames(0.1f, _filter);
             GameManager.Get().GetCameraShaker().SetShake(0.2f, 5f, true);
@@ -366,14 +385,18 @@ public abstract class FighterController : MonoBehaviour
             _myAction = FighterAction.none;
         }
 
+
         _animator.SetTrigger("land");
+
         _canJump = true;
+        _currentJumps = 0;
 
         ResetAttack();
     }
 
     public virtual void OnJump() {
         _canJump = false;
+        _currentJumps++;
 
         if (_canAttack) {
             _animator.SetTrigger("jump");
@@ -467,6 +490,7 @@ public abstract class FighterController : MonoBehaviour
         //}
 
         if (_grounded) {
+            _currentJumps = 0;
             _canJump = true;
         }
     }
@@ -522,10 +546,11 @@ public abstract class FighterController : MonoBehaviour
             _canAttack = false;
             ResetHitbox();
 
-            _currentMove = _smashMove;
+            _currentMove = _superMove;
+            OnSuperMechanic();
+
             UpdateMove();
             ResetMeter();
-            OnSuperMechanic();
         }
 
         if (_failSafeAttack > 0) {
@@ -545,7 +570,7 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void OnSuccessfulHit(Vector3 point) {
         //AddMeter(12);
-        AddMeter(12 / GameManager.Get().GetSuccessive());
+        AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
         //Debug.Log("Successive: " + GameManager.Get().GetSuccessive() + " - Meter Gain: " + 12 / GameManager.Get().GetSuccessive());
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
         _impact.transform.position = point;
@@ -598,12 +623,14 @@ public abstract class FighterController : MonoBehaviour
         _freeze = true;
         _animator.speed = 0;
         _rigidbody.isKinematic = true;
+        _failSafeAttack += time;
         yield return new WaitForSeconds(time);
         _freeze = false;
         _rigidbody.isKinematic = false;
         _animator.speed = 1;
         _rigidbody.velocity = _controllerVelocity;
         if (_grounded) {
+            _currentJumps = 0;
             _canJump = true;
             ResetAttack();
         }

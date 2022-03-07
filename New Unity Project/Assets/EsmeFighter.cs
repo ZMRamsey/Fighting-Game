@@ -12,6 +12,7 @@ public class EsmeFighter : FighterController
     float _shieldTimer;
     bool _timeStop;
     float _timeStopTimer;
+    float _coolDown;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
@@ -49,7 +50,9 @@ public class EsmeFighter : FighterController
 
         }
 
-        _netObject.SetActive(false);
+        if (_netObject) {
+            _netObject.SetActive(false);
+        }
         _shieldTimer = 0.0f;
     }
 
@@ -57,8 +60,10 @@ public class EsmeFighter : FighterController
     public override void OnFighterUpdate() {
         base.OnFighterUpdate();
 
-        _magicRaketObject.SetActive(!_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter());
+        _magicRaketObject.SetActive(!_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f);
         _magicRaketObject.transform.position = GameManager.Get().GetShuttle().transform.position;
+
+        _coolDown += Time.deltaTime;
 
         if (_netObject) {
             _shieldTimer += Time.deltaTime;
@@ -82,7 +87,7 @@ public class EsmeFighter : FighterController
     public override void UpdateMove() {
         base.UpdateMove();
 
-        if (_inputHandler.GetCrouch() && !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter()) {
+        if (_inputHandler.GetCrouch() && !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f) {
             var ball = GameManager.Get().GetShuttle();
 
             float facing = 1;
@@ -99,10 +104,12 @@ public class EsmeFighter : FighterController
                 ball.SetBounciness(0.2f);
             }
 
-            ball.Shoot(dir, Vector3.zero, true, _currentMove.GetType() == ShotType.chip, GetFilter(), this);
+            var hitMes = new HitMessage(dir, new VelocityInfluence(), _currentMove.GetType() == ShotType.chip, GetFilter());
+            ball.Shoot(hitMes, this);
 
             OnSuccessfulHit(ball.transform.position);
             _ghostHitUsed = true;
         }
+        _coolDown = 0;
     }
 }

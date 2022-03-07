@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum FighterFilter { one, two, both};
+public enum FighterFilter { one, two, both, current};
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
@@ -20,10 +20,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _stageCamera;
     [SerializeField] AudioClip _superSFX;
     [SerializeField] AudioSource _music;
+    [SerializeField] AudioSource _endMusic;
     [SerializeField] UIFader _screenFader;
     [SerializeField] GameObject _debugCanvas;
     [SerializeField] GameObject _debugCamera;
     [SerializeField] GameEventManager _eventManager;
+    [SerializeField] Animator _UIBars;
+    [SerializeField] Animator _UIStage;
     GameEvent _lastSuperEvent;
     AudioSource _source;
     float _rotateTarget;
@@ -177,7 +180,7 @@ public class GameManager : MonoBehaviour
         _spinDown = false;
 
         _screenFader.SetAlpha(1);
-        _shuttle.ResetShuttle();
+        _shuttle.ResetShuttle(true);
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
@@ -313,7 +316,7 @@ public class GameManager : MonoBehaviour
         _spinDown = true;
         yield return new WaitForSecondsRealtime(1f);
         Time.timeScale = 0.2f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        //Time.fixedDeltaTime = 0.02f * Time.timeScale;
         yield return new WaitForSecondsRealtime(0.2f);
         _eventManager.GetDarkness().DisableScreen();
         _stageCamera.SetActive(true);
@@ -321,13 +324,13 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
             yield return new WaitForSecondsRealtime(1f);
             Time.timeScale = 1f;
-            Time.fixedDeltaTime = 0.02f;
+            //Time.fixedDeltaTime = 0.02f;
             yield return new WaitForSecondsRealtime(1f);
         }
         else {
             yield return new WaitForSecondsRealtime(4f);
             Time.timeScale = 1f;
-            Time.fixedDeltaTime = 0.02f;
+            //Time.fixedDeltaTime = 0.02f;
             yield return new WaitForSecondsRealtime(4f);
         }
         SetUpGame();
@@ -335,6 +338,10 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator EndGameProcess(FighterFilter winner, FighterFilter loser) {
+        _UIStage.SetTrigger("Fade");
+        _UIBars.SetBool("Show", true);
+        _spinDown = true;
+
         var winController = _fighterOne.GetController();
         var loseController = _fighterOne.GetController();
 
@@ -350,6 +357,9 @@ public class GameManager : MonoBehaviour
         loseController.RemoveControl();
 
         _source.PlayOneShot(_endGameSFX);
+
+        yield return new WaitForSecondsRealtime(_endGameSFX.length / 2);
+        _endMusic.Play();
         yield return new WaitForSecondsRealtime(0.5f);
         winController.PlayWin();
         loseController.PlayLose();
@@ -386,7 +396,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (_rally == 0 && _successive == 0)
         {
-            _shuttle.Shoot(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new Vector3(), false, false, FighterFilter.both);
+            _shuttle.ResetShuttle(true);
+            var hitMes = new HitMessage(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new VelocityInfluence(), false, FighterFilter.both);
+            _shuttle.Shoot(hitMes);
         }
         TimerManager.Get().SetTimerState(true);
     }

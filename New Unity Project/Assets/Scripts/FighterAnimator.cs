@@ -12,6 +12,10 @@ public class FighterAnimator : MonoBehaviour
         _controller = transform.root.GetComponent<FighterController>();
     }
 
+    public void OnSuperEvent() {
+        _controller.OnSuperEvent();
+    }
+
     public void ResetAttack() {
         _controller.ResetHitbox();
         _controller.ResetAttack();

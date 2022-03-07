@@ -7,12 +7,18 @@ public class SubWoofer : ShuttleCock
     [Header("Subwoofer Settings")]
     [SerializeField] float _subWooferThreshold;
     [SerializeField] ParticleSystem _explosion;
-    [SerializeField] AudioClip _explosionSND;
+    [SerializeField] AudioClip _explosionSND, _beepSND;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _renderer;
-    float _timeBetweenBeeps;
+    [SerializeField] AnimationCurve _beepCurve;
     float subWooferTimer;
+    float _timeBetweenBeeps;
     bool _isActive;
+
+    void Start() {
+        ResetShuttle(false);
+    }
+
     public override void UpdateShuttleApperance(Vector3 vel) {
         //transform.right = Vector3.Lerp(transform.right, vel, Time.deltaTime * _smoothing);
         if (!_isActive) {
@@ -27,23 +33,25 @@ public class SubWoofer : ShuttleCock
         }
     }
 
-    public override void ResetShuttle() {
+    public override void ResetShuttle(bool freeze) {
+        base.ResetShuttle(false);
         _isActive = true;
         subWooferTimer = 0.0f;
-        base.ResetShuttle();
+        //_rb.velocity = Vector3.zero;
     }
 
-    public override void Shoot(Vector3 distance, Vector3 movementInfluence, bool player, bool slowDown, FighterFilter filter) {
-        base.Shoot(distance, movementInfluence, player, slowDown, filter);
-        _rb.AddTorque(distance, ForceMode.Impulse);
+    public override void Shoot(HitMessage message) {
+        base.Shoot(message);
+        _rb.AddTorque(message.direction, ForceMode.Impulse);
     }
 
     bool _tick;
     public override void ShuttleUpdate() {
         subWooferTimer += Time.deltaTime;
         _timeBetweenBeeps += Time.deltaTime;
+        var thres = _beepCurve.Evaluate(subWooferTimer / _subWooferThreshold);
 
-        if (_timeBetweenBeeps > 0.25f) {
+        if (_timeBetweenBeeps > thres) {
             _tick = !_tick;
 
             if (_tick) {
@@ -52,6 +60,8 @@ public class SubWoofer : ShuttleCock
             else {
                 _renderer.sprite = _sprites[1];
             }
+
+            _source.PlayOneShot(_beepSND);
             _timeBetweenBeeps = 0;
         }
 
@@ -61,12 +71,17 @@ public class SubWoofer : ShuttleCock
     }
 
     void Explode() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 100);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 50);
         foreach (Collider hit in colliders) {
             ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
 
-            if (shuttle != null) {
-                shuttle.Reverse();
+            if (shuttle != null && !shuttle.GetComponent<SubWoofer>()) {
+                Vector3 direction = shuttle.transform.position - transform.position;
+                direction.Normalize();
+
+                //shuttle.ProcessForce(direction * 100, Vector3.zero, 1, false);
+                shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
+                shuttle.SetOwner(FighterFilter.both);
             }
         }
 
@@ -74,9 +89,9 @@ public class SubWoofer : ShuttleCock
         _explosion.Play();
         _explosion.transform.SetParent(null);
         _explosion.transform.position = transform.position;
-        GetComponent<AudioSource>().PlayOneShot(_explosionSND, 1.5f);
+        _explosion.GetComponent<AudioSource>().PlayOneShot(_explosionSND, 1.5f);
         GameManager.Get().GetCameraShaker().SetShake(1.1f, 4, false);
-        ResetShuttle();
+        ResetShuttle(false);
         gameObject.SetActive(false);
     }
 }
