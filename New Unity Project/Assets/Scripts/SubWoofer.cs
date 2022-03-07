@@ -16,7 +16,7 @@ public class SubWoofer : ShuttleCock
     bool _isActive;
 
     void Start() {
-        ResetShuttle(false);
+        //ResetShuttle(false);
     }
 
     public override void UpdateShuttleApperance(Vector3 vel) {
@@ -71,9 +71,10 @@ public class SubWoofer : ShuttleCock
     }
 
     void Explode() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 50);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
         foreach (Collider hit in colliders) {
             ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+            FighterController controller = hit.GetComponent<FighterController>();
 
             if (shuttle != null && !shuttle.GetComponent<SubWoofer>()) {
                 Vector3 direction = shuttle.transform.position - transform.position;
@@ -82,6 +83,16 @@ public class SubWoofer : ShuttleCock
                 //shuttle.ProcessForce(direction * 100, Vector3.zero, 1, false);
                 shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
                 shuttle.SetOwner(FighterFilter.both);
+            }
+
+            if(controller != null) {
+                Vector3 direction = controller.transform.position - transform.position;
+                direction.Normalize();
+
+                GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
+                controller.KO(direction * 20);
+                ScoreManager.Get().UpdateScore(controller.GetFilter().ToString(), "KO");
+                GameManager.Get().KOEvent();
             }
         }
 

@@ -19813,7 +19813,7 @@ MonoBehaviour:
     _frames: 12
     _hitFrame: 0
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
-    _hitDirection: {x: 15, y: 8, z: 0}
+    _hitDirection: {x: 3, y: 5, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
   _hitType: 2
   _groundLayers:
@@ -19823,6 +19823,7 @@ MonoBehaviour:
   _speed: 14
   _height: 2
   _meterIncreaseValue: 16
+  _maxJumps: 0
   _jumpForce: 50
   _fallMultiplier: 12
   _jumpFalloff: 0.89
@@ -19874,6 +19875,7 @@ MonoBehaviour:
   _state: 1
   _inputX: 0
   _jumpInput: 0
+  _jumpExtraInput: 0
   _jumpHeld: 0
   _smashInput: 0
   _dropInput: 0

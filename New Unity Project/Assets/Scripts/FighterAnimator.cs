@@ -16,6 +16,10 @@ public class FighterAnimator : MonoBehaviour
         _controller.OnSuperEvent();
     }
 
+    public void ResetSuper() {
+        _controller.ResetSuper();
+    }
+
     public void ResetAttack() {
         _controller.ResetHitbox();
         _controller.ResetAttack();

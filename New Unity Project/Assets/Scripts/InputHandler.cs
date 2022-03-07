@@ -24,25 +24,39 @@ public class InputHandler : MonoBehaviour
 
     public bool _crouchInput;
 
+    Gamepad _gamepad;
+    Keyboard _keyboard;
+
     public void SetDevice(PlayerDevice device) {
-        _playerDevice = device;
+        //_playerDevice = device;
+        if (device.GetDeviceType() == InputDeviceType.keyboard) {
+            _keyboard = Keyboard.current;
+        }
+
+        if (device.GetDeviceType() == InputDeviceType.gamepad) {
+           foreach(Gamepad pad in Gamepad.all) {
+                if(pad.deviceId == device.GetDeviceID()) {
+                    _gamepad = pad;
+                }
+            }
+        }
     }
 
     void Update() {
-        if (_playerDevice != null && _playerDevice.GetKeyboard() != null) {
+        if (_keyboard != null) {
             
             _inputX = 0.0f;
-            if (_playerDevice.GetKeyboard().aKey.IsPressed()) {
+            if (_keyboard.aKey.IsPressed()) {
                 _inputX = 1;
             }
-            if (_playerDevice.GetKeyboard().dKey.IsPressed()) {
+            if (_keyboard.dKey.IsPressed()) {
                 _inputX = -1;
             }
 
-            _jumpHeld = _playerDevice.GetKeyboard().wKey.isPressed;
+            _jumpHeld = _keyboard.wKey.isPressed;
 
 
-            if (_playerDevice.GetKeyboard().wKey.isPressed) {
+            if (_keyboard.wKey.isPressed) {
                 _jumpInput = true;
                 _crouchInput = false;
             }
@@ -50,37 +64,37 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (_playerDevice.GetKeyboard().wKey.wasPressedThisFrame) {
+            if (_keyboard.wKey.wasPressedThisFrame) {
                 _jumpExtraInput = true;
             }
 
-            _crouchInput = _playerDevice.GetKeyboard().sKey.isPressed;
+            _crouchInput = _keyboard.sKey.isPressed;
 
-            if (_playerDevice.GetKeyboard().shiftKey.wasPressedThisFrame) {
+            if (_keyboard.shiftKey.wasPressedThisFrame) {
                 _dashInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame) {
+            if (_keyboard.rightArrowKey.wasPressedThisFrame) {
                 _driveInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().upArrowKey.wasPressedThisFrame) {
+            if (_keyboard.upArrowKey.wasPressedThisFrame) {
                 _dropInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().leftArrowKey.wasPressedThisFrame) {
+            if (_keyboard.leftArrowKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame) {
+            if (_keyboard.downArrowKey.wasPressedThisFrame) {
                 _chipInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().spaceKey.wasPressedThisFrame) {
+            if (_keyboard.spaceKey.wasPressedThisFrame) {
                 _specialInput = true;
             }
 
-            if(_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed)
+            if(_keyboard.rightArrowKey.isPressed || _keyboard.leftArrowKey.isPressed || _keyboard.downArrowKey.isPressed || _keyboard.upArrowKey.isPressed)
             {
                 _chargeInput = true;
             }
@@ -90,21 +104,21 @@ public class InputHandler : MonoBehaviour
             }
         }
 
-        if (_playerDevice != null && _playerDevice.GetGamepad() != null)
+        if (_gamepad != null)
         {
             _inputX = 0.0f;
-            if (_playerDevice.GetGamepad().leftStick.left.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.left.isPressed)
+            if (_gamepad.leftStick.left.ReadValue() > 0.5 || _gamepad.dpad.left.isPressed)
             {
                 _inputX = 1;
             }
-            if (_playerDevice.GetGamepad().leftStick.right.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.right.isPressed)
+            if (_gamepad.leftStick.right.ReadValue() > 0.5 || _gamepad.dpad.right.isPressed)
             {
                 _inputX = -1;
             }
 
-            _jumpHeld = _playerDevice.GetGamepad().leftStick.up.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.up.isPressed;
+            _jumpHeld = _gamepad.leftStick.up.ReadValue() > 0.5 || _gamepad.dpad.up.isPressed;
 
-            if (_playerDevice.GetGamepad().leftStick.up.ReadValue() > 0.5 || _playerDevice.GetGamepad().dpad.up.isPressed)
+            if (_gamepad.leftStick.up.ReadValue() > 0.5 || _gamepad.dpad.up.isPressed)
             {
                 _jumpInput = true;
                 _crouchInput = false;
@@ -114,38 +128,42 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            _crouchInput = _playerDevice.GetGamepad().leftStick.down.isPressed || _playerDevice.GetGamepad().dpad.down.isPressed;
+            if (_gamepad.leftStick.up.wasPressedThisFrame|| _gamepad.dpad.up.wasPressedThisFrame) {
+                _jumpExtraInput = true;
+            }
 
-            if (_playerDevice.GetGamepad().leftTrigger.wasPressedThisFrame) {
+            _crouchInput = _gamepad.leftStick.down.isPressed || _gamepad.dpad.down.isPressed;
+
+            if (_gamepad.leftTrigger.wasPressedThisFrame) {
                 _dashInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonEast.wasPressedThisFrame)
+            if (_gamepad.buttonEast.wasPressedThisFrame)
             {
                 _driveInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonNorth.wasPressedThisFrame)
+            if (_gamepad.buttonNorth.wasPressedThisFrame)
             {
                 _dropInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonWest.wasPressedThisFrame)
+            if (_gamepad.buttonWest.wasPressedThisFrame)
             {
                 _smashInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonSouth.wasPressedThisFrame)
+            if (_gamepad.buttonSouth.wasPressedThisFrame)
             {
                 _chipInput = true;
             }
 
-            if (_playerDevice.GetGamepad().rightTrigger.wasPressedThisFrame)
+            if (_gamepad.rightTrigger.wasPressedThisFrame)
             {
                 _specialInput = true;
             }
 
-            if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed || _playerDevice.GetGamepad().buttonSouth.isPressed)
+            if (_gamepad.buttonEast.isPressed || _gamepad.buttonNorth.isPressed || _gamepad.buttonWest.isPressed || _gamepad.buttonSouth.isPressed)
             {
                 _chargeInput = true;
             }
@@ -231,7 +249,7 @@ public class InputHandler : MonoBehaviour
         return temp;
     }
 
-    public bool GetSpecial() {
+    public bool GetSuper() {
         var temp = _specialInput;
         _specialInput = false;
         return temp;

@@ -65,6 +65,7 @@ public abstract class FighterController : MonoBehaviour
     bool _isDashing;
     bool _hasBounced;
     bool _grounded;
+    bool _inSuper;
     RaycastHit _groundHit;
 
     protected FighterAction _myAction;
@@ -131,12 +132,19 @@ public abstract class FighterController : MonoBehaviour
         ResetFighter();
     }
 
+    public bool IsKOed() {
+        return _myState == FighterState.dead;
+    }
+
     public void ResetFighter() {
         OnSuperEnd(true);
 
         _animator.SetLayerWeight(1, 0);
 
         _myState = FighterState.inControl;
+
+        ResetAttack();
+        ResetSuper();
 
         _commandMeter = 0.0f;
         _currentJumps = 0;
@@ -247,7 +255,7 @@ public abstract class FighterController : MonoBehaviour
     float xCalculation = 0.0f;
     public virtual void OnGroundMovement() {
 
-        if (_canAttack && _myState == FighterState.inControl) {
+        if (_canAttack && !_inSuper && _myState == FighterState.inControl) {
             xCalculation = _inputHandler.GetInputX();
             xCalculation *= _speed;
         }
@@ -268,6 +276,11 @@ public abstract class FighterController : MonoBehaviour
 
     public void ResetHitbox() {
         _hitboxes.ResetCD();
+    }
+
+    public void ResetSuper() {
+        _animator.SetLayerWeight(2, 0);
+        _inSuper = false;
     }
 
     public void ResetAttack() {
@@ -505,7 +518,7 @@ public abstract class FighterController : MonoBehaviour
             _myStance = FighterStance.air;
         }
 
-        if (_freeze || _myState != FighterState.inControl) {
+        if (_freeze || _inSuper || _myState != FighterState.inControl) {
             return;
         }
 
@@ -542,9 +555,12 @@ public abstract class FighterController : MonoBehaviour
         }
 
 
-        if (_inputHandler.GetSpecial() && _canAttack && _commandMeter >= 100) {
+        if (_inputHandler.GetSuper() && _canAttack && _commandMeter >= 100) {
             _canAttack = false;
+            _inSuper = true;
             ResetHitbox();
+
+            _animator.SetLayerWeight(2, 1);
 
             _currentMove = _superMove;
             OnSuperMechanic();

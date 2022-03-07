@@ -7,16 +7,25 @@ using TMPro;
 
 public class InputTest : MonoBehaviour
 {
+    PlayerDevice _playerOne;
+    Gamepad _playerOneGamepad;
+    Keyboard _playerOneKeyboard;
+    PlayerDevice _playerTwo;
+    Gamepad _playerTwoGamepad;
+    Keyboard _playerTwoKeyboard;
+    bool setPlayerOne;
+    bool setPlayerTwo;
+    int _f1Index;
+    int _f2Index;
+
     [SerializeField] GameSettings _settings;
     [SerializeField] TextMeshProUGUI _f1Text;
     [SerializeField] TextMeshProUGUI _f1Char;
-    int _f1Index;
-    int _f2Index;
     [SerializeField] TextMeshProUGUI _f2Text;
     [SerializeField] TextMeshProUGUI _f2Char;
     [SerializeField] FighterProfile[] _profiles;
-    bool setPlayerOne;
-    bool setPlayerTwo;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,24 +38,39 @@ public class InputTest : MonoBehaviour
         _settings.SetFighterOneProfile(_profiles[0]);
         _settings.SetFighterTwoProfile(_profiles[0]);
 
-        var allGamepads = Gamepad.all;
-
-        foreach (Gamepad device in allGamepads) {
-            var c = gameObject.AddComponent<DeviceConnector>();
-            c.AddDevice(null, device, this);
-        }
-
-        if(Keyboard.current != null) {
-            var c = gameObject.AddComponent<DeviceConnector>();
-            c.AddDevice(Keyboard.current, null, this);
-        }
-
     }
 
     void Update() {
-        //DONT NEED TO REFERENCE THIS
-        if (_settings.GetFighterOneDevice().GetKeyboard() != null) {
-            if (_settings.GetFighterOneDevice().GetKeyboard().leftArrowKey.wasPressedThisFrame || _settings.GetFighterOneDevice().GetKeyboard().aKey.wasPressedThisFrame) {
+        var allGamepads = Gamepad.all;
+
+        foreach (Gamepad device in allGamepads) {
+            if (device.aButton.wasPressedThisFrame) {
+                SetPlayer(device);
+            }
+        }
+
+        if (Keyboard.current != null) {
+            if (Keyboard.current.enterKey.wasPressedThisFrame) {
+                SetPlayer(Keyboard.current);
+            }
+        }
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame) {
+            if (!setPlayerOne && !setPlayerTwo) {
+                SetAIVAI();
+            }
+            else if (setPlayerOne && setPlayerTwo) {
+                SetPVP();
+                print("PVP");
+            }
+            else if (setPlayerOne) {
+                SetPVAI();
+            }
+        }
+
+        //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
+        if (_playerOneKeyboard != null) {
+            if (_playerOneKeyboard.leftArrowKey.wasPressedThisFrame || _playerOneKeyboard.aKey.wasPressedThisFrame) {
                 _f1Index++;
                 if (_f1Index > _profiles.Length - 1) {
                     _f1Index = 0;
@@ -54,7 +78,7 @@ public class InputTest : MonoBehaviour
                 _f1Char.text = _profiles[_f1Index].GetName();
             }
 
-            if (_settings.GetFighterOneDevice().GetKeyboard().rightArrowKey.wasPressedThisFrame || _settings.GetFighterOneDevice().GetKeyboard().dKey.wasPressedThisFrame) {
+            if (_playerOneKeyboard.rightArrowKey.wasPressedThisFrame || _playerOneKeyboard.dKey.wasPressedThisFrame) {
                 _f1Index--;
                 if (_f1Index < 0) {
                     _f1Index = _profiles.Length - 1;
@@ -64,8 +88,8 @@ public class InputTest : MonoBehaviour
             }
         }
 
-        if (_settings.GetFighterTwoDevice().GetKeyboard() != null) {
-            if (_settings.GetFighterTwoDevice().GetKeyboard().leftArrowKey.wasPressedThisFrame || _settings.GetFighterTwoDevice().GetKeyboard().aKey.wasPressedThisFrame) {
+        if (_playerTwoKeyboard != null) {
+            if (_playerTwoKeyboard.leftArrowKey.wasPressedThisFrame || _playerTwoKeyboard.aKey.wasPressedThisFrame) {
                 _f2Index++;
                 if (_f2Index > _profiles.Length - 1) {
                     _f2Index = 0;
@@ -73,7 +97,7 @@ public class InputTest : MonoBehaviour
                 _f2Char.text = _profiles[_f2Index].GetName();
             }
 
-            if (_settings.GetFighterTwoDevice().GetKeyboard().rightArrowKey.wasPressedThisFrame || _settings.GetFighterTwoDevice().GetKeyboard().dKey.wasPressedThisFrame) {
+            if (_playerTwoKeyboard.rightArrowKey.wasPressedThisFrame || _playerTwoKeyboard.dKey.wasPressedThisFrame) {
                 _f2Index--;
                 if (_f2Index < 0) {
                     _f2Index = _profiles.Length - 1;
@@ -83,8 +107,8 @@ public class InputTest : MonoBehaviour
             }
         }
 
-        if (_settings.GetFighterOneDevice().GetGamepad() != null) {
-            if (_settings.GetFighterOneDevice().GetGamepad().dpad.left.wasPressedThisFrame || _settings.GetFighterOneDevice().GetGamepad().leftStick.left.wasPressedThisFrame) {
+        if (_playerOneGamepad != null) {
+            if (_playerOneGamepad.dpad.left.wasPressedThisFrame || _playerOneGamepad.leftStick.left.wasPressedThisFrame) {
                 _f1Index++;
                 if (_f1Index > _profiles.Length - 1) {
                     _f1Index = 0;
@@ -92,7 +116,7 @@ public class InputTest : MonoBehaviour
                 _f1Char.text = _profiles[_f1Index].GetName();
             }
 
-            if (_settings.GetFighterOneDevice().GetGamepad().dpad.right.wasPressedThisFrame || _settings.GetFighterOneDevice().GetGamepad().leftStick.right.wasPressedThisFrame) {
+            if (_playerOneGamepad.dpad.right.wasPressedThisFrame || _playerOneGamepad.leftStick.right.wasPressedThisFrame) {
                 _f1Index--;
                 if (_f1Index < 0) {
                     _f1Index = _profiles.Length - 1;
@@ -102,24 +126,30 @@ public class InputTest : MonoBehaviour
             }
         }
 
-        if (_settings.GetFighterTwoDevice().GetGamepad() != null) {
-            if (_settings.GetFighterTwoDevice().GetGamepad().dpad.left.wasPressedThisFrame || _settings.GetFighterTwoDevice().GetGamepad().leftStick.left.wasPressedThisFrame) {
+        if (_playerTwoGamepad!= null) {
+            if (_playerTwoGamepad.dpad.left.wasPressedThisFrame || _playerTwoGamepad.leftStick.left.wasPressedThisFrame) {
                 _f2Index++;
                 if (_f2Index > _profiles.Length - 1) {
                     _f2Index = 0;
                 }
-                _f1Char.text = _profiles[_f2Index].GetName();
+                _f2Char.text = _profiles[_f2Index].GetName();
             }
 
-            if (_settings.GetFighterTwoDevice().GetGamepad().dpad.right.wasPressedThisFrame || _settings.GetFighterTwoDevice().GetGamepad().leftStick.right.wasPressedThisFrame) {
+            if (_playerTwoGamepad.dpad.right.wasPressedThisFrame || _playerTwoGamepad.leftStick.right.wasPressedThisFrame) {
                 _f2Index--;
                 if (_f2Index < 0) {
                     _f2Index = _profiles.Length - 1;
                 }
-                _f1Char.text = _profiles[_f2Index].GetName();
+                _f2Char.text = _profiles[_f2Index].GetName();
                 _settings.SetFighterTwoProfile(_profiles[_f2Index]);
             }
         }
+    }
+
+    public void SetAIVAI() {
+        _settings.GetFighterOneDevice().SetInputState(InputState.ai);
+        _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
+        Application.LoadLevel("Base");
     }
 
     public void SetPVAI() {
@@ -127,45 +157,64 @@ public class InputTest : MonoBehaviour
         Application.LoadLevel("Base");
     }
 
+    public void SetPVP() {
+        Application.LoadLevel("Base");
+    }
+
     public void SetPlayer(Keyboard keyboard) {
+        if(setPlayerOne && _playerOne.GetDeviceID() == keyboard.deviceId) {
+            return;
+        }
+
         if (!setPlayerOne) {
             _f1Char.color = Color.white;
             _f1Text.text = "KEYBOARD";
-            _settings.GetFighterOneDevice().SetKeyboard(keyboard);
+            _playerOne = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
+            _settings.GetFighterOneDevice().SetDevice(_playerOne);
             _settings.GetFighterOneDevice().SetInputState(InputState.player);
             setPlayerOne = true;
+            _playerOneKeyboard = keyboard;
             return;
         }
 
         if (!setPlayerTwo) {
             _f2Char.color = Color.white;
             _f2Text.text = "KEYBOARD";
-            _settings.GetFighterTwoDevice().SetKeyboard(keyboard);
+            _playerTwo = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
+            _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
             _settings.GetFighterTwoDevice().SetInputState(InputState.player);
             setPlayerTwo = true;
-            Application.LoadLevel("Base");
+            _playerTwoKeyboard = keyboard;
+            //Application.LoadLevel("Base");
             return;
         }
     }
 
     public void SetPlayer(Gamepad gamepad) {
+        if (setPlayerOne && _playerOne.GetDeviceID() == gamepad.deviceId) {
+            return;
+        }
+
         if (!setPlayerOne) {
             _f1Char.color = Color.white;
             _f1Text.text = "GAMEPAD";
-            _settings.GetFighterOneDevice().SetGamepad(gamepad);
-            print(_settings.GetFighterOneDevice().GetGamepad().name);
+            _playerOne = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
+            _settings.GetFighterOneDevice().SetDevice(_playerOne) ;
             _settings.GetFighterOneDevice().SetInputState(InputState.player);
             setPlayerOne = true;
+            _playerOneGamepad = gamepad;
             return;
         }
 
         if (!setPlayerTwo) {
             _f2Char.color = Color.white;
             _f2Text.text = "GAMEPAD";
-            _settings.GetFighterTwoDevice().SetGamepad(gamepad);
+            _playerTwo = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
+            _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
             _settings.GetFighterTwoDevice().SetInputState(InputState.player);
             setPlayerTwo = true;
-            Application.LoadLevel("Base");
+            _playerTwoGamepad = gamepad;
+            //Application.LoadLevel("Base");
             return;
         }
     }

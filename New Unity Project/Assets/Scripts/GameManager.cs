@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum FighterFilter { one, two, both, current};
+public enum FighterFilter { one, two, both, current };
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameEventManager _eventManager;
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
+    [SerializeField] Image _pauseArt;
+    [SerializeField] GameObject _pausePanel;
     GameEvent _lastSuperEvent;
     AudioSource _source;
     float _rotateTarget;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     FighterFilter _lastHit = FighterFilter.both;
     public float _serveSpeed = 7.5f;
     public bool needNewRound = false;
+    bool _isPaused;
 
     [SerializeField] bool _spinDown;
 
@@ -50,8 +53,7 @@ public class GameManager : MonoBehaviour
         return _eventManager;
     }
 
-    void Awake()
-    {
+    void Awake() {
         _instance = this;
         _source = GetComponent<AudioSource>();
 
@@ -99,18 +101,40 @@ public class GameManager : MonoBehaviour
 
         //ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
 
-      
+
     }
 
     private void Start() {
         SetUpGame();
     }
 
+    float _pauseTime;
+    void Update() {
+        if (_isPaused) {
+            if (Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
+                Time.timeScale = 1;
+                _isPaused = false;
+            }
+        }
 
-    void Update()
-    {
+        if ((Gamepad.current.startButton.isPressed || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+            _pauseTime += Time.deltaTime * 2;
+            if (_pauseTime >= 1) {
+                _isPaused = true;
+                _pauseTime = 0;
+                Time.timeScale = 0;
+            }
+        }
+        else {
+            _pauseTime = 0;
+        }
+
+
+        _pauseArt.fillAmount = Mathf.Clamp(_pauseTime, 0, 1);
+        _pausePanel.SetActive(_isPaused);
+
         _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeedPercent(), Time.deltaTime * 12);
-        _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0,0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
+        _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0, 0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
             SetUpGame();
@@ -134,19 +158,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle.IsFrozen() && KOCoroutine == null && EndGameCoroutine == null)
-        {
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle.IsFrozen() && KOCoroutine == null && EndGameCoroutine == null) {
             string scorer = "one";
-            if (_shuttle.transform.position.x < 0)
-            {
+            if (_shuttle.transform.position.x < 0) {
                 scorer = "two";
             }
             ScoreManager.Get().UpdateScore(scorer, "GroundOut");
             SetUpGame();
         }
 
-        if (NewRound() && KOCoroutine == null && EndGameCoroutine == null)
-        {
+        if (NewRound() && KOCoroutine == null && EndGameCoroutine == null) {
             SetUpGame();
             NewRoundNeeded(false);
         }
@@ -159,11 +180,9 @@ public class GameManager : MonoBehaviour
         //}
     }
 
-    void SetUpGame()
-    {
+    void SetUpGame() {
 
-        if (ScoreManager.Get().gameOver != FighterFilter.both)
-        {
+        if (ScoreManager.Get().gameOver != FighterFilter.both) {
             EndGame();
             return;
         }
@@ -191,18 +210,16 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetUI().SetBarValue(0.0f);
         _fighterTwo.GetUI().SetBarValue(0.0f);
 
-        _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,0]);
-        _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound()-1,1]);
+        _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
+        _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
 
 
-        if (ScoreManager.Get().GetLastScorer() == 0)
-        {
-            _shuttle.transform.position = new Vector3 (_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
+        if (ScoreManager.Get().GetLastScorer() == 0) {
+            _shuttle.transform.position = new Vector3(_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
             _shuttle.SetOwner(_fighterOne.GetController());
             //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
         }
-        else
-        {
+        else {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x - 5, _shuttleSpawn.y, _shuttleSpawn.z);
             _shuttle.SetOwner(_fighterTwo.GetController());
             //_shuttle.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
@@ -255,7 +272,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         _eventManager.GetImpactFlash().DisableScreen();
         _stageCamera.SetActive(true);
-        stageCoroutine = null;
+        impactCoroutine = null;
     }
 
     public void StunFrames(float timer, FighterFilter filter) {
@@ -288,7 +305,7 @@ public class GameManager : MonoBehaviour
 
     public Coroutine KOCoroutine;
     public void KOEvent() {
-        if(KOCoroutine != null) {
+        if (KOCoroutine != null) {
             return;
         }
 
@@ -381,21 +398,19 @@ public class GameManager : MonoBehaviour
     }
 
     public FighterTab GetFighterTab(FighterFilter filter) {
-        if(filter == FighterFilter.one) {
+        if (filter == FighterFilter.one) {
             return _fighterOne;
         }
 
         return _fighterTwo;
     }
 
-    IEnumerator ServeTimer()
-    {
+    IEnumerator ServeTimer() {
         TimerManager.Get().SetTimerState(false);
-        _rally = 0; 
+        _rally = 0;
         _successive = 0;
         yield return new WaitForSeconds(1);
-        if (_rally == 0 && _successive == 0)
-        {
+        if (_rally == 0 && _successive == 0) {
             _shuttle.ResetShuttle(true);
             var hitMes = new HitMessage(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new VelocityInfluence(), false, FighterFilter.both);
             _shuttle.Shoot(hitMes);
@@ -403,8 +418,7 @@ public class GameManager : MonoBehaviour
         TimerManager.Get().SetTimerState(true);
     }
 
-    public void IncreaseRally()
-    {
+    public void IncreaseRally() {
         _rally++;
         _successive = 1;
 
@@ -415,39 +429,32 @@ public class GameManager : MonoBehaviour
         //}
     }
 
-    public void SuccessiveHit()
-    {
+    public void SuccessiveHit() {
         _successive++;
     }
 
-    public void ResetSuccessive()
-    {
+    public void ResetSuccessive() {
         _successive = 0;
     }
 
-    public void SetLastHitter(FighterFilter hitter)
-    {
+    public void SetLastHitter(FighterFilter hitter) {
         _lastHit = hitter;
     }
 
-    public FighterFilter GetLastHit()
-    {
+    public FighterFilter GetLastHit() {
         return _lastHit;
     }
 
-    public int GetCurrentRally()
-    {
+    public int GetCurrentRally() {
         return _rally;
     }
 
-    public int GetSuccessive()
-    {
+    public int GetSuccessive() {
         return _successive;
     }
 
     public Coroutine EndGameCoroutine;
-    public void EndGame()
-    {
+    public void EndGame() {
         string p1Name = _settings.GetFighterOneProfile().GetName();
         string p2Name = _settings.GetFighterTwoProfile().GetName();
 
@@ -469,23 +476,19 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public bool NewRound()
-    {
+    public bool NewRound() {
         return needNewRound;
     }
 
-    public void NewRoundNeeded(bool needed)
-    {
+    public void NewRoundNeeded(bool needed) {
         needNewRound = needed;
     }
 
-    public GameSettings GetGameSettings()
-    {
+    public GameSettings GetGameSettings() {
         return _settings;
     }
 
-    public void PerformCoinToss()
-    {
+    public void PerformCoinToss() {
         int rand = Random.Range(1, 100);
         ScoreManager.Get().SetLastScorer(rand % 2);
     }

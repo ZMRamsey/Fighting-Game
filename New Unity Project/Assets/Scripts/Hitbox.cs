@@ -96,6 +96,7 @@ public class Hitbox : MonoBehaviour
                 //        break;
                 //}
             }
+
             cooldowns.Add(collision.gameObject);
         }
     }
