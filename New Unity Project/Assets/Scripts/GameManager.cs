@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
     float _pauseTime;
     void Update() {
         if (_isPaused) {
-            if (Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
+            if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Time.timeScale = 1;
                 _isPaused = false;
             }
