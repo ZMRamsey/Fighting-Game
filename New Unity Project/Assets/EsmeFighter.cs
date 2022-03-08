@@ -60,7 +60,12 @@ public class EsmeFighter : FighterController
     public override void OnFighterUpdate() {
         base.OnFighterUpdate();
 
-        _magicRaketObject.SetActive(!_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f);
+        var powered = !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f;
+
+        _animator.SetBool("charge", _inputHandler.GetCrouch());
+        _animator.SetBool("power", powered);
+
+        _magicRaketObject.SetActive(powered);
         _magicRaketObject.transform.position = GameManager.Get().GetShuttle().transform.position;
 
         _coolDown += Time.deltaTime;
@@ -109,6 +114,7 @@ public class EsmeFighter : FighterController
 
             OnSuccessfulHit(ball.transform.position);
             _ghostHitUsed = true;
+            _animator.SetTrigger("gimicHit");
         }
         _coolDown = 0;
     }

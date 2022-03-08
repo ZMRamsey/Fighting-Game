@@ -19807,12 +19807,12 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 4, y: 6, z: 0}
   _superMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
+    _animationPath: super
+    _clipName: Test_Super
+    _shotType: 4
+    _frames: 4
+    _hitFrame: 1
+    _clip: {fileID: 7400000, guid: 4882c7768564aca41b90c0e0eee89c4e, type: 2}
     _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
   _hitType: 1
@@ -20107,7 +20107,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 76e300dfabef0124eb8732b9bc5bc69b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.9830489, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0

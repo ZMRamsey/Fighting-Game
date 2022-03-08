@@ -73,7 +73,7 @@ public abstract class FighterController : MonoBehaviour
     protected FighterState _myState;
 
     [Header("Components")]
-    [SerializeField] Animator _animator;
+    [SerializeField] protected Animator _animator;
     [SerializeField] FighterUI _fighterUI;
     protected InputHandler _inputHandler;
     Rigidbody _rigidbody;

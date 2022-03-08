@@ -55,7 +55,7 @@ public class InputTest : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame) {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) {
             if (!setPlayerOne && !setPlayerTwo) {
                 SetAIVAI();
             }

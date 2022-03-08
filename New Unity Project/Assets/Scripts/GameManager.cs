@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if ((Gamepad.current.startButton.isPressed || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+        if (((Gamepad.current != null && Gamepad.current.startButton.isPressed) || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
             _pauseTime += Time.deltaTime * 2;
             if (_pauseTime >= 1) {
                 _isPaused = true;
