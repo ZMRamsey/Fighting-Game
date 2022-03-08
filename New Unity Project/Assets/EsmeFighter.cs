@@ -91,7 +91,7 @@ public class EsmeFighter : FighterController
 
     public override void UpdateMove() {
         base.UpdateMove();
-
+         
         if (_inputHandler.GetCrouch() && !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f) {
             var ball = GameManager.Get().GetShuttle();
 
@@ -117,5 +117,9 @@ public class EsmeFighter : FighterController
             _animator.SetTrigger("gimicHit");
         }
         _coolDown = 0;
+    }
+
+    public bool CanGhostShot() {
+        return !_ghostHitUsed;
     }
 }

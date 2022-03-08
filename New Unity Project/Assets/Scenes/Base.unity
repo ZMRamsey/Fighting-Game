@@ -2548,9 +2548,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _netVariations:
-  - {fileID: -5066523906300639224, guid: c274717999c28c943b10ea218e3ce329, type: 3}
-  - {fileID: -5066523906300639224, guid: 115600b5a064c8449baaa42c1ef92845, type: 3}
-  - {fileID: -5066523906300639224, guid: a0ffc622aa506ad4c9e476280357c0a1, type: 3}
+  - {fileID: -5066523906300639224, guid: ecf0de2ab919cd74581e96f877139784, type: 3}
+  - {fileID: -5066523906300639224, guid: 582a379db0fb1fa4b937ac44b67dfe57, type: 3}
+  - {fileID: -5066523906300639224, guid: a881a11eba0b9a34ea8cf3aedaef1f4c, type: 3}
   _renderer: {fileID: 685250573}
   _shaker: {fileID: 520492821}
 --- !u!95 &685250576
@@ -6122,10 +6122,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c274717999c28c943b10ea218e3ce329, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6222cf1ee2ffea5468c7fa629b42faf4, type: 2}
     - target: {fileID: -5754084199372789682, guid: c274717999c28c943b10ea218e3ce329, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -5066523906300639224, guid: c274717999c28c943b10ea218e3ce329, type: 3}
+      objectReference: {fileID: -5066523906300639224, guid: ecf0de2ab919cd74581e96f877139784, type: 3}
     - target: {fileID: 919132149155446097, guid: c274717999c28c943b10ea218e3ce329, type: 3}
       propertyPath: m_Name
       value: Net

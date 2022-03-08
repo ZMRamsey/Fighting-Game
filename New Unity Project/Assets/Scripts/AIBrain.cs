@@ -10,10 +10,13 @@ public class AIBrain : MonoBehaviour
     float tick;
     Vector3 targetPosition;
 
+    EsmeFighter _esme;
+
     void Start() {
         _shuttle = GameManager.Get().GetShuttle();
         _handler = GetComponent<InputHandler>();
         _controller = GetComponent<FighterController>();
+        _esme = GetComponent<EsmeFighter>();
     }
 
     void Update() {
@@ -23,15 +26,34 @@ public class AIBrain : MonoBehaviour
 
         if (tick > 0.05f) {
             _handler._inputX = 0;
+            bool moveAwayOverride = false;
 
-            if (IsBallOnRight() && IsOnMySide()) {
-                _handler._inputX = 1;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5);
+            foreach (Collider hit in colliders) {
+                SubWoofer woofer = hit.GetComponent<SubWoofer>();
+
+                if(woofer != null) {
+                    if(woofer.transform.position.x < transform.position.x) {
+                        _handler._inputX = 1;
+                    }
+
+                    if (woofer.transform.position.x > transform.position.x) {
+                        _handler._inputX = -1;
+                    }
+
+                    moveAwayOverride = true;
+                }
             }
 
-            if (IsBallOnLeft() && IsOnMySide()) {
-                _handler._inputX = -1;
-            }
+            if (!moveAwayOverride) {
+                if (IsBallOnRight() && IsOnMySide()) {
+                    _handler._inputX = 1;
+                }
 
+                if (IsBallOnLeft() && IsOnMySide()) {
+                    _handler._inputX = -1;
+                }
+            }
 
             _handler._jumpHeld = IsOnMySide() && transform.position.y < _shuttle.transform.position.y;
 
@@ -39,49 +61,65 @@ public class AIBrain : MonoBehaviour
 
             _handler._chargeInput = true;
 
+            if (_esme && _esme.CanGhostShot() && _controller.GetGrounded()) {
+                _handler._crouchInput = true;
+
+                if (Vector3.Distance(transform.position, targetPosition) > 4f) {
+                    processHit();
+                }
+            }
+            else {
+                _handler._crouchInput = false;
+            }
+
 
             if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
-                int rand = Random.Range(0, 3);
-                int rndDec = 0;
-
-                if (rand == 2 && _shuttle.transform.position.y > 1.2f && _shuttle.GetSpeedPercent() > 0.1f) {
-                    _handler._chipInput = true;
-                }
-                else {
-                    if (transform.position.y > 1.2f) {
-                        rndDec = Random.Range(0, 3);
-                        if (rndDec == 0) {
-                            _handler._smashInput = true;
-                        }
-                        else if (rndDec == 1 && _controller.GetMeter() == 1) {
-                            _handler._specialInput = true;
-                        }
-                        else {
-                            _handler._dropInput = true;
-                        }
-
-                    }
-                    else {
-                        rndDec = Random.Range(0, 2);
-                        if (rndDec == 1) {
-                            _handler._driveInput = true;
-                        }
-                        else {
-                            _handler._dropInput = true;
-                        }
-                    }
-                }
+                processHit();
             }
             tick = 0.0f;
         }
     }
 
-    bool IsOnMySide() {
-        if(_controller.GetFilter() == FighterFilter.one) {
-            return targetPosition.x > 1;
+    void processHit() {
+        int rand = Random.Range(0, 3);
+        int rndDec = 0;
+
+        if (rand == 2 && _shuttle.transform.position.y > 1.2f && _shuttle.GetSpeedPercent() > 0.1f) {
+            _handler._chipInput = true;
         }
         else {
-            return targetPosition.x < -1;
+
+            if (transform.position.y > 1.2f) {
+                rndDec = Random.Range(0, 3);
+                if (rndDec == 0) {
+                    _handler._smashInput = true;
+                }
+                else if (rndDec == 1 && _controller.GetMeter() == 1) {
+                    _handler._specialInput = true;
+                }
+                else {
+                    _handler._dropInput = true;
+                }
+
+            }
+            else {
+                rndDec = Random.Range(0, 2);
+                if (rndDec == 1) {
+                    _handler._driveInput = true;
+                }
+                else {
+                    _handler._dropInput = true;
+                }
+            }
+        }
+    }
+
+    bool IsOnMySide() {
+        if(_controller.GetFilter() == FighterFilter.one) {
+            return targetPosition.x > 0.1f;
+        }
+        else {
+            return targetPosition.x < -0.1f;
         }
     }
 

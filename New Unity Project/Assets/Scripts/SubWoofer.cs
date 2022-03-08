@@ -71,19 +71,9 @@ public class SubWoofer : ShuttleCock
     }
 
     void Explode() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
-        foreach (Collider hit in colliders) {
-            ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+        Collider[] collidersPlayers = Physics.OverlapSphere(transform.position, 4f);
+        foreach (Collider hit in collidersPlayers) {
             FighterController controller = hit.GetComponent<FighterController>();
-
-            if (shuttle != null && !shuttle.GetComponent<SubWoofer>()) {
-                Vector3 direction = shuttle.transform.position - transform.position;
-                direction.Normalize();
-
-                //shuttle.ProcessForce(direction * 100, Vector3.zero, 1, false);
-                shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
-                shuttle.SetOwner(FighterFilter.both);
-            }
 
             if(controller != null) {
                 Vector3 direction = controller.transform.position - transform.position;
@@ -93,6 +83,19 @@ public class SubWoofer : ShuttleCock
                 controller.KO(direction * 20);
                 ScoreManager.Get().UpdateScore(controller.GetFilter().ToString(), "KO");
                 GameManager.Get().KOEvent();
+            }
+        }
+
+        Collider[] collidersShuttle = Physics.OverlapSphere(transform.position, 12f);
+        foreach (Collider hit in collidersShuttle) {
+            ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+
+            if (shuttle != null && !shuttle.GetComponent<SubWoofer>()) {
+                Vector3 direction = shuttle.transform.position - transform.position;
+                direction.Normalize();
+
+                shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
+                shuttle.SetOwner(FighterFilter.both);
             }
         }
 
