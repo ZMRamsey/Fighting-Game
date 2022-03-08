@@ -70,6 +70,10 @@ public class SubWoofer : ShuttleCock
         }
     }
 
+    public float GetTimer(){
+        return subWooferTimer;
+    }
+
     void Explode() {
         Collider[] collidersPlayers = Physics.OverlapSphere(transform.position, 4f);
         foreach (Collider hit in collidersPlayers) {

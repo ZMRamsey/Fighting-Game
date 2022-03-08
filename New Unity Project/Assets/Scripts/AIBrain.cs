@@ -27,18 +27,32 @@ public class AIBrain : MonoBehaviour
         if (tick > 0.05f) {
             _handler._inputX = 0;
             bool moveAwayOverride = false;
+            bool inRangeOfSubWoofer = false;
 
             Collider[] colliders = Physics.OverlapSphere(transform.position, 5);
             foreach (Collider hit in colliders) {
                 SubWoofer woofer = hit.GetComponent<SubWoofer>();
 
                 if(woofer != null) {
-                    if(woofer.transform.position.x < transform.position.x) {
-                        _handler._inputX = 1;
-                    }
+                    if(woofer.GetTimer() < 3 && IsOnMySide(woofer.transform) && !IsOnMySide()) {
+                        if (woofer.transform.position.x < transform.position.x) {
+                            _handler._inputX = -1;
+                        }
 
-                    if (woofer.transform.position.x > transform.position.x) {
-                        _handler._inputX = -1;
+                        if (woofer.transform.position.x > transform.position.x) {
+                            _handler._inputX = 1;
+                        }
+
+                        inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 1.5f;
+                    }
+                    else {
+                        if (woofer.transform.position.x < transform.position.x) {
+                            _handler._inputX = 1;
+                        }
+
+                        if (woofer.transform.position.x > transform.position.x) {
+                            _handler._inputX = -1;
+                        }
                     }
 
                     moveAwayOverride = true;
@@ -70,6 +84,16 @@ public class AIBrain : MonoBehaviour
             }
             else {
                 _handler._crouchInput = false;
+            }
+
+            if (inRangeOfSubWoofer) {
+                var rndDec = Random.Range(0, 3);
+                if (rndDec == 0) {
+                    _handler._smashInput = true;
+                }
+                else {
+                    _handler._dropInput = true;
+                }
             }
 
 
@@ -120,6 +144,15 @@ public class AIBrain : MonoBehaviour
         }
         else {
             return targetPosition.x < -0.1f;
+        }
+    }
+
+    bool IsOnMySide(Transform transform) {
+        if (_controller.GetFilter() == FighterFilter.one) {
+            return transform.position.x > 0.1f;
+        }
+        else {
+            return transform.position.x < -0.1f;
         }
     }
 
