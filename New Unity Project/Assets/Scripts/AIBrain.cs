@@ -27,11 +27,13 @@ public class AIBrain : MonoBehaviour
         tick += Time.deltaTime;
 
        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
+        targetPosition -= _shuttle.GetVelocity().normalized;
 
         if (tick > 0.05f) {
             _handler._inputX = 0;
             bool moveAwayOverride = false;
             bool inRangeOfSubWoofer = false;
+            RaycastHit netDetection;
 
             Collider[] colliders = Physics.OverlapSphere(transform.position, 5);
             foreach (Collider hit in colliders) {
@@ -50,12 +52,24 @@ public class AIBrain : MonoBehaviour
                         inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 1.5f;
                     }
                     else {
-                        if (woofer.transform.position.x < transform.position.x) {
-                            _handler._inputX = 1;
+           
+
+                        if (IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
+                            _handler._inputX = -1;
+                            if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection))
+                            {
+                                _handler._jumpHeld = true;
+                                _handler._jumpInput = true;
+                            }
                         }
 
-                        if (woofer.transform.position.x > transform.position.x) {
-                            _handler._inputX = -1;
+                        if (IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
+                            _handler._inputX = 1;
+                            if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection))
+                            {
+                                _handler._jumpHeld = true;
+                                _handler._jumpInput = true;
+                            }
                         }
                     }
 
@@ -78,12 +92,11 @@ public class AIBrain : MonoBehaviour
 
                 if(!IsOnMySide() && !IsOnMySide(transform))
                 {
-                    RaycastHit hit;
 
                     if (_controller.GetFilter() == FighterFilter.one)
                     {
                         _handler._inputX = 1;
-                        if (Physics.Raycast(transform.position, new Vector3(1,0,0), out hit, 2, _netDetection))
+                        if (Physics.Raycast(transform.position, new Vector3(1,0,0), out netDetection, 2, _netDetection))
                         {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
@@ -92,7 +105,7 @@ public class AIBrain : MonoBehaviour
                     else
                     {
                         _handler._inputX = -1;
-                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out hit, 2, _netDetection))
+                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection))
                         {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
@@ -133,7 +146,7 @@ public class AIBrain : MonoBehaviour
             }
 
 
-            if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
+            if (Vector3.Distance(transform.position, targetPosition) <  1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude) || Vector3.Distance(transform.position, _shuttle.transform.position) < 1f) {
                 processHit();
             }
             tick = 0.0f;
