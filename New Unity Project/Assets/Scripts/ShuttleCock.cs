@@ -402,12 +402,14 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity *= 0.9f;
     }
 
-    public void Reverse() {
-        SetOwner(FighterFilter.both);
+    public void Reverse(FighterFilter filter) {
+        SetOwner(filter);
 
-        Vector3 vel = _rb.velocity * 4;
+        Vector3 vel = _rb.velocity;
         vel.x = -vel.x;
-        _rb.velocity = vel;
+        vel= vel.normalized * 6;
+        var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none);
+        Shoot(hitMes);
     }
 
     IEnumerator ShootProccess(HitMessage message, bool resetVelocity, float time) {

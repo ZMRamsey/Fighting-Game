@@ -11,12 +11,14 @@ public class AIBrain : MonoBehaviour
     Vector3 targetPosition;
 
     EsmeFighter _esme;
+    RacketFighter _raket;
 
     void Start() {
         _shuttle = GameManager.Get().GetShuttle();
         _handler = GetComponent<InputHandler>();
         _controller = GetComponent<FighterController>();
         _esme = GetComponent<EsmeFighter>();
+        _raket = GetComponent<RacketFighter>();
     }
 
     void Update() {
@@ -84,6 +86,14 @@ public class AIBrain : MonoBehaviour
             }
             else {
                 _handler._crouchInput = false;
+            }
+
+            if(_raket && _raket.GetMeter() > 0.5f) {
+                int rndGimic = Random.Range(0, 250);
+                if(rndGimic == 5) {
+                    _handler._crouchInput = true;
+                    _handler._chipInput = true;
+                }
             }
 
             if (inRangeOfSubWoofer) {

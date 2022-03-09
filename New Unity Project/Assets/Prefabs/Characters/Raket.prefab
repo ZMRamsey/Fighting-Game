@@ -19860,6 +19860,7 @@ MonoBehaviour:
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
   _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
+  _mrHandyPrefab: {fileID: 4953018871932507929, guid: e4fa35645e5b0064c955dd98649419a2, type: 3}
 --- !u!114 &4874520954667380375
 MonoBehaviour:
   m_ObjectHideFlags: 0

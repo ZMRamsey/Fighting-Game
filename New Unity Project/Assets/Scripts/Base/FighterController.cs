@@ -193,6 +193,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        OnFixedFighterUpdate();
         _animator.SetBool("running", _myState == FighterState.inControl && _grounded && _inputHandler.GetInputX() != 0);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
@@ -249,6 +250,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnFighterUpdate() {
+
+    }
+
+    public virtual void OnFixedFighterUpdate() {
 
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum FighterFilter { one, two, both, current };
+public enum FighterFilter { one, two, both, current, none };
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
