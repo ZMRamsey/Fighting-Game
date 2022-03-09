@@ -79,6 +79,8 @@ public class MrHandy : MonoBehaviour
             _rb.AddTorque(new Vector3(rot.x, rot.y, rot.z) * _floatSpeed * 2);
 
             _rb.angularVelocity *= 0.98f;
+
+            _rb.angularVelocity = Vector3.ClampMagnitude(_rb.angularVelocity, _speedCap);
         }
         else {
             _buldtime += Time.deltaTime;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public enum FighterFilter { one, two, both, current, none };
 public class GameManager : MonoBehaviour
@@ -12,39 +13,54 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameSettings _settings;
     [SerializeField] FighterTab _fighterOne;
     [SerializeField] FighterTab _fighterTwo;
-    [SerializeField] Shaker _cameraShaker;
-    [SerializeField] Shaker _stageShaker;
+    [SerializeField] GameEventManager _eventManager;
+
+    [Header("Shuttle Settings")]
     [SerializeField] ShuttleCock _shuttle;
     [SerializeField] Vector3 _shuttleSpawn;
+
+    [Header("Aesthetics")]
+    [SerializeField] Shaker _cameraShaker;
+    [SerializeField] Shaker _stageShaker;
+
+    [Header("Speedometer")]
     [SerializeField] Transform _speedRotator;
-    [SerializeField] GameObject _stageCamera;
-    [SerializeField] AudioClip _superSFX;
-    [SerializeField] AudioSource _music;
-    [SerializeField] AudioSource _endMusic;
-    [SerializeField] UIFader _screenFader;
+
+    [Header("UI")]
     [SerializeField] GameObject _debugCanvas;
-    [SerializeField] GameObject _debugCamera;
-    [SerializeField] GameEventManager _eventManager;
+    [SerializeField] UIFader _screenFader;
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
+
+    [Header("Cameras")]
+    [SerializeField] GameObject _stageCamera;
+    [SerializeField] GameObject _uiCamera;
+    [SerializeField] GameObject _debugCamera;
+
+    [Header("Pause")]
+    [SerializeField] GameObject _pausePanel;
     [SerializeField] Image _pauseArt;
     [SerializeField] Image _pauseArtBack;
-    [SerializeField] GameObject _pausePanel;
-    GameEvent _lastSuperEvent;
+
+    [Header("Audio")]
     AudioSource _source;
+    [SerializeField] AudioSource _music;
+    [SerializeField] AudioSource _endMusic;
+    [SerializeField] AudioClip _superSFX;
+    [SerializeField] AudioClip _endGameSFX;
+    [SerializeField] AudioMixer _mixer;
+    [SerializeField] bool _spinDown;
+
+    [Header("Stats")]
+    GameEvent _lastSuperEvent;
+    FighterFilter _lastHit = FighterFilter.both;
+    public float _serveSpeed = 7.5f;
+    public bool needNewRound = false;
     float _rotateTarget;
     int _rally;
     int _successive = 0;
     int _targetRally = 10;
-    FighterFilter _lastHit = FighterFilter.both;
-    public float _serveSpeed = 7.5f;
-    public bool needNewRound = false;
     bool _isPaused;
-
-    [SerializeField] bool _spinDown;
-
-    [Header("Audio")]
-    [SerializeField] AudioClip _endGameSFX;
 
     public static GameManager Get() {
         return _instance;
@@ -112,16 +128,23 @@ public class GameManager : MonoBehaviour
     float _pauseTime;
     void Update() {
         if (_isPaused) {
+            _mixer.SetFloat("lowpass", 424);
             if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Time.timeScale = 1;
                 _isPaused = false;
+                _uiCamera.SetActive(true);
             }
+        }
+        else
+        {
+            _mixer.SetFloat("lowpass", 22000);
         }
 
         if (((Gamepad.current != null && Gamepad.current.startButton.isPressed) || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
             _pauseTime += Time.deltaTime * 2;
             if (_pauseTime >= 1) {
                 _isPaused = true;
+                _uiCamera.SetActive(false);
                 _pauseTime = 0;
                 Time.timeScale = 0;
             }
