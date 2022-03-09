@@ -12,6 +12,8 @@ public class OptionsMenuManager : MonoBehaviour
     bool _hasGoneLeft = false;
     int _randSelection = 0;
 
+    [SerializeField] GameSettings _settings;
+
     string _selectedCharacter;
 
     public bool _isReady = false;
@@ -52,6 +54,8 @@ public class OptionsMenuManager : MonoBehaviour
 
     public int _maxCharacters = 6;
 
+    public FighterProfile[] fighters;
+
     void SelectHighlightedCharacter()
     {
         if(_confirmedIndex == 0)
@@ -60,10 +64,12 @@ public class OptionsMenuManager : MonoBehaviour
             {
                 _randSelection = Random.Range(0, 7);
                 animatedCharactersLeft[_randSelection].SetActive(true);
+                _settings.SetFighterOneProfile(fighters[_selectionIndex]);
             }
             else
             {
                 animatedCharactersLeft[_selectionIndex].SetActive(true);
+                _settings.SetFighterOneProfile(fighters[_selectionIndex]);
             }
         }
         else
@@ -72,10 +78,12 @@ public class OptionsMenuManager : MonoBehaviour
             {
                 _randSelection = Random.Range(0, 7);
                 animatedCharactersRight[_randSelection].SetActive(true);
+                _settings.SetFighterTwoProfile(fighters[_selectionIndex]);
             }
             else
             {
                 animatedCharactersRight[_selectionIndex].SetActive(true);
+                _settings.SetFighterTwoProfile(fighters[_selectionIndex]);
             }
         }
         

@@ -23,6 +23,8 @@ public class InputTest : MonoBehaviour
     bool _player2AI = false;
     bool _player2Player = false;
     bool _player1Player = false;
+    bool _readyToPlay = false;
+    bool _loadCharacterSelection = false;
 
     public GameObject[] leftSelectors;
     public GameObject[] rightSelectors;
@@ -79,13 +81,19 @@ public class InputTest : MonoBehaviour
             else if (setPlayerOne) {
                 SetPVAI();
             }
+        } 
+        if ((Keyboard.current.enterKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) && (_player1Player && (_player2AI || _player2Player)))
+        {
+            if (_readyToPlay)
+            {
+                Debug.Log("I pray this fixes it");
+                inputSelectorScreen.SetActive(false);
+                characterSelectScreen.SetActive(true);
+                _loadCharacterSelection = true;
+            }
+            
         }
 
-        if(_player1Player && _player2AI)
-        {
-            inputSelectorScreen.SetActive(false);
-            characterSelectScreen.SetActive(true);
-        }
 
         //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
         //    if (_playerOneKeyboard != null) {
@@ -173,6 +181,7 @@ public class InputTest : MonoBehaviour
     public void SetPVAI() {
         Debug.Log("Test");
         _player2AI = true;
+        _readyToPlay = true;
         _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
         rightSelectors[0].SetActive(true);
     }
@@ -229,6 +238,7 @@ public class InputTest : MonoBehaviour
             _playerOneGamepad = gamepad;
             leftSelectors[1].SetActive(true);
             _player1Player = true;
+            _readyToPlay = true;
             return;
         }
 
@@ -243,6 +253,7 @@ public class InputTest : MonoBehaviour
             //Application.LoadLevel("Base");
             rightSelectors[1].SetActive(true);
             _player2Player = true;
+            _readyToPlay = true;
             return;
         }
     }
