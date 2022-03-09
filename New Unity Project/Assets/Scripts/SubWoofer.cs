@@ -93,6 +93,7 @@ public class SubWoofer : ShuttleCock
         Collider[] collidersShuttle = Physics.OverlapSphere(transform.position, 12f);
         foreach (Collider hit in collidersShuttle) {
             ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+            MrHandy handy = hit.GetComponent<MrHandy>();
 
             if (shuttle != null && !shuttle.GetComponent<SubWoofer>()) {
                 Vector3 direction = shuttle.transform.position - transform.position;
@@ -100,6 +101,10 @@ public class SubWoofer : ShuttleCock
 
                 shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
                 shuttle.SetOwner(FighterFilter.both);
+            }
+
+            if(handy != null) {
+                handy.transform.eulerAngles = new Vector3(180, 0, 0);
             }
         }
 

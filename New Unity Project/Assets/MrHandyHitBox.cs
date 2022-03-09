@@ -38,7 +38,7 @@ public class MrHandyHitBox : MonoBehaviour
         }
 
         if (_handy.MaxHits()) {
-            _handy.gameObject.SetActive(false);
+            _handy.OnDeath();
         }
     }
 }

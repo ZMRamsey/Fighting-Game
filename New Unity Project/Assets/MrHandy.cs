@@ -12,9 +12,18 @@ public class MrHandy : MonoBehaviour
     [SerializeField] int _hitThreshold = 10;
     [SerializeField] Transform _scaler;
     [SerializeField] float _speedCap = 4;
+    [SerializeField] ParticleSystem _death;
+    [SerializeField] AudioClip _deathSound;
+    [SerializeField] AudioClip _spawnSound;
+    [SerializeField] AudioClip[] _spawnVoiceSounds;
+    [SerializeField] AudioClip[] _deathVoiceSounds;
     float _buldtime;
     int hits;
     // Start is called before the first frame update
+
+    private void Start() {
+        _death.transform.SetParent(null);
+    }
 
     public void ResetHandy(FighterFilter filter) {
         _rb = GetComponent<Rigidbody>();
@@ -36,6 +45,19 @@ public class MrHandy : MonoBehaviour
 
     public bool MaxHits() {
         return hits >= _hitThreshold;
+    }
+
+    public void OnDeath() {
+        _death.transform.position = transform.position;
+        _death.Play();
+        _death.GetComponent<AudioSource>().PlayOneShot(_deathSound);
+        _death.GetComponent<AudioSource>().PlayOneShot(_deathVoiceSounds[UnityEngine.Random.Range(0,_deathVoiceSounds.Length)], 4);
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable() {
+        GetComponent<AudioSource>().PlayOneShot(_spawnSound);
+        GetComponent<AudioSource>().PlayOneShot(_spawnVoiceSounds[UnityEngine.Random.Range(0, _spawnVoiceSounds.Length)], 4);
     }
 
     // Update is called once per frame

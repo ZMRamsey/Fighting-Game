@@ -35,7 +35,7 @@ public class RacketFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
-        if(_inputHandler.GetCrouch() && _inputHandler.GetChip() && !_mrHandyObject.activeSelf && GetMeter() >= 0.5f) {
+        if(_inputHandler.GetCrouch() && _inputHandler.GetChip() && !_mrHandyObject.activeSelf && GetMeter() >= 0.5f && _myState == FighterState.inControl) {
             ReduceMeter(50f);
             _mrHandyObject.transform.position = transform.position;
             _mrHandyObject.GetComponent<MrHandy>().ResetHandy(_filter);
