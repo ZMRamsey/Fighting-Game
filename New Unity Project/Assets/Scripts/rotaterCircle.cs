@@ -22,7 +22,7 @@ public class rotaterCircle : MonoBehaviour
     int _firstOption = 0;
     int _lastOption = 1;
 
-    public static int _PlayerOptionSelected = 0;
+    public int _PlayerOptionSelected = 0;
 
     public GameObject playMenu;
     public GameObject optionsMenu;
@@ -41,6 +41,8 @@ public class rotaterCircle : MonoBehaviour
     public GameObject menuScript;
 
     public GameObject playSubMenu;
+
+    public GameObject inputSelecter;
 
     //Test Start
     //Test End
@@ -147,7 +149,9 @@ public class rotaterCircle : MonoBehaviour
         {
             _PlayerOptionSelected = 1;
         }
-        SceneManager.LoadScene("InputTest");
+        inputSelecter.SetActive(true);
+        mainMenu.SetActive(false);
+
     }
 
     private void Update()
@@ -252,11 +256,10 @@ public class rotaterCircle : MonoBehaviour
         {
             if (_readyToPlay)
             {
-                Debug.Log("Play 2");
                 if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
-                    //PressPlay();
-                    loadSelectedMenu();
+                    Debug.Log("Play 2");
+                    PressPlay();
                 }
             }
             _readyToPlay = true;
