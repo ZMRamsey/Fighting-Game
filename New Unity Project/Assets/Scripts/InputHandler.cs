@@ -74,19 +74,19 @@ public class InputHandler : MonoBehaviour
                 _dashInput = true;
             }
 
-            if (_keyboard.rightArrowKey.wasPressedThisFrame) {
+            if (_keyboard.lKey.wasPressedThisFrame || _keyboard.rightArrowKey.wasPressedThisFrame) {
                 _driveInput = true;
             }
 
-            if (_keyboard.upArrowKey.wasPressedThisFrame) {
+            if (_keyboard.iKey.wasPressedThisFrame || _keyboard.upArrowKey.wasPressedThisFrame) {
                 _dropInput = true;
             }
 
-            if (_keyboard.leftArrowKey.wasPressedThisFrame) {
+            if (_keyboard.jKey.wasPressedThisFrame || _keyboard.leftArrowKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
 
-            if (_keyboard.downArrowKey.wasPressedThisFrame) {
+            if (_keyboard.kKey.wasPressedThisFrame || _keyboard.downArrowKey.wasPressedThisFrame) {
                 _chipInput = true;
             }
 
@@ -128,7 +128,7 @@ public class InputHandler : MonoBehaviour
                 _jumpInput = false;
             }
 
-            if (_gamepad.leftStick.up.wasPressedThisFrame|| _gamepad.dpad.up.wasPressedThisFrame) {
+            if (_gamepad.leftStick.up.wasPressedThisFrame || _gamepad.dpad.up.wasPressedThisFrame) {
                 _jumpExtraInput = true;
             }
 
