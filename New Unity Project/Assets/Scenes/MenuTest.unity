@@ -1413,7 +1413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &148557257
 Transform:
   m_ObjectHideFlags: 0
@@ -2186,6 +2186,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rot: {fileID: 1588688800}
+  leftSelectors:
+  - {fileID: 148557256}
+  - {fileID: 614183286}
+  - {fileID: 1206100645}
+  rightSelectors:
+  - {fileID: 302068107}
+  - {fileID: 1337986885}
+  - {fileID: 1453697554}
   _settings: {fileID: 11400000, guid: 758fa2ae524b0774fbcbca715a7e3a4c, type: 2}
   _profiles:
   - {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
@@ -2193,6 +2201,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
   - {fileID: 11400000, guid: c40a68d55e733844b9e3bfdb16234584, type: 2}
   - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  characterSelectScreen: {fileID: 1899366558}
+  inputSelectorScreen: {fileID: 249319236}
 --- !u!1 &252787655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &302068108
 Transform:
   m_ObjectHideFlags: 0
@@ -5628,7 +5638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &614183287
 Transform:
   m_ObjectHideFlags: 0
@@ -10272,7 +10282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1206100646
 Transform:
   m_ObjectHideFlags: 0
@@ -11562,7 +11572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1337986886
 Transform:
   m_ObjectHideFlags: 0
@@ -12381,7 +12391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1453697555
 Transform:
   m_ObjectHideFlags: 0
@@ -13380,6 +13390,7 @@ MonoBehaviour:
   playMenu: {fileID: 1899366558}
   optionsMenu: {fileID: 26491433}
   mainMenu: {fileID: 1345440822}
+  completeMenu: {fileID: 212658223}
   playMenuOptions:
   - {fileID: 403471852}
   - {fileID: 81220517}

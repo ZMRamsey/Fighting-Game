@@ -27,6 +27,7 @@ public class rotaterCircle : MonoBehaviour
     public GameObject playMenu;
     public GameObject optionsMenu;
     public GameObject mainMenu;
+    public GameObject completeMenu;
 
     public GameObject[] playMenuOptions;
 
@@ -150,7 +151,7 @@ public class rotaterCircle : MonoBehaviour
             _PlayerOptionSelected = 1;
         }
         inputSelecter.SetActive(true);
-        mainMenu.SetActive(false);
+        completeMenu.SetActive(false);
 
     }
 

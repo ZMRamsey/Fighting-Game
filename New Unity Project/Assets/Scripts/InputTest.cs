@@ -20,8 +20,18 @@ public class InputTest : MonoBehaviour
     int _f1Index;
     int _f2Index;
 
+    bool _player2AI = false;
+    bool _player2Player = false;
+    bool _player1Player = false;
+
+    public GameObject[] leftSelectors;
+    public GameObject[] rightSelectors;
+
     [SerializeField] GameSettings _settings;
     [SerializeField] FighterProfile[] _profiles;
+
+    public GameObject characterSelectScreen;
+    public GameObject inputSelectorScreen;
 
 
     // Start is called before the first frame update
@@ -69,6 +79,12 @@ public class InputTest : MonoBehaviour
             else if (setPlayerOne) {
                 SetPVAI();
             }
+        }
+
+        if(_player1Player && _player2AI)
+        {
+            inputSelectorScreen.SetActive(false);
+            characterSelectScreen.SetActive(true);
         }
 
         //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
@@ -155,7 +171,10 @@ public class InputTest : MonoBehaviour
     }
 
     public void SetPVAI() {
+        Debug.Log("Test");
+        _player2AI = true;
         _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
+        rightSelectors[0].SetActive(true);
     }
 
     public void SetPVP() {
@@ -175,10 +194,12 @@ public class InputTest : MonoBehaviour
             _settings.GetFighterOneDevice().SetInputState(InputState.player);
             setPlayerOne = true;
             _playerOneKeyboard = keyboard;
+            leftSelectors[2].SetActive(true);
+            _player1Player = true;
             return;
         }
 
-        if (!setPlayerTwo) {
+        if (!setPlayerTwo && !_player2AI) {
             //_f2Char.color = Color.white;
             //_f2Text.text = "KEYBOARD";
             _playerTwo = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
@@ -187,6 +208,8 @@ public class InputTest : MonoBehaviour
             setPlayerTwo = true;
             _playerTwoKeyboard = keyboard;
             //Application.LoadLevel("Base");
+            rightSelectors[2].SetActive(true);
+            _player2Player = true;
             return;
         }
     }
@@ -204,10 +227,12 @@ public class InputTest : MonoBehaviour
             _settings.GetFighterOneDevice().SetInputState(InputState.player);
             setPlayerOne = true;
             _playerOneGamepad = gamepad;
+            leftSelectors[1].SetActive(true);
+            _player1Player = true;
             return;
         }
 
-        if (!setPlayerTwo) {
+        if (!setPlayerTwo && !_player2AI) {
             //_f2Char.color = Color.white;
             //_f2Text.text = "GAMEPAD";
             _playerTwo = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
@@ -216,6 +241,8 @@ public class InputTest : MonoBehaviour
             setPlayerTwo = true;
             _playerTwoGamepad = gamepad;
             //Application.LoadLevel("Base");
+            rightSelectors[1].SetActive(true);
+            _player2Player = true;
             return;
         }
     }
