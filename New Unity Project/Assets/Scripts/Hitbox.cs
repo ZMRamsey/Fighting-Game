@@ -11,6 +11,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] GameObject _character;
     bool grabbing;
     bool hasBall;
+    ShuttleCock heldBall;
 
     public List<GameObject> cooldowns = new List<GameObject>();
 
@@ -73,8 +74,8 @@ public class Hitbox : MonoBehaviour
                 else
                 {
                     ball.followPlayer(_character, true);
-                    Debug.Log("Following now");
                     hasBall = true;
+                    heldBall = ball;
                     //fuccy wuccy
                 }
                 
@@ -90,6 +91,33 @@ public class Hitbox : MonoBehaviour
     public void SetGrab(bool grab)
     {
         grabbing = grab;
+
+        if ((!grabbing) && (heldBall != null))
+        {
+            hasBall = false;
+
+            InputHandler handler = _self.GetComponent<InputHandler>();
+
+            float facing = 1;
+            if (_character.GetComponent<SpriteRenderer>().flipX)
+            {
+                facing = -1;
+            }
+
+            float xFace = _currentMove.GetHitDirection().x * facing;
+            Vector3 dir = _currentMove.GetHitDirection();
+            dir.x = xFace;
+            heldBall.SetBounciness(0.2f);
+            heldBall.followPlayer(_character, false);
+
+            heldBall.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
+
+            Debug.Log("Ball launched");
+        }
+        else
+        {
+            heldBall = null;
+        }
     }
 
     public bool HasShuttle()
@@ -100,7 +128,5 @@ public class Hitbox : MonoBehaviour
     public void ResetCD()
     {
         cooldowns.Clear();
-        hasBall = false;
-        
     }
 }

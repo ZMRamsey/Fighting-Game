@@ -69,8 +69,8 @@ public class InputHandler : MonoBehaviour
                 _specialInput = true;
             }
 
-            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed || _playerDevice.GetKeyboard().lKey.wasPressedThisFrame
-                || _playerDevice.GetKeyboard().iKey.wasPressedThisFrame || _playerDevice.GetKeyboard().jKey.wasPressedThisFrame)
+            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed || _playerDevice.GetKeyboard().lKey.isPressed
+                || _playerDevice.GetKeyboard().iKey.isPressed || _playerDevice.GetKeyboard().jKey.isPressed)
             {
                 _chargeInput = true;
             }
@@ -79,11 +79,13 @@ public class InputHandler : MonoBehaviour
                 _chargeInput = false;
             }
 
-            if (_playerDevice.GetKeyboard().downArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().kKey.wasPressedThisFrame)
+            _chipHeld = _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().kKey.isPressed;
+
+            if (_playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().kKey.isPressed)
             {
                 _chipInput = true;
             }
-            else if (_playerDevice.GetKeyboard().downArrowKey.wasReleasedThisFrame || _playerDevice.GetKeyboard().kKey.wasPressedThisFrame)
+            else
             {
                 _chipInput = false;
             }
@@ -240,6 +242,6 @@ public class InputHandler : MonoBehaviour
 
     public bool GetGrab()
     {
-        return _grabInput;
+        return _chipHeld;
     }
 }

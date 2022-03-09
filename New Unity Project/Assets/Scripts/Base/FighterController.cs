@@ -74,6 +74,8 @@ public abstract class FighterController : MonoBehaviour
     InputHandler _inputHandler;
     Rigidbody _rigidbody;
 
+    bool test = false;
+
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
         _inputHandler = GetComponent<InputHandler>();
@@ -187,11 +189,17 @@ public abstract class FighterController : MonoBehaviour
 
             if (_holdingShuttle)
             {
-                _grabbingTime += 0.1f;
+                _grabbingTime -= 0.1f;
             }
             else
             {
-                _grabbingTime = 0;
+                _grabbingTime = 2;
+            }
+
+            if (_grabbingTime < 0)
+            {
+                Debug.Log("Out of grab time");
+                //_hitboxes.SetGrab(false);
             }
         }
     }
@@ -438,7 +446,8 @@ public abstract class FighterController : MonoBehaviour
     }
 
     //Checks all input commands from InputHandler
-    public virtual void ProcessInput() {
+    public virtual void ProcessInput()
+    {
         if (IsGrounded()) {
             _myStance = FighterStance.standing;
         }
@@ -490,25 +499,31 @@ public abstract class FighterController : MonoBehaviour
         {
             //Scoop up shuttle
             _canAttack = false;
+            _hitboxes.SetGrab(true);
             _currentMove = _chipMove;
             ResetHitbox();
             _animator.SetTrigger(_currentMove.GetPath());
-            _hitboxes.SetGrab(true);
             _hitboxes.SetMove(_currentMove);
             _holdingShuttle = _hitboxes.HasShuttle();
-            //_failSafeAttack = _currentMove.GetClip().length;
+
+            _failSafeAttack = _currentMove.GetClip().length;
         }
-        else if (!_inputHandler.GetChip() && !_canAttack && _holdingShuttle)
+        
+        if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
         {
-                _hitboxes.SetGrab(false);
-                _holdingShuttle = false;
-                _canAttack = false;
-                ResetHitbox();
+            _canAttack = false;
+            ResetHitbox();
 
-                _currentMove = _chipMove;
-                UpdateMove();
+            _currentMove = _chipMove;
+            
+            OnAttack();
+            _hitboxes.SetGrab(false);
+            _animator.SetTrigger(_currentMove.GetPath());
+            _failSafeAttack = _currentMove.GetClip().length;
+            _holdingShuttle = false;
+            Debug.Log("Released the cock");
+
         }
-
 
         if (_inputHandler.GetSpecial() && _canAttack && _commandMeter >= 100) {
             _canAttack = false;
@@ -523,9 +538,16 @@ public abstract class FighterController : MonoBehaviour
         if (_failSafeAttack > 0) {
             _failSafeAttack -= Time.deltaTime;
             if (_failSafeAttack <= 0) {
-                ResetAttack();
+                if (!_holdingShuttle)
+                {
+                    Debug.Log("Not holding shuttle");
+                    ResetAttack();
+                }
             }
         }
+
+
+        
     }
 
     void UpdateMove() {

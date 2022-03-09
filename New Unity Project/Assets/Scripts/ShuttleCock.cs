@@ -214,6 +214,7 @@ public class ShuttleCock : MonoBehaviour
         {
             _rb.velocity = Vector3.zero;
             transform.position = target.transform.position;
+            Debug.Log("Frozen");
         }
 
         ShuttleUpdate();
