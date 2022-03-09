@@ -152,6 +152,7 @@ public class rotaterCircle : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(_PlayerOptionSelected);
         if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             if (sceneIndex == 0)
