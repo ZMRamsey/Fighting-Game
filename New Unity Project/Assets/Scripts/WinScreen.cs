@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public enum player { danny, hunter, raket, esme, ganz};
 public class WinScreen : MonoBehaviour
 {
+    [Header("Screen")]
     [SerializeField] GameObject _character;
     [SerializeField] GameObject _winner;
     [SerializeField] GameObject _winnerNameO;
@@ -23,29 +24,22 @@ public class WinScreen : MonoBehaviour
     string winner;
     string loser;
 
-    //public int _roundIndex;
-    //public int _p1r1;
-    //public int _p2r1;
-    //public int _p1r2;
-    //public int _p2r2;
-    //public int _p1r3;
-    //public int _p2r3;
+    //public Sprite Danny;
+    //public Sprite Hunter;
+    //public Sprite Esme;
+    //public Sprite Raket;
+    //public Sprite Ganz;
 
-
-    public Sprite Danny;
-    public Sprite Hunter;
-    public Sprite Esme;
-    public Sprite Raket;
-    public Sprite Ganz;
     public Image imageHolder;
 
-    public GameObject winnerAnimation;
-
+    [Header("Animations")]
     public GameObject DannyA;
     public GameObject HunterA;
     public GameObject EsmeA;
     public GameObject RaketA;
     public GameObject GanzA;
+
+    public GameObject winnerAnimation;
 
     public void Awake()
     {

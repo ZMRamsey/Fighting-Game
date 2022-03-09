@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _pausePanel;
     [SerializeField] Image _pauseArt;
     [SerializeField] Image _pauseArtBack;
+    [SerializeField] PauseMenu _pauseController;
 
     [Header("Audio")]
     AudioSource _source;
@@ -127,11 +128,13 @@ public class GameManager : MonoBehaviour
 
     float _pauseTime;
     void Update() {
+        //if (_isPaused) {
         if (_isPaused) {
             _mixer.SetFloat("lowpass", 424);
             if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Time.timeScale = 1;
                 _isPaused = false;
+                _pauseController.Enable();
                 _uiCamera.SetActive(true);
             }
         }
