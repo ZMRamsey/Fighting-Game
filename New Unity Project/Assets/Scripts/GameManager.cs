@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 _shuttleSpawn;
     [SerializeField] Transform _speedRotator;
     [SerializeField] GameObject _stageCamera;
+    [SerializeField] GameObject _uiCamera;
     [SerializeField] AudioClip _superSFX;
     [SerializeField] AudioSource _music;
     [SerializeField] AudioSource _endMusic;
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
             if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Time.timeScale = 1;
                 _isPaused = false;
+                _uiCamera.SetActive(true);
             }
         }
 
@@ -122,6 +124,7 @@ public class GameManager : MonoBehaviour
             _pauseTime += Time.deltaTime * 2;
             if (_pauseTime >= 1) {
                 _isPaused = true;
+                _uiCamera.SetActive(false);
                 _pauseTime = 0;
                 Time.timeScale = 0;
             }
