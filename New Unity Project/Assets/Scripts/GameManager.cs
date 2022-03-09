@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
     [SerializeField] Image _pauseArt;
+    [SerializeField] Image _pauseArtBack;
     [SerializeField] GameObject _pausePanel;
     GameEvent _lastSuperEvent;
     AudioSource _source;
@@ -131,6 +132,7 @@ public class GameManager : MonoBehaviour
 
 
         _pauseArt.fillAmount = Mathf.Clamp(_pauseTime, 0, 1);
+        _pauseArtBack.fillAmount = _pauseArt.fillAmount;
         _pausePanel.SetActive(_isPaused);
 
         _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeedPercent(), Time.deltaTime * 12);
