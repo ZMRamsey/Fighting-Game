@@ -1037,7 +1037,7 @@ AudioSource:
   m_GameObject: {fileID: 282428884}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
   m_audioClip: {fileID: 8300000, guid: fc6d2f026bc990b43be7a1c895b38be4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -7695,29 +7695,30 @@ MonoBehaviour:
     _spawn: {x: -5, y: 2.4, z: 0}
     _fighterName: {fileID: 1094609596}
     _fighterScore: {fileID: 69906219}
-  _cameraShaker: {fileID: 1778820963}
-  _stageShaker: {fileID: 1928380880}
+  _eventManager: {fileID: 1531375507}
   _shuttle: {fileID: 1768378424}
   _shuttleSpawn: {x: 0, y: 7, z: 0}
+  _cameraShaker: {fileID: 1778820963}
+  _stageShaker: {fileID: 1928380880}
   _speedRotator: {fileID: 1033106888}
-  _stageCamera: {fileID: 1897574291}
-  _uiCamera: {fileID: 1809863013}
-  _superSFX: {fileID: 8300000, guid: af412dc5c539a1f4ba81c5f78573454e, type: 3}
-  _music: {fileID: 282428885}
-  _endMusic: {fileID: 1614203411}
-  _screenFader: {fileID: 50402524}
   _debugCanvas: {fileID: 756198046}
-  _debugCamera: {fileID: 2005752492}
-  _eventManager: {fileID: 1531375507}
+  _screenFader: {fileID: 50402524}
   _UIBars: {fileID: 1440051572}
   _UIStage: {fileID: 1637076496}
+  _stageCamera: {fileID: 1897574291}
+  _uiCamera: {fileID: 1809863013}
+  _debugCamera: {fileID: 2005752492}
+  _pausePanel: {fileID: 1487734429}
   _pauseArt: {fileID: 1692038489}
   _pauseArtBack: {fileID: 771949848}
-  _pausePanel: {fileID: 1487734429}
+  _music: {fileID: 282428885}
+  _endMusic: {fileID: 1614203411}
+  _superSFX: {fileID: 8300000, guid: af412dc5c539a1f4ba81c5f78573454e, type: 3}
+  _endGameSFX: {fileID: 8300000, guid: 8b8ca6e00cc72fa43a521bb6662f16db, type: 3}
+  _mixer: {fileID: 24100000, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
+  _spinDown: 0
   _serveSpeed: 7.5
   needNewRound: 0
-  _spinDown: 0
-  _endGameSFX: {fileID: 8300000, guid: 8b8ca6e00cc72fa43a521bb6662f16db, type: 3}
 --- !u!114 &1744718070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7901,7 +7902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.94722086}
   m_AnchorMax: {x: 1, y: 0.94722086}
-  m_AnchoredPosition: {x: -714.30005, y: -43.200073}
+  m_AnchoredPosition: {x: -714.3001, y: -43.200073}
   m_SizeDelta: {x: -1428.6, y: 70.70001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1755116887

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIBrain : MonoBehaviour
 {
+    [SerializeField] LayerMask _netDetection;
     InputHandler _handler;
     ShuttleCock _shuttle;
     FighterController _controller;
@@ -14,6 +15,7 @@ public class AIBrain : MonoBehaviour
     RacketFighter _raket;
 
     void Start() {
+        _netDetection = LayerMask.GetMask("Net");
         _shuttle = GameManager.Get().GetShuttle();
         _handler = GetComponent<InputHandler>();
         _controller = GetComponent<FighterController>();
@@ -61,6 +63,10 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
+            _handler._jumpHeld = IsOnMySide() && transform.position.y < _shuttle.transform.position.y;
+
+            _handler._jumpInput = IsOnMySide() && IsBallAbovePlayer();
+
             if (!moveAwayOverride) {
                 if (IsBallOnRight() && IsOnMySide()) {
                     _handler._inputX = 1;
@@ -69,11 +75,31 @@ public class AIBrain : MonoBehaviour
                 if (IsBallOnLeft() && IsOnMySide()) {
                     _handler._inputX = -1;
                 }
+
+                if(!IsOnMySide() && !IsOnMySide(transform))
+                {
+                    RaycastHit hit;
+
+                    if (_controller.GetFilter() == FighterFilter.one)
+                    {
+                        _handler._inputX = 1;
+                        if (Physics.Raycast(transform.position, new Vector3(1,0,0), out hit, 2, _netDetection))
+                        {
+                            _handler._jumpHeld = true;
+                            _handler._jumpInput = true;
+                        }
+                    }
+                    else
+                    {
+                        _handler._inputX = -1;
+                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out hit, 2, _netDetection))
+                        {
+                            _handler._jumpHeld = true;
+                            _handler._jumpInput = true;
+                        }
+                    }
+                }
             }
-
-            _handler._jumpHeld = IsOnMySide() && transform.position.y < _shuttle.transform.position.y;
-
-            _handler._jumpInput = IsOnMySide() && IsBallAbovePlayer();
 
             _handler._chargeInput = true;
 
