@@ -16,11 +16,20 @@ public class RayAndTekaFighter : FighterController
         base.InitializeFighter();
         _rigidbody.useGravity = false;
         _inputHandler.SetInputState(InputState.none);
-        _rayObject = Instantiate(_rayPrefab, transform.position, Quaternion.identity);
         _handler = _rayObject.GetComponent<InputHandler>();
         _slowObject = Instantiate(_slowPrefab, transform.position, Quaternion.identity);
         _rayRenderer = _rayObject.GetComponent<RayAI>().GetSpriteRenderer();
         _slowObject.SetActive(false);
+    }
+
+    public override void FighterAwake()
+    {
+        _rayObject = Instantiate(_rayPrefab, transform.position, Quaternion.identity);
+    }
+
+    public override void SetFilter(FighterFilter filter)
+    {
+        base.SetFilter(filter);
         _rayObject.GetComponent<FighterController>().SetFilter(_filter);
     }
 

@@ -87,6 +87,12 @@ public abstract class FighterController : MonoBehaviour
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
         _inputHandler = GetComponent<InputHandler>();
+        FighterAwake();
+    }
+
+    public virtual void FighterAwake()
+    {
+
     }
 
     void Start() {
@@ -115,7 +121,7 @@ public abstract class FighterController : MonoBehaviour
         _source.PlayOneShot(_rightFootSounds[UnityEngine.Random.Range(0, _rightFootSounds.Length)], 1f);
     }
 
-    public void SetFilter(FighterFilter filter) {
+    public virtual void SetFilter(FighterFilter filter) {
         _filter = filter;
     }
 
