@@ -99,7 +99,7 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.enterKey.wasPressedThisFrame)
         {
-            SceneManager.LoadScene("InputTest");
+            SceneManager.LoadScene("Base");
         }
         winnerAnimation.SetActive(true);
         imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;

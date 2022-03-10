@@ -19828,6 +19828,9 @@ MonoBehaviour:
   _fallMultiplier: 8
   _jumpFalloff: 0.9
   _airSpeed: 10
+  _fastFallSpeed: 20
+  _hasDash: 1
+  _hasJump: 1
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}

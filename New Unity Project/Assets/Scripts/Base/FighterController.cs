@@ -142,7 +142,7 @@ public abstract class FighterController : MonoBehaviour
         return _myState == FighterState.dead;
     }
 
-    public void ResetFighter() {
+    public virtual void ResetFighter() {
         OnSuperEnd(true);
 
         _animator.SetLayerWeight(1, 0);

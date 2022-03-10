@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-
+using TMPro;
 public enum FighterFilter { one, two, both, current, none };
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIFader _screenFader;
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
+    [SerializeField] Animator _UIScore;
+    [SerializeField] TextMeshProUGUI _UIScoreText;
+    [SerializeField] TextMeshProUGUI _UIScoreF1;
+    [SerializeField] TextMeshProUGUI _UIScoreF2;
 
     [Header("Cameras")]
     [SerializeField] GameObject _stageCamera;
@@ -116,6 +120,9 @@ public class GameManager : MonoBehaviour
 
         _shuttle.SetOwner(_fighterOne.GetController());
         _shuttle.SetOwner(FighterFilter.both);
+
+        _UIScoreF1.text = _settings.GetFighterOneProfile().GetName();
+        _UIScoreF2.text = _settings.GetFighterTwoProfile().GetName();
 
         //ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
 
@@ -208,12 +215,25 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    void FlashScore() {
+        _UIScore.SetTrigger("score");
+        var pointOne = string.Format("{0:00}", ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
+        var pointTwo = string.Format("{0:00}", ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
+        _UIScoreText.text = $"{pointOne} - {pointTwo}";
+    }
+    bool _firstTrigger;
     void SetUpGame() {
-
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
             EndGame();
             return;
         }
+        else {
+            if (_firstTrigger) {
+                FlashScore();
+            }
+        }
+
+        _firstTrigger = true;
 
         if (stageCoroutine != null) {
             StopCoroutine(stageCoroutine);
@@ -257,6 +277,7 @@ public class GameManager : MonoBehaviour
         _rally = 0;
         _targetRally = 10;
         _shuttle.resetBounces();
+        _shuttle.SetBounciness(1f);
         TimerManager.Get().ResetPointTimer();
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;

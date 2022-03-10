@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f88ba3e0c7d2474181eb94f49c2fa98, type: 3}
+  m_Name: Profile_Ganz
+  m_EditorClassIdentifier: 
+  _fighterName: Ganz
+  _fighterPrefab: {fileID: 4874520954667380368, guid: e241ba0e31a3eb442a8dc72213a2abe8, type: 3}
+  _fighterPalettes:
+  - {fileID: 0}
+  - {fileID: 2100000, guid: c9e8b9e6ed248474596b0032b82b6fc1, type: 2}
+  - {fileID: 2100000, guid: f35a825871764bd478df897524670a0a, type: 2}
+  - {fileID: 2100000, guid: a173308b1cdccfc4fabbff2dcd42deb0, type: 2}
+  - {fileID: 2100000, guid: 048411e6895d5374c94ad8be68afd556, type: 2}
+  - {fileID: 2100000, guid: b88e5a832fde1554ab0137d7e3bfd7ef, type: 2}
+  - {fileID: 2100000, guid: f57a7ff459b3e684d818dd43aa88987b, type: 2}
+  - {fileID: 2100000, guid: 0bc801160be78ab45a7182b760808b6f, type: 2}
+  - {fileID: 2100000, guid: 4106c6054c5be254cb35081d379cdebf, type: 2}
