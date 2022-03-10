@@ -275,7 +275,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (CanHahaFunny() && _inputHandler.GetCrouch()) {
-            print("nice");
+            //print("nice");
         }
 
         AdjustControllerHeight();

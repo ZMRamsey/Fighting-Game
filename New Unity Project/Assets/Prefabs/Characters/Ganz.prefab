@@ -19991,6 +19991,7 @@ MonoBehaviour:
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 5976351738336448106}
   _fighterUI: {fileID: 0}
+  _goosePrefab: {fileID: 766030058933936881, guid: 1926eca199e952d46b1a4276db253daf, type: 3}
 --- !u!114 &4874520954667380375
 MonoBehaviour:
   m_ObjectHideFlags: 0

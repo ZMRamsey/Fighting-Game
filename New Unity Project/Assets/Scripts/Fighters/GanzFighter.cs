@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GanzFighter : FighterController
 {
+    [SerializeField] GameObject _goosePrefab;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public enum player { danny, hunter, raket, esme, ganz};
+public enum player { danny, hunter, raket, esme, ganz, ray};
 public class WinScreen : MonoBehaviour
 {
     [Header("Screen")]
@@ -38,6 +38,7 @@ public class WinScreen : MonoBehaviour
     public GameObject EsmeA;
     public GameObject RaketA;
     public GameObject GanzA;
+    public GameObject RayA;
 
     public GameObject winnerAnimation;
 
@@ -129,6 +130,10 @@ public class WinScreen : MonoBehaviour
                         text = "Woah! You were a goose this whole time? What a plot twist!";
                         break;
 
+                    case "Ray & Teka":
+                        text = "Placeholder.txt";
+                        break;
+
                     default:
                         text = "I’ve practiced in front of a mirror, but this is on a whole other level!";
                         break;
@@ -153,6 +158,10 @@ public class WinScreen : MonoBehaviour
 
                     case "Ganz":
                         text = "I’ve got to get a new agent, I’m playing against weirdos now. What are you, a chicken or something?";
+                        break;
+
+                    case "Ray & Teka":
+                        text = "Placeholder.txt";
                         break;
 
                     default:
@@ -181,6 +190,10 @@ public class WinScreen : MonoBehaviour
                         text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets.";
                         break;
 
+                    case "Ray & Teka":
+                        text = "Placeholder.txt";
+                        break;
+
                     default:
                         text = "Wait, I didn’t make a cloning machine. I call dibs on being the original.";
                         break;
@@ -205,6 +218,10 @@ public class WinScreen : MonoBehaviour
 
                     case "Ganz":
                         text = "Your emotions, I can feel them so strong. What happened to you?";
+                        break;
+
+                    case "Ray & Teka":
+                        text = "Placeholder.txt";
                         break;
 
                     default:
@@ -233,8 +250,42 @@ public class WinScreen : MonoBehaviour
                         text = "HONK (Your powers intrigue me young witch, what a goose you could have been. Alas, your failure only proves that you are the inferior species).";
                         break;
 
+                    case "Ray & Teka":
+                        text = "Placeholder.txt";
+                        break;
+
                     default:
                         text = "HONK (I assume you have arrived from a parallel timeline? You may return there now and report your failures at the wings of the one true Ganz)!";
+                        break;
+                }
+                break;
+
+            case "Ray & Teka":
+                winnerAnimation = RayA;
+                switch (loser)
+                {
+                    case "Danny":
+                        text = "Placeholder.txt";
+                        break;
+
+                    case "Hunter":
+                        text = "Placeholder.txt";
+                        break;
+
+                    case "Raket":
+                        text = "Placeholder.txt";
+                        break;
+
+                    case "Esme":
+                        text = "Placeholder.txt";
+                        break;
+
+                    case "Ganz":
+                        text = "Placeholder.txt";
+                        break;
+
+                    default:
+                        text = "Placeholder.txt";
                         break;
                 }
                 break;
