@@ -21,7 +21,7 @@ public class Audio_Value_Changer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame)
+        if (Keyboard.current.aKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame))
         {
             value -= 5;
             if (value < minVal)
@@ -29,7 +29,7 @@ public class Audio_Value_Changer : MonoBehaviour
                 value = minVal;
             }
         }
-        else if (Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
+        else if (Keyboard.current.dKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
         {
             value += 5;
             if (value > maxVal)
