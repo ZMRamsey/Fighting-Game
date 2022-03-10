@@ -132,6 +132,14 @@ public class ScoreManager : MonoBehaviour
         return winner;
     }
 
+    public int GetPlayerOneWins() {
+        return _p1Wins;
+    }
+
+    public int GetPlayerTwoWins() {
+        return _p2Wins;
+    }
+
     //One round system
     public FighterFilter DecideGameWinner()
     {

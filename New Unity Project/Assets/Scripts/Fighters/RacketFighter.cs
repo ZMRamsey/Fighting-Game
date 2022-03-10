@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RacketFighter : FighterController
 {
     [SerializeField] GameObject _subWooferPrefab;
     [SerializeField] GameObject _mrHandyPrefab;
+    [SerializeField] CanvasGroup _raketUI;
+    [SerializeField] Image _raketMeter;
+    float _buildMeter;
     GameObject _subWooferObject;
     GameObject _mrHandyObject;
 
@@ -35,13 +39,25 @@ public class RacketFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
-        if(_inputHandler.GetCrouch() && _inputHandler.GetChip() && !_mrHandyObject.activeSelf && GetMeter() >= 0.5f && _myState == FighterState.inControl) {
-            ReduceMeter(50f);
+        if (_inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack) {
+            _raketUI.alpha = 1;
+            _buildMeter += Time.deltaTime * 0.15f;
+            _buildMeter = Mathf.Clamp(_buildMeter, 0, 1);
+            _raketMeter.fillAmount = _buildMeter;
+        }
+
+        if (!_inputHandler.GetCrouch() && _raketUI.alpha != 0) {
+            _raketUI.alpha -= Time.deltaTime * 4;
+        }
+
+
+        if (_inputHandler.GetCrouch() && _inputHandler.GetChip() && !_mrHandyObject.activeSelf && _buildMeter >= 1 && _myState == FighterState.inControl) {
+            _buildMeter = 0;
             _mrHandyObject.transform.position = transform.position;
             _mrHandyObject.GetComponent<MrHandy>().ResetHandy(_filter);
             _mrHandyObject.SetActive(true);
         }
-    } 
+    }
 
     public override void InitializeFighter() {
         base.InitializeFighter();
@@ -53,5 +69,15 @@ public class RacketFighter : FighterController
         _mrHandyObject.SetActive(false);
     }
 
-    
+    public override void ResetFighter() {
+        base.ResetFighter();
+        _raketUI.alpha = 0;
+        _buildMeter = 0;
+        _raketMeter.fillAmount = 0;
+        if (_mrHandyObject && _mrHandyObject.activeSelf) {
+            _mrHandyObject.GetComponent<MrHandy>().OnDeath();
+        }
+    }
+
+
 }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-
+using TMPro;
 public enum FighterFilter { one, two, both, current, none };
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIFader _screenFader;
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
+    [SerializeField] Animator _UIScore;
+    [SerializeField] TextMeshProUGUI _UIScoreText;
 
     [Header("Cameras")]
     [SerializeField] GameObject _stageCamera;
@@ -208,12 +210,23 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    void FlashScore() {
+        _UIScore.SetTrigger("score");
+        _UIScoreText.text = $"{ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]} - {ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]}";
+    }
+    bool _firstTrigger;
     void SetUpGame() {
-
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
             EndGame();
             return;
         }
+        else {
+            if (_firstTrigger) {
+                FlashScore();
+            }
+        }
+
+        _firstTrigger = true;
 
         if (stageCoroutine != null) {
             StopCoroutine(stageCoroutine);
