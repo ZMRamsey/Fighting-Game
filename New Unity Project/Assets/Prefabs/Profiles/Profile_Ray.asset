@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f88ba3e0c7d2474181eb94f49c2fa98, type: 3}
-  m_Name: Profile_Ghost
+  m_Name: Profile_Ray
   m_EditorClassIdentifier: 
-  _fighterName: Ghost
-  _fighterPrefab: {fileID: 6440253435561356235, guid: 7a04c8dad3e8b7243adcbbf9776ce6a1, type: 3}
+  _fighterName: Ray & Teka
+  _fighterPrefab: {fileID: 4874520954667380368, guid: 6d3e80973129d8041b080768acf17d2f, type: 3}
+  _fighterPalettes: []

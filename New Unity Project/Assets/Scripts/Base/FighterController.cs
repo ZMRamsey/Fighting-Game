@@ -23,7 +23,7 @@ public abstract class FighterController : MonoBehaviour
     [Header("Base Settings")]
     [SerializeField] LayerMask _groundLayers;
     [SerializeField] Transform _hitboxFlipper;
-    [SerializeField] float _speed;
+    [SerializeField] protected float _speed;
     [SerializeField] float _height;
     [SerializeField] float _meterIncreaseValue;
     [SerializeField] int _maxJumps;
@@ -59,7 +59,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] ParticleSystem _jumpLand;
 
     [Header("Controller Values")]
-    [SerializeField] Vector3 _controllerVelocity;
+    [SerializeField] protected Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
     float _lastTapAxis;
@@ -82,7 +82,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected Animator _animator;
     [SerializeField] FighterUI _fighterUI;
     protected InputHandler _inputHandler;
-    Rigidbody _rigidbody;
+    protected Rigidbody _rigidbody;
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -95,6 +95,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayLeftFoot() {
+        if (_leftFootSounds == null || _leftFootSounds.Length == 0)
+        {
+            return;
+        }
         _source.PlayOneShot(_leftFootSounds[UnityEngine.Random.Range(0, _leftFootSounds.Length)], 1f);
     }
 
@@ -103,6 +107,11 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayRightFoot() {
+        if(_rightFootSounds == null || _rightFootSounds.Length == 0)
+        {
+            return;
+        }
+
         _source.PlayOneShot(_rightFootSounds[UnityEngine.Random.Range(0, _rightFootSounds.Length)], 1f);
     }
 
@@ -178,7 +187,7 @@ public abstract class FighterController : MonoBehaviour
         ProcessInput();
 
 
-        if (_inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
+        if (_hasDash && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
             _lastTapAxis = _inputHandler.GetInputX();
             OnDash();
         }
@@ -223,7 +232,7 @@ public abstract class FighterController : MonoBehaviour
                 return;
             }
 
-            if (_hasDash && _isDashing) {
+            if (_isDashing) {
                 _rigidbody.AddForce(new Vector3(_lastTapAxis, 0, 0) * 25, ForceMode.Impulse);
             }
 

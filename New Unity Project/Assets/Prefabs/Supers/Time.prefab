@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7354004054965358416}
   - component: {fileID: 4019147507145155531}
   - component: {fileID: 8301373420424221798}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Negate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,6 +253,10 @@ PrefabInstance:
     - target: {fileID: 4475980353290896946, guid: 6ac4d61dc5ec3e64481db4eb40040d4b, type: 3}
       propertyPath: m_Name
       value: Negate
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475980353290896946, guid: 6ac4d61dc5ec3e64481db4eb40040d4b, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5163860242754601966, guid: 6ac4d61dc5ec3e64481db4eb40040d4b, type: 3}
       propertyPath: m_RootOrder

@@ -13781,6 +13781,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6655499865525216860, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655499865525216860, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -739882403
+      objectReference: {fileID: 0}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
