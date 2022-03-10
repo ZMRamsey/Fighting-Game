@@ -24,6 +24,8 @@ public class InputTest : MonoBehaviour
     bool _player2Player = false;
     bool _player1Player = false;
 
+    bool readyToPlay = false;
+
     public GameObject[] leftSelectors;
     public GameObject[] rightSelectors;
 
@@ -54,38 +56,56 @@ public class InputTest : MonoBehaviour
     }
 
     void Update() {
-        var allGamepads = Gamepad.all;
-
-        foreach (Gamepad device in allGamepads) {
-            if (device.aButton.wasPressedThisFrame) {
-                SetPlayer(device);
-            }
-        }
-
-        if (Keyboard.current != null) {
-            if (Keyboard.current.enterKey.wasPressedThisFrame) {
-                SetPlayer(Keyboard.current);
-            }
-        }
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) {
-            if (!setPlayerOne && !setPlayerTwo) {
-                SetAIVAI();
-            }
-            else if (setPlayerOne && setPlayerTwo) {
-                SetPVP();
-                print("PVP");
-            }
-            else if (setPlayerOne) {
-                SetPVAI();
-            }
-        }
-
-        if(_player1Player && _player2AI)
+        if (readyToPlay)
         {
-            inputSelectorScreen.SetActive(false);
-            characterSelectScreen.SetActive(true);
+            if((Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) && (_player1Player && (_player2AI || _player2Player)))
+            {
+                Debug.Log("Delayed Selection Active");
+                    inputSelectorScreen.SetActive(false);
+                    characterSelectScreen.SetActive(true);
+            }
+            
         }
+        else
+        {
+            var allGamepads = Gamepad.all;
+
+            foreach (Gamepad device in allGamepads)
+            {
+                if (device.aButton.wasPressedThisFrame)
+                {
+                    SetPlayer(device);
+                }
+            }
+
+            if (Keyboard.current != null)
+            {
+                if (Keyboard.current.enterKey.wasPressedThisFrame)
+                {
+                    SetPlayer(Keyboard.current);
+                }
+            }
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
+            {
+                if (!setPlayerOne && !setPlayerTwo)
+                {
+                    SetAIVAI();
+                }
+                else if (setPlayerOne && setPlayerTwo)
+                {
+                    SetPVP();
+                    print("PVP");
+                }
+                else if (setPlayerOne)
+                {
+                    SetPVAI();
+                }
+            }
+        }
+        
+
+        
 
         //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
         //    if (_playerOneKeyboard != null) {
@@ -196,6 +216,10 @@ public class InputTest : MonoBehaviour
             _playerOneKeyboard = keyboard;
             leftSelectors[2].SetActive(true);
             _player1Player = true;
+            if(rot._PlayerOptionSelected == 0)
+            {
+                readyToPlay = true;
+            }
             return;
         }
 
@@ -210,6 +234,7 @@ public class InputTest : MonoBehaviour
             //Application.LoadLevel("Base");
             rightSelectors[2].SetActive(true);
             _player2Player = true;
+            readyToPlay = true;
             return;
         }
     }
@@ -243,6 +268,7 @@ public class InputTest : MonoBehaviour
             //Application.LoadLevel("Base");
             rightSelectors[1].SetActive(true);
             _player2Player = true;
+            readyToPlay = true;
             return;
         }
     }
