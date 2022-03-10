@@ -19802,7 +19802,7 @@ MonoBehaviour:
   _dropMove:
     _animationPath: drive
     _clipName: Test_Shoot
-    _shotType: 0
+    _shotType: 2
     _frames: 15
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
@@ -19823,7 +19823,7 @@ MonoBehaviour:
   _hitboxFlipper: {fileID: 1540060562962152633}
   _speed: 9
   _height: 2
-  _meterIncreaseValue: 100
+  _meterIncreaseValue: 0
   _maxJumps: 0
   _jumpForce: 60
   _fallMultiplier: 12

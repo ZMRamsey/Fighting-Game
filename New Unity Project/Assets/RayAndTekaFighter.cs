@@ -21,13 +21,14 @@ public class RayAndTekaFighter : FighterController
         _slowObject = Instantiate(_slowPrefab, transform.position, Quaternion.identity);
         _rayRenderer = _rayObject.GetComponent<RayAI>().GetSpriteRenderer();
         _slowObject.SetActive(false);
+        _rayObject.GetComponent<FighterController>().SetFilter(_filter);
     }
 
     public override void OnSuperMechanic()
     {
-        _slowObject.transform.position = new Vector3(transform.position.x, transform.position.y, 12);
-        _slowObject.SetActive(true);
-        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter);
+        //_slowObject.transform.position = new Vector3(transform.position.x, transform.position.y, 12);
+        //_slowObject.SetActive(true);
+        //GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter);
     }
 
     public override void ResetFighter()

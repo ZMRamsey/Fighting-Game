@@ -13,6 +13,7 @@ public class AIBrain : MonoBehaviour
 
     EsmeFighter _esme;
     RacketFighter _raket;
+    RayAndTekaFighter _ray;
 
     void Start() {
         _netDetection = LayerMask.GetMask("Net");
@@ -21,6 +22,7 @@ public class AIBrain : MonoBehaviour
         _controller = GetComponent<FighterController>();
         _esme = GetComponent<EsmeFighter>();
         _raket = GetComponent<RacketFighter>();
+        _ray = GetComponent<RayAndTekaFighter>();
     }
 
     void Update() {
@@ -81,6 +83,7 @@ public class AIBrain : MonoBehaviour
 
             _handler._jumpInput = IsOnMySide() && IsBallAbovePlayer();
 
+
             if (!moveAwayOverride) {
                 if (IsBallOnRight() && IsOnMySide()) {
                     _handler._inputX = 1;
@@ -134,6 +137,21 @@ public class AIBrain : MonoBehaviour
                     _handler._chipInput = true;
                 }
             }
+
+            if (_ray != null)
+            {
+                print("I'M RAY LOL");
+                if (_shuttle.transform.position.y < transform.position.y)
+                {
+                    _handler._crouchInput = true;
+                }
+                else
+                {
+                    _handler._crouchInput = false;
+
+                }
+            }
+
 
             if (inRangeOfSubWoofer) {
                 var rndDec = Random.Range(0, 3);
