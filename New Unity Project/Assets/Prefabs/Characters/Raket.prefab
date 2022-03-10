@@ -19815,7 +19815,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
     _hitDirection: {x: 3, y: 5, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
-  _hitType: 2
+  _hitType: 1
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -19824,9 +19824,13 @@ MonoBehaviour:
   _height: 2
   _meterIncreaseValue: 16
   _maxJumps: 0
-  _jumpForce: 50
+  _jumpForce: 60
   _fallMultiplier: 12
-  _jumpFalloff: 0.89
+  _jumpFalloff: 0.85
+  _airSpeed: 8
+  _fastFallSpeed: 16
+  _hasDash: 1
+  _hasJump: 1
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}

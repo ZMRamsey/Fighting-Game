@@ -63,6 +63,8 @@ public class ShuttleCock : MonoBehaviour
 
     [ContextMenu("Reset Ball")]
     public virtual void ResetShuttle(bool freeze) {
+        _speed = 1;
+
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
@@ -78,7 +80,6 @@ public class ShuttleCock : MonoBehaviour
         _frozen = false;
 
         _rb.velocity = Vector3.zero;
-        _speed = 1;
     }
 
     Vector3 _lastShootForce;
@@ -92,11 +93,11 @@ public class ShuttleCock : MonoBehaviour
         _lastShootDirection = message.direction;
 
         if (message.muteVelocity) {
-            processedSpeed = 2;
+            processedSpeed = 2f;
         }
 
         if (charge <= 0.4f) {
-            processedSpeed = 2f;
+            processedSpeed = 1.5f;
         }
 
         if (message.influence.type == InfluenceType.overtime) {

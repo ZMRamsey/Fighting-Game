@@ -32,7 +32,13 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] float _jumpForce;
     [SerializeField] float _fallMultiplier;
     [SerializeField] float _jumpFalloff;
+    [SerializeField] float _airSpeed;
+    [SerializeField] float _fastFallSpeed = 20;
     float _failSafeAttack;
+
+    [Header("Functions")]
+    [SerializeField] bool _hasDash;
+    [SerializeField] bool _hasJump;
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
@@ -207,17 +213,17 @@ public abstract class FighterController : MonoBehaviour
                 OnAirMovement();
             }
 
-            if (_inputHandler.GetDoubleJump(!_canJump && !_grounded && _currentJumps < _maxJumps) && _canAttack && _myState == FighterState.inControl) {
+            if (_hasJump && _inputHandler.GetDoubleJump(!_canJump && !_grounded && _currentJumps < _maxJumps) && _canAttack && _myState == FighterState.inControl) {
                 OnJump();
                 return;
             }
 
-            if (_inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
+            if (_hasJump && _inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
                 OnJump();
                 return;
             }
 
-            if (_isDashing) {
+            if (_hasDash && _isDashing) {
                 _rigidbody.AddForce(new Vector3(_lastTapAxis, 0, 0) * 25, ForceMode.Impulse);
             }
 
@@ -475,14 +481,14 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (CanFastFall() && _inputHandler.GetCrouch()) {
-            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * 20);
+            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * _fastFallSpeed);
         }
 
         var xCalculation = _inputHandler.GetInputX();
 
         if (_myState == FighterState.inControl) {
-            _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * 5);
-            velocityX = Mathf.Clamp(velocityX, -5f, 5f);
+            _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * _airSpeed);
+            velocityX = Mathf.Clamp(velocityX, -_airSpeed, _airSpeed);
         }
 
         _controllerVelocity = new Vector3(velocityX, velocityY, 0);
