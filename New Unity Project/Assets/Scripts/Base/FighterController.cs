@@ -289,6 +289,11 @@ public abstract class FighterController : MonoBehaviour
             xCalculation = xCalculation * 0.8f;
         }
 
+        if (_inputHandler.GetCrouch())
+        {
+            xCalculation = 0;
+        }
+
         if (CanHahaFunny() && _inputHandler.GetCrouch()) {
             //print("nice");
         }
