@@ -277,6 +277,7 @@ public class GameManager : MonoBehaviour
         _rally = 0;
         _targetRally = 10;
         _shuttle.resetBounces();
+        _shuttle.SetBounciness(1f);
         TimerManager.Get().ResetPointTimer();
         SetLastHitter(FighterFilter.both);
         //_shuttle.transform.position = _shuttleSpawn;

@@ -14,33 +14,29 @@ public class Hurtbox : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collision) {
-
         var hurt = collision.gameObject.GetComponent<ShuttleCock>();
-        if (hurt != null && hurt.GetOwner() != null && (hurt.GetFilter() == FighterFilter.both || hurt.GetOwner() != transform.root.GetComponent<FighterController>())) {
+        if (hurt != null && hurt.GetOwner() != null && (hurt.GetFilter() == FighterFilter.both || hurt.GetOwner() != transform.root.GetComponent<FighterController>()))
+        {
             float axis = -3;
-            if(hurt.GetOwner() && hurt.GetOwner().GetFilter() == FighterFilter.one) {
+            if (hurt.GetOwner() && hurt.GetOwner().GetFilter() == FighterFilter.one)
+            {
                 axis = 3;
             }
 
-            if (hurt.CanKill() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null) {
-                Vector3 prevVelocity = hurt.GetComponent<Rigidbody>().velocity;
-                GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
-                hurt.Bounce(axis);
-                transform.root.GetComponent<FighterController>().KO(prevVelocity);
-                ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString(), "KO");
-                GameManager.Get().KOEvent();
-            }
-            //else if (hurt.GetSpeedPercent() >= .3f) {
-            //    //Debug.Log("Sonic_Spring_Noise.MP3");
-            //    transform.root.GetComponent<FighterController>().SetFighterStance(FighterStance.blow);
-            //    //hurt.Shoot(hurt.GetVelocity() / -10, new Vector3(), false, false, FighterFilter.both);
-            //    hurt.Bounce(axis*2);
-            //    transform.root.GetComponent<FighterController>().ReduceMeter(5f);
-            //    hurt.SetOwner(transform.root.GetComponent<FighterController>());
-            //}
-            else {
-                //Debug.Log("We Tech Those");
+            if (hurt.CanKill() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null)
+            {
+                ProcessHurt(collision, hurt, axis);
             }
         }
+    }
+
+    public virtual void ProcessHurt(Collider collision, ShuttleCock hurt, float axis)
+    {
+        Vector3 prevVelocity = hurt.GetComponent<Rigidbody>().velocity;
+        GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
+        hurt.Bounce(axis);
+        transform.root.GetComponent<FighterController>().KO(prevVelocity);
+        ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString(), "KO");
+        GameManager.Get().KOEvent();
     }
 }

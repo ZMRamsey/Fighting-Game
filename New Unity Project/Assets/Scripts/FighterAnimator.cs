@@ -38,7 +38,10 @@ public class FighterAnimator : MonoBehaviour
     }
 
     public void KOEffects() {
-        _KOEffects.Play();
+        if (_KOEffects != null)
+        {
+            _KOEffects.Play();
+        }
     }
 
 }
