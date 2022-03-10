@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator _UIStage;
     [SerializeField] Animator _UIScore;
     [SerializeField] TextMeshProUGUI _UIScoreText;
+    [SerializeField] TextMeshProUGUI _UIScoreF1;
+    [SerializeField] TextMeshProUGUI _UIScoreF2;
 
     [Header("Cameras")]
     [SerializeField] GameObject _stageCamera;
@@ -118,6 +120,9 @@ public class GameManager : MonoBehaviour
 
         _shuttle.SetOwner(_fighterOne.GetController());
         _shuttle.SetOwner(FighterFilter.both);
+
+        _UIScoreF1.text = _settings.GetFighterOneProfile().GetName();
+        _UIScoreF2.text = _settings.GetFighterTwoProfile().GetName();
 
         //ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
 
@@ -212,7 +217,9 @@ public class GameManager : MonoBehaviour
 
     void FlashScore() {
         _UIScore.SetTrigger("score");
-        _UIScoreText.text = $"{ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]} - {ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]}";
+        var pointOne = string.Format("{0:00}", ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
+        var pointTwo = string.Format("{0:00}", ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
+        _UIScoreText.text = $"{pointOne} - {pointTwo}";
     }
     bool _firstTrigger;
     void SetUpGame() {
