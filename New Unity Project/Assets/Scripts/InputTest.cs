@@ -7,6 +7,8 @@ using TMPro;
 
 public class InputTest : MonoBehaviour
 {
+
+    public OptionsMenuManager op;
     public rotaterCircle rot;
 
     PlayerDevice _playerOne;
@@ -45,8 +47,8 @@ public class InputTest : MonoBehaviour
         //_f1Char.text = _profiles[0].GetName();
         //_f2Char.text = _profiles[0].GetName();
 
-        _settings.SetFighterOneProfile(_profiles[0]);
-        _settings.SetFighterTwoProfile(_profiles[0]);
+        //_settings.SetFighterOneProfile(_profiles[op.player1Char]);
+        //_settings.SetFighterTwoProfile(_profiles[op.player2Char]);
 
         if(rot._PlayerOptionSelected == 0)
         {

@@ -2185,6 +2185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1ede24e198eeb45b49ff3ce9d3bbbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  op: {fileID: 1890742584}
   rot: {fileID: 1588688800}
   leftSelectors:
   - {fileID: 148557256}
@@ -16058,6 +16059,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectionIndex: 0
   _confirmedIndex: 0
+  _settings: {fileID: 11400000, guid: 758fa2ae524b0774fbcbca715a7e3a4c, type: 2}
+  _profiles:
+  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
+  - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  - {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
+  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
+  - {fileID: 11400000, guid: c40a68d55e733844b9e3bfdb16234584, type: 2}
+  - {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
+  - {fileID: 11400000, guid: aa36e8eb24bfba24796befd0b9487ef7, type: 2}
+  player1Char: 0
+  player2Char: 0
   _isReady: 0
   _isSelectingMap: 0
   man: {fileID: 2007779278}

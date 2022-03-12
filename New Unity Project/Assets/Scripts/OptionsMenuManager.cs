@@ -12,6 +12,12 @@ public class OptionsMenuManager : MonoBehaviour
     bool _hasGoneLeft = false;
     int _randSelection = 0;
 
+    [SerializeField] GameSettings _settings;
+    [SerializeField] FighterProfile[] _profiles;
+
+    public int player1Char;
+    public int player2Char;
+
     string _selectedCharacter;
 
     public bool _isReady = false;
@@ -60,24 +66,28 @@ public class OptionsMenuManager : MonoBehaviour
             if (_selectionIndex == 3)
             {
                 _randSelection = Random.Range(0, 7);
-                animatedCharactersLeft[_randSelection].SetActive(true);
+                _selectionIndex = _randSelection;
+                animatedCharactersLeft[_selectionIndex].SetActive(true);
             }
             else
             {
                 animatedCharactersLeft[_selectionIndex].SetActive(true);
             }
+            _settings.SetFighterOneProfile(_profiles[_selectionIndex]);
         }
         else
         {
             if (_selectionIndex == 3)
             {
                 _randSelection = Random.Range(0, 7);
-                animatedCharactersRight[_randSelection].SetActive(true);
+                _selectionIndex = _randSelection;
+                animatedCharactersRight[_selectionIndex].SetActive(true);
             }
             else
             {
                 animatedCharactersRight[_selectionIndex].SetActive(true);
             }
+            _settings.SetFighterTwoProfile(_profiles[_selectionIndex]);
         }
         
 
