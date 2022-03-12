@@ -43,7 +43,7 @@ public class TextLoadingController : MonoBehaviour
         }
         if(loadingText.text == "Continue" && Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
-            SceneManager.LoadScene("InputTest");
+            SceneManager.LoadScene("Base");
         }
     }
 }
