@@ -20,6 +20,7 @@ public class OptionsMenuManager : MonoBehaviour
     public MapMenuManager man;
 
     public GameObject[] readyButtons;
+    public GameObject[] fighters;
 
     public GameObject RuleSetMenu;
 
