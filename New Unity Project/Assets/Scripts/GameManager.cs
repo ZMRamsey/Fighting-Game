@@ -444,10 +444,10 @@ public class GameManager : MonoBehaviour
         winController.PlayWin();
         loseController.PlayLose();
 
-        CameraContoller.Get().SetFocus(winController.transform);
+        CameraContoller.Get().SetFocus(winController.GetFocusTransform());
 
         yield return new WaitForSecondsRealtime(5f);
-        CameraContoller.Get().SetFocus(loseController.transform);
+        CameraContoller.Get().SetFocus(loseController.GetFocusTransform());
         yield return new WaitForSecondsRealtime(5f);
         SceneManager.LoadScene(sceneName: "WinScreenTest");
     }

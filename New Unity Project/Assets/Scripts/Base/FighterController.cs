@@ -115,6 +115,10 @@ public abstract class FighterController : MonoBehaviour
         return _dropMove;
     }
 
+    public virtual Transform GetFocusTransform() {
+        return transform;
+    }
+
     void Start() {
         InitializeFighter();
         _fighterUI = GameManager.Get().GetFighterTab(_filter).GetUI();
@@ -197,15 +201,6 @@ public abstract class FighterController : MonoBehaviour
 
     void Update() {
         OnFighterUpdate();
-        //if (IsGrounded()) {
-        //    if (_filter == FighterFilter.one && transform.position.x < 0 || _filter == FighterFilter.two && transform.position.x > 0) {
-        //        _meterPenaltyTimer += Time.deltaTime;
-        //        if (_meterPenaltyTimer > 0.1f && GameManager.Get().KOCoroutine == null) {
-        //            ReduceMeter(1);
-        //            _meterPenaltyTimer = 0;
-        //        }
-        //    }
-        //}
 
         _grounded = IsGrounded();
 
@@ -271,14 +266,6 @@ public abstract class FighterController : MonoBehaviour
         _myState = FighterState.dead;
         _animator.Rebind();
         _animator.SetLayerWeight(1, 1);
-
-        //if (_grounded) {
-        //    _animator.SetTrigger("land");
-        //}
-        //else {
-        //    _animator.SetTrigger("KO");
-        //}
-
         _animator.SetTrigger("KO");
         _grounded = false;
 
@@ -345,11 +332,11 @@ public abstract class FighterController : MonoBehaviour
         _myState = FighterState.restricted;
     }
 
-    public void PlayWin() {
+    public virtual void PlayWin() {
         _animator.SetTrigger("win");
     }
 
-    public void PlayLose() {
+    public virtual void PlayLose() {
         if (_myState == FighterState.dead) {
             return;
         }
@@ -357,7 +344,6 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void AddMeter(float value) {
-        //Debug.Log("Meter Gain: " + value);
         _commandMeter += value;
 
         if (_commandMeter > 100) {
@@ -546,16 +532,12 @@ public abstract class FighterController : MonoBehaviour
     }
 
     IEnumerator DashProcess() {
-        // _myAction = FighterAction.dashing;
         _canJump = false;
         _effects.SetAfterImage();
         _isDashing = true;
         yield return new WaitForSeconds(0.1f);
         _effects.DisableAfterImage();
         _isDashing = false;
-        //if (_myAction == FighterAction.dashing) {
-        //    _myAction = FighterAction.none;
-        //}
 
         if (_grounded) {
             _currentJumps = 0;
@@ -640,9 +622,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnSuccessfulHit(Vector3 point) {
-        //AddMeter(12);
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
-        //Debug.Log("Successive: " + GameManager.Get().GetSuccessive() + " - Meter Gain: " + 12 / GameManager.Get().GetSuccessive());
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
         _impact.transform.position = point;
         _impact.Play();

@@ -19827,7 +19827,7 @@ MonoBehaviour:
   _jumpForce: 30
   _fallMultiplier: 8
   _jumpFalloff: 0.9
-  _airSpeed: 10
+  _airSpeed: 6
   _fastFallSpeed: 20
   _hasDash: 1
   _hasJump: 1

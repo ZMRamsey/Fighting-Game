@@ -184,4 +184,8 @@ public class RayAndTekaFighter : FighterController
 
         _rigidbody.position = pos;
     }
+
+    public override Transform GetFocusTransform() {
+        return _rayObject.transform;
+    }
 }
