@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     int _successive = 0;
     int _targetRally = 10;
     bool _isPaused;
+    bool _slowMusic;
 
     public static GameManager Get() {
         return _instance;
@@ -180,6 +181,10 @@ public class GameManager : MonoBehaviour
             _debugCamera.SetActive(_debugCanvas.activeSelf);
         }
 
+        if (_slowMusic) {
+            _music.pitch = 0.5f;
+        }
+
         if (_spinDown) {
             _music.pitch *= 0.99f;
         }
@@ -213,6 +218,14 @@ public class GameManager : MonoBehaviour
         //    _fighterTwo.GetController().SetFighterAction(FighterAction.none);
         //    KOEvent();
         //}
+    }
+
+    public void SlowDownMusic() {
+        _slowMusic = true;
+    }
+
+    public void SpeedUpMuisc() {
+        _slowMusic = false;
     }
 
     void FlashScore() {
@@ -293,7 +306,7 @@ public class GameManager : MonoBehaviour
     }
 
     Coroutine stageCoroutine;
-    public void OnSpecial(GameEvent gEvent, FighterFilter filter) {
+    public void OnSpecial(GameEvent gEvent, FighterFilter filter, FighterController controller) {
         StunFrames(1f, FighterFilter.both);
         _shuttle.FreezeShuttle(1.0f);
         _source.PlayOneShot(_superSFX);
@@ -303,7 +316,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stageCoroutine);
         }
 
-        stageCoroutine = StartCoroutine(StageFlash(1, gEvent, filter));
+        stageCoroutine = StartCoroutine(StageFlash(1, gEvent, filter, controller));
     }
 
     Coroutine impactCoroutine;
@@ -339,13 +352,14 @@ public class GameManager : MonoBehaviour
         return _shuttle;
     }
 
-    IEnumerator StageFlash(float time, GameEvent gEvent, FighterFilter filter) {
+    IEnumerator StageFlash(float time, GameEvent gEvent, FighterFilter filter, FighterController controller) {
         gEvent.SetOrientation(filter);
         _music.pitch = -1f;
         gEvent.EnableScreen();
         _lastSuperEvent = gEvent;
         _stageCamera.SetActive(false);
         yield return new WaitForSeconds(time);
+        controller.OnAfterSuperScreen();
         gEvent.DisableScreen();
         _stageCamera.SetActive(true);
         _music.pitch = 1f;

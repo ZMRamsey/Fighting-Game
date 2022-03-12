@@ -54,10 +54,14 @@ public class GameEvent
     }
 
     public void EnableScreen() {
-        _screen.SetActive(true);
+        if (_screen) {
+            _screen.SetActive(true);
+        }
     }
 
     public void DisableScreen() {
-        _screen.SetActive(false);
+        if (_screen) {
+            _screen.SetActive(false);
+        }
     }
 }

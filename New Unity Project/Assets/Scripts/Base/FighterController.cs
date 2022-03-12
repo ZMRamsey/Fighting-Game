@@ -87,12 +87,32 @@ public abstract class FighterController : MonoBehaviour
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
         _inputHandler = GetComponent<InputHandler>();
+        _rigidbody.isKinematic = true;
         FighterAwake();
     }
 
-    public virtual void FighterAwake()
-    {
+    public bool InSuper() {
+        return _inSuper;
+    }
 
+    public virtual void FighterAwake() {
+
+    }
+
+    public FighterMove GetSmashMove() {
+        return _smashMove;
+    }
+
+    public FighterMove GetChipMove() {
+        return _chipMove;
+    }
+
+    public FighterMove GetDriveMove() {
+        return _driveMove;
+    }
+
+    public FighterMove GetLiftMove() {
+        return _dropMove;
     }
 
     void Start() {
@@ -101,8 +121,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayLeftFoot() {
-        if (_leftFootSounds == null || _leftFootSounds.Length == 0)
-        {
+        if (_leftFootSounds == null || _leftFootSounds.Length == 0) {
             return;
         }
         _source.PlayOneShot(_leftFootSounds[UnityEngine.Random.Range(0, _leftFootSounds.Length)], 1f);
@@ -113,8 +132,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayRightFoot() {
-        if(_rightFootSounds == null || _rightFootSounds.Length == 0)
-        {
+        if (_rightFootSounds == null || _rightFootSounds.Length == 0) {
             return;
         }
 
@@ -172,6 +190,9 @@ public abstract class FighterController : MonoBehaviour
         _canJump = true;
         _canAttack = true;
         _hasBounced = false;
+
+        AdjustControllerHeight();
+        _rigidbody.isKinematic = false;
     }
 
     void Update() {
@@ -289,8 +310,7 @@ public abstract class FighterController : MonoBehaviour
             xCalculation = xCalculation * 0.8f;
         }
 
-        if (_inputHandler.GetCrouch())
-        {
+        if (_inputHandler.GetCrouch()) {
             xCalculation = 0;
         }
 
@@ -376,6 +396,10 @@ public abstract class FighterController : MonoBehaviour
 
     }
 
+    public virtual void OnAfterSuperScreen() {
+
+    }
+
     public virtual void OnSuperEnd(bool instant) {
 
     }
@@ -389,7 +413,7 @@ public abstract class FighterController : MonoBehaviour
         float relativeVel = targetDirVel - groundDirVel;
 
         float x = _groundHit.distance - _height;
-        float springForce = (x * 20) - (relativeVel * 0.01f);
+        float springForce = (x * 1) - (relativeVel * 0.01f);
 
         Vector3 result = rayDirection * springForce;
         _yVelocity = result.y;

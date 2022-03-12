@@ -10,15 +10,13 @@ public class EsmeFighter : FighterController
     GameObject _magicRaketObject;
     bool _ghostHitUsed;
     float _shieldTimer;
-    bool _timeStop;
-    float _timeStopTimer;
     float _coolDown;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
         _shieldTimer = 0.0f;
 
-        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetEsmetSuper(), _filter);
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetEsmetSuper(), _filter, this);
 
         _netObject.SetActive(true);
         //_timeStop = true;

@@ -16,13 +16,17 @@ public class RacketFighter : FighterController
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
         _subWooferObject.GetComponent<SubWoofer>().ResetShuttle(false);
-        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter);
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter, this);
     }
 
     public override void OnSuperEnd(bool instant) {
         if (instant && _subWooferObject != null) {
             _subWooferObject.SetActive(false);
         }
+    }
+
+    public float GetBuildMeter() {
+        return _buildMeter;
     }
 
     public override void OnSuperEvent() {
@@ -39,7 +43,7 @@ public class RacketFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
-        if (_inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack) {
+        if (_inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack && GetGrounded()) {
             _raketUI.alpha = 1;
             _buildMeter += Time.deltaTime * 0.15f;
             _buildMeter = Mathf.Clamp(_buildMeter, 0, 1);

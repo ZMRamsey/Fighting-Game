@@ -14,18 +14,19 @@ public class Hurtbox : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collision) {
-        var hurt = collision.gameObject.GetComponent<ShuttleCock>();
-        if (hurt != null && hurt.GetOwner() != null && (hurt.GetFilter() == FighterFilter.both || hurt.GetOwner() != transform.root.GetComponent<FighterController>()))
+        var shuttleCock = collision.gameObject.GetComponent<ShuttleCock>();
+        var self = transform.root.GetComponent<FighterController>();
+        if (shuttleCock != null && (shuttleCock.GetFilter() == FighterFilter.both || shuttleCock.GetFilter() != self.GetFilter()))
         {
             float axis = -3;
-            if (hurt.GetOwner() && hurt.GetOwner().GetFilter() == FighterFilter.one)
+            if (shuttleCock.GetOwner() && shuttleCock.GetOwner().GetFilter() == FighterFilter.one)
             {
                 axis = 3;
             }
 
-            if (hurt.CanKill() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null)
+            if (shuttleCock.CanKill() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null)
             {
-                ProcessHurt(collision, hurt, axis);
+                ProcessHurt(collision, shuttleCock, axis);
             }
         }
     }
