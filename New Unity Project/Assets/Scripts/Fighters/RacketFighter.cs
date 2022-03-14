@@ -79,7 +79,7 @@ public class RacketFighter : FighterController
         _buildMeter = 0;
         _raketMeter.fillAmount = 0;
         if (_mrHandyObject && _mrHandyObject.activeSelf) {
-            _mrHandyObject.GetComponent<MrHandy>().OnDeath();
+            _mrHandyObject.GetComponent<MrHandy>().OnDeath(true);
         }
     }
 

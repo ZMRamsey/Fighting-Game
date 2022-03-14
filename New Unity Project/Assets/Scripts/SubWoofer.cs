@@ -47,6 +47,10 @@ public class SubWoofer : ShuttleCock
 
     bool _tick;
     public override void ShuttleUpdate() {
+        if (IsFrozen()) {
+            return;
+        }
+
         subWooferTimer += Time.deltaTime;
         _timeBetweenBeeps += Time.deltaTime;
         var thres = _beepCurve.Evaluate(subWooferTimer / _subWooferThreshold);

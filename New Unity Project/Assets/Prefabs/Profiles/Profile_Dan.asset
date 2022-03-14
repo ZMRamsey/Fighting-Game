@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Profile_Dan
   m_EditorClassIdentifier: 
   _fighterName: Dan
-  _fighterPrefab: {fileID: 4874520954667380368, guid: b4fd5d450e9c33b4e9d943da140660c2, type: 3}
+  _fighterPrefab: {fileID: 4874520954667380368, guid: e241ba0e31a3eb442a8dc72213a2abe8, type: 3}
+  _fighterPalettes: []

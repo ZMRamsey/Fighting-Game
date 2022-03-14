@@ -1254,6 +1254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 282428886}
   - component: {fileID: 282428885}
+  - component: {fileID: 282428887}
   m_Layer: 0
   m_Name: _Music
   m_TagString: Untagged
@@ -1273,7 +1274,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
   m_audioClip: {fileID: 8300000, guid: fc6d2f026bc990b43be7a1c895b38be4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1371,6 +1372,23 @@ Transform:
   m_Father: {fileID: 1744718068}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &282428887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282428884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a56895d3398c8e459ea42e05895d87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _musics:
+  - {fileID: 8300000, guid: 4bf111d1c6b7ded49973a31d1fa39400, type: 3}
+  - {fileID: 8300000, guid: fc6d2f026bc990b43be7a1c895b38be4, type: 3}
+  - {fileID: 8300000, guid: 98f2d33870d8c83478fbaa7193158479, type: 3}
+  _source: {fileID: 282428885}
 --- !u!1 &285084709
 GameObject:
   m_ObjectHideFlags: 0
@@ -6248,6 +6266,12 @@ MonoBehaviour:
   _camera: {fileID: 1781519608}
   _limitX: {x: -0.8, y: 0.8}
   _limitY: {x: 5.92, y: 8}
+  _main:
+  - {fileID: 1781519607}
+  - {fileID: 1900043441}
+  - {fileID: 1809863017}
+  - {fileID: 1897574292}
+  - {fileID: 2005752493}
 --- !u!1 &1278584929
 GameObject:
   m_ObjectHideFlags: 0
@@ -14128,14 +14152,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6655499865525216860, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499865525216860, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -739882403
-      objectReference: {fileID: 0}
+    - target: {fileID: 975072594694678410, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c551fe60abdabfb4ebf2fdbd6f382020, type: 3}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock

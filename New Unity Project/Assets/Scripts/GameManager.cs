@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
         _pauseArtBack.fillAmount = _pauseArt.fillAmount;
         _pausePanel.SetActive(_isPaused);
 
-        _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeedPercent(), Time.deltaTime * 12);
+        _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.deltaTime * 12);
         _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0, 0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {

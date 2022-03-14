@@ -61,7 +61,10 @@ public class RayAndTekaFighter : FighterController
         }
 
         _timeStopCanvas.GetComponent<Animator>().SetTrigger("start");
+        TimeStop();
         GameManager.Get().StunFrames(3.0f, filter);
+        GameManager.Get().GetCameraShaker().SetShake(0.5f, 3f, true);
+        CameraContoller.Get().SetZoomTimer(0.3f);
         GameManager.Get().SlowDownMusic();
         _source.PlayOneShot(_stopTimeSFX);
     }
@@ -72,13 +75,48 @@ public class RayAndTekaFighter : FighterController
             _timeStopCanvas.gameObject.SetActive(false);
         }
         else {
+            TimeStart();
             _source.PlayOneShot(_startTimeSFX);
             _timeStopCanvas.GetComponent<Animator>().SetTrigger("stop");
         }
-        GameManager.Get().GetShuttle().ForceUnfreeze();
+
         GameManager.Get().SpeedUpMuisc();
         _timeStop = false;
+        GameManager.Get().GetCameraShaker().SetShake(0.5f, 3f, true);
+        CameraContoller.Get().SetZoomOutTimer(0.3f);
         _timeStopTimer = 0.0f;
+    }
+
+    public void TimeStop() {
+        Collider[] collidersPlayers = Physics.OverlapSphere(transform.position, 100f);
+        foreach (Collider hit in collidersPlayers) {
+            MrHandy handy = hit.GetComponent<MrHandy>();
+            ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+
+            if (handy != null) {
+                handy.ForceFreeze();
+            }
+
+            if (shuttle != null) {
+                shuttle.ForceFreeze();
+            }
+        }
+    }
+
+    public void TimeStart() {
+        Collider[] collidersPlayers = Physics.OverlapSphere(transform.position, 100f);
+        foreach (Collider hit in collidersPlayers) {
+            MrHandy handy = hit.GetComponent<MrHandy>();
+            ShuttleCock shuttle = hit.GetComponent<ShuttleCock>();
+
+            if (handy != null) {
+                handy.ForceUnfreeze();
+            }
+
+            if (shuttle != null) {
+                shuttle.ForceUnfreeze();
+            }
+        }
     }
 
     public override void ResetFighter()
@@ -153,7 +191,7 @@ public class RayAndTekaFighter : FighterController
 
         if (_timeStop) {
             _timeStopTimer += Time.deltaTime;
-            GameManager.Get().GetShuttle().ForceFreeze();
+            TimeStop();
             if (_timeStopTimer > 3.0f) {
                 OnSuperEnd(false);
             }

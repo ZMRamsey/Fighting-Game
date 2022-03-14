@@ -10,6 +10,7 @@ public class ShuttleCock : MonoBehaviour
     [Range(0.0f, 1.0f)] [SerializeField] float _trailActiveOnPercent;
     [Range(0.0f, 1.0f)] [SerializeField] float _windActiveOnPercent;
     [Range(0.0f, 1.0f)] [SerializeField] float _killActiveOnPercent;
+    [SerializeField] float _maximumJail;
     [SerializeField] int _bouncesBeforeSpeedLoss;
     [SerializeField] bool _canKillOnPercentSpeed;
     [SerializeField] float _gainPerHit = 0.25f;
@@ -21,14 +22,17 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] float _squishThreshold = 0.1f;
     [SerializeField] GameObject _wind;
 
+
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
     [SerializeField] ParticleSystem _impactFrameEffect;
+    [SerializeField] ParticleSystem _trailKill;
     [SerializeField] ParticleSystem _trailParticle;
 
     [Header("Audio")]
     [SerializeField] AudioSource _windSource;
+    [SerializeField] AudioSource _killSource;
     [SerializeField] ShuttleCockSound _soundManager;
     [SerializeField] AudioClip[] _ricochets;
 
@@ -97,7 +101,7 @@ public class ShuttleCock : MonoBehaviour
         }
 
         if (charge <= 0.4f) {
-            processedSpeed = 1.5f;
+            processedSpeed = 1f;
         }
 
         if (message.influence.type == InfluenceType.overtime) {
@@ -140,27 +144,38 @@ public class ShuttleCock : MonoBehaviour
     public virtual void Shoot(HitMessage message) {
         transform.right = message.direction.normalized;
 
+        var hitStun = 0.3f;
+
+        if (GetSpeedPercent() > _windActiveOnPercent) {
+            hitStun = 0.4f;
+        }
+
+        if (CanKill()) {
+            hitStun = 0.8f;
+        }
+
         if (message.isPlayer) {
-            GameManager.Get().StunFrames(0.3f, message.sender);
-            GameManager.Get().GetCameraShaker().SetShake(0.1f, 2f, true);
+            GameManager.Get().StunFrames(hitStun, message.sender);
+            GameManager.Get().GetCameraShaker().SetShake(hitStun / 2, 2f, true);
         }
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
 
-        if (GetSpeedPercent() >= _killActiveOnPercent && _canImpactFrame) {
+        if (GetSpeedPercent() >= _killActiveOnPercent && _canImpactFrame && _filter != message.sender) {
             GameManager.Get().OnImpactFrame(0.1f);
             if (_impactFrameEffect) {
                 _impactFrameEffect.Play();
             }
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(message, false, 0.3f));
+        SetOwner(message.sender);
+
+        shootCoroutine = StartCoroutine(ShootProccess(message, false, hitStun));
     }
 
     public virtual void Shoot(HitMessage message, FighterController owner) {
-        SetOwner(owner);
         Shoot(message);
     }
 
@@ -183,8 +198,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     bool isPlaying;
+    bool killIsPlaying;
     float volume;
+    float killVolume;
     void Update() {
+        _speed = Mathf.Clamp(_speed, 0, _maximumJail);
 
         if (_frozen) {
             if (_owner && _owner.GetComponent<InputHandler>().GetCharge()) {
@@ -197,7 +215,8 @@ public class ShuttleCock : MonoBehaviour
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
         }
 
-        if (GetSpeedPercent() > _trailActiveOnPercent) {
+
+        if (GetSpeedPercent() > _trailActiveOnPercent && GetSpeedPercent() < _killActiveOnPercent) {
             if (!isPlaying && _trailParticle) {
                 _trailParticle.Play();
                 isPlaying = true;
@@ -207,6 +226,21 @@ public class ShuttleCock : MonoBehaviour
             if (isPlaying && _trailParticle) {
                 _trailParticle.Stop();
                 isPlaying = false;
+            }
+        }
+
+        if (_trailKill != null) {
+            if (GetSpeedPercent() > _killActiveOnPercent) {
+                if (!killIsPlaying && _trailKill) {
+                    _trailKill.Play();
+                    killIsPlaying = true;
+                }
+            }
+            else {
+                if (killIsPlaying && _trailKill) {
+                    _trailKill.Stop();
+                    killIsPlaying = false;
+                }
             }
         }
 
@@ -221,7 +255,7 @@ public class ShuttleCock : MonoBehaviour
             _windSource.panStereo = -vol;
 
 
-            if (GetSpeedPercent() > _windActiveOnPercent) {
+            if (GetSpeedPercent() > _windActiveOnPercent && GetSpeedPercent() < _killActiveOnPercent) {
                 volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
             }
             else {
@@ -229,6 +263,22 @@ public class ShuttleCock : MonoBehaviour
             }
 
             _windSource.volume = volume;
+        }
+
+        if (_killSource != null) {
+
+            _killSource.panStereo = -vol;
+
+
+            if (GetSpeedPercent() >= _killActiveOnPercent) {
+                killVolume = 1;
+                GameManager.Get().GetCameraShaker().SetShake(0.2f, 2.5f, true);
+            }
+            else {
+                killVolume = Mathf.Lerp(killVolume, 0, Time.deltaTime * 2);
+            }
+
+            _killSource.volume = killVolume;
         }
 
         _magnitude = _rb.velocity.magnitude;
@@ -330,6 +380,14 @@ public class ShuttleCock : MonoBehaviour
         return _rb.velocity.magnitude / _maxSpeed;
     }
 
+    public float GetSpeed() {
+        return _speed;
+    }
+
+    public float GetMaxJailSpeed() {
+        return _maximumJail;
+    }
+
     public bool IsBallActive() {
         return _waitForHit == false;
     }
@@ -352,6 +410,10 @@ public class ShuttleCock : MonoBehaviour
 
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
+
+        if(CanKill()) {
+            FreezeShuttle(0.15f);
+        }
 
         if (collision.gameObject.GetComponent<StageNet>()) {
             if (collision.gameObject.layer == 14) {
@@ -409,7 +471,7 @@ public class ShuttleCock : MonoBehaviour
 
         Vector3 vel = _rb.velocity;
         vel.x = -vel.x;
-        vel= vel.normalized * 6;
+        vel = vel.normalized * 6;
         var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none);
         Shoot(hitMes);
     }
@@ -431,6 +493,10 @@ public class ShuttleCock : MonoBehaviour
 
         chargedForce = 0.1f;
         chargeTimer = 0f;
+    }
+
+    public float GetForce() {
+        return chargedForce;
     }
 
     public void SetOwner(FighterController owner) {
@@ -461,7 +527,7 @@ public class ShuttleCock : MonoBehaviour
 
     public void increaseBounces() {
         _bouncesBeforeSpeedLoss++;
-        print("Bounces: " + _bouncesBeforeSpeedLoss);
+        //print("Bounces: " + _bouncesBeforeSpeedLoss);
     }
 
     public void resetBounces() {

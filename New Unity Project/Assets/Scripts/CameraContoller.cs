@@ -16,6 +16,7 @@ public class CameraContoller : MonoBehaviour
     [SerializeField] Transform _camera;
     [SerializeField] Vector2 _limitX;
     [SerializeField] Vector2 _limitY;
+    [SerializeField] Camera[] _main;
     Vector3 _cameraTarget;
 
     Transform _focus;
@@ -25,6 +26,7 @@ public class CameraContoller : MonoBehaviour
         _instance = this;
     }
 
+    float zoom;
     // Update is called once per frame
     void Update()
     {
@@ -36,6 +38,47 @@ public class CameraContoller : MonoBehaviour
         _cameraTarget.x = Mathf.Clamp(_cameraTarget.x, _limitX.x, _limitX.y);
         _cameraTarget.y = Mathf.Clamp(_cameraTarget.y, _limitY.x, _limitY.y);
 
+        //if (GameManager.Get().GetShuttle()) {
+        //    zoom = Mathf.Lerp(zoom, 10f * GameManager.Get().GetShuttle().GetSpeedPercent(), Time.deltaTime * 0.2f);
+           
+        //    var zoomVal = 60f + (zoom);
+
+        //    foreach(Camera cam in _main) {
+        //        cam.fieldOfView = zoomVal; 
+        //    }
+        //}
+
+        if (GameManager.Get().GetShuttle().CanKill() || zoomOutTimer > 0) {
+            zoomOutTimer -= Time.deltaTime;
+            foreach (Camera cam in _main) {
+                var zoomVal = Mathf.Lerp(cam.fieldOfView, 70f, Time.deltaTime * 10);
+                cam.fieldOfView = zoomVal;
+            }
+        }
+        else if (zoomTimer > 0) {
+            zoomTimer -= Time.deltaTime;
+
+            foreach (Camera cam in _main) {
+                var zoomVal = Mathf.Lerp(cam.fieldOfView, 50, Time.deltaTime * 10);
+                cam.fieldOfView = zoomVal;
+            }
+        }
+        else {
+            foreach (Camera cam in _main) {
+                var zoomVal = Mathf.Lerp(cam.fieldOfView, 60, Time.deltaTime * 3);
+                cam.fieldOfView = zoomVal;
+            }
+        }
+    }
+
+    float zoomTimer;
+    public void SetZoomTimer(float time) {
+        zoomTimer = time;
+    }
+
+    float zoomOutTimer;
+    public void SetZoomOutTimer(float time) {
+        zoomOutTimer = time;
     }
 
     private void LateUpdate()

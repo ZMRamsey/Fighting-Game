@@ -17,6 +17,8 @@ public class MrHandy : MonoBehaviour
     [SerializeField] AudioClip _spawnSound;
     [SerializeField] AudioClip[] _spawnVoiceSounds;
     [SerializeField] AudioClip[] _deathVoiceSounds;
+    [SerializeField] Animator _animator;
+    bool _frozen;
     float _buldtime;
     int hits;
     // Start is called before the first frame update
@@ -47,11 +49,13 @@ public class MrHandy : MonoBehaviour
         return hits >= _hitThreshold;
     }
 
-    public void OnDeath() {
-        _death.transform.position = transform.position;
-        _death.Play();
-        _death.GetComponent<AudioSource>().PlayOneShot(_deathSound);
-        _death.GetComponent<AudioSource>().PlayOneShot(_deathVoiceSounds[UnityEngine.Random.Range(0,_deathVoiceSounds.Length)], 4);
+    public void OnDeath(bool instant) {
+        if (!instant) {
+            _death.transform.position = transform.position;
+            _death.Play();
+            _death.GetComponent<AudioSource>().PlayOneShot(_deathSound);
+            _death.GetComponent<AudioSource>().PlayOneShot(_deathVoiceSounds[UnityEngine.Random.Range(0, _deathVoiceSounds.Length)], 4);
+        }
         gameObject.SetActive(false);
     }
 
@@ -87,6 +91,16 @@ public class MrHandy : MonoBehaviour
         }
 
         _scaler.transform.localScale = Vector3.MoveTowards(_scaler.transform.localScale, Vector3.one, Time.deltaTime * 2f);
+    }
+
+    public void ForceFreeze() {
+        _rb.isKinematic = true;
+        _animator.speed = 0;
+    }
+
+    public void ForceUnfreeze() {
+        _rb.isKinematic = false;
+        _animator.speed = 1;
     }
 
     public FighterFilter GetFilter() {

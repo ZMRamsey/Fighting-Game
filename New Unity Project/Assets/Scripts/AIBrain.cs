@@ -26,7 +26,7 @@ public class AIBrain : MonoBehaviour
         _raket = GetComponent<RacketFighter>();
         _ray = GetComponent<RayAndTekaFighter>();
         _enemy = GameManager.Get().GetFighterOne();
-        if(_controller == _enemy) {
+        if (_controller == _enemy) {
             _enemy = GameManager.Get().GetFighterTwo();
         }
     }
@@ -34,7 +34,7 @@ public class AIBrain : MonoBehaviour
     void Update() {
         tick += Time.deltaTime;
 
-       targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
+        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
         targetPosition -= _shuttle.GetVelocity().normalized * 2;
 
         if (tick > 0.05f) {
@@ -51,7 +51,7 @@ public class AIBrain : MonoBehaviour
                 SubWoofer woofer = hit.GetComponent<SubWoofer>();
 
 
-                if(woofer != null) {
+                if (woofer != null) {
                     if (IsOnMySide(woofer.transform)) {
                         isWooferOnMySide = true;
                     }
@@ -60,6 +60,7 @@ public class AIBrain : MonoBehaviour
 
                     inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 4f;
                     inHittingRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 1f;
+
                     if (!isTimeToMove && IsOnMySide(woofer.transform) && !IsOnMySide()) {
                         if (woofer.transform.position.x < transform.position.x) {
                             _handler._inputX = -1;
@@ -69,17 +70,16 @@ public class AIBrain : MonoBehaviour
                             _handler._inputX = 1;
                         }
                     }
-                    else { 
-                        if (inRangeOfSubWoofer || IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
+                    else {
+                        if(inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
                             _handler._inputX = -1;
-                            if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection))
-                            {
+                            if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
                                 _handler._jumpHeld = true;
                                 _handler._jumpInput = true;
                             }
                         }
 
-                        if (inRangeOfSubWoofer || !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
+                        if (inRangeOfSubWoofer && !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
                             _handler._inputX = 1;
                             if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
                                 _handler._jumpHeld = true;
@@ -87,16 +87,16 @@ public class AIBrain : MonoBehaviour
                             }
                         }
 
-                        if (inRangeOfSubWoofer || IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
+
+                        if (inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
                             _handler._inputX = 1;
-                            if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection))
-                            {
+                            if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
                                 _handler._jumpHeld = true;
                                 _handler._jumpInput = true;
                             }
                         }
 
-                        if (inRangeOfSubWoofer || !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
+                        if (inRangeOfSubWoofer && !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
                             _handler._inputX = -1;
                             if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
                                 _handler._jumpHeld = true;
@@ -128,23 +128,18 @@ public class AIBrain : MonoBehaviour
                     }
                 }
 
-                if(!IsOnMySide() && !IsOnMySide(transform) && !isWooferOnMySide && Vector3.Distance(transform.position, _shuttle.transform.position) > 2)
-                {
+                if (!IsOnMySide() && !IsOnMySide(transform) && !isWooferOnMySide && Vector3.Distance(transform.position, _shuttle.transform.position) > 2) {
 
-                    if (_controller.GetFilter() == FighterFilter.one)
-                    {
+                    if (_controller.GetFilter() == FighterFilter.one) {
                         _handler._inputX = 1;
-                        if (Physics.Raycast(transform.position, new Vector3(1,0,0), out netDetection, 2, _netDetection))
-                        {
+                        if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
                         }
                     }
-                    else
-                    {
+                    else {
                         _handler._inputX = -1;
-                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection))
-                        {
+                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
                         }
@@ -168,7 +163,7 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if(_raket != null) {
+            if (_raket != null) {
                 _handler._crouchInput = false;
                 if (_raket.GetBuildMeter() < 1f && !IsOnMySide() && !HeadingMyDirection() && !isTimeToMove && !inRangeOfSubWoofer) {
                     _handler._crouchInput = true;
@@ -179,26 +174,25 @@ public class AIBrain : MonoBehaviour
                     _handler._chipInput = true;
                 }
 
-                if(!IsOnMySide() && _raket.GetMeter() >= 1) {
+                if (!IsOnMySide() && _raket.GetMeter() >= 1) {
                     _handler._jumpHeld = true;
                     _handler._jumpInput = true;
-                    if(transform.position.y > 6) {
+                    if (transform.position.y > 6) {
                         _handler._specialInput = true;
                     }
                 }
             }
 
-            if (_ray != null)
-            {
+            if (_ray != null) {
                 _handler._specialInput = false;
-                if (_shuttle.transform.position.y < transform.position.y)
-                {
-                    _handler._crouchInput = true;
-                }
-                else
-                {
-                    _handler._crouchInput = false;
+                if (HeadingMyDirection() || IsOnMySide()) {
+                    if (_shuttle.transform.position.y < transform.position.y) {
+                        _handler._crouchInput = true;
+                    }
+                    else {
+                        _handler._crouchInput = false;
 
+                    }
                 }
 
                 if (IsOnMySide() && _ray.GetMeter() >= 1 && ((_shuttle.GetComponent<Rigidbody>().velocity.y > 6 && HeadingMyDirection()) || Vector3.Distance(_shuttle.transform.position, _ray.GetRayPos()) < 3)) {
@@ -206,7 +200,7 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) <  1f || Vector3.Distance(transform.position, _shuttle.transform.position) < 1f) {
+            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1f || Vector3.Distance(transform.position, _shuttle.transform.position) < 1f) {
                 ProcessHit();
             }
 
@@ -222,21 +216,22 @@ public class AIBrain : MonoBehaviour
             _handler._chipInput = true;
         }
         else {
+            var enemyRay = _enemy.GetComponent<RayAndTekaFighter>();
             var enemyAngle = (transform.position - _enemy.transform.position).normalized;
 
-            if(_ray != null) {
-                enemyAngle = (transform.position - _ray.GetRayPos()).normalized;
+            if (enemyRay != null) {
+                enemyAngle = (transform.position - enemyRay.GetRayPos()).normalized;
             }
 
             var shootDirection = _controller.GetLiftMove().GetHitDirection().normalized;
 
-            if(_controller.GetFilter() == FighterFilter.one) {
+            if (_controller.GetFilter() == FighterFilter.one) {
                 shootDirection.x *= -1;
             }
 
             var testingAngle = Vector3.Angle(shootDirection, enemyAngle);
             var currentAngle = testingAngle;
-            var angle = ShotType.drop;
+            var angle = ShotType.lift;
 
             shootDirection = _controller.GetSmashMove().GetHitDirection().normalized;
 
@@ -262,16 +257,16 @@ public class AIBrain : MonoBehaviour
                 angle = ShotType.drive;
             }
 
-            if(angle == ShotType.drive) {
+            if (angle == ShotType.drive) {
                 if (Physics.Raycast(transform.position, shootDirection, _netDetection)) {
                     _heavy = false;
-                    angle = ShotType.drop;
+                    angle = ShotType.lift;
                 }
             }
 
             _handler._chargeInput = _heavy;
 
-            if(angle == ShotType.drop) {
+            if (angle == ShotType.lift) {
                 _handler._dropInput = true;
             }
             if (angle == ShotType.smash) {
@@ -287,14 +282,14 @@ public class AIBrain : MonoBehaviour
     }
 
     bool HeadingMyDirection() {
-        if(_controller.GetFilter() == FighterFilter.one) {
+        if (_controller.GetFilter() == FighterFilter.one) {
             return _shuttle.GetComponent<Rigidbody>().velocity.x > 0;
         }
         return _shuttle.GetComponent<Rigidbody>().velocity.x < 0;
     }
 
     bool IsOnMySide() {
-        if(_controller.GetFilter() == FighterFilter.one) {
+        if (_controller.GetFilter() == FighterFilter.one) {
             return targetPosition.x > 0.1f;
         }
         else {
@@ -324,7 +319,7 @@ public class AIBrain : MonoBehaviour
     }
 
     bool InHittingRange() {
-        if(Vector3.Distance(transform.position, targetPosition) < 1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
+        if (Vector3.Distance(transform.position, targetPosition) < 1f + (_shuttle.GetSpeedPercent() * _shuttle.GetVelocity().magnitude)) {
             return true;
         }
 
