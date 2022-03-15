@@ -117,6 +117,11 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
 
+        _fighterOne.GetController().SetPallette(false, null);
+
+        var pallete2 = _settings.GetFighterTwoProfile().GetRandomPallete();
+        _fighterTwo.GetController().SetPallette(true, pallete2);
+
         PerformCoinToss();
 
         _shuttle.SetOwner(_fighterOne.GetController());

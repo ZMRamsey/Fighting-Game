@@ -25,6 +25,16 @@ public class RacketFighter : FighterController
         }
     }
 
+    public override void SetPallette(bool active, Material mat) {
+        if(_rgbRenderer != null) {
+            _rgbRenderer.enabled = active;
+
+            if (active) {
+                _rgbRenderer.material = mat;
+            }
+        }
+    }
+
     public float GetBuildMeter() {
         return _buildMeter;
     }

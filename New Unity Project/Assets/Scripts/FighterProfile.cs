@@ -21,4 +21,8 @@ public class FighterProfile : ScriptableObject
     public Material GetPallete(int ID) {
         return _fighterPalettes[ID];
     }
+
+    public Material GetRandomPallete() {
+        return _fighterPalettes[Random.Range(1, _fighterPalettes.Length)];
+    }
 }

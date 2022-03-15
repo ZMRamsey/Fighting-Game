@@ -4996,6 +4996,7 @@ MonoBehaviour:
   _trailActiveOnPercent: 0.1
   _windActiveOnPercent: 0.1
   _killActiveOnPercent: 0
+  _maximumJail: 5
   _bouncesBeforeSpeedLoss: 2
   _canKillOnPercentSpeed: 0
   _gainPerHit: 0.25
@@ -5007,8 +5008,10 @@ MonoBehaviour:
   _hit: {fileID: 6268000892362266039}
   _wallHit: {fileID: 1896314728285587626}
   _impactFrameEffect: {fileID: 0}
+  _trailKill: {fileID: 0}
   _trailParticle: {fileID: 4237136051444870901}
   _windSource: {fileID: 8866480548702310935}
+  _killSource: {fileID: 0}
   _soundManager: {fileID: 3464881925245864052}
   _ricochets:
   - {fileID: 8300000, guid: ba1a15385ffca9e4e8e55b6f7431b9ca, type: 3}

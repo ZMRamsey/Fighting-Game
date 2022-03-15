@@ -26,6 +26,7 @@ public class Hitbox : MonoBehaviour
             var ball = collision.transform.GetComponent<ShuttleCock>();
             if (ball != null) {
                 currentBall = ball;
+
                 float facing = 1;
                 if (_character.GetComponent<SpriteRenderer>().flipX) {
                     facing = -1;
@@ -52,71 +53,49 @@ public class Hitbox : MonoBehaviour
                     ball.SetBounciness(0.2f);
                 }
 
-                float velInfY = 0;
-                if (handler.GetJumpHeld()) {
-                    velInfY = 1;
-                }
 
-                if (handler.GetCrouch()) {
-                    velInfY = -1;
-                }
-
-                var extraVel = handler.GetInput();
-
-                if(_currentMove.GetType() == ShotType.drive) {
-                    extraVel = new Vector3(handler.GetInput().x, velInfY * 6, 0);
-                }
-
-                if (_currentMove.GetType() == ShotType.smash) {
-                    extraVel = new Vector3(handler.GetInput().x, -Mathf.Abs(velInfY * 3), 0);
-                }
-
-                if (_currentMove.GetType() == ShotType.lift) {
-                    extraVel = new Vector3(handler.GetInput().x * 4, 0, 0);
-                }
-
-
-                if (_currentMove.GetType() == ShotType.lift) {
-                    extraVel = new Vector3(handler.GetInput().x * 3, velInfY * 3, 0);
-                }
-
-                var velInf = new VelocityInfluence(new Vector3(handler.GetInput().x, velInfY * 6, 0), _self.GetHitType());
+                var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
                 var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
                 ball.Shoot(hiMes, _self);
 
-                if (_debugRenderer) {
-                    _debugRenderer.enabled = true;
+                UpdateDebug(collision);
 
-                    if (_currentMove.GetType() == ShotType.chip) {
-                        _debugRenderer.startColor = Color.blue;
-                        _debugRenderer.endColor = Color.blue;
-                    }
+            }
 
-                    if (_currentMove.GetType() == ShotType.drive) {
-                        _debugRenderer.startColor = Color.red;
-                        _debugRenderer.endColor = Color.red;
-                    }
+            cooldowns.Add(collision.gameObject);
+        }
+    }
 
-                    if (_currentMove.GetType() == ShotType.smash) {
-                        _debugRenderer.startColor = Color.red + Color.white;
-                        _debugRenderer.endColor = Color.red + Color.white;
-                    }
+    public void UpdateDebug(Collider collision) {
+        if (_debugRenderer) {
+            _debugRenderer.enabled = true;
 
-                    if (_currentMove.GetType() == ShotType.lift) {
-                        _debugRenderer.startColor = Color.green;
-                        _debugRenderer.endColor = Color.green;
-                    }
+            if (_currentMove.GetType() == ShotType.chip) {
+                _debugRenderer.startColor = Color.blue;
+                _debugRenderer.endColor = Color.blue;
+            }
 
-                    Vector3[] arc = new Vector3[]{
+            if (_currentMove.GetType() == ShotType.drive) {
+                _debugRenderer.startColor = Color.red;
+                _debugRenderer.endColor = Color.red;
+            }
+
+            if (_currentMove.GetType() == ShotType.smash) {
+                _debugRenderer.startColor = Color.red + Color.white;
+                _debugRenderer.endColor = Color.red + Color.white;
+            }
+
+            if (_currentMove.GetType() == ShotType.lift) {
+                _debugRenderer.startColor = Color.green;
+                _debugRenderer.endColor = Color.green;
+            }
+
+            Vector3[] arc = new Vector3[]{
                     collision.transform.position,
                     (collision.transform.position)
                     };
 
-                    _debugRenderer.SetPositions(arc);
-                }
-            }
-
-            cooldowns.Add(collision.gameObject);
+            _debugRenderer.SetPositions(arc);
         }
     }
 
@@ -126,7 +105,7 @@ public class Hitbox : MonoBehaviour
             InputHandler handler = _self.GetComponent<InputHandler>();
             var speed = currentBall.GetSpeed();
 
-            if(currentBall.GetForce() <= 0.4f) {
+            if(currentBall.GetChargeTime() <= 0.1) {
                 speed = 1;
             }
 

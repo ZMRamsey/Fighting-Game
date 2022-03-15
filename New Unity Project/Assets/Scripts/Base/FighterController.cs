@@ -44,6 +44,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] Transform _controllerScaler;
     [SerializeField] FighterEffects _effects;
     [SerializeField] protected SpriteRenderer _renderer;
+    [SerializeField] protected SpriteRenderer _rgbRenderer;
     [SerializeField] float _stretchSpeed;
     [SerializeField] protected AudioSource _source;
     [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
@@ -96,6 +97,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void FighterAwake() {
+
+    }
+
+    public virtual void SetPallette(bool active, Material mat) {
 
     }
 
@@ -157,22 +162,27 @@ public abstract class FighterController : MonoBehaviour
 
     public virtual void InitializeFighter() {
         _renderer.flipX = _filter == FighterFilter.one;
-
-        if (_filter == FighterFilter.one) {
-            _hitboxFlipper.localScale = new Vector3(1, 1, 1);
-        }
-        else {
-            _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
+        if (_rgbRenderer) {
+            _rgbRenderer.flipX = _filter == FighterFilter.one;
         }
 
         if (_filter == FighterFilter.one) {
-            _source.panStereo = -0.5f;
-        }
-        else {
-            _source.panStereo = 0.5f;
-        }
+            if (_filter == FighterFilter.one) {
+                _hitboxFlipper.localScale = new Vector3(1, 1, 1);
+            }
+            else {
+                _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
+            }
 
-        ResetFighter();
+            if (_filter == FighterFilter.one) {
+                _source.panStereo = -0.5f;
+            }
+            else {
+                _source.panStereo = 0.5f;
+            }
+
+            ResetFighter();
+        }
     }
 
     public bool IsKOed() {

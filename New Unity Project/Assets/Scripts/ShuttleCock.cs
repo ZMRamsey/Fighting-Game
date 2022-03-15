@@ -50,14 +50,12 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
-    float chargedForce;
     float chargeTimer;
     int _bouncesSinceShoot;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
         _source = GetComponent<AudioSource>();
-        chargedForce = 0.1f;
         _speed = 1;
     }
 
@@ -89,7 +87,7 @@ public class ShuttleCock : MonoBehaviour
     Vector3 _lastShootForce;
     Vector3 _lastShootDirection;
     public void ProcessForce(HitMessage message, float charge) {
-        _canGimic = !message.muteVelocity && charge <= 0.4f;
+        _canGimic = !message.muteVelocity && charge <= 0.1f;
 
         float processedSpeed = _speed;
         _acceleration = 0;
@@ -100,15 +98,8 @@ public class ShuttleCock : MonoBehaviour
             processedSpeed = 2f;
         }
 
-        if (charge <= 0.4f) {
+        if (charge <= 0.1f) {
             processedSpeed = 1f;
-        }
-
-        if (message.influence.type == InfluenceType.overtime) {
-            _influence = message.influence;
-        }
-        else {
-            _influence = new VelocityInfluence();
         }
 
         _hit.Play();
@@ -120,10 +111,6 @@ public class ShuttleCock : MonoBehaviour
         Vector3 proceDir = message.direction;
 
         Vector3 targetVelocity = proceDir * processedSpeed;
-
-        if (message.influence.type == InfluenceType.instant) {
-            targetVelocity = (message.influence.velocity + proceDir) * processedSpeed;
-        }
 
         _rb.isKinematic = false;
 
@@ -151,7 +138,7 @@ public class ShuttleCock : MonoBehaviour
         }
 
         if (CanKill()) {
-            hitStun = 0.8f;
+            hitStun = 0.6f;
         }
 
         if (message.isPlayer) {
@@ -170,13 +157,12 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        SetOwner(message.sender);
-
         shootCoroutine = StartCoroutine(ShootProccess(message, false, hitStun));
     }
 
     public virtual void Shoot(HitMessage message, FighterController owner) {
         Shoot(message);
+        SetOwner(message.sender);
     }
 
     public void Bounce(float axis) {
@@ -194,7 +180,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public bool CanKill() {
-        return _canKillOnPercentSpeed && GetSpeedPercent() >= _killActiveOnPercent;
+        return _canKillOnPercentSpeed && GetSpeedPercent() >= _killActiveOnPercent && _rb.velocity.magnitude > 35f;
     }
 
     bool isPlaying;
@@ -204,11 +190,17 @@ public class ShuttleCock : MonoBehaviour
     void Update() {
         _speed = Mathf.Clamp(_speed, 0, _maximumJail);
 
+        if (CanKill()) {
+            print(_rb.velocity.magnitude);
+        }
+
         if (_frozen) {
             if (_owner && _owner.GetComponent<InputHandler>().GetCharge()) {
                 chargeTimer += Time.deltaTime;
-                chargedForce = Mathf.Clamp(chargeTimer, 0f, 0.3f) / 0.3f;
             }
+        }
+        else {
+            chargeTimer = 0;
         }
 
         if (_wind) {
@@ -216,7 +208,7 @@ public class ShuttleCock : MonoBehaviour
         }
 
 
-        if (GetSpeedPercent() > _trailActiveOnPercent && GetSpeedPercent() < _killActiveOnPercent) {
+        if (GetSpeedPercent() > _trailActiveOnPercent && !CanKill()) {
             if (!isPlaying && _trailParticle) {
                 _trailParticle.Play();
                 isPlaying = true;
@@ -230,7 +222,7 @@ public class ShuttleCock : MonoBehaviour
         }
 
         if (_trailKill != null) {
-            if (GetSpeedPercent() > _killActiveOnPercent) {
+            if (CanKill()) {
                 if (!killIsPlaying && _trailKill) {
                     _trailKill.Play();
                     killIsPlaying = true;
@@ -270,7 +262,7 @@ public class ShuttleCock : MonoBehaviour
             _killSource.panStereo = -vol;
 
 
-            if (GetSpeedPercent() >= _killActiveOnPercent) {
+            if (CanKill()) {
                 killVolume = 1;
                 GameManager.Get().GetCameraShaker().SetShake(0.2f, 2.5f, true);
             }
@@ -377,7 +369,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public float GetSpeedPercent() {
-        return _rb.velocity.magnitude / _maxSpeed;
+        return _speed / _maximumJail;
     }
 
     public float GetSpeed() {
@@ -488,15 +480,14 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(message, chargedForce);
+            ProcessForce(message, chargeTimer);
         }
 
-        chargedForce = 0.1f;
         chargeTimer = 0f;
     }
 
-    public float GetForce() {
-        return chargedForce;
+    public float GetChargeTime() {
+        return chargeTimer;
     }
 
     public void SetOwner(FighterController owner) {
