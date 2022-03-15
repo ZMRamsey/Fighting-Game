@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class OptionsMenuManager : MonoBehaviour
 {
+
+    private void Start()
+    {
+        characterSelectPanel.GetComponent<Image>().sprite = characterSelectPanelSprite;
+    }
     public int _selectionIndex = 0;
     public int _confirmedIndex = 0;
     bool _hasGoneRight = false;
@@ -24,6 +29,9 @@ public class OptionsMenuManager : MonoBehaviour
     public bool _isSelectingMap = false;
 
     public MapMenuManager man;
+
+    public GameObject characterSelectPanel;
+    public Sprite characterSelectPanelSprite;
 
     public GameObject[] readyButtons;
     public GameObject[] fighters;
