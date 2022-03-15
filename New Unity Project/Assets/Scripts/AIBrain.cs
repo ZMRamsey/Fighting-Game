@@ -58,7 +58,7 @@ public class AIBrain : MonoBehaviour
 
                     isTimeToMove = woofer.GetTimer() > 3.5f;
 
-                    inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 4f;
+                    inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 6f;
                     inHittingRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 1f;
 
                     if (!isTimeToMove && IsOnMySide(woofer.transform) && !IsOnMySide()) {
@@ -116,13 +116,13 @@ public class AIBrain : MonoBehaviour
 
                 if (IsOnMySide() || HeadingMyDirection() || _controller.InSuper()) {
                     if (IsBallOnRight()) {
-                        if (!Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 0.5f, _netDetection)) {
+                        if (!Physics.Raycast(transform.position, new Vector3(2, 0, 0), out netDetection, 0.5f, _netDetection)) {
                             _handler._inputX = 1;
                         }
                     }
 
                     if (IsBallOnLeft()) {
-                        if (!Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 0.5f, _netDetection)) {
+                        if (!Physics.Raycast(transform.position, new Vector3(-2, 0, 0), out netDetection, 0.5f, _netDetection)) {
                             _handler._inputX = -1;
                         }
                     }
@@ -132,14 +132,14 @@ public class AIBrain : MonoBehaviour
 
                     if (_controller.GetFilter() == FighterFilter.one) {
                         _handler._inputX = 1;
-                        if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
+                        if (Physics.Raycast(transform.position, new Vector3(2, 0, 0), out netDetection, 2, _netDetection)) {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
                         }
                     }
                     else {
                         _handler._inputX = -1;
-                        if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
+                        if (Physics.Raycast(transform.position, new Vector3(-2, 0, 0), out netDetection, 2, _netDetection)) {
                             _handler._jumpHeld = true;
                             _handler._jumpInput = true;
                         }
