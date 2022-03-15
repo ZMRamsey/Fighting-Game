@@ -212,7 +212,7 @@ public class AIBrain : MonoBehaviour
         int chipShot = Random.Range(0, 5);
         bool _heavy = true;
 
-        if (chipShot == 2 && _shuttle.transform.position.y > 1.2f && _shuttle.GetSpeedPercent() > 0.1f) {
+        if (chipShot == 2 && _shuttle.transform.position.y > 1.2f && _shuttle.GetSpeedPercent() > 0.5f) {
             _handler._chipInput = true;
         }
         else {

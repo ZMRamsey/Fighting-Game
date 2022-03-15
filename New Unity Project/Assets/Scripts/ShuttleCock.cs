@@ -161,8 +161,8 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public virtual void Shoot(HitMessage message, FighterController owner) {
+        SetOwner(owner);
         Shoot(message);
-        SetOwner(message.sender);
     }
 
     public void Bounce(float axis) {
@@ -199,16 +199,13 @@ public class ShuttleCock : MonoBehaviour
                 chargeTimer += Time.deltaTime;
             }
         }
-        else {
-            chargeTimer = 0;
-        }
 
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
         }
 
 
-        if (GetSpeedPercent() > _trailActiveOnPercent && !CanKill()) {
+        if (GetSpeedPercent() > _trailActiveOnPercent && _rb.velocity.magnitude > 10 && !CanKill()) {
             if (!isPlaying && _trailParticle) {
                 _trailParticle.Play();
                 isPlaying = true;
@@ -247,7 +244,7 @@ public class ShuttleCock : MonoBehaviour
             _windSource.panStereo = -vol;
 
 
-            if (GetSpeedPercent() > _windActiveOnPercent && GetSpeedPercent() < _killActiveOnPercent) {
+            if (GetSpeedPercent() > _windActiveOnPercent && _rb.velocity.magnitude > 10 && GetSpeedPercent() < _killActiveOnPercent) {
                 volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
             }
             else {
@@ -279,12 +276,10 @@ public class ShuttleCock : MonoBehaviour
 
         UpdateShuttleApperance(velocity);
 
-        velocity.x = velocity.x * 0.9f;
+        if (_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
+            velocity.x = velocity.x * 0.9f;
+        }
 
-        //var tempVel = _rb.velocity;
-        //tempVel = Vector3.ClampMagnitude(tempVel, _maxSpeed);
-
-        //_rb.velocity = tempVel;
 
         if (_frozen) {
             _rb.velocity = Vector3.zero;
@@ -348,12 +343,6 @@ public class ShuttleCock : MonoBehaviour
         else {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 0.5f, true);
         }
-
-        //float calc = _magnitude / _initialImpact.Length;
-
-
-        //int con = (int)calc;
-        //con = Mathf.Clamp(con, 0, _initialImpact.Length - 1);
 
         _source.PlayOneShot(_soundManager.GetClip(tag), 2f);
 
