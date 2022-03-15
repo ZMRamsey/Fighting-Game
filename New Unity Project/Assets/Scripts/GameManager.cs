@@ -141,13 +141,11 @@ public class GameManager : MonoBehaviour
 
     float _pauseTime;
     void Update() {
-        //if (_isPaused) {
-        if (_isPaused) {
+        if (_pauseController.IsActive()) {
             _mixer.SetFloat("lowpass", 424);
             if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Time.timeScale = 1;
-                _isPaused = false;
-                _pauseController.Enable();
+                _pauseController.Disable();
                 _uiCamera.SetActive(true);
             }
         }
@@ -159,7 +157,8 @@ public class GameManager : MonoBehaviour
         if (((Gamepad.current != null && Gamepad.current.startButton.isPressed) || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
             _pauseTime += Time.deltaTime * 2;
             if (_pauseTime >= 1) {
-                _isPaused = true;
+                _pauseController.Enable();
+                _pauseController.SetPauseOwner(_fighterOne.GetController());
                 _uiCamera.SetActive(false);
                 _pauseTime = 0;
                 Time.timeScale = 0;
@@ -172,7 +171,6 @@ public class GameManager : MonoBehaviour
 
         _pauseArt.fillAmount = Mathf.Clamp(_pauseTime, 0, 1);
         _pauseArtBack.fillAmount = _pauseArt.fillAmount;
-        _pausePanel.SetActive(_isPaused);
 
         _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.deltaTime * 12);
         _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0, 0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
@@ -559,6 +557,11 @@ public class GameManager : MonoBehaviour
     public void PerformCoinToss() {
         int rand = Random.Range(1, 100);
         ScoreManager.Get().SetLastScorer(rand % 2);
+    }
+
+    public void EnableUI()
+    {
+        _uiCamera.SetActive(true);
     }
 
 }

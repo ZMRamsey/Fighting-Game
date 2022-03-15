@@ -6198,7 +6198,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pausePanel: {fileID: 1487734429}
-  _selector: {fileID: 0}
+  _selector: {fileID: 2058243878}
+  _options:
+  - {fileID: 1840816793}
+  - {fileID: 858589636}
+  - {fileID: 1007510095}
+  - {fileID: 176103725}
+  _targetPoints:
+  - {x: 0, y: 111, z: 0}
+  - {x: 0, y: 21, z: 0}
+  - {x: 0, y: -69, z: 0}
+  - {x: 0, y: -159, z: 0}
 --- !u!4 &1172071212
 Transform:
   m_ObjectHideFlags: 0
@@ -9800,8 +9810,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10636,7 +10646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: 111}
+  m_AnchoredPosition: {x: 0, y: 111}
   m_SizeDelta: {x: 884, y: 82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058243880

@@ -83,7 +83,8 @@ public class SubWoofer : ShuttleCock
         foreach (Collider hit in collidersPlayers) {
             FighterController controller = hit.GetComponent<FighterController>();
 
-            if(controller != null) {
+            //We need to decide who dies in the event of double explosion KO
+            if(controller != null && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null) {
                 Vector3 direction = controller.transform.position - transform.position;
                 direction.Normalize();
 

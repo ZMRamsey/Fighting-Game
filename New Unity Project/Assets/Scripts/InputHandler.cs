@@ -23,6 +23,7 @@ public class InputHandler : MonoBehaviour
     public bool _chargeInput;
 
     public bool _crouchInput;
+    public bool _crouchFrame;
 
     Gamepad _gamepad;
     Keyboard _keyboard;
@@ -69,6 +70,11 @@ public class InputHandler : MonoBehaviour
             }
 
             _crouchInput = _keyboard.sKey.isPressed;
+
+            if (_keyboard.sKey.wasPressedThisFrame)
+            {
+                _crouchFrame = true;
+            }
 
             if (_keyboard.shiftKey.wasPressedThisFrame) {
                 _dashInput = true;
@@ -133,6 +139,11 @@ public class InputHandler : MonoBehaviour
             }
 
             _crouchInput = _gamepad.leftStick.down.isPressed || _gamepad.dpad.down.isPressed;
+
+            if (_gamepad.leftStick.down.isPressed || _gamepad.dpad.down.isPressed)
+            {
+                _crouchFrame = true;
+            }
 
             if (_gamepad.leftTrigger.wasPressedThisFrame) {
                 _dashInput = true;
@@ -223,6 +234,13 @@ public class InputHandler : MonoBehaviour
     public bool GetCrouch()
     {
         return _crouchInput;
+    }
+
+    public bool GetCrouchFrame()
+    {
+        var temp = _crouchFrame;
+        _crouchFrame = false;
+        return temp;
     }
 
     public bool GetSmash() {

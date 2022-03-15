@@ -237,6 +237,15 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetFloat("xInput", xAnim);
         _animator.SetFloat("yInput", _rigidbody.velocity.y);
 
+        if (_inputHandler._crouchInput && GameManager.Get().KOCoroutine != null && !IsKOed())
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(0.5f,0.25f,0.5f);
+        }
+        else
+        {
+            transform.root.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+
     }
 
     void FixedUpdate() {
@@ -716,5 +725,10 @@ public abstract class FighterController : MonoBehaviour
 
     public bool CanHahaFunny() {
         return _myState != FighterState.dead && GameManager.Get().KOCoroutine != null;
+    }
+
+    public InputHandler GetHandler()
+    {
+        return _inputHandler;
     }
 }

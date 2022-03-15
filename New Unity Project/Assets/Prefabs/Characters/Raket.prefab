@@ -24986,6 +24986,7 @@ MonoBehaviour:
   _dashInput: 0
   _chargeInput: 0
   _crouchInput: 0
+  _crouchFrame: 0
 --- !u!114 &8223740252825536706
 MonoBehaviour:
   m_ObjectHideFlags: 0
