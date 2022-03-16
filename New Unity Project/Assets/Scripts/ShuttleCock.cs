@@ -52,7 +52,6 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
-    float chargeTimer;
     int _bouncesSinceShoot;
 
     void Awake() {
@@ -88,7 +87,25 @@ public class ShuttleCock : MonoBehaviour
 
     Vector3 _lastShootForce;
     Vector3 _lastShootDirection;
-    public void ProcessForce(HitMessage message, float charge) {
+    public void ProcessForce(HitMessage message) {
+        var charge = 0;
+
+        if(message.sender == FighterFilter.one)
+        {
+            if (GameManager.Get().GetFighterOne().GetComponent<InputHandler>().GetCharge())
+            {
+                charge = 1;
+            }
+        }
+
+        if (message.sender == FighterFilter.two)
+        {
+            if (GameManager.Get().GetFighterTwo().GetComponent<InputHandler>().GetCharge())
+            {
+                charge = 1;
+            }
+        }
+
         _canGimic = !message.muteVelocity && charge <= 0.1f;
 
         float processedSpeed = _speed;
@@ -170,7 +187,7 @@ public class ShuttleCock : MonoBehaviour
     public void Bounce(float axis) {
         _speed = 1;
         var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both);
-        ProcessForce(hitMes, 1);
+        ProcessForce(hitMes);
     }
 
     public FighterController GetOwner() {
@@ -321,6 +338,11 @@ public class ShuttleCock : MonoBehaviour
         }
 
         ShuttleUpdate();
+    }
+
+    public void SetVelocity(Vector3 dir)
+    {
+        _rb.velocity = dir * _speed;
     }
 
     public virtual void UpdateShuttleApperance(Vector3 vel) {
@@ -503,14 +525,8 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(message, chargeTimer);
+            ProcessForce(message);
         }
-
-        chargeTimer = 0f;
-    }
-
-    public float GetChargeTime() {
-        return chargeTimer;
     }
 
     public void SetOwner(FighterController owner) {

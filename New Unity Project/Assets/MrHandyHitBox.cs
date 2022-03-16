@@ -32,7 +32,14 @@ public class MrHandyHitBox : MonoBehaviour
 
         if(shuttle != null) {
             _anim.SetTrigger("stun");
-            shuttle.Reverse(_handy.GetFilter());
+            Vector3 calcVel = new Vector3(2f, 4f, 0f);
+            if (_handy.GetFilter() == FighterFilter.two)
+            {
+               calcVel = new Vector3(-2f, 4f, 0f);
+            }
+
+            shuttle.SetVelocity(calcVel);
+            print("vel");
             _handy.AddHit();
             transform.root.GetComponent<AudioSource>().PlayOneShot(_smacks[Random.Range(0, _smacks.Length)], 1.5f);
         }
