@@ -16,8 +16,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
     [SerializeField] float _grabTimer;
-    //[SerializeField] FighterMove _specialMove;
-    FighterMove _currentMove;
+    [SerializeField] protected FighterMove _superMove;
+    protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
     [SerializeField] InfluenceType _hitType;
 
@@ -76,8 +76,6 @@ public abstract class FighterController : MonoBehaviour
     bool _grounded;
     bool _inSuper;
     bool _holdingShuttle;
-    float _lastTapAxis;
-    float _meterPenaltyTimer;
     float _grabbingTime;
     RaycastHit _groundHit;
 

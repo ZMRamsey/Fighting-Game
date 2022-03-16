@@ -60,7 +60,15 @@ public class Hitbox : MonoBehaviour
 
                     ball.followPlayer(_character, false);
 
-                    ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
+                    var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+                    var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+                    ball.Shoot(hiMes, _self);
+
+                    _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), ball.CanKill());
+
+                    UpdateDebug(collision);
+
+                    //ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
                 }
                 else
                 {
@@ -155,7 +163,9 @@ public class Hitbox : MonoBehaviour
             heldBall.SetBounciness(0.2f);
             heldBall.followPlayer(_character, false);
 
-            heldBall.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
+            var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+            var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+            heldBall.Shoot(hiMes, _self);
 
             Debug.Log("Ball launched");
         }

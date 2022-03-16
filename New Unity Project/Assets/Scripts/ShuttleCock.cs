@@ -60,7 +60,7 @@ public class ShuttleCock : MonoBehaviour
 
     float chargedForce;
     float chargeTimer;
-    int _bouncesSinceShoot;
+    //int _bouncesSinceShoot;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
