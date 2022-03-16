@@ -260,7 +260,7 @@ public class optionsRotatorCircle : MonoBehaviour
     private void Update()
     {
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
-        if (Keyboard.current.spaceKey.wasPressedThisFrame  || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+        if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             if (sceneIndex != 2)
             {
@@ -280,26 +280,26 @@ public class optionsRotatorCircle : MonoBehaviour
                 if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
                 {
                     _rotatorConstant -= 30.0f;
-                    sceneIndex += 1;
+                    sceneIndex -= 1;
                     MoveUp();
-                    if (sceneIndex > 2)
+                    if (sceneIndex < 0)
                     {
-                        sceneIndex = 0;
+                        sceneIndex = 2;
                         WrapAroundToPlay();
                     }
                 }
                 else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
                 {
                     _rotatorConstant += 30.0f;
-                    sceneIndex -= 1;
+                    sceneIndex += 1;
                     MoveDown();
-                    if (sceneIndex < 0)
+                    if (sceneIndex > 2)
                     {
-                        sceneIndex = 2;
+                        sceneIndex = 0;
                         WrapAroundToQuit();
                     }
                 }
-                else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
                     if (sceneIndex == 2)
                     {
@@ -309,12 +309,12 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             else
             {
-                if(Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                if((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
                     _hasConfirmedOptions = true;
                     HasSelectedOptions();
                 }
-                else if(Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+                else if(Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
                 {
                     _hasConfirmedOptions = false;
                     HasSelectedOptions();
@@ -325,7 +325,7 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         else
         {
-            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+            if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
             {
                 subSceneIndex -= 1;
                 if(subSceneIndex < firstOption)
@@ -337,7 +337,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
             {
                 subSceneIndex += 1;
                 if (subSceneIndex > lastOption)

@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class rotaterCircle : MonoBehaviour
 {
+    public GameObject MainMenuScript;
+
     public moveMenus men;
 
     public float turningRate = 0.75f;
@@ -72,6 +74,7 @@ public class rotaterCircle : MonoBehaviour
         optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
         _optionsSelected = false;
         Screen.SetResolution(1920, 1080, true);
+        MainMenuScript.GetComponent<rotaterCircle>().enabled = true;
     }
     //void SlideToOptions()
     //{
@@ -158,7 +161,7 @@ public class rotaterCircle : MonoBehaviour
     private void Update()
     {
         Debug.Log(_PlayerOptionSelected);
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+        if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
         {
             if (sceneIndex == 0)
             {
@@ -166,7 +169,7 @@ public class rotaterCircle : MonoBehaviour
             }
 
         }
-        else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+        else if (Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
         {
             controlSelectionWheel();
         }
@@ -191,12 +194,13 @@ public class rotaterCircle : MonoBehaviour
             {
                 if (!_optionsSelected)
                 {
-                    _rotatorConstant += 30.0f;
-                    sceneIndex += 1;
-                    if (sceneIndex > 2)
+                    _rotatorConstant -= 30.0f;
+                    sceneIndex -= 1;
+                    if (sceneIndex < 0)
                     {
-                        sceneIndex = 0;
+                        sceneIndex = 2;
                     }
+                    Debug.Log(_rotatorConstant);
                 }
 
             }
@@ -204,15 +208,16 @@ public class rotaterCircle : MonoBehaviour
             {
                 if (!_optionsSelected)
                 {
-                    _rotatorConstant -= 30.0f;
-                    sceneIndex -= 1;
-                    if (sceneIndex < 0)
+                    _rotatorConstant += 30.0f;
+                    sceneIndex += 1;
+                    if (sceneIndex > 2)
                     {
-                        sceneIndex = 2;
+                        sceneIndex = 0;
                     }
+                    Debug.Log(_rotatorConstant);
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+            else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
             {
                 if (!_optionsSelected)
                 {

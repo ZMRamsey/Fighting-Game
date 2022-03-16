@@ -11,6 +11,9 @@ public class OptionsMenuManager : MonoBehaviour
     {
         characterSelectPanel.GetComponent<Image>().sprite = characterSelectPanelSprite;
     }
+
+    public GameObject MMenuScript;
+
     public int _selectionIndex = 0;
     public int _confirmedIndex = 0;
     bool _hasGoneRight = false;
@@ -231,6 +234,25 @@ public class OptionsMenuManager : MonoBehaviour
         bg.GetComponent<Image>().sprite = mBG;
     }
 
+    void ResetCharacterSelection()
+    {
+        _isSelectingMap = false;
+        for(int i = 0; i < 7; i++)
+        {
+            animatedCharactersLeft[i].SetActive(false);
+            animatedCharactersRight[i].SetActive(false);
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            readyButtons[i].SetActive(false);
+        }
+        _selectionIndex = 0;
+        _hasGoneLeft = false;
+        _hasGoneRight = false;
+        _isReady = false;
+        MMenuScript.GetComponent<rotaterCircle>().enabled = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -281,6 +303,7 @@ public class OptionsMenuManager : MonoBehaviour
 
             if (_isReady)
             {
+                ResetCharacterSelection();
                 LoadRuleSetSelect();
             }
             //HighlightSelectedCharacter();

@@ -60,7 +60,7 @@ public class InputTest : MonoBehaviour
     void Update() {
         if (readyToPlay)
         {
-            if((Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) && (_player1Player && (_player2AI || _player2Player)))
+            if((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) && (_player1Player && (_player2AI || _player2Player)))
             {
                 Debug.Log("Delayed Selection Active");
                     inputSelectorScreen.SetActive(false);
@@ -88,7 +88,7 @@ public class InputTest : MonoBehaviour
                 }
             }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
+            if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
             {
                 if (!setPlayerOne && !setPlayerTwo)
                 {
@@ -256,6 +256,10 @@ public class InputTest : MonoBehaviour
             _playerOneGamepad = gamepad;
             leftSelectors[1].SetActive(true);
             _player1Player = true;
+            if (rot._PlayerOptionSelected == 0)
+            {
+                readyToPlay = true;
+            }
             return;
         }
 
