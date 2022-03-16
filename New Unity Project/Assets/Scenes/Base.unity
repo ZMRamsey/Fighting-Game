@@ -14164,7 +14164,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: _gainPerHit
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: _maximumJail

@@ -53,7 +53,12 @@ public class RacketFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
-        if (_inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack && GetGrounded()) {
+
+        var isBuilding = _inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack && GetGrounded();
+
+        _animator.SetBool("charge", isBuilding);
+
+        if (isBuilding) {
             _raketUI.alpha = 1;
             _buildMeter += Time.deltaTime * 0.15f;
             _buildMeter = Mathf.Clamp(_buildMeter, 0, 1);

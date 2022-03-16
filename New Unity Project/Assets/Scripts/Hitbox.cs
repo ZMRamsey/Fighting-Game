@@ -39,8 +39,6 @@ public class Hitbox : MonoBehaviour
                     GameManager.Get().SuccessiveHit();
                 }
 
-                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position));
-
                 InputHandler handler = _self.GetComponent<InputHandler>();
 
 
@@ -57,6 +55,8 @@ public class Hitbox : MonoBehaviour
                 var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
                 var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
                 ball.Shoot(hiMes, _self);
+
+                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), ball.CanKill());
 
                 UpdateDebug(collision);
 

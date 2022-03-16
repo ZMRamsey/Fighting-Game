@@ -27,7 +27,9 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] ParticleSystem _hit;
     [SerializeField] ParticleSystem _wallHit;
     [SerializeField] ParticleSystem _impactFrameEffect;
-    [SerializeField] ParticleSystem _trailKill;
+    [SerializeField] ParticleSystem _trailRed;
+    [SerializeField] ParticleSystem _trailBlue;
+    [SerializeField] ParticleSystem _trailYellow;
     [SerializeField] ParticleSystem _trailParticle;
 
     [Header("Audio")]
@@ -184,7 +186,9 @@ public class ShuttleCock : MonoBehaviour
     }
 
     bool isPlaying;
-    bool killIsPlaying;
+    bool redKillActive;
+    bool blueKillActive;
+    bool yellowKillActive;
     float volume;
     float killVolume;
     void Update() {
@@ -218,17 +222,47 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        if (_trailKill != null) {
-            if (CanKill()) {
-                if (!killIsPlaying && _trailKill) {
-                    _trailKill.Play();
-                    killIsPlaying = true;
+        if (_trailRed != null) {
+            if (CanKill() && _filter == FighterFilter.one) {
+                if (!redKillActive && _trailRed) {
+                    _trailRed.Play();
+                    redKillActive = true;
                 }
             }
             else {
-                if (killIsPlaying && _trailKill) {
-                    _trailKill.Stop();
-                    killIsPlaying = false;
+                if (redKillActive && _trailRed) {
+                    _trailRed.Stop();
+                    redKillActive = false;
+                }
+            }
+        }
+
+        if (_trailBlue != null) {
+            if (CanKill() && _filter == FighterFilter.two) {
+                if (!blueKillActive && _trailBlue) {
+                    _trailBlue.Play();
+                    blueKillActive = true;
+                }
+            }
+            else {
+                if (blueKillActive && _trailBlue) {
+                    _trailBlue.Stop();
+                    blueKillActive = false;
+                }
+            }
+        }
+
+        if (_trailYellow != null) {
+            if (CanKill() && _filter != FighterFilter.one && _filter != FighterFilter.two) {
+                if (!yellowKillActive && _trailYellow) {
+                    _trailYellow.Play();
+                    yellowKillActive = true;
+                }
+            }
+            else {
+                if (yellowKillActive && _trailYellow) {
+                    _trailYellow.Stop();
+                    yellowKillActive = false;
                 }
             }
         }

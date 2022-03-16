@@ -7,6 +7,7 @@ public class SubWoofer : ShuttleCock
     [Header("Subwoofer Settings")]
     [SerializeField] float _subWooferThreshold;
     [SerializeField] ParticleSystem _explosion;
+    [SerializeField] ParticleSystem _beepRadius;
     [SerializeField] AudioClip _explosionSND, _beepSND;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _renderer;
@@ -66,6 +67,7 @@ public class SubWoofer : ShuttleCock
             }
 
             _source.PlayOneShot(_beepSND);
+            _beepRadius.Play();
             _timeBetweenBeeps = 0;
         }
 
@@ -84,7 +86,7 @@ public class SubWoofer : ShuttleCock
             FighterController controller = hit.GetComponent<FighterController>();
 
             //We need to decide who dies in the event of double explosion KO
-            if(controller != null && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null) {
+            if(controller != null && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null && !controller.GetComponent<RayAndTekaFighter>()) {
                 Vector3 direction = controller.transform.position - transform.position;
                 direction.Normalize();
 

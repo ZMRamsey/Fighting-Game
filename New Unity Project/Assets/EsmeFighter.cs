@@ -38,8 +38,8 @@ public class EsmeFighter : FighterController
         _magicRaketObject.SetActive(false);
     }
 
-    public override void OnSuccessfulHit(Vector3 point) {
-        base.OnSuccessfulHit(point);
+    public override void OnSuccessfulHit(Vector3 point, bool big) {
+        base.OnSuccessfulHit(point, big);
         _ghostHitUsed = false;
     }
 
@@ -110,7 +110,7 @@ public class EsmeFighter : FighterController
             var hitMes = new HitMessage(dir, new VelocityInfluence(), _currentMove.GetType() == ShotType.chip, GetFilter());
             ball.Shoot(hitMes, this);
 
-            OnSuccessfulHit(ball.transform.position);
+            OnSuccessfulHit(ball.transform.position, false);
             _ghostHitUsed = true;
             _animator.SetTrigger("gimicHit");
         }

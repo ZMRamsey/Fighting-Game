@@ -54,7 +54,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] AudioClip[] _leftFootSounds;
     [SerializeField] AudioClip[] _rightFootSounds;
 
-    [SerializeField] ParticleSystem _impact;
+    [SerializeField] ParticleSystem _hitImpactSmall;
+    [SerializeField] ParticleSystem _hitImpactBig;
     [SerializeField] ParticleSystem _impactFrame;
     [SerializeField] ParticleSystem _jumpDust;
     [SerializeField] ParticleSystem _jumpLand;
@@ -237,13 +238,13 @@ public abstract class FighterController : MonoBehaviour
         _animator.SetFloat("xInput", xAnim);
         _animator.SetFloat("yInput", _rigidbody.velocity.y);
 
-        if (_inputHandler._crouchInput && GameManager.Get().KOCoroutine != null && !IsKOed())
-        {
-            transform.root.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(0.5f,0.25f,0.5f);
-        }
-        else
-        {
-            transform.root.GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        if (GameManager.Get().KOCoroutine != null && !IsKOed()) {
+            if (_inputHandler._crouchInput) {
+                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, new Vector3(1f, 0.7f, 1f), Time.deltaTime * 10);
+            }
+            else {
+                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * 5); ;
+            }
         }
 
     }
@@ -393,8 +394,8 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnSuperMechanic() {
-        _impact.transform.position = transform.position;
-        _impact.Play();
+        _hitImpactSmall.transform.position = transform.position;
+        _hitImpactSmall.Play();
     }
 
     public virtual void OnSuperEvent() {
@@ -640,11 +641,18 @@ public abstract class FighterController : MonoBehaviour
         _failSafeAttack = _currentMove.GetClip().length;
     }
 
-    public virtual void OnSuccessfulHit(Vector3 point) {
+    public virtual void OnSuccessfulHit(Vector3 point, bool big) {
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
-        _impact.transform.position = point;
-        _impact.Play();
+
+        if (!big) {
+            _hitImpactSmall.transform.position = point;
+            _hitImpactSmall.Play();
+        }
+        else {
+            _hitImpactBig.transform.position = point;
+            _hitImpactBig.Play();
+        }
 
         if (_hitSounds.Length > 0) {
             _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
