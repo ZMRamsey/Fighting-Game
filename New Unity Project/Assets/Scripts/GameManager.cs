@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
     void Update() {
         if (_pauseController.IsActive()) {
             _mixer.SetFloat("lowpass", 424);
-            if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
+            if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame && _pauseController.ReturnLayer() == 0) {
                 Time.timeScale = 1;
                 _pauseController.Disable();
                 _uiCamera.SetActive(true);
