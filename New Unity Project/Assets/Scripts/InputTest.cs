@@ -256,6 +256,10 @@ public class InputTest : MonoBehaviour
             _playerOneGamepad = gamepad;
             leftSelectors[1].SetActive(true);
             _player1Player = true;
+            if (rot._PlayerOptionSelected == 0)
+            {
+                readyToPlay = true;
+            }
             return;
         }
 

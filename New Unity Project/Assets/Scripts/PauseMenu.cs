@@ -78,7 +78,7 @@ public class PauseMenu : MonoBehaviour
                     break;
 
                 case (3):
-                    //SceneManager.LoadScene(sceneName: "MenuTest");
+                    SceneManager.LoadScene(sceneName: "MenuTest");
                     break;
 
                 default:

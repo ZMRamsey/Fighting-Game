@@ -6,6 +6,12 @@ using UnityEngine.InputSystem;
 
 public class MapMenuManager : MonoBehaviour
 {
+
+    //For resetting menus
+    public GameObject completeMainMenu;
+    public GameObject completeCharacterSelection;
+    
+    //
     public GameObject C1;
     public GameObject C2;
     public GameObject CSButtons;
@@ -172,6 +178,7 @@ public class MapMenuManager : MonoBehaviour
         characterSelect.SetActive(false);
         background.SetActive(false);
     }
+
     void Update()
     {
         if (_moveAside)
@@ -220,6 +227,7 @@ public class MapMenuManager : MonoBehaviour
             {
                 if(Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
+                    //Need to reset the menus here.
                     GoToLoadingMenu();
                 }
             }
