@@ -32,18 +32,29 @@ public class AIBrain : MonoBehaviour
     }
 
     void Update() {
+        bool moveAwayOverride = false;
+        bool inRangeOfSubWoofer = false;
+        bool inHittingRangeOfSubWoofer = false;
+        bool isWooferOnMySide = false;
+        bool isTimeToMove = false;
+
         tick += Time.deltaTime;
+        float dist = Vector3.Distance(transform.position, _shuttle.transform.position);
+        float time = dist / _controller.GetSpeed();
+        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() * time;
+        targetPosition.y = Mathf.Clamp(targetPosition.y, 1, 10);
 
-        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
-        targetPosition -= _shuttle.GetVelocity().normalized * 2;
+        float shuttleXDist = Vector3.Distance(new Vector3(transform.position.x, transform.position.y, 0), new Vector3(_shuttle.transform.position.x, transform.position.y, 0));
 
-        if (tick > 0.05f) {
+        if (_controller.GetFilter() == FighterFilter.one) {
+            targetPosition.x += 0.5f;
+        }
+        else {
+            targetPosition.x -= 0.5f;
+        }
+
+        if (tick > 0.05f && GameManager.Get().IsGameActive() && _shuttle.GetVelocity().magnitude > 1) {
             _handler._inputX = 0;
-            bool moveAwayOverride = false;
-            bool inRangeOfSubWoofer = false;
-            bool inHittingRangeOfSubWoofer = false;
-            bool isWooferOnMySide = false;
-            bool isTimeToMove = false;
             RaycastHit netDetection;
 
             Collider[] colliders = Physics.OverlapSphere(transform.position, 4);
@@ -111,18 +122,18 @@ public class AIBrain : MonoBehaviour
 
 
             if (!moveAwayOverride) {
-                _handler._jumpHeld = (IsOnMySide() || HeadingMyDirection()) && transform.position.y < _shuttle.transform.position.y;
-                _handler._jumpInput = (IsOnMySide() || HeadingMyDirection()) && IsBallAbovePlayer();
+                if (IsOnMySide() || HeadingMyDirection()) {
+                    _handler._jumpHeld = IsBallAbovePlayer() && transform.position.y < _shuttle.transform.position.y;
+                    _handler._jumpInput = IsBallAbovePlayer();
+                }
 
                 if (IsOnMySide() || HeadingMyDirection() || _controller.InSuper()) {
-                    if (IsBallOnRight()) {
-                        if (!Physics.Raycast(transform.position, new Vector3(2, 0, 0), out netDetection, 0.5f, _netDetection)) {
+                    if (shuttleXDist > 0.1f) {
+                        if (IsBallOnRight()) {
                             _handler._inputX = 1;
                         }
-                    }
 
-                    if (IsBallOnLeft()) {
-                        if (!Physics.Raycast(transform.position, new Vector3(-2, 0, 0), out netDetection, 0.5f, _netDetection)) {
+                        if (IsBallOnLeft()) {
                             _handler._inputX = -1;
                         }
                     }
@@ -165,6 +176,7 @@ public class AIBrain : MonoBehaviour
 
             if (_raket != null) {
                 _handler._crouchInput = false;
+
                 if (_raket.GetBuildMeter() < 1f && !IsOnMySide() && !HeadingMyDirection() && !isTimeToMove && !inRangeOfSubWoofer) {
                     _handler._crouchInput = true;
                 }
@@ -200,11 +212,15 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1f || Vector3.Distance(transform.position, _shuttle.transform.position) < 1f) {
+            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f) {
                 ProcessHit();
             }
 
             tick = 0.0f;
+        }
+
+        if (!GameManager.Get().IsGameActive()) {
+            _handler._inputX = 0;
         }
     }
 
@@ -290,10 +306,10 @@ public class AIBrain : MonoBehaviour
 
     bool IsOnMySide() {
         if (_controller.GetFilter() == FighterFilter.one) {
-            return targetPosition.x > 0.1f;
+            return targetPosition.x > 0f;
         }
         else {
-            return targetPosition.x < -0.1f;
+            return targetPosition.x < 0f;
         }
     }
 
@@ -315,7 +331,7 @@ public class AIBrain : MonoBehaviour
     }
 
     bool IsBallAbovePlayer() {
-        return _shuttle.transform.position.y > 3;
+        return _shuttle.transform.position.y > transform.position.y + 4;
     }
 
     bool InHittingRange() {
@@ -324,5 +340,10 @@ public class AIBrain : MonoBehaviour
         }
 
         return Vector3.Distance(transform.position, _shuttle.transform.position) < 2f;
+    }
+
+    public void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetPosition, 1);
     }
 }

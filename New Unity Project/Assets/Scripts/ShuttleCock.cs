@@ -55,9 +55,6 @@ public class ShuttleCock : MonoBehaviour
     int _bouncesSinceShoot;
     GameObject target;
     bool following;
-
-    float chargedForce;
-    float chargeTimer;
     //int _bouncesSinceShoot;
 
     void Awake() {
@@ -91,14 +88,18 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = Vector3.zero;
     }
 
-    Vector3 _lastShootForce;
+    Vector3 _lastVelocity;
     Vector3 _lastShootDirection;
     public void ProcessForce(HitMessage message) {
         var charge = 0;
+        InputHandler handler = null;
+        Vector3 influence = Vector3.zero;
+
 
         if(message.sender == FighterFilter.one)
         {
-            if (GameManager.Get().GetFighterOne().GetComponent<InputHandler>().GetCharge())
+            handler = GameManager.Get().GetFighterOne().GetComponent<InputHandler>();
+            if (handler.GetCharge())
             {
                 charge = 1;
             }
@@ -106,9 +107,28 @@ public class ShuttleCock : MonoBehaviour
 
         if (message.sender == FighterFilter.two)
         {
-            if (GameManager.Get().GetFighterTwo().GetComponent<InputHandler>().GetCharge())
+            handler = GameManager.Get().GetFighterTwo().GetComponent<InputHandler>();
+            if (handler.GetCharge())
             {
                 charge = 1;
+            }
+        }
+
+        if(handler != null) {
+            if (handler.GetJumpHeld()) {
+                influence.y = 2;
+            }
+
+            if (handler.GetCrouch()) {
+                influence.y = -2;
+            }
+
+            if (handler.GetInputX() > 0) {
+                influence.x = 2;
+            }
+
+            if (handler.GetInputX() < 0) {
+                influence.x = -2;
             }
         }
 
@@ -133,7 +153,7 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 proceDir = message.direction;
+        Vector3 proceDir = message.direction + influence;
 
         Vector3 targetVelocity = proceDir * processedSpeed;
 
@@ -143,13 +163,15 @@ public class ShuttleCock : MonoBehaviour
 
         _speed += _gainPerHit;
 
-        _lastShootForce = targetVelocity;
-
         _bouncesSinceShoot = 0;
     }
 
     public FighterFilter GetFilter() {
         return _filter;
+    }
+
+    public bool IsFalling() {
+        return GetVelocity().y < 0;
     }
 
     Coroutine shootCoroutine;
@@ -216,16 +238,6 @@ public class ShuttleCock : MonoBehaviour
     float killVolume;
     void Update() {
         _speed = Mathf.Clamp(_speed, 0, _maximumJail);
-
-        if (CanKill()) {
-            print(_rb.velocity.magnitude);
-        }
-
-        if (_frozen) {
-            if (_owner && _owner.GetComponent<InputHandler>().GetCharge()) {
-                chargeTimer += Time.deltaTime;
-            }
-        }
 
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
@@ -349,6 +361,8 @@ public class ShuttleCock : MonoBehaviour
             transform.position = target.transform.position;
             Debug.Log("Frozen");
         }
+
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
 
         ShuttleUpdate();
     }
@@ -488,6 +502,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public void ForceFreeze() {
+        _lastVelocity = _rb.velocity;
         _rb.isKinematic = true;
         _frozen = true;
     }
@@ -495,7 +510,7 @@ public class ShuttleCock : MonoBehaviour
     public void ForceUnfreeze() {
         _rb.isKinematic = false;
         _frozen = false;
-        _rb.velocity = _lastShootForce;
+        _rb.velocity = _lastVelocity;
     }
 
     float _acceleration;
@@ -583,6 +598,5 @@ public class ShuttleCock : MonoBehaviour
         following = follow;
     }
 
-    
 }
 

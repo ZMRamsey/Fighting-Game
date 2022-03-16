@@ -14162,26 +14162,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _gainPerHit
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _maximumJail
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _killActiveOnPercent
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _windActiveOnPercent
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _trailActiveOnPercent
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
@@ -14229,10 +14209,6 @@ PrefabInstance:
     - target: {fileID: 6655499867361194829, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194831, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: m_Radius
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}

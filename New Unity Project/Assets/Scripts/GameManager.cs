@@ -135,6 +135,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public bool IsGameActive() {
+        return KOCoroutine == null;
+    }
+
     private void Start() {
         SetUpGame();
     }
