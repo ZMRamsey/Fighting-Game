@@ -53,7 +53,6 @@ public class ShuttleCock : MonoBehaviour
     float _speed;
     float _magnitude;
     int _bouncesSinceShoot;
-
     GameObject target;
     bool following;
 

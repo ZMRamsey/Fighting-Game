@@ -123,9 +123,9 @@ public class Hitbox : MonoBehaviour
             InputHandler handler = _self.GetComponent<InputHandler>();
             var speed = currentBall.GetSpeed();
 
-            if(currentBall.GetChargeTime() <= 0.1) {
-                speed = 1;
-            }
+            //if(currentBall.GetChargeTime() <= 0.1) {
+            //    speed = 1;
+            //}
 
             lastVel = _debugRenderer.GetPosition(_debugRenderer.positionCount - 1);
 

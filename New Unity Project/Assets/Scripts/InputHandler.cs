@@ -285,7 +285,7 @@ public class InputHandler : MonoBehaviour
     public bool GetChip() {
         var temp = _chipInput;
         _chipInput = false;
-        return temp;
+        return false;
     }
 
     public bool GetSuper() {
