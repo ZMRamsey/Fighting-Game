@@ -10,6 +10,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] InputState _state;
     PlayerDevice _playerDevice;
     public float _inputX;
+    public float _grabHoldTime;
 
     public bool _jumpInput;
     public bool _jumpExtraInput;
@@ -21,6 +22,8 @@ public class InputHandler : MonoBehaviour
     public bool _specialInput;
     public bool _dashInput;
     public bool _chargeInput;
+    public bool _grabInput;
+    public bool _chipHeld;
 
     public bool _crouchInput;
     public bool _crouchFrame;
@@ -80,33 +83,41 @@ public class InputHandler : MonoBehaviour
                 _dashInput = true;
             }
 
-            if (_keyboard.lKey.wasPressedThisFrame || _keyboard.rightArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().rightArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().lKey.wasPressedThisFrame) {
                 _driveInput = true;
             }
 
-            if (_keyboard.iKey.wasPressedThisFrame || _keyboard.upArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().upArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().iKey.wasPressedThisFrame) {
                 _dropInput = true;
             }
 
-            if (_keyboard.jKey.wasPressedThisFrame || _keyboard.leftArrowKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().leftArrowKey.wasPressedThisFrame || _playerDevice.GetKeyboard().jKey.wasPressedThisFrame) {
                 _smashInput = true;
             }
 
-            if (_keyboard.kKey.wasPressedThisFrame || _keyboard.downArrowKey.wasPressedThisFrame) {
-                _chipInput = true;
-            }
-
-            if (_keyboard.spaceKey.wasPressedThisFrame) {
+            if (_playerDevice.GetKeyboard().spaceKey.wasPressedThisFrame) {
                 _specialInput = true;
             }
 
-            if(_keyboard.rightArrowKey.isPressed || _keyboard.leftArrowKey.isPressed || _keyboard.downArrowKey.isPressed || _keyboard.upArrowKey.isPressed)
+            if (_playerDevice.GetKeyboard().rightArrowKey.isPressed || _playerDevice.GetKeyboard().leftArrowKey.isPressed || _playerDevice.GetKeyboard().upArrowKey.isPressed || _playerDevice.GetKeyboard().lKey.isPressed
+                || _playerDevice.GetKeyboard().iKey.isPressed || _playerDevice.GetKeyboard().jKey.isPressed)
             {
                 _chargeInput = true;
             }
             else
             {
                 _chargeInput = false;
+            }
+
+            _chipHeld = _playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().kKey.isPressed;
+
+            if (_playerDevice.GetKeyboard().downArrowKey.isPressed || _playerDevice.GetKeyboard().kKey.isPressed)
+            {
+                _chipInput = true;
+            }
+            else
+            {
+                _chipInput = false;
             }
         }
 
@@ -174,13 +185,23 @@ public class InputHandler : MonoBehaviour
                 _specialInput = true;
             }
 
-            if (_gamepad.buttonEast.isPressed || _gamepad.buttonNorth.isPressed || _gamepad.buttonWest.isPressed || _gamepad.buttonSouth.isPressed)
+            //if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed || _playerDevice.GetGamepad().buttonSouth.isPressed)
+            if (_playerDevice.GetGamepad().buttonEast.isPressed || _playerDevice.GetGamepad().buttonNorth.isPressed || _playerDevice.GetGamepad().buttonWest.isPressed)
             {
                 _chargeInput = true;
             }
             else
             {
                 _chargeInput = false;
+            }
+
+            if (_playerDevice.GetGamepad().buttonSouth.isPressed)
+            {
+                _grabInput = true;
+            }
+            else
+            {
+                _grabInput = false;
             }
         }
     }
@@ -282,5 +303,10 @@ public class InputHandler : MonoBehaviour
     public bool GetCharge()
     {
         return _chargeInput;
+    }
+
+    public bool GetGrab()
+    {
+        return _chipHeld;
     }
 }
