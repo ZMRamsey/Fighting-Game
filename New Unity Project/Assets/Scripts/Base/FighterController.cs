@@ -289,7 +289,9 @@ public abstract class FighterController : MonoBehaviour
 
             _rigidbody.velocity = _controllerVelocity;
 
-            _holdingShuttle = _hitboxes.HasShuttle();
+            if (_hitboxes != null) {
+                _holdingShuttle = _hitboxes.HasShuttle();
+            }
 
             if (_holdingShuttle)
             {

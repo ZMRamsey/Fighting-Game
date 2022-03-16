@@ -24731,8 +24731,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4874520953896087305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8086002, y: -0.5749998, z: 0}
-  m_LocalScale: {x: 2.022238, y: 5.724066, z: 2}
+  m_LocalPosition: {x: 0.873, y: -0.642, z: 0}
+  m_LocalScale: {x: 1.8928148, y: 5.8589706, z: 2}
   m_Children: []
   m_Father: {fileID: 1540060562962152633}
   m_RootOrder: 1
@@ -24899,6 +24899,7 @@ MonoBehaviour:
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
+  _grabTimer: 0
   _superMove:
     _animationPath: super
     _clipName: Raket_Super
@@ -24976,6 +24977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 1
   _inputX: 0
+  _grabHoldTime: 0
   _jumpInput: 0
   _jumpExtraInput: 0
   _jumpHeld: 0
@@ -24986,6 +24988,8 @@ MonoBehaviour:
   _specialInput: 0
   _dashInput: 0
   _chargeInput: 0
+  _grabInput: 0
+  _chipHeld: 0
   _crouchInput: 0
   _crouchFrame: 0
 --- !u!114 &8223740252825536706
@@ -25241,7 +25245,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 48a717ea527f47e41a85ac5c4f5adef6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

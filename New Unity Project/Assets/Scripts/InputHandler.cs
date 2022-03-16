@@ -47,6 +47,10 @@ public class InputHandler : MonoBehaviour
     }
 
     void Update() {
+        if(Time.timeScale <= 0) {
+            return;
+        }
+
         if (_keyboard != null) {
             
             _inputX = 0.0f;

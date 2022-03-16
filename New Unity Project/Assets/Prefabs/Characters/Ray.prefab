@@ -19805,6 +19805,7 @@ MonoBehaviour:
     _hitFrame: 0
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
+  _grabTimer: 0
   _superMove:
     _animationPath: 
     _clipName: 
@@ -19833,6 +19834,7 @@ MonoBehaviour:
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 2723939782792330346}
   _renderer: {fileID: 4874520954698666500}
+  _rgbRenderer: {fileID: 0}
   _stretchSpeed: 4
   _source: {fileID: 4874520954667380378}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
@@ -19847,7 +19849,8 @@ MonoBehaviour:
   _rightFootSounds:
   - {fileID: 8300000, guid: d9f301596c9466e41875928bf8edeba3, type: 3}
   - {fileID: 8300000, guid: 969cbcbb10ceb2d45bbb9c5f2b769ec3, type: 3}
-  _impact: {fileID: 6980052365574868023}
+  _hitImpactSmall: {fileID: 0}
+  _hitImpactBig: {fileID: 0}
   _impactFrame: {fileID: 3168012337785043981}
   _jumpDust: {fileID: 0}
   _jumpLand: {fileID: 0}
@@ -19868,6 +19871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   _inputX: 0
+  _grabHoldTime: 0
   _jumpInput: 0
   _jumpExtraInput: 0
   _jumpHeld: 0
@@ -19878,7 +19882,10 @@ MonoBehaviour:
   _specialInput: 0
   _dashInput: 0
   _chargeInput: 0
+  _grabInput: 0
+  _chipHeld: 0
   _crouchInput: 0
+  _crouchFrame: 0
 --- !u!54 &4874520954667380372
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20131,7 +20138,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 48a717ea527f47e41a85ac5c4f5adef6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

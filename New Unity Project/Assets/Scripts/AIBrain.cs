@@ -82,7 +82,7 @@ public class AIBrain : MonoBehaviour
                         }
                     }
                     else {
-                        if(inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
+                        if (inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
                             _handler._inputX = -1;
                             if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
                                 _handler._jumpHeld = true;
@@ -128,15 +128,15 @@ public class AIBrain : MonoBehaviour
                 }
 
                 if (IsOnMySide() || HeadingMyDirection() || _controller.InSuper()) {
-                    if (shuttleXDist > 0.1f) {
-                        if (IsBallOnRight()) {
-                            _handler._inputX = 1;
-                        }
 
-                        if (IsBallOnLeft()) {
-                            _handler._inputX = -1;
-                        }
+                    if (IsBallOnRight()) {
+                        _handler._inputX = 1;
                     }
+
+                    if (IsBallOnLeft()) {
+                        _handler._inputX = -1;
+                    }
+
                 }
 
                 if (!IsOnMySide() && !IsOnMySide(transform) && !isWooferOnMySide && Vector3.Distance(transform.position, _shuttle.transform.position) > 2) {
@@ -212,7 +212,7 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f) {
+            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || (Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f && shuttleXDist < 0.6f)) {
                 ProcessHit();
             }
 

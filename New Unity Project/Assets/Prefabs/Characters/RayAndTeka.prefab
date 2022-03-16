@@ -19887,6 +19887,7 @@ MonoBehaviour:
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
+  _grabTimer: 0
   _superMove:
     _animationPath: super
     _clipName: Raket_Super
@@ -19960,6 +19961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 1
   _inputX: 0
+  _grabHoldTime: 0
   _jumpInput: 0
   _jumpExtraInput: 0
   _jumpHeld: 0
@@ -19970,6 +19972,8 @@ MonoBehaviour:
   _specialInput: 0
   _dashInput: 0
   _chargeInput: 0
+  _grabInput: 0
+  _chipHeld: 0
   _crouchInput: 0
   _crouchFrame: 0
 --- !u!114 &8223740252825536706
@@ -20224,7 +20228,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 48a717ea527f47e41a85ac5c4f5adef6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
