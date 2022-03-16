@@ -15,6 +15,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _chipMove;
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
+    [SerializeField] float _grabTimer;
     [SerializeField] protected FighterMove _superMove;
     protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
@@ -74,6 +75,8 @@ public abstract class FighterController : MonoBehaviour
     bool _hasBounced;
     bool _grounded;
     bool _inSuper;
+    bool _holdingShuttle;
+    float _grabbingTime;
     RaycastHit _groundHit;
 
     protected FighterAction _myAction;
@@ -85,6 +88,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterUI _fighterUI;
     protected InputHandler _inputHandler;
     protected Rigidbody _rigidbody;
+
+    bool test = false;
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -279,6 +284,23 @@ public abstract class FighterController : MonoBehaviour
             }
 
             _rigidbody.velocity = _controllerVelocity;
+
+            _holdingShuttle = _hitboxes.HasShuttle();
+
+            if (_holdingShuttle)
+            {
+                _grabbingTime -= 0.1f;
+            }
+            else
+            {
+                _grabbingTime = 2;
+            }
+
+            if (_grabbingTime < 0)
+            {
+                Debug.Log("Out of grab time");
+                //_hitboxes.SetGrab(false);
+            }
         }
     }
 
@@ -499,6 +521,7 @@ public abstract class FighterController : MonoBehaviour
         _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
     }
 
+    //Plays a swing sound for the attack
     public virtual void OnAttack() {
         if (_swingSounds.Length > 0) {
             _source.PlayOneShot(_swingSounds[UnityEngine.Random.Range(0, _swingSounds.Length)], 1.75f);
@@ -565,10 +588,10 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-
-
-    public virtual void ProcessInput() {
-        if (_grounded) {
+    //Checks all input commands from InputHandler
+    public virtual void ProcessInput()
+    {
+        if (IsGrounded()) {
             _myStance = FighterStance.standing;
         }
         else {
@@ -586,6 +609,10 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _smashMove;
             UpdateMove();
         }
+        else if (_inputHandler.GetSmash() && !_canAttack)
+        {
+            Debug.Log("Can't attack");
+        }
 
         if (_inputHandler.GetDrive() && _canAttack) {
             _canAttack = false;
@@ -593,6 +620,10 @@ public abstract class FighterController : MonoBehaviour
 
             _currentMove = _driveMove;
             UpdateMove();
+        }
+        else if (_inputHandler.GetDrive() && !_canAttack)
+        {
+            Debug.Log("Can't attack");
         }
 
         if (_inputHandler.GetDrop() && _canAttack) {
@@ -602,15 +633,40 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _dropMove;
             UpdateMove();
         }
+        else if (_inputHandler.GetDrop() && !_canAttack)
+        {
+            Debug.Log("Can't attack");
+        }
 
-        if (_inputHandler.GetChip() && _canAttack) {
+        if (_inputHandler.GetChip() && !_holdingShuttle && _canAttack)
+        {
+            //Scoop up shuttle
+            _canAttack = false;
+            _hitboxes.SetGrab(true);
+            _currentMove = _chipMove;
+            ResetHitbox();
+            _animator.SetTrigger(_currentMove.GetPath());
+            _hitboxes.SetMove(_currentMove);
+            _holdingShuttle = _hitboxes.HasShuttle();
+
+            _failSafeAttack = _currentMove.GetClip().length;
+        }
+        
+        if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
+        {
             _canAttack = false;
             ResetHitbox();
 
             _currentMove = _chipMove;
-            UpdateMove();
-        }
+            
+            OnAttack();
+            _hitboxes.SetGrab(false);
+            _animator.SetTrigger(_currentMove.GetPath());
+            _failSafeAttack = _currentMove.GetClip().length;
+            _holdingShuttle = false;
+            Debug.Log("Released the cock");
 
+        }
 
         if (_inputHandler.GetSuper() && _canAttack && _commandMeter >= 100) {
             _canAttack = false;
@@ -629,9 +685,16 @@ public abstract class FighterController : MonoBehaviour
         if (_failSafeAttack > 0) {
             _failSafeAttack -= Time.deltaTime;
             if (_failSafeAttack <= 0) {
-                ResetAttack();
+                if (!_holdingShuttle)
+                {
+                    Debug.Log("Not holding shuttle");
+                    ResetAttack();
+                }
             }
         }
+
+
+        
     }
 
     public virtual void UpdateMove() {
@@ -659,8 +722,7 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-
-    bool IsGrounded() {
+    public bool IsGrounded() {
         if (_myAction == FighterAction.jumping) {
             return false;
         }
