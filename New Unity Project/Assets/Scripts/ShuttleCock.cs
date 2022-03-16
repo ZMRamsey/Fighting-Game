@@ -52,8 +52,13 @@ public class ShuttleCock : MonoBehaviour
     protected float _squishTimer;
     float _speed;
     float _magnitude;
-    float chargeTimer;
     int _bouncesSinceShoot;
+    GameObject target;
+    bool following;
+
+    float chargedForce;
+    float chargeTimer;
+    //int _bouncesSinceShoot;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -88,7 +93,25 @@ public class ShuttleCock : MonoBehaviour
 
     Vector3 _lastShootForce;
     Vector3 _lastShootDirection;
-    public void ProcessForce(HitMessage message, float charge) {
+    public void ProcessForce(HitMessage message) {
+        var charge = 0;
+
+        if(message.sender == FighterFilter.one)
+        {
+            if (GameManager.Get().GetFighterOne().GetComponent<InputHandler>().GetCharge())
+            {
+                charge = 1;
+            }
+        }
+
+        if (message.sender == FighterFilter.two)
+        {
+            if (GameManager.Get().GetFighterTwo().GetComponent<InputHandler>().GetCharge())
+            {
+                charge = 1;
+            }
+        }
+
         _canGimic = !message.muteVelocity && charge <= 0.1f;
 
         float processedSpeed = _speed;
@@ -170,7 +193,7 @@ public class ShuttleCock : MonoBehaviour
     public void Bounce(float axis) {
         _speed = 1;
         var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both);
-        ProcessForce(hitMes, 1);
+        ProcessForce(hitMes);
     }
 
     public FighterController GetOwner() {
@@ -320,7 +343,19 @@ public class ShuttleCock : MonoBehaviour
             _rb.angularVelocity = Vector3.zero;
         }
 
+        if (following)
+        {
+            _rb.velocity = Vector3.zero;
+            transform.position = target.transform.position;
+            Debug.Log("Frozen");
+        }
+
         ShuttleUpdate();
+    }
+
+    public void SetVelocity(Vector3 dir)
+    {
+        _rb.velocity = dir * _speed;
     }
 
     public virtual void UpdateShuttleApperance(Vector3 vel) {
@@ -503,14 +538,8 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = vel;
         }
         else {
-            ProcessForce(message, chargeTimer);
+            ProcessForce(message);
         }
-
-        chargeTimer = 0f;
-    }
-
-    public float GetChargeTime() {
-        return chargeTimer;
     }
 
     public void SetOwner(FighterController owner) {
@@ -547,23 +576,13 @@ public class ShuttleCock : MonoBehaviour
     public void resetBounces() {
         _bouncesBeforeSpeedLoss = 2;
     }
-    //public void JailSpeed()
-    //{
-    //    if(jail == 0)
-    //    {
-    //        jail = _rb.velocity.magnitude;
-    //        Debug.Log("Jailed at: " + jail);
-    //    }
-    //}
 
-    //public void UnJailSpeed()
-    //{
-    //    if(jail != 0)
-    //    {
-    //        _rb.velocity *= jail;
-    //        jail = 0;
-    //        Debug.Log("UnJailed to " + _rb.velocity.magnitude);
-    //    }
-    //}
+    public void followPlayer(GameObject player, bool follow)
+    {
+        target = player;
+        following = follow;
+    }
+
+    
 }
 

@@ -11,6 +11,9 @@ public class Hitbox : MonoBehaviour
     [SerializeField] GameObject _character;
     [SerializeField] LineRenderer _debugRenderer;
     ShuttleCock currentBall;
+    bool grabbing;
+    bool hasBall;
+    ShuttleCock heldBall;
 
     public List<GameObject> cooldowns = new List<GameObject>();
 
@@ -46,20 +49,35 @@ public class Hitbox : MonoBehaviour
                 Vector3 dir = _currentMove.GetHitDirection();
                 dir.x = xFace;
 
-                ball.SetBounciness(1);
-                if (_currentMove.GetType() == ShotType.chip) {
-                    ball.SetBounciness(0.2f);
+                if (!grabbing)
+                {
+
+                    ball.SetBounciness(1);
+                    if (_currentMove.GetType() == ShotType.chip)
+                    {
+                        ball.SetBounciness(0.2f);
+                    }
+
+                    ball.followPlayer(_character, false);
+
+                    var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+                    var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+                    ball.Shoot(hiMes, _self);
+
+                    _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), ball.CanKill());
+
+                    UpdateDebug(collision);
+
+                    //ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
                 }
-
-
-                var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
-                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
-                ball.Shoot(hiMes, _self);
-
-                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), ball.CanKill());
-
-                UpdateDebug(collision);
-
+                else
+                {
+                    ball.followPlayer(_character, true);
+                    hasBall = true;
+                    heldBall = ball;
+                    //fuccy wuccy
+                }
+                
             }
 
             cooldowns.Add(collision.gameObject);
@@ -105,9 +123,9 @@ public class Hitbox : MonoBehaviour
             InputHandler handler = _self.GetComponent<InputHandler>();
             var speed = currentBall.GetSpeed();
 
-            if(currentBall.GetChargeTime() <= 0.1) {
-                speed = 1;
-            }
+            //if(currentBall.GetChargeTime() <= 0.1) {
+            //    speed = 1;
+            //}
 
             lastVel = _debugRenderer.GetPosition(_debugRenderer.positionCount - 1);
 
@@ -123,7 +141,47 @@ public class Hitbox : MonoBehaviour
         _currentMove = move;
     }
 
-    public void ResetCD() {
+    public void SetGrab(bool grab)
+    {
+        grabbing = grab;
+
+        if ((!grabbing) && (heldBall != null))
+        {
+            hasBall = false;
+
+            InputHandler handler = _self.GetComponent<InputHandler>();
+
+            float facing = 1;
+            if (_character.GetComponent<SpriteRenderer>().flipX)
+            {
+                facing = -1;
+            }
+
+            float xFace = _currentMove.GetHitDirection().x * facing;
+            Vector3 dir = _currentMove.GetHitDirection();
+            dir.x = xFace;
+            heldBall.SetBounciness(0.2f);
+            heldBall.followPlayer(_character, false);
+
+            var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+            var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+            heldBall.Shoot(hiMes, _self);
+
+            Debug.Log("Ball launched");
+        }
+        else
+        {
+            heldBall = null;
+        }
+    }
+
+    public bool HasShuttle()
+    {
+        return hasBall;
+    }
+
+    public void ResetCD()
+    {
         cooldowns.Clear();
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f88ba3e0c7d2474181eb94f49c2fa98, type: 3}
   m_Name: Profile_Ray
   m_EditorClassIdentifier: 
-  _fighterName: Ray & Teka
+  _fighterName: Ray + Teka
   _fighterPrefab: {fileID: 4874520954667380368, guid: 6d3e80973129d8041b080768acf17d2f, type: 3}
   _fighterPalettes:
   - {fileID: 0}
