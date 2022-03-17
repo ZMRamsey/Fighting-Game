@@ -12,33 +12,41 @@ public class Hitbox : MonoBehaviour
     [SerializeField] LineRenderer _debugRenderer;
     ShuttleCock currentBall;
     bool grabbing;
-    bool hasBall;
-    ShuttleCock heldBall;
+    //bool hasBall;
+    //ShuttleCock heldBall;
 
     public List<GameObject> cooldowns = new List<GameObject>();
 
-    private void Awake() {
+    private void Awake()
+    {
         _self = transform.root.GetComponent<FighterController>();
     }
 
-    private void OnTriggerEnter(Collider collision) {
-        if (collision.transform == _self.transform) {
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.transform == _self.transform)
+        {
             return;
         }
-        if (!cooldowns.Contains(collision.gameObject)) {
+        if (!cooldowns.Contains(collision.gameObject))
+        {
             var ball = collision.transform.GetComponent<ShuttleCock>();
-            if (ball != null) {
+            if (ball != null)
+            {
                 currentBall = ball;
 
                 float facing = 1;
-                if (_character.GetComponent<SpriteRenderer>().flipX) {
+                if (_character.GetComponent<SpriteRenderer>().flipX)
+                {
                     facing = -1;
                 }
 
-                if (_self != ball.GetOwner()) {
+                if (_self != ball.GetOwner())
+                {
                     GameManager.Get().IncreaseRally();
                 }
-                else {
+                else
+                {
                     GameManager.Get().SuccessiveHit();
                 }
 
@@ -49,61 +57,64 @@ public class Hitbox : MonoBehaviour
                 Vector3 dir = _currentMove.GetHitDirection();
                 dir.x = xFace;
 
-                if (!grabbing)
+
+                ball.SetBounciness(1);
+                if (_currentMove.GetType() == ShotType.chip)
                 {
+                    ball.SetBounciness(0.2f);
+                }
 
-                    ball.SetBounciness(1);
-                    if (_currentMove.GetType() == ShotType.chip)
-                    {
-                        ball.SetBounciness(0.2f);
-                    }
+                //ball.BoundToPlayer(_character);
 
-                    ball.followPlayer(_character, false);
+                var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
 
-                    var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
-                    var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
-                    ball.Shoot(hiMes, _self);
-
-                    _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType());
-
-                    UpdateDebug(collision);
-
-                    //ball.Shoot(dir, handler.GetInput(), true, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _self);
+                if (_currentMove.GetType() == ShotType.chip && _self.GetComponent<InputHandler>().GetGrab())
+                {
+                    ball.BoundToPlayer(_self.gameObject);
+                    ball.SetOwner(_self.GetFilter());
                 }
                 else
                 {
-                    ball.followPlayer(_character, true);
-                    hasBall = true;
-                    heldBall = ball;
-                    //fuccy wuccy
+                    ball.ReleaseFromPlayer(false);
+                    ball.Shoot(hiMes, _self);
                 }
-                
+
+                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType());
+
+                UpdateDebug(collision);
             }
 
             cooldowns.Add(collision.gameObject);
         }
     }
 
-    public void UpdateDebug(Collider collision) {
-        if (_debugRenderer) {
+    public void UpdateDebug(Collider collision)
+    {
+        if (_debugRenderer)
+        {
             _debugRenderer.enabled = true;
 
-            if (_currentMove.GetType() == ShotType.chip) {
+            if (_currentMove.GetType() == ShotType.chip)
+            {
                 _debugRenderer.startColor = Color.blue;
                 _debugRenderer.endColor = Color.blue;
             }
 
-            if (_currentMove.GetType() == ShotType.drive) {
+            if (_currentMove.GetType() == ShotType.drive)
+            {
                 _debugRenderer.startColor = Color.red;
                 _debugRenderer.endColor = Color.red;
             }
 
-            if (_currentMove.GetType() == ShotType.smash) {
+            if (_currentMove.GetType() == ShotType.smash)
+            {
                 _debugRenderer.startColor = Color.red + Color.white;
                 _debugRenderer.endColor = Color.red + Color.white;
             }
 
-            if (_currentMove.GetType() == ShotType.lift) {
+            if (_currentMove.GetType() == ShotType.lift)
+            {
                 _debugRenderer.startColor = Color.green;
                 _debugRenderer.endColor = Color.green;
             }
@@ -118,8 +129,10 @@ public class Hitbox : MonoBehaviour
     }
 
     Vector3 lastVel;
-    void Update() {
-        if (_debugRenderer && _debugRenderer.enabled && currentBall != null) {
+    void Update()
+    {
+        if (_debugRenderer && _debugRenderer.enabled && currentBall != null)
+        {
             InputHandler handler = _self.GetComponent<InputHandler>();
             var speed = currentBall.GetSpeed();
 
@@ -133,52 +146,54 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         _debugRenderer.enabled = false;
     }
 
-    public void SetMove(FighterMove move) {
+    public void SetMove(FighterMove move)
+    {
         _currentMove = move;
     }
 
-    public void SetGrab(bool grab)
-    {
-        grabbing = grab;
+    //public void SetGrab(bool grab)
+    //{
+    //    grabbing = grab;
 
-        if ((!grabbing) && (heldBall != null))
-        {
-            hasBall = false;
+    //    if ((!grabbing) && (heldBall != null))
+    //    {
+    //        hasBall = false;
 
-            InputHandler handler = _self.GetComponent<InputHandler>();
+    //        InputHandler handler = _self.GetComponent<InputHandler>();
 
-            float facing = 1;
-            if (_character.GetComponent<SpriteRenderer>().flipX)
-            {
-                facing = -1;
-            }
+    //        float facing = 1;
+    //        if (_character.GetComponent<SpriteRenderer>().flipX)
+    //        {
+    //            facing = -1;
+    //        }
 
-            float xFace = _currentMove.GetHitDirection().x * facing;
-            Vector3 dir = _currentMove.GetHitDirection();
-            dir.x = xFace;
-            heldBall.SetBounciness(0.2f);
-            heldBall.followPlayer(_character, false);
+    //        float xFace = _currentMove.GetHitDirection().x * facing;
+    //        Vector3 dir = _currentMove.GetHitDirection();
+    //        dir.x = xFace;
+    //        heldBall.SetBounciness(0.2f);
+    //        heldBall.BoundToPlayer(_character, false);
 
-            var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
-            var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
-            heldBall.Shoot(hiMes, _self);
+    //        var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
+    //        var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+    //        heldBall.Shoot(hiMes, _self);
 
-            Debug.Log("Ball launched");
-        }
-        else
-        {
-            heldBall = null;
-        }
-    }
+    //        Debug.Log("Ball launched");
+    //    }
+    //    else
+    //    {
+    //        heldBall = null;
+    //    }
+    //}
 
-    public bool HasShuttle()
-    {
-        return hasBall;
-    }
+    //public bool HasShuttle()
+    //{
+    //    return hasBall;
+    //}
 
     public void ResetCD()
     {

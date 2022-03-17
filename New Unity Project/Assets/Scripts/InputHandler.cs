@@ -115,13 +115,9 @@ public class InputHandler : MonoBehaviour
 
             _chipHeld = _keyboard.downArrowKey.isPressed || _keyboard.kKey.isPressed;
 
-            if (_keyboard.downArrowKey.isPressed || _keyboard.kKey.isPressed)
+            if (_keyboard.downArrowKey.wasPressedThisFrame || _keyboard.kKey.wasPressedThisFrame)
             {
                 _chipInput = true;
-            }
-            else
-            {
-                _chipInput = false;
             }
         }
 

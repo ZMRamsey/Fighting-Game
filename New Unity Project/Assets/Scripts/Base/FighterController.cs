@@ -308,24 +308,24 @@ public abstract class FighterController : MonoBehaviour
 
             _rigidbody.velocity = _controllerVelocity;
 
-            if (_hitboxes != null) {
-                _holdingShuttle = _hitboxes.HasShuttle();
-            }
+            //if (_hitboxes != null) {
+            //    _holdingShuttle = _hitboxes.HasShuttle();
+            //}
 
-            if (_holdingShuttle)
-            {
-                _grabbingTime -= 0.1f;
-            }
-            else
-            {
-                _grabbingTime = 2;
-            }
+            //if (_holdingShuttle)
+            //{
+            //    _grabbingTime -= 0.1f;
+            //}
+            //else
+            //{
+            //    _grabbingTime = 2;
+            //}
 
-            if (_grabbingTime < 0)
-            {
-                Debug.Log("Out of grab time");
-                //_hitboxes.SetGrab(false);
-            }
+            //if (_grabbingTime < 0)
+            //{
+            //    Debug.Log("Out of grab time");
+            //    //_hitboxes.SetGrab(false);
+            //}
         }
     }
 
@@ -641,10 +641,7 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _smashMove;
             UpdateMove();
         }
-        else if (_inputHandler.GetSmash() && !_canAttack)
-        {
-            Debug.Log("Can't attack");
-        }
+
 
         if (_inputHandler.GetDrive() && _canAttack) {
             _canAttack = false;
@@ -652,10 +649,6 @@ public abstract class FighterController : MonoBehaviour
 
             _currentMove = _driveMove;
             UpdateMove();
-        }
-        else if (_inputHandler.GetDrive() && !_canAttack)
-        {
-            Debug.Log("Can't attack");
         }
 
         if (_inputHandler.GetLift() && _canAttack) {
@@ -666,40 +659,33 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _dropMove;
             UpdateMove();
         }
-        else if (_inputHandler.GetLift() && !_canAttack)
-        {
-            Debug.Log("Can't attack");
-        }
 
-        if (_inputHandler.GetChip() && !_holdingShuttle && _canAttack)
+
+        if (_inputHandler.GetChip() &&  _canAttack)
         {
-            //Scoop up shuttle
+            print("chip");
             _canAttack = false;
-            _hitboxes.SetGrab(true);
-            _currentMove = _chipMove;
             ResetHitbox();
-            _animator.SetTrigger(_currentMove.GetPath());
-            _hitboxes.SetMove(_currentMove);
-            _holdingShuttle = _hitboxes.HasShuttle();
 
-            _failSafeAttack = _currentMove.GetClip().length;
+            _currentMove = _chipMove;
+            UpdateMove();
         }
         
-        if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
-        {
-            _canAttack = false;
-            ResetHitbox();
+        //if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
+        //{
+        //    _canAttack = false;
+        //    ResetHitbox();
 
-            _currentMove = _chipMove;
+        //    _currentMove = _chipMove;
             
-            OnAttack();
-            _hitboxes.SetGrab(false);
-            _animator.SetTrigger(_currentMove.GetPath());
-            _failSafeAttack = _currentMove.GetClip().length;
-            _holdingShuttle = false;
-            Debug.Log("Released the cock");
+        //    OnAttack();
+        //    _hitboxes.SetGrab(false);
+        //    _animator.SetTrigger(_currentMove.GetPath());
+        //    _failSafeAttack = _currentMove.GetClip().length;
+        //    _holdingShuttle = false;
+        //    Debug.Log("Released the cock");
 
-        }
+        //}
 
         if (_inputHandler.GetSuper() && _canAttack && _commandMeter >= 100) {
             _canAttack = false;

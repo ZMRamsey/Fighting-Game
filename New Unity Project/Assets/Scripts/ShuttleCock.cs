@@ -21,7 +21,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] protected float _smoothing;
     [SerializeField] float _squishThreshold = 0.1f;
     [SerializeField] GameObject _wind;
-
+    [SerializeField] Transform _circle;
 
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
@@ -54,8 +54,8 @@ public class ShuttleCock : MonoBehaviour
     float _magnitude;
     int _bouncesSinceShoot;
     GameObject target;
-    bool following;
     //int _bouncesSinceShoot;
+    float grabbedTimer;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -330,7 +330,7 @@ public class ShuttleCock : MonoBehaviour
 
             if (CanKill()) {
                 killVolume = 1;
-                GameManager.Get().GetCameraShaker().SetShake(0.2f, 2.5f, true);
+                GameManager.Get().GetCameraShaker().SetShake(0.2f, 2f, true);
             }
             else {
                 killVolume = Mathf.Lerp(killVolume, 0, Time.deltaTime * 2);
@@ -355,10 +355,19 @@ public class ShuttleCock : MonoBehaviour
             _rb.angularVelocity = Vector3.zero;
         }
 
-        if (following)
+        _circle.gameObject.SetActive(target != null);
+
+        if (target != null)
         {
+            grabbedTimer -= Time.deltaTime * 0.5f;
+            _circle.localScale = Vector3.one * grabbedTimer;
             _rb.velocity = Vector3.zero;
             transform.position = target.transform.position;
+
+            if(grabbedTimer <= 0)
+            {
+                ReleaseFromPlayer(true);
+            }
             Debug.Log("Frozen");
         }
 
@@ -366,6 +375,7 @@ public class ShuttleCock : MonoBehaviour
 
         ShuttleUpdate();
     }
+
 
     public void SetVelocity(Vector3 dir)
     {
@@ -592,10 +602,20 @@ public class ShuttleCock : MonoBehaviour
         _bouncesBeforeSpeedLoss = 2;
     }
 
-    public void followPlayer(GameObject player, bool follow)
+    public void BoundToPlayer(GameObject player)
     {
+        grabbedTimer = 1;
         target = player;
-        following = follow;
+    }
+
+    public void ReleaseFromPlayer(bool inheritVel)
+    {
+        if (inheritVel)
+        {
+            _rb.velocity = target.GetComponent<Rigidbody>().velocity;
+        }
+        target = null;
+        grabbedTimer = 0;
     }
 
 }
