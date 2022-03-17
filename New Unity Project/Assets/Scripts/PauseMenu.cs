@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
     [Header("Movelist Left Side")]
     [SerializeField] GameObject[] _movelistOptions;
     [SerializeField] Color[] _colorSet;
+    [SerializeField] GameObject _arrows;
     private int _mIndex;
 
     [Header("Movelist Right Side")]
@@ -128,7 +129,7 @@ public class PauseMenu : MonoBehaviour
                     _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[1];
                     foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
                     {
-                        textbox.color = Color.black;
+                        textbox.color = Color.white;
                     }
                     UpdateRightSide();
                 }
@@ -148,8 +149,18 @@ public class PauseMenu : MonoBehaviour
                     _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[1];
                     foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
                     {
-                        textbox.color = Color.black;
+                        textbox.color = Color.white;
                     }
+                }
+                if (_mIndex == 4)
+                {
+                    _arrows.GetComponent<Image>().color = Color.white;
+                    _arrows.GetComponent<Animator>().SetBool("Idle", false);
+                }
+                else
+                {
+                    _arrows.GetComponent<Image>().color = _colorSet[1];
+                    _arrows.GetComponent<Animator>().SetBool("Idle", true);
                 }
                 UpdateRightSide();
             }       
@@ -200,6 +211,7 @@ public class PauseMenu : MonoBehaviour
         _pauseLayer = 2;
         _movelistPanel.SetActive(true);
         _pausePanel.SetActive(false);
+        _arrows.GetComponent<Image>().color = _colorSet[1];
         foreach (GameObject option in _movelistOptions)
         {
             option.GetComponent<Image>().color = _colorSet[2];
@@ -209,7 +221,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
         _movelistOptions[0].GetComponent<Image>().color = _colorSet[1];
-        _movelistOptions[0].GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+        _movelistOptions[0].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
     }
 
     public void UpdateRightSide()
