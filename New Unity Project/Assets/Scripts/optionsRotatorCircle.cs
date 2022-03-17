@@ -279,24 +279,24 @@ public class optionsRotatorCircle : MonoBehaviour
             {
                 if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
                 {
-                    _rotatorConstant -= 30.0f;
+                    _rotatorConstant += 30.0f;
                     sceneIndex -= 1;
-                    MoveUp();
+                    MoveDown();
                     if (sceneIndex < 0)
                     {
                         sceneIndex = 2;
-                        WrapAroundToPlay();
+                        WrapAroundToQuit();
                     }
                 }
                 else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
                 {
-                    _rotatorConstant += 30.0f;
+                    _rotatorConstant -= 30.0f;
                     sceneIndex += 1;
-                    MoveDown();
+                    MoveUp();
                     if (sceneIndex > 2)
                     {
                         sceneIndex = 0;
-                        WrapAroundToQuit();
+                        WrapAroundToPlay();
                     }
                 }
                 else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
