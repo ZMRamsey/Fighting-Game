@@ -151,7 +151,7 @@ public class InputHandler : MonoBehaviour
 
             _crouchInput = _gamepad.leftStick.down.isPressed || _gamepad.dpad.down.isPressed;
 
-            if (_gamepad.leftStick.down.isPressed || _gamepad.dpad.down.isPressed)
+            if (_gamepad.leftStick.down.wasPressedThisFrame || _gamepad.dpad.down.wasPressedThisFrame)
             {
                 _crouchFrame = true;
             }
