@@ -55,9 +55,13 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] AudioClip[] _leftFootSounds;
     [SerializeField] AudioClip[] _rightFootSounds;
 
-    [SerializeField] ParticleSystem _hitImpactSmall;
+    [SerializeField] ParticleSystem _hitSmashVFX;
+    [SerializeField] ParticleSystem _hitChipVFX;
+    [SerializeField] ParticleSystem _hitDriveVFX;
+    [SerializeField] ParticleSystem _hitLiftVFX;
     [SerializeField] ParticleSystem _hitImpactBig;
-    [SerializeField] ParticleSystem _impactFrame;
+    [SerializeField] ParticleSystem _runningLeftVFX;
+    [SerializeField] ParticleSystem _runningRightVFX;
     [SerializeField] ParticleSystem _jumpDust;
     [SerializeField] ParticleSystem _jumpLand;
 
@@ -260,9 +264,24 @@ public abstract class FighterController : MonoBehaviour
 
     void FixedUpdate() {
         OnFixedFighterUpdate();
-        _animator.SetBool("running", _myState == FighterState.inControl && _grounded && _inputHandler.GetInputX() != 0 && !_inputHandler.GetCrouch());
+        var isRunning = _myState == FighterState.inControl && _grounded && _inputHandler.GetInputX() != 0 && !_inputHandler.GetCrouch();
+        _animator.SetBool("running", isRunning);
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
+        //if (isRunning && _inputHandler.GetInputX() > 0 && _runningLeftVFX != null) {
+        //    _runningLeftVFX.Play();
+        //}
+        //else {
+        //    _runningLeftVFX.Stop();
+        //}
+
+        //if (isRunning && _inputHandler.GetInputX() < 0 && _runningRightVFX != null) {
+        //    _runningRightVFX.Play();
+        //}
+        //else {
+        //    _runningRightVFX.Stop();
+        //}
+ 
 
         if (!_freeze) {
             if (_myStance == FighterStance.standing) {
@@ -422,8 +441,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnSuperMechanic() {
-        _hitImpactSmall.transform.position = transform.position;
-        _hitImpactSmall.Play();
+
     }
 
     public virtual void OnSuperEvent() {
@@ -594,6 +612,14 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
+    public virtual void OnGrab() {
+
+    }
+
+    public virtual void OnUnGrab() {
+
+    }
+
     //Checks all input commands from InputHandler
     public virtual void ProcessInput()
     {
@@ -632,14 +658,15 @@ public abstract class FighterController : MonoBehaviour
             Debug.Log("Can't attack");
         }
 
-        if (_inputHandler.GetDrop() && _canAttack) {
+        if (_inputHandler.GetLift() && _canAttack) {
+            print("lift");
             _canAttack = false;
             ResetHitbox();
 
             _currentMove = _dropMove;
             UpdateMove();
         }
-        else if (_inputHandler.GetDrop() && !_canAttack)
+        else if (_inputHandler.GetLift() && !_canAttack)
         {
             Debug.Log("Can't attack");
         }
@@ -688,18 +715,17 @@ public abstract class FighterController : MonoBehaviour
             ResetMeter();
         }
 
-        if (_failSafeAttack > 0) {
+        if (_failSafeAttack > 0 && !_freeze) {
             _failSafeAttack -= Time.deltaTime;
             if (_failSafeAttack <= 0) {
-                if (!_holdingShuttle)
-                {
-                    Debug.Log("Not holding shuttle");
-                    ResetAttack();
-                }
+                //if (!_holdingShuttle)
+                //{
+                //    Debug.Log("Not holding shuttle");
+                //    ResetAttack();
+                //}
+                ResetAttack();
             }
         }
-
-
         
     }
 
@@ -710,15 +736,32 @@ public abstract class FighterController : MonoBehaviour
         _failSafeAttack = _currentMove.GetClip().length;
     }
 
-    public virtual void OnSuccessfulHit(Vector3 point, bool big) {
+    public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot) {
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
 
-        if (!big) {
-            _hitImpactSmall.transform.position = point;
-            _hitImpactSmall.Play();
+        ParticleSystem useVFX = null;
+        if(shot == ShotType.smash) {
+            useVFX = _hitSmashVFX;
         }
-        else {
+
+        if (shot == ShotType.chip) {
+            useVFX = _hitChipVFX;
+        }
+
+        if (shot == ShotType.drive) {
+            useVFX = _hitDriveVFX;
+        }
+
+        if (shot == ShotType.lift) {
+            useVFX = _hitLiftVFX;
+        }
+
+        useVFX.transform.position = point;
+        useVFX.transform.right = -dir;
+        useVFX.Play();
+
+        if (big) {
             _hitImpactBig.transform.position = point;
             _hitImpactBig.Play();
         }
@@ -769,7 +812,6 @@ public abstract class FighterController : MonoBehaviour
         _freeze = true;
         _animator.speed = 0;
         _rigidbody.isKinematic = true;
-        _failSafeAttack += time;
         yield return new WaitForSeconds(time);
         _freeze = false;
         _rigidbody.isKinematic = false;

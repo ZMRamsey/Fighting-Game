@@ -369,7 +369,7 @@ public class ShuttleCock : MonoBehaviour
 
     public void SetVelocity(Vector3 dir)
     {
-        _rb.velocity = dir * _speed;
+        _rb.velocity = dir * 4;
     }
 
     public virtual void UpdateShuttleApperance(Vector3 vel) {

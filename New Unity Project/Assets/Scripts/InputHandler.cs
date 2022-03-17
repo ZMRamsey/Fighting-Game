@@ -274,7 +274,7 @@ public class InputHandler : MonoBehaviour
         return temp;
     }
 
-    public bool GetDrop() {
+    public bool GetLift() {
         var temp = _dropInput;
         _dropInput = false;
         return temp;

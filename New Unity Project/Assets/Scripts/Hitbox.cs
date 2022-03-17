@@ -64,7 +64,7 @@ public class Hitbox : MonoBehaviour
                     var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
                     ball.Shoot(hiMes, _self);
 
-                    _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), ball.CanKill());
+                    _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType());
 
                     UpdateDebug(collision);
 

@@ -347,11 +347,9 @@ public class GameManager : MonoBehaviour
     public void StunFrames(float timer, FighterFilter filter) {
         if (filter == FighterFilter.one || filter == FighterFilter.both) {
             _fighterOne.GetController().StunController(timer);
-            print("one");
         }
         if (filter == FighterFilter.two || filter == FighterFilter.both) {
             _fighterTwo.GetController().StunController(timer);
-            print("two");
         }
     }
 
