@@ -197,11 +197,11 @@ public class InputHandler : MonoBehaviour
 
             if (_gamepad.buttonSouth.isPressed)
             {
-                _grabInput = true;
+                _chipHeld = true;
             }
             else
             {
-                _grabInput = false;
+                _chipHeld = false;
             }
         }
     }
