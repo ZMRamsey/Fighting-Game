@@ -100,7 +100,7 @@ public class WinScreen : MonoBehaviour
     {
         if (Keyboard.current.enterKey.wasPressedThisFrame)
         {
-            SceneManager.LoadScene("MenuTest");
+            GameLogic.Get().LoadScene("MenuTest", "WinScreen");
         }
         winnerAnimation.SetActive(true);
         imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;

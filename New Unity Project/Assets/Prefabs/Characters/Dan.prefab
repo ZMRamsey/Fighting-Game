@@ -24605,20 +24605,36 @@ MonoBehaviour:
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 0, y: 0, z: 0}
+  _superMove:
+    _animationPath: 
+    _clipName: 
+    _shotType: 0
+    _frames: 0
+    _hitFrame: 0
+    _clip: {fileID: 0}
+    _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
+  _hurtBox: {fileID: 0}
+  _hitType: 0
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1024
-  _hitboxFlipper: {fileID: 0}
+  _hitboxFlipper: {fileID: 4874520953896087310}
   _speed: 14
   _height: 2
   _meterIncreaseValue: 0
+  _maxJumps: 0
   _jumpForce: 40
   _fallMultiplier: 12
   _jumpFalloff: 0.9
+  _airSpeed: 0
+  _fastFallSpeed: 20
+  _hasDash: 0
+  _hasJump: 0
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 4528345394989312034}
   _renderer: {fileID: 4874520954698666500}
+  _rgbRenderer: {fileID: 0}
   _stretchSpeed: 4
   _source: {fileID: 4874520954667380378}
   _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
@@ -24637,14 +24653,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 206ea55499eceef45bc5318ec0b745f9, type: 3}
   _leftFootSounds: []
   _rightFootSounds: []
-  _impact: {fileID: 6980052365574868023}
-  _impactFrame: {fileID: 3168012337785043981}
+  _hitSmashVFX: {fileID: 0}
+  _hitChipVFX: {fileID: 0}
+  _hitDriveVFX: {fileID: 0}
+  _hitLiftVFX: {fileID: 0}
+  _hitImpactBig: {fileID: 0}
+  _runningLeftVFX: {fileID: 0}
+  _runningRightVFX: {fileID: 0}
   _jumpDust: {fileID: 5721181606051324333}
   _jumpLand: {fileID: 5128315945622591292}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
   _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
+  _mrHandyPrefab: {fileID: 0}
+  _raketUI: {fileID: 0}
+  _raketMeter: {fileID: 0}
 --- !u!114 &4874520954667380375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24659,7 +24683,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 1
   _inputX: 0
+  _grabHoldTime: 0
   _jumpInput: 0
+  _jumpExtraInput: 0
   _jumpHeld: 0
   _smashInput: 0
   _dropInput: 0
@@ -24668,7 +24694,10 @@ MonoBehaviour:
   _specialInput: 0
   _dashInput: 0
   _chargeInput: 0
+  _grabInput: 0
+  _chipHeld: 0
   _crouchInput: 0
+  _crouchFrame: 0
 --- !u!114 &4528345394989312034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24994,6 +25023,7 @@ MonoBehaviour:
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
   _character: {fileID: 4874520954698666502}
+  _debugRenderer: {fileID: 0}
   cooldowns: []
 --- !u!1 &6193888805169198848
 GameObject:

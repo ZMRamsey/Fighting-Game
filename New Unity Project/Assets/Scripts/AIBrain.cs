@@ -292,7 +292,8 @@ public class AIBrain : MonoBehaviour
                     _heavy = false;
 
                     if (_controller.CanGrab() && !_shuttle.IsGrabbed(_controller)) {
-                        angle = ShotType.chip;
+                        angle = ShotType.lift;
+                        _heavy = true;
                     }
                     else {
                         angle = ShotType.lift;
@@ -300,14 +301,14 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if(angle == ShotType.chip) {
-                if (Physics.Raycast(transform.position, shootDirection, _netDetection)) {
-                    if (_controller.CanGrab() && !_shuttle.IsGrabbed(_controller)) {
-                        _handler._chipHeld = true;
+            //if(angle == ShotType.chip) {
+            //    if (Physics.Raycast(transform.position, shootDirection, _netDetection)) {
+            //        if (_controller.CanGrab() && !_shuttle.IsGrabbed(_controller)) {
+            //            _handler._chipHeld = true;
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
 
             _handler._chargeInput = _heavy;
 

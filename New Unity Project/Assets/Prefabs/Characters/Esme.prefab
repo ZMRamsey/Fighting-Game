@@ -29537,7 +29537,6 @@ MonoBehaviour:
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
-  _grabTimer: 0
   _superMove:
     _animationPath: super
     _clipName: Test_Super
@@ -29547,6 +29546,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: 4882c7768564aca41b90c0e0eee89c4e, type: 2}
     _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
+  _hurtBox: {fileID: 4874520953896087311}
   _hitType: 1
   _groundLayers:
     serializedVersion: 2

@@ -18,6 +18,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected FighterMove _superMove;
     protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
+    [SerializeField] Hurtbox _hurtBox;
     [SerializeField] InfluenceType _hitType;
 
     [Header("Base Settings")]
@@ -68,9 +69,10 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected Vector3 _controllerVelocity;
     float _commandMeter;
     float _yVelocity;
-    float _lastTapAxis;
+    Vector3 _lastTapAxis;
     float _meterPenaltyTimer;
     float _grabCoolDown;
+    float _dashCoolDown;
     int _currentJumps;
     bool _canJump;
     protected bool _canAttack;
@@ -106,6 +108,10 @@ public abstract class FighterController : MonoBehaviour
 
     public bool InSuper() {
         return _inSuper;
+    }
+
+    public bool HurtBoxActive() {
+        return _hurtBox.isActiveAndEnabled;
     }
 
     public virtual void FighterAwake() {
@@ -240,9 +246,24 @@ public abstract class FighterController : MonoBehaviour
             _grabCoolDown -= Time.deltaTime;
         }
 
+        if(_dashCoolDown > 0) {
+            _dashCoolDown -= Time.deltaTime;
+        }
 
-        if (_hasDash && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
-            _lastTapAxis = _inputHandler.GetInputX();
+
+        if (_hasDash && _dashCoolDown <= 0 && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
+            _lastTapAxis.x = _inputHandler.GetInputX();
+            _lastTapAxis.y = 0;
+            if (_inputHandler.GetJumpHeld()) {
+                _lastTapAxis.y = 1;
+            }
+
+            if (_inputHandler.GetCrouch()) {
+                _lastTapAxis.y = -1;
+            }
+
+            _lastTapAxis.Normalize();
+
             OnDash();
         }
 
@@ -311,7 +332,7 @@ public abstract class FighterController : MonoBehaviour
             }
 
             if (_isDashing) {
-                _rigidbody.AddForce(new Vector3(_lastTapAxis, 0, 0) * 25, ForceMode.Impulse);
+                _rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
             }
 
             _rigidbody.velocity = _controllerVelocity;
@@ -369,7 +390,9 @@ public abstract class FighterController : MonoBehaviour
             xCalculation *= _speed;
         }
         else {
-            xCalculation = xCalculation * 0.8f;
+            if (!_isDashing) {
+                xCalculation = xCalculation * 0.8f;
+            }
         }
 
         if (_inputHandler.GetCrouch()) {
@@ -501,6 +524,7 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
         _source.PlayOneShot(_jumpDownSFX);
+        _dashCoolDown = 0;
 
         if (_jumpLand != null) {
             _jumpLand.transform.position = _groundHit.point;
@@ -509,9 +533,9 @@ public abstract class FighterController : MonoBehaviour
             PlayRightFoot();
         }
 
-        if (_myAction == FighterAction.dashing) {
-            _myAction = FighterAction.none;
-        }
+        //if (_myAction == FighterAction.dashing) {
+        //    _myAction = FighterAction.none;
+        //}
 
 
         _animator.SetTrigger("land");
@@ -610,14 +634,18 @@ public abstract class FighterController : MonoBehaviour
         _canJump = false;
         _effects.SetAfterImage();
         _isDashing = true;
+        _hurtBox.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.1f);
         _effects.DisableAfterImage();
         _isDashing = false;
+        yield return new WaitForSeconds(0.1f);
+        _hurtBox.gameObject.SetActive(true);
 
         if (_grounded) {
             _currentJumps = 0;
             _canJump = true;
         }
+        _dashCoolDown = 1;
     }
 
     //Checks all input commands from InputHandler
@@ -721,6 +749,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot) {
+        _isDashing = false;
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
 
@@ -753,6 +782,10 @@ public abstract class FighterController : MonoBehaviour
         if (_hitSounds.Length > 0) {
             _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
         }
+    }
+
+    public bool IsDashing() {
+        return _isDashing;
     }
 
     public bool IsGrounded() {

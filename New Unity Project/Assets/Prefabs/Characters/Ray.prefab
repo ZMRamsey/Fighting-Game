@@ -19805,7 +19805,6 @@ MonoBehaviour:
     _hitFrame: 0
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
-  _grabTimer: 0
   _superMove:
     _animationPath: 
     _clipName: 
@@ -19815,6 +19814,7 @@ MonoBehaviour:
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
   _hitboxes: {fileID: 0}
+  _hurtBox: {fileID: 4874520953896087311}
   _hitType: 0
   _groundLayers:
     serializedVersion: 2
@@ -19849,9 +19849,13 @@ MonoBehaviour:
   _rightFootSounds:
   - {fileID: 8300000, guid: d9f301596c9466e41875928bf8edeba3, type: 3}
   - {fileID: 8300000, guid: 969cbcbb10ceb2d45bbb9c5f2b769ec3, type: 3}
-  _hitImpactSmall: {fileID: 0}
+  _hitSmashVFX: {fileID: 0}
+  _hitChipVFX: {fileID: 0}
+  _hitDriveVFX: {fileID: 0}
+  _hitLiftVFX: {fileID: 0}
   _hitImpactBig: {fileID: 0}
-  _impactFrame: {fileID: 3168012337785043981}
+  _runningLeftVFX: {fileID: 0}
+  _runningRightVFX: {fileID: 0}
   _jumpDust: {fileID: 0}
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}

@@ -347,7 +347,6 @@ public class ShuttleCock : MonoBehaviour
 
         Vector3 velocity = _rb.velocity;
 
-        UpdateShuttleApperance(velocity);
 
         if (_bouncesSinceShoot > _bouncesBeforeSpeedLoss) {
             velocity.x = velocity.x * 0.9f;
@@ -357,6 +356,9 @@ public class ShuttleCock : MonoBehaviour
         if (_frozen) {
             _rb.velocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
+        }
+        else {
+            UpdateShuttleApperance(velocity);
         }
 
         _circle.gameObject.SetActive(_grabber != null);
@@ -368,11 +370,10 @@ public class ShuttleCock : MonoBehaviour
             _rb.velocity = Vector3.zero;
             transform.position = _grabber.transform.position;
 
-            if(grabbedTimer <= 0)
+            if(grabbedTimer <= 0 || _grabber.GetComponent<InputHandler>().GetCrouch() || _grabber.IsDashing())
             {
                 ReleaseFromPlayer(true);
             }
-            Debug.Log("Frozen");
         }
 
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
@@ -627,8 +628,8 @@ public class ShuttleCock : MonoBehaviour
 
         if (inheritVel)
         {
-            var own =  _owner.GetChipMove().GetHitDirection();
-            if (_owner.GetFilter() == FighterFilter.two) {
+            var own =  _grabber.GetChipMove().GetHitDirection();
+            if (_grabber.GetFilter() == FighterFilter.two) {
                 own.x *= -1;
             }
             _rb.velocity = own;

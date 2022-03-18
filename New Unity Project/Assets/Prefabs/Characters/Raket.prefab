@@ -29768,7 +29768,6 @@ MonoBehaviour:
     _hitFrame: 13
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
-  _grabTimer: 0
   _superMove:
     _animationPath: super
     _clipName: Raket_Super
@@ -29778,6 +29777,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
     _hitDirection: {x: 3, y: 5, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
+  _hurtBox: {fileID: 4874520953896087311}
   _hitType: 1
   _groundLayers:
     serializedVersion: 2

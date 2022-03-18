@@ -10,6 +10,11 @@ public class FighterProfile : ScriptableObject
     [SerializeField] GameObject _fighterPrefab;
     [SerializeField] Material[] _fighterPalettes;
 
+    [Header("VS Screen")]
+    [SerializeField] Sprite _fighterIconSprite;
+    [SerializeField] Sprite _fighterNameLSprite;
+    [SerializeField] Sprite _fighterNameRSprite;
+
     public string GetName() {
         return _fighterName;
     }
@@ -24,5 +29,16 @@ public class FighterProfile : ScriptableObject
 
     public Material GetRandomPallete() {
         return _fighterPalettes[Random.Range(1, _fighterPalettes.Length)];
+    }
+
+    public Sprite GetIconSprite() {
+        return _fighterIconSprite;
+    }
+
+    public Sprite GetNameSprite(FighterFilter filter) {
+        if(filter == FighterFilter.one) {
+            return _fighterNameLSprite;
+        }
+        return _fighterNameRSprite;
     }
 }
