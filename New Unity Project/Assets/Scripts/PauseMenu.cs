@@ -92,7 +92,7 @@ public class PauseMenu : MonoBehaviour
                         case (3):
                             //SceneManager.LoadScene(sceneName: "MenuTest");
                             Resume();
-                            GameLogic.Get().LoadScene("MenuTest");
+                            GameLogic.Get().LoadScene("MenuTest", "Base");
                             break;
 
                         default:

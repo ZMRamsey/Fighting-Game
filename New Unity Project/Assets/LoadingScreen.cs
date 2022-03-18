@@ -13,6 +13,16 @@ public class LoadingScreen : MonoBehaviour
     }
 
     public void EndAnimation() {
+        if (_anim == null) {
+            return;
+        }
         _anim.SetTrigger("End");
+    }
+
+    public void Rebind() {
+        if(_anim == null) {
+            return;
+        }
+        _anim.Rebind();
     }
 }

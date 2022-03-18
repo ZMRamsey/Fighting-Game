@@ -228,7 +228,7 @@ public abstract class FighterController : MonoBehaviour
 
         _grounded = IsGrounded();
 
-        _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * _stretchSpeed);
+        _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.fixedDeltaTime * _stretchSpeed);
 
         ProcessInput();
 
@@ -253,10 +253,10 @@ public abstract class FighterController : MonoBehaviour
 
         if (GameManager.Get().KOCoroutine != null && !IsKOed()) {
             if (_inputHandler._crouchInput) {
-                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, new Vector3(1f, 0.7f, 1f), Time.deltaTime * 10);
+                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, new Vector3(1f, 0.7f, 1f), Time.fixedDeltaTime * 10);
             }
             else {
-                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.deltaTime * 5); ;
+                _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.fixedDeltaTime * 5); ;
             }
         }
 
@@ -702,7 +702,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (_failSafeAttack > 0 && !_freeze) {
-            _failSafeAttack -= Time.deltaTime;
+            _failSafeAttack -= Time.fixedDeltaTime;
             if (_failSafeAttack <= 0) {
                 //if (!_holdingShuttle)
                 //{
