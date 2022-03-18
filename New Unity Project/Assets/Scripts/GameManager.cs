@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     void Update() {
         if (_pauseController.IsActive()) {
             _mixer.SetFloat("lowpass", 424);
-            if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame && _pauseController.ReturnLayer() == 0) {
+            if (GlobalInputManager.Get().GetPauseInput() && _pauseController.ReturnLayer() == 0) {
                 Time.timeScale = 1;
                 _pauseController.Disable();
                 _uiCamera.SetActive(true);
@@ -158,8 +158,8 @@ public class GameManager : MonoBehaviour
             _mixer.SetFloat("lowpass", 22000);
         }
 
-        if (((Gamepad.current != null && Gamepad.current.startButton.isPressed) || Keyboard.current.escapeKey.isPressed) && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
-            _pauseTime += Time.deltaTime * 2;
+        if (GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+            _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
                 _pauseController.Enable();
                 _pauseController.SetPauseOwner(_fighterOne.GetController());
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         _pauseArt.fillAmount = Mathf.Clamp(_pauseTime, 0, 1);
         _pauseArtBack.fillAmount = _pauseArt.fillAmount;
 
-        _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.deltaTime * 12);
+        _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.fixedDeltaTime * 12);
         _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0, 0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
         }
         else {
             if (_music.pitch < 1 && stageCoroutine == null) {
-                _music.pitch += Time.deltaTime;
+                _music.pitch += Time.fixedDeltaTime;
 
                 if (_music.pitch > 1) {
                     _music.pitch = 1;

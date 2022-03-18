@@ -29751,7 +29751,7 @@ MonoBehaviour:
     _frames: 20
     _hitFrame: 13
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0.1, y: 2, z: 0}
+    _hitDirection: {x: 0.4, y: 6, z: 0}
   _driveMove:
     _animationPath: drive
     _clipName: Test_Shoot
@@ -29824,7 +29824,6 @@ MonoBehaviour:
   _hitChipVFX: {fileID: 4229280859398464204}
   _hitDriveVFX: {fileID: 8177297691330241246}
   _hitLiftVFX: {fileID: 5496261666117408509}
-  _hitImpactSmall: {fileID: 6980052365574868023}
   _hitImpactBig: {fileID: 5091172910661499145}
   _runningLeftVFX: {fileID: 2748266797930306616}
   _runningRightVFX: {fileID: 2152401901532782120}

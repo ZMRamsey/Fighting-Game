@@ -78,9 +78,7 @@ public class PauseMenu : MonoBehaviour
                     switch (_index)
                     {
                         case (0):
-                            Time.timeScale = 1;
-                            Disable();
-                            GameManager.Get().EnableUI();
+                            Resume();
                             break;
 
                         case (1):
@@ -93,6 +91,8 @@ public class PauseMenu : MonoBehaviour
 
                         case (3):
                             //SceneManager.LoadScene(sceneName: "MenuTest");
+                            Resume();
+                            GameLogic.Get().LoadScene("MenuTest");
                             break;
 
                         default:
@@ -165,6 +165,12 @@ public class PauseMenu : MonoBehaviour
                 UpdateRightSide();
             }       
         }      
+    }
+
+    void Resume() {
+        Time.timeScale = 1;
+        Disable();
+        GameManager.Get().EnableUI();
     }
 
     public void Enable() 

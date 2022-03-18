@@ -314,10 +314,10 @@ public class ShuttleCock : MonoBehaviour
 
 
             if (GetSpeedPercent() > _windActiveOnPercent && _rb.velocity.magnitude > 10 && GetSpeedPercent() < _killActiveOnPercent) {
-                volume = Mathf.Lerp(volume, 1, Time.deltaTime * 2);
+                volume = Mathf.Lerp(volume, 1, Time.fixedDeltaTime * 2);
             }
             else {
-                volume = Mathf.Lerp(volume, 0, Time.deltaTime * 10);
+                volume = Mathf.Lerp(volume, 0, Time.fixedDeltaTime * 10);
             }
 
             _windSource.volume = volume;
@@ -333,7 +333,7 @@ public class ShuttleCock : MonoBehaviour
                 GameManager.Get().GetCameraShaker().SetShake(0.2f, 2f, true);
             }
             else {
-                killVolume = Mathf.Lerp(killVolume, 0, Time.deltaTime * 2);
+                killVolume = Mathf.Lerp(killVolume, 0, Time.fixedDeltaTime * 2);
             }
 
             _killSource.volume = killVolume;
@@ -359,7 +359,7 @@ public class ShuttleCock : MonoBehaviour
 
         if (target != null)
         {
-            grabbedTimer -= Time.deltaTime * 0.5f;
+            grabbedTimer -= Time.fixedDeltaTime * 0.5f;
             _circle.localScale = Vector3.one * grabbedTimer;
             _rb.velocity = Vector3.zero;
             transform.position = target.transform.position;
@@ -391,13 +391,13 @@ public class ShuttleCock : MonoBehaviour
             scale.x = Mathf.Clamp(vel.magnitude * 0.15f, -1, -3);
         }
 
-        transform.right = Vector3.Lerp(transform.right, vel, Time.deltaTime * _smoothing);
+        transform.right = Vector3.Lerp(transform.right, vel, Time.fixedDeltaTime * _smoothing);
 
         if (_squishTimer <= 0) {
             _ballHolder.localScale = scale;
         }
         else {
-            _squishTimer -= Time.deltaTime;
+            _squishTimer -= Time.fixedDeltaTime;
         }
     }
 
@@ -531,8 +531,8 @@ public class ShuttleCock : MonoBehaviour
         //}
 
         if (_influence != null && _canGimic && _influence.type == InfluenceType.overtime && !_frozen && _accelerationTimer < 1f) {
-            _accelerationTimer += Time.deltaTime;
-            _acceleration += Time.deltaTime;
+            _accelerationTimer += Time.fixedDeltaTime;
+            _acceleration += Time.fixedDeltaTime;
             _rb.velocity += _influence.velocity * _acceleration;
         }
     }
@@ -612,7 +612,11 @@ public class ShuttleCock : MonoBehaviour
     {
         if (inheritVel)
         {
-            _rb.velocity = target.GetComponent<Rigidbody>().velocity;
+            var own =  _owner.GetChipMove().GetHitDirection();
+            if (_owner.GetFilter() == FighterFilter.two) {
+                own.x *= -1;
+            }
+            _rb.velocity = own;
         }
         target = null;
         grabbedTimer = 0;

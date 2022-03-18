@@ -174,7 +174,8 @@ public class MapMenuManager : MonoBehaviour
 
     void GoToLoadingMenu()
     {
-        loadingScreen.SetActive(true);
+        //loadingScreen.SetActive(true);
+        GameLogic.Get().LoadScene("Base");
         characterSelect.SetActive(false);
         background.SetActive(false);
     }
