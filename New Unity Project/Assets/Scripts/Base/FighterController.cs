@@ -15,7 +15,6 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] FighterMove _chipMove;
     [SerializeField] FighterMove _driveMove;
     [SerializeField] FighterMove _dropMove;
-    [SerializeField] float _grabTimer;
     [SerializeField] protected FighterMove _superMove;
     protected FighterMove _currentMove;
     [SerializeField] Hitbox _hitboxes;
@@ -71,6 +70,7 @@ public abstract class FighterController : MonoBehaviour
     float _yVelocity;
     float _lastTapAxis;
     float _meterPenaltyTimer;
+    float _grabCoolDown;
     int _currentJumps;
     bool _canJump;
     protected bool _canAttack;
@@ -79,8 +79,6 @@ public abstract class FighterController : MonoBehaviour
     bool _hasBounced;
     bool _grounded;
     bool _inSuper;
-    bool _holdingShuttle;
-    float _grabbingTime;
     RaycastHit _groundHit;
 
     protected FighterAction _myAction;
@@ -105,7 +103,7 @@ public abstract class FighterController : MonoBehaviour
     public float GetSpeed() {
         return _speed;
     }
-    
+
     public bool InSuper() {
         return _inSuper;
     }
@@ -139,7 +137,6 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void Start() {
-        InitializeFighter();
         _fighterUI = GameManager.Get().GetFighterTab(_filter).GetUI();
     }
 
@@ -181,22 +178,29 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (_filter == FighterFilter.one) {
-            if (_filter == FighterFilter.one) {
-                _hitboxFlipper.localScale = new Vector3(1, 1, 1);
-            }
-            else {
-                _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
-            }
-
-            if (_filter == FighterFilter.one) {
-                _source.panStereo = -0.5f;
-            }
-            else {
-                _source.panStereo = 0.5f;
-            }
-
-            ResetFighter();
+            _hitboxFlipper.localScale = new Vector3(1, 1, 1);
         }
+        else {
+            _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
+        }
+
+        if (_filter == FighterFilter.one) {
+            _source.panStereo = -0.5f;
+        }
+        else {
+            _source.panStereo = 0.5f;
+        }
+
+        ResetFighter();
+
+    }
+
+    public void ResetGrab() {
+        _grabCoolDown = 1;
+    }
+
+    public bool CanGrab() {
+        return _grabCoolDown <= 0;
     }
 
     public bool IsKOed() {
@@ -231,6 +235,10 @@ public abstract class FighterController : MonoBehaviour
         _controllerScaler.localScale = Vector3.Lerp(_controllerScaler.localScale, Vector3.one, Time.fixedDeltaTime * _stretchSpeed);
 
         ProcessInput();
+
+        if(_grabCoolDown > 0) {
+            _grabCoolDown -= Time.deltaTime;
+        }
 
 
         if (_hasDash && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
@@ -281,7 +289,7 @@ public abstract class FighterController : MonoBehaviour
         //else {
         //    _runningRightVFX.Stop();
         //}
- 
+
 
         if (!_freeze) {
             if (_myStance == FighterStance.standing) {
@@ -612,17 +620,8 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-    public virtual void OnGrab() {
-
-    }
-
-    public virtual void OnUnGrab() {
-
-    }
-
     //Checks all input commands from InputHandler
-    public virtual void ProcessInput()
-    {
+    public virtual void ProcessInput() {
         if (IsGrounded()) {
             _myStance = FighterStance.standing;
         }
@@ -661,8 +660,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
 
-        if (_inputHandler.GetChip() &&  _canAttack)
-        {
+        if (_inputHandler.GetChip() && _canAttack) {
             print("chip");
             _canAttack = false;
             ResetHitbox();
@@ -670,14 +668,14 @@ public abstract class FighterController : MonoBehaviour
             _currentMove = _chipMove;
             UpdateMove();
         }
-        
+
         //if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
         //{
         //    _canAttack = false;
         //    ResetHitbox();
 
         //    _currentMove = _chipMove;
-            
+
         //    OnAttack();
         //    _hitboxes.SetGrab(false);
         //    _animator.SetTrigger(_currentMove.GetPath());
@@ -712,7 +710,7 @@ public abstract class FighterController : MonoBehaviour
                 ResetAttack();
             }
         }
-        
+
     }
 
     public virtual void UpdateMove() {
@@ -727,7 +725,7 @@ public abstract class FighterController : MonoBehaviour
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
 
         ParticleSystem useVFX = null;
-        if(shot == ShotType.smash) {
+        if (shot == ShotType.smash) {
             useVFX = _hitSmashVFX;
         }
 
@@ -831,8 +829,7 @@ public abstract class FighterController : MonoBehaviour
         return _myState != FighterState.dead && GameManager.Get().KOCoroutine != null;
     }
 
-    public InputHandler GetHandler()
-    {
+    public InputHandler GetHandler() {
         return _inputHandler;
     }
 }

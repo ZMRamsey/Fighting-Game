@@ -53,7 +53,7 @@ public class ShuttleCock : MonoBehaviour
     float _speed;
     float _magnitude;
     int _bouncesSinceShoot;
-    GameObject target;
+    FighterController _grabber;
     //int _bouncesSinceShoot;
     float grabbedTimer;
 
@@ -94,6 +94,10 @@ public class ShuttleCock : MonoBehaviour
         var charge = 0;
         InputHandler handler = null;
         Vector3 influence = Vector3.zero;
+
+        if(_grabber != null) {
+            ReleaseFromPlayer(false);
+        }
 
 
         if(message.sender == FighterFilter.one)
@@ -355,14 +359,14 @@ public class ShuttleCock : MonoBehaviour
             _rb.angularVelocity = Vector3.zero;
         }
 
-        _circle.gameObject.SetActive(target != null);
+        _circle.gameObject.SetActive(_grabber != null);
 
-        if (target != null)
+        if (_grabber != null)
         {
             grabbedTimer -= Time.fixedDeltaTime * 0.5f;
             _circle.localScale = Vector3.one * grabbedTimer;
             _rb.velocity = Vector3.zero;
-            transform.position = target.transform.position;
+            transform.position = _grabber.transform.position;
 
             if(grabbedTimer <= 0)
             {
@@ -602,14 +606,25 @@ public class ShuttleCock : MonoBehaviour
         _bouncesBeforeSpeedLoss = 2;
     }
 
-    public void BoundToPlayer(GameObject player)
+    public void BoundToPlayer(FighterController player)
     {
         grabbedTimer = 1;
-        target = player;
+        _grabber = player;
+    }
+
+    public bool IsGrabbed(FighterController me) {
+        if(_grabber == null) {
+            return false;
+        }
+        return _grabber.GetInstanceID() == me.GetInstanceID();
     }
 
     public void ReleaseFromPlayer(bool inheritVel)
     {
+        if(_grabber == null) {
+            return;
+        }
+
         if (inheritVel)
         {
             var own =  _owner.GetChipMove().GetHitDirection();
@@ -618,7 +633,9 @@ public class ShuttleCock : MonoBehaviour
             }
             _rb.velocity = own;
         }
-        target = null;
+
+        _grabber.ResetGrab();
+        _grabber = null;
         grabbedTimer = 0;
     }
 

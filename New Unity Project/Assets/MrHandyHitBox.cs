@@ -32,10 +32,10 @@ public class MrHandyHitBox : MonoBehaviour
 
         if(shuttle != null) {
             _anim.SetTrigger("stun");
-            Vector3 calcVel = new Vector3(-2f, -4f, 0f);
+            Vector3 calcVel = new Vector3(-2f, 0f, 0f);
             if (_handy.GetFilter() == FighterFilter.two)
             {
-               calcVel = new Vector3(2f, -4f, 0f);
+               calcVel = new Vector3(2f, 0f, 0f);
             }
 
             shuttle.SetVelocity(calcVel);

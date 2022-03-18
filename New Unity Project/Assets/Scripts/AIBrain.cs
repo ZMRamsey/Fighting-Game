@@ -41,7 +41,7 @@ public class AIBrain : MonoBehaviour
         tick += Time.deltaTime;
         float dist = Vector3.Distance(transform.position, _shuttle.transform.position);
         float time = dist / _controller.GetSpeed();
-        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() * time;
+        targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
         targetPosition.y = Mathf.Clamp(targetPosition.y, 1, 10);
 
         float shuttleXDist = Vector3.Distance(new Vector3(transform.position.x, transform.position.y, 0), new Vector3(_shuttle.transform.position.x, transform.position.y, 0));
@@ -195,6 +195,7 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
+
             if (_ray != null) {
                 _handler._specialInput = false;
                 if (HeadingMyDirection() || IsOnMySide()) {
@@ -212,7 +213,20 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
-            if ((!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || (Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f && shuttleXDist < 0.6f)) {
+            bool canShoot = true;
+
+            print(_shuttle.IsGrabbed(_controller));
+
+            if (_shuttle.IsGrabbed(_controller)) {
+                _handler._jumpInput = true;
+                _handler._jumpHeld = true;
+
+                if(transform.position.y < 5) {
+                    canShoot = false;
+                }
+            }
+
+            if (canShoot && (!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || (Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f && shuttleXDist < 0.6f)) {
                 ProcessHit();
             }
 
@@ -276,7 +290,22 @@ public class AIBrain : MonoBehaviour
             if (angle == ShotType.drive) {
                 if (Physics.Raycast(transform.position, shootDirection, _netDetection)) {
                     _heavy = false;
-                    angle = ShotType.lift;
+
+                    if (_controller.CanGrab() && !_shuttle.IsGrabbed(_controller)) {
+                        angle = ShotType.chip;
+                    }
+                    else {
+                        angle = ShotType.lift;
+                    }
+                }
+            }
+
+            if(angle == ShotType.chip) {
+                if (Physics.Raycast(transform.position, shootDirection, _netDetection)) {
+                    if (_controller.CanGrab() && !_shuttle.IsGrabbed(_controller)) {
+                        _handler._chipHeld = true;
+
+                    }
                 }
             }
 

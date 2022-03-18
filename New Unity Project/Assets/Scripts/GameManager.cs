@@ -114,6 +114,10 @@ public class GameManager : MonoBehaviour
         _fighterOne.GetController().SetFilter(FighterFilter.one);
         _fighterTwo.GetController().SetFilter(FighterFilter.two);
 
+
+        _fighterOne.GetController().InitializeFighter();
+        _fighterTwo.GetController().InitializeFighter();
+
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
 
