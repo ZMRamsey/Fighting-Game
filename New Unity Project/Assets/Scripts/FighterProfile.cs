@@ -15,6 +15,13 @@ public class FighterProfile : ScriptableObject
     [SerializeField] Sprite _fighterNameLSprite;
     [SerializeField] Sprite _fighterNameRSprite;
 
+    [Header("Movelist Data")]
+    [SerializeField] string _fighterDescription;
+    [SerializeField] GameObject _gimmickVideo;
+    [SerializeField] string _gimmickDescription;
+    [SerializeField] GameObject _superVideo;
+    [SerializeField] string _superDescription;
+
     public string GetName() {
         return _fighterName;
     }
@@ -40,5 +47,20 @@ public class FighterProfile : ScriptableObject
             return _fighterNameLSprite;
         }
         return _fighterNameRSprite;
+    }
+
+    public string GetFighterDesc()
+    {
+        return _fighterDescription;
+    }
+
+    public string GetGimmickDesc()
+    {
+        return _gimmickDescription;
+    }
+
+    public string GetSuperDesc()
+    {
+        return _superDescription;
     }
 }

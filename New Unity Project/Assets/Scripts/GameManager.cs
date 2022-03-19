@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
             _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
                 _pauseController.Enable();
-                _pauseController.SetPauseOwner(_fighterOne.GetController());
+                _pauseController.SetPauseOwner(FighterFilter.one);
                 _uiCamera.SetActive(false);
                 _pauseTime = 0;
                 Time.timeScale = 0;

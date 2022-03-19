@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject _selector;
     private int _index;
     private int _pauseLayer;
-    protected FighterController _pauseOwner;
+    protected FighterFilter _pauseOwner;
 
     //continue, movelist, characterSelect, returnToMenu
     [SerializeField] TextMeshProUGUI[] _options;
@@ -29,142 +29,139 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Movelist Right Side")]
     [SerializeField] GameObject[] _movelistRightSide;
+    [SerializeField] Sprite[] _rightSideSprites;
+    [SerializeField] string[] _rightSideDescriptions;
+    [SerializeField] FighterProfile[] _fighterProfiles;
+    private int _rIndex;
 
     private void Awake()
     {
-        //SetPauseOwner(GameManager.Get().GetFighterOne());
-        //_index = 0;
-        //_selector.transform.localPosition = _targetPoints[_index];
     }
-    // Update is called once per frame
+    
     void Update()
     {
         if (IsActive())
         {
-            if (ReturnLayer() == 1)
+            switch (ReturnLayer())
             {
-                _pauseLayer = 0;
+                case (0):
+                    OnMainPause();
+                    break;
+                case (1):
+                    _pauseLayer = 0;
+                    break;
+                case (2):
+                    OnMoveList();
+                    break;
+                default:
+                    break;
             }
-            else if (ReturnLayer() == 0)
+        }
+    }
+
+    public void OnMainPause()
+    {
+        if (GlobalInputManager.Get().GetDownInput(_pauseOwner))
+        {
+            _options[_index].color = Color.black;
+            _index++;
+            if (_index == 4)
             {
-                //if ((Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame || Gamepad.current.dpad.down.wasPressedThisFrame) || Keyboard.current.sKey.wasPressedThisFrame)
-                //if (_pauseOwner.GetHandler().GetCrouchFrame())
-                if (Keyboard.current.sKey.wasPressedThisFrame)
-                {
-                    _options[_index].color = Color.black;
-                    _index++;
-                    if (_index == 4)
-                    {
-                        _index = 0;
-                    }
-                    _options[_index].color = Color.white;
-                }
-
-                if (Keyboard.current.wKey.wasPressedThisFrame)
-                {
-                    _options[_index].color = Color.black;
-                    _index--;
-                    if (_index == -1)
-                    {
-                        _index = 3;
-                    }
-                    _options[_index].color = Color.white;
-                }
-
-                _selector.transform.localPosition = _targetPoints[_index];
-
-                if (Keyboard.current.enterKey.wasPressedThisFrame)
-                {
-                    switch (_index)
-                    {
-                        case (0):
-                            Resume();
-                            break;
-
-                        case (1):
-                            SetMovelist();
-                            break;
-
-                        case (2):
-                            //SceneManager.LoadScene(sceneName: "WinScreenTest");
-                            break;
-
-                        case (3):
-                            //SceneManager.LoadScene(sceneName: "MenuTest");
-                            Resume();
-                            GameLogic.Get().LoadScene("MenuTest", "Base");
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                }
+                _index = 0;
             }
+            _options[_index].color = Color.white;
+            _selector.transform.localPosition = _targetPoints[_index];
+        }
 
-            if (ReturnLayer() == 2)
+        if (GlobalInputManager.Get().GetUpInput(_pauseOwner))
+        {
+            _options[_index].color = Color.black;
+            _index--;
+            if (_index == -1)
             {
-                if (Keyboard.current.escapeKey.wasPressedThisFrame)
-                {
-                    SetMainPause();
-                    _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[2];
-                    foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
-                    {
-                        textbox.color = _colorSet[0];
-                    }
-                }
+                _index = 3;
+            }
+            _options[_index].color = Color.white;
+            _selector.transform.localPosition = _targetPoints[_index];
+        }
 
-                if (Keyboard.current.sKey.wasPressedThisFrame)
-                {
-                    _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[2];
-                    foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
-                    {
-                        textbox.color = _colorSet[0];
-                    }
-                    _mIndex++;
-                    if (_mIndex == 7)
-                    {
-                        _mIndex = 0;
-                    }
-                    _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[1];
-                    foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
-                    {
-                        textbox.color = Color.white;
-                    }
-                    UpdateRightSide();
-                }
+        if (GlobalInputManager.Get().GetSubmitInput(_pauseOwner))
+        {
+            switch (_index)
+            {
+                case (0):
+                    Resume();
+                    break;
 
-                if (Keyboard.current.wKey.wasPressedThisFrame)
-                {
-                    _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[2];
-                    foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
-                    {
-                        textbox.color = _colorSet[0];
-                    }
-                    _mIndex--;
-                    if (_mIndex == -1)
-                    {
-                        _mIndex = 6;
-                    }
-                    _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[1];
-                    foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
-                    {
-                        textbox.color = Color.white;
-                    }
-                }
-                if (_mIndex == 4)
-                {
-                    _arrows.GetComponent<Image>().color = Color.white;
-                    _arrows.GetComponent<Animator>().SetBool("Idle", false);
-                }
-                else
-                {
-                    _arrows.GetComponent<Image>().color = _colorSet[1];
-                    _arrows.GetComponent<Animator>().SetBool("Idle", true);
-                }
-                UpdateRightSide();
-            }       
-        }      
+                case (1):
+                    SetMovelist();
+                    break;
+
+                case (2):
+                    //SceneManager.LoadScene(sceneName: "WinScreenTest");
+                    break;
+
+                case (3):
+                    //SceneManager.LoadScene(sceneName: "MenuTest");
+                    Resume();
+                    GameLogic.Get().LoadScene("MenuTest", "Base");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void OnMoveList()
+    {
+        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner))
+        {
+            DeselectLeftSide();
+            SetMainPause();
+        }
+
+        if (GlobalInputManager.Get().GetDownInput(_pauseOwner))
+        {
+            DeselectLeftSide();
+            _mIndex++;
+            if (_mIndex == 7)
+            {
+                _mIndex = 0;
+            }
+            SelectLeftSide();
+        }
+
+        if (GlobalInputManager.Get().GetUpInput(_pauseOwner))
+        {
+            DeselectLeftSide();
+            _mIndex--;
+            if (_mIndex == -1)
+            {
+                _mIndex = 6;
+            }
+            SelectLeftSide();
+        }
+
+        if (GlobalInputManager.Get().GetRightInput(_pauseOwner) && _mIndex == 4)
+        {
+            _rIndex++;
+            if (_rIndex == 8)
+            {
+                _rIndex = 0;
+            }
+            ChangeSpecialCharacter();
+        }
+
+        if (GlobalInputManager.Get().GetLeftInput(_pauseOwner) && _mIndex == 4)
+        {
+            _rIndex--;
+            if (_rIndex == -1)
+            {
+                _rIndex = 7;
+            }
+            ChangeSpecialCharacter();
+        }
     }
 
     void Resume() {
@@ -194,7 +191,7 @@ public class PauseMenu : MonoBehaviour
         return _active;
     }
 
-    public void SetPauseOwner(FighterController owner)
+    public void SetPauseOwner(FighterFilter owner)
     {
         _pauseOwner = owner;
     }
@@ -208,32 +205,90 @@ public class PauseMenu : MonoBehaviour
     {
         _pauseLayer = 1;
         _movelistPanel.SetActive(false);
+        ResetLeftSide();
         _pausePanel.SetActive(true);
     }
 
     public void SetMovelist()
     {
+        _rIndex = 0;
+        foreach (FighterProfile profile in _fighterProfiles)
+        {
+            if (GameManager.Get().GetGameSettings().GetFighterProfile(_pauseOwner) == profile)
+            {
+                break;
+            }
+            _rIndex++;
+        }
         _mIndex = 0;
         _pauseLayer = 2;
+        ChangeSpecialCharacter();
         _movelistPanel.SetActive(true);
         _pausePanel.SetActive(false);
+    }
+
+    public void ResetLeftSide()
+    {
         _arrows.GetComponent<Image>().color = _colorSet[1];
-        foreach (GameObject option in _movelistOptions)
-        {
-            option.GetComponent<Image>().color = _colorSet[2];
-            foreach (TextMeshProUGUI textbox in option.GetComponentsInChildren<TextMeshProUGUI>())
-            {
-                textbox.color = _colorSet[0];
-            }
-        }
         _movelistOptions[0].GetComponent<Image>().color = _colorSet[1];
         _movelistOptions[0].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
     }
 
+    public void DeselectLeftSide()
+    {
+        _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[2];
+        foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
+        {
+            textbox.color = _colorSet[0];
+        }
+        if (_mIndex == 4)
+        {
+            _arrows.GetComponent<Image>().color = _colorSet[1];
+            _arrows.GetComponent<Animator>().SetBool("Idle", true);
+        }
+    }
+
+    public void SelectLeftSide()
+    {
+        _movelistOptions[_mIndex].GetComponent<Image>().color = _colorSet[1];
+        foreach (TextMeshProUGUI textbox in _movelistOptions[_mIndex].GetComponentsInChildren<TextMeshProUGUI>())
+        {
+            textbox.color = Color.white;
+        }
+        if (_mIndex == 4)
+        {
+            _arrows.GetComponent<Image>().color = Color.white;
+            _arrows.GetComponent<Animator>().SetBool("Idle", false);
+            ChangeSpecialCharacter();
+        }
+        else
+        {
+            UpdateRightSide();
+        }
+    }
+
     public void UpdateRightSide()
     {
+        //Final
         _movelistRightSide[0].GetComponent<TextMeshProUGUI>().text = _movelistOptions[_mIndex].GetComponentInChildren<TextMeshProUGUI>().text;
-        //_movelistRightSide[1].GetComponent<Image>().sprite;
-        //_movelistRightSide[2].GetComponent<TextMeshProUGUI>().text;
+        //Temp
+        _movelistRightSide[1].GetComponent<Image>().sprite = _rightSideSprites[_mIndex];
+        //Temp?
+        _movelistRightSide[2].GetComponent<TextMeshProUGUI>().text = _rightSideDescriptions[_mIndex];
+    }
+
+    public void ChangeSpecialCharacter()
+    {
+        _movelistOptions[4].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetName();
+
+        _rightSideSprites[4] = _fighterProfiles[_rIndex].GetIconSprite();
+        _rightSideSprites[5] = _fighterProfiles[_rIndex].GetIconSprite();
+        _rightSideSprites[6] = _fighterProfiles[_rIndex].GetIconSprite();
+
+        _rightSideDescriptions[4] = _fighterProfiles[_rIndex].GetFighterDesc();
+        _rightSideDescriptions[5] = _fighterProfiles[_rIndex].GetSuperDesc();
+        _rightSideDescriptions[6] = _fighterProfiles[_rIndex].GetGimmickDesc();
+
+        UpdateRightSide();
     }
 }
