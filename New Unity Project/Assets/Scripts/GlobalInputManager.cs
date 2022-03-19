@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Global Input Manger to sync menu controls so everythings consistent.
+/// You can get any device by using GetUpInput(); 
+/// You can get player ones device by GetUpInput(FighterFilter.one);
+/// You can get player twos device by GetUpInput(FighterFilter.two);
+/// If it can't get access to player ones or twos specific devices it'll default to any device. 
+/// </summary>
+
 public class GlobalInputManager : MonoBehaviour
 {
     static GlobalInputManager _manager;
