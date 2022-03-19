@@ -54,6 +54,7 @@ public class ShuttleCock : MonoBehaviour
     float _magnitude;
     int _bouncesSinceShoot;
     FighterController _grabber;
+    Vector3 _storedHitVelocity;
     //int _bouncesSinceShoot;
     float grabbedTimer;
 
@@ -95,30 +96,26 @@ public class ShuttleCock : MonoBehaviour
         InputHandler handler = null;
         Vector3 influence = Vector3.zero;
 
-        if(_grabber != null) {
+        if (_grabber != null) {
             ReleaseFromPlayer(false);
         }
 
 
-        if(message.sender == FighterFilter.one)
-        {
+        if (message.sender == FighterFilter.one) {
             handler = GameManager.Get().GetFighterOne().GetComponent<InputHandler>();
-            if (handler.GetCharge())
-            {
+            if (handler.GetCharge()) {
                 charge = 1;
             }
         }
 
-        if (message.sender == FighterFilter.two)
-        {
+        if (message.sender == FighterFilter.two) {
             handler = GameManager.Get().GetFighterTwo().GetComponent<InputHandler>();
-            if (handler.GetCharge())
-            {
+            if (handler.GetCharge()) {
                 charge = 1;
             }
         }
 
-        if(handler != null) {
+        if (handler != null) {
             if (handler.GetJumpHeld()) {
                 influence.y = 2;
             }
@@ -159,6 +156,8 @@ public class ShuttleCock : MonoBehaviour
 
         Vector3 proceDir = message.direction + influence;
 
+        _storedHitVelocity = Vector3.zero;
+
         Vector3 targetVelocity = proceDir * processedSpeed;
 
         _rb.isKinematic = false;
@@ -181,6 +180,7 @@ public class ShuttleCock : MonoBehaviour
     Coroutine shootCoroutine;
     public virtual void Shoot(HitMessage message) {
         transform.right = message.direction.normalized;
+        _storedHitVelocity = message.direction * _speed;
 
         var hitStun = 0.3f;
 
@@ -363,15 +363,13 @@ public class ShuttleCock : MonoBehaviour
 
         _circle.gameObject.SetActive(_grabber != null);
 
-        if (_grabber != null)
-        {
+        if (_grabber != null) {
             grabbedTimer -= Time.fixedDeltaTime * 0.5f;
             _circle.localScale = Vector3.one * grabbedTimer;
             _rb.velocity = Vector3.zero;
             transform.position = _grabber.transform.position;
 
-            if(grabbedTimer <= 0 || _grabber.GetComponent<InputHandler>().GetCrouch() || _grabber.IsDashing())
-            {
+            if (grabbedTimer <= 0 || (_grabber.GetComponent<InputHandler>().GetCrouch() && _grabber.GetGrounded()) || _grabber.IsDashing()) {
                 ReleaseFromPlayer(true);
             }
         }
@@ -382,8 +380,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
 
-    public void SetVelocity(Vector3 dir)
-    {
+    public void SetVelocity(Vector3 dir) {
         _rb.velocity = dir * 4;
     }
 
@@ -490,7 +487,7 @@ public class ShuttleCock : MonoBehaviour
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
 
-        if(CanKill()) {
+        if (CanKill()) {
             FreezeShuttle(0.15f);
         }
 
@@ -525,6 +522,12 @@ public class ShuttleCock : MonoBehaviour
     public void ForceUnfreeze() {
         _rb.isKinematic = false;
         _frozen = false;
+
+        if (_storedHitVelocity != Vector3.zero) {
+            _lastVelocity = _storedHitVelocity;
+            _storedHitVelocity = Vector3.zero;
+        }
+
         _rb.velocity = _lastVelocity;
     }
 
@@ -565,6 +568,11 @@ public class ShuttleCock : MonoBehaviour
             _rb.isKinematic = false;
         }
         if (resetVelocity) {
+            if (_storedHitVelocity != Vector3.zero) {
+                vel = _storedHitVelocity;
+                _storedHitVelocity = Vector3.zero;
+            }
+
             _rb.velocity = vel;
         }
         else {
@@ -607,28 +615,25 @@ public class ShuttleCock : MonoBehaviour
         _bouncesBeforeSpeedLoss = 2;
     }
 
-    public void BoundToPlayer(FighterController player)
-    {
+    public void BoundToPlayer(FighterController player) {
         grabbedTimer = 1;
         _grabber = player;
     }
 
     public bool IsGrabbed(FighterController me) {
-        if(_grabber == null) {
+        if (_grabber == null) {
             return false;
         }
         return _grabber.GetInstanceID() == me.GetInstanceID();
     }
 
-    public void ReleaseFromPlayer(bool inheritVel)
-    {
-        if(_grabber == null) {
+    public void ReleaseFromPlayer(bool inheritVel) {
+        if (_grabber == null) {
             return;
         }
 
-        if (inheritVel)
-        {
-            var own =  _grabber.GetChipMove().GetHitDirection();
+        if (inheritVel) {
+            var own = _grabber.GetChipMove().GetHitDirection();
             if (_grabber.GetFilter() == FighterFilter.two) {
                 own.x *= -1;
             }

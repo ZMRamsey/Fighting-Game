@@ -67,13 +67,16 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Controller Values")]
     [SerializeField] protected Vector3 _controllerVelocity;
+    [SerializeField] protected Vector3 _extraVelocity;
     float _commandMeter;
     float _yVelocity;
     Vector3 _lastTapAxis;
     float _meterPenaltyTimer;
     float _grabCoolDown;
     float _dashCoolDown;
+    float _successHitsCoolDown;
     int _currentJumps;
+    int _successfulHits;
     bool _canJump;
     protected bool _canAttack;
     bool _freeze;
@@ -243,11 +246,19 @@ public abstract class FighterController : MonoBehaviour
         ProcessInput();
 
         if(_grabCoolDown > 0) {
-            _grabCoolDown -= Time.deltaTime;
+            _grabCoolDown -= Time.fixedDeltaTime;
         }
 
         if(_dashCoolDown > 0) {
-            _dashCoolDown -= Time.deltaTime;
+            _dashCoolDown -= Time.fixedDeltaTime;
+        }
+
+        if(_successHitsCoolDown > 0) {
+            _successHitsCoolDown -= Time.fixedDeltaTime;
+            if(_successHitsCoolDown <= 0 || GameManager.Get().GetShuttle().GetFilter() != GetFilter()) {
+                _successHitsCoolDown = 0.0f;
+                _successfulHits = 0;
+            }
         }
 
 
@@ -332,10 +343,13 @@ public abstract class FighterController : MonoBehaviour
             }
 
             if (_isDashing) {
-                _rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
+                //_rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
+                _extraVelocity = new Vector3(_lastTapAxis.x * 10, _lastTapAxis.y * 2, 0);
             }
 
-            _rigidbody.velocity = _controllerVelocity;
+            _extraVelocity *= 0.9f;
+
+            _rigidbody.velocity = _controllerVelocity + _extraVelocity;
 
             //if (_hitboxes != null) {
             //    _holdingShuttle = _hitboxes.HasShuttle();
@@ -748,9 +762,25 @@ public abstract class FighterController : MonoBehaviour
         _failSafeAttack = _currentMove.GetClip().length;
     }
 
-    public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot) {
+    public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab) {
+        _successfulHits++;
+        _successHitsCoolDown = 2;
+
+
+        if (GameManager.Get().GetSuccessive() > 0) {
+            GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(GameManager.Get().GetSuccessive());
+        }
+
         _isDashing = false;
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
+
+        if (!isGrab && GameManager.Get().GetSuccessive() > 1) {
+            _extraVelocity.x = 8;
+            if (GetFilter() == FighterFilter.two) {
+                _extraVelocity.x = -8;
+            }
+        }
+
         _animator.Play(_currentMove.GetClipName(), 0, (1f / _currentMove.GetFrames()) * _currentMove.GetHitFrame());
 
         ParticleSystem useVFX = null;

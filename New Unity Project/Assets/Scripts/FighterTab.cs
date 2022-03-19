@@ -12,6 +12,7 @@ public class FighterTab
     [SerializeField] Vector3 _spawn;
     [SerializeField] TextMeshProUGUI _fighterName;
     [SerializeField] TextMeshProUGUI _fighterScore;
+    [SerializeField] Animator _scoreAnim;
 
     public FighterUI GetUI() {
         return _fighterUI;
@@ -32,5 +33,10 @@ public class FighterTab
 
     public void UpdateScore(int score) {
         _fighterScore.text = score.ToString();
+    }
+
+    public void UpdateRallyScore(int rally) {
+        _scoreAnim.SetTrigger("Score");
+        _scoreAnim.GetComponent<TextMeshProUGUI>().text = rally.ToString();
     }
 }

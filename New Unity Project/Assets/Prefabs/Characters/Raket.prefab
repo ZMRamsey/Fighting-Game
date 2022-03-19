@@ -29830,6 +29830,7 @@ MonoBehaviour:
   _jumpDust: {fileID: 0}
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
+  _extraVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
   _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
@@ -30118,7 +30119,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 48a717ea527f47e41a85ac5c4f5adef6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

@@ -69,8 +69,11 @@ public class Hitbox : MonoBehaviour
                 var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
                 var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
 
+                bool isGrab = false;
+
                 if (_currentMove.GetType() == ShotType.chip && _self.GetComponent<InputHandler>().GetGrab() && _self.CanGrab() && !ball.IsGrabbed(_self))
                 {
+                    isGrab = true;
                     ball.BoundToPlayer(_self);
                     ball.SetOwner(_self.GetFilter());
                 }
@@ -80,7 +83,7 @@ public class Hitbox : MonoBehaviour
                     ball.Shoot(hiMes, _self);
                 }
 
-                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType());
+                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType(), isGrab);
 
                 UpdateDebug(collision);
             }
