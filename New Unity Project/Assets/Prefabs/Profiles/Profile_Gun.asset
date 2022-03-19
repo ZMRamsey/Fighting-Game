@@ -27,8 +27,10 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 0}
   _fighterNameLSprite: {fileID: 0}
   _fighterNameRSprite: {fileID: 0}
-  _fighterDescription: 
+  _fighterDescription: Gun
+  _gimmickName: Gun
   _gimmickVideo: {fileID: 0}
-  _gimmickDescription: 
+  _gimmickDescription: Gun
+  _superName: Gun
   _superVideo: {fileID: 0}
-  _superDescription: 
+  _superDescription: Gun

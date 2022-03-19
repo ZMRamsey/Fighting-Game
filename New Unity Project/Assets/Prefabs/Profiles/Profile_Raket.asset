@@ -28,8 +28,10 @@ MonoBehaviour:
   _fighterNameLSprite: {fileID: 21300000, guid: 9e8953c7749e6bb4097dd12dd7df3bc3, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: 3f84919b86223094cb938d5ab922af01, type: 3}
   _fighterDescription: High jumps, movement speed, and good strike strength
+  _gimmickName: Mr Hands
   _gimmickVideo: {fileID: 0}
   _gimmickDescription: Raket can build a Mr Hands robot to deflect incoming shots
     and speed up her own
+  _superName: Subwoofer
   _superVideo: {fileID: 0}
   _superDescription: haha subwoofer go xd boom

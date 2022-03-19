@@ -27,3 +27,10 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: 67c9e12664c47944ba8390e5f7c726d7, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: 7b99eb46e897a9748bb56fdefc1e9fbe, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: c7d07562e9554d845a1ed140f7655ff0, type: 3}
+  _fighterDescription: good goose
+  _gimmickName: double tap
+  _gimmickVideo: {fileID: 0}
+  _gimmickDescription: goose literally to angry to die
+  _superName: the flock
+  _superVideo: {fileID: 0}
+  _superDescription: a flock of geese storm the pitch to prevent groundouts

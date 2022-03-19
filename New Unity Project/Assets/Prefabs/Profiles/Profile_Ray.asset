@@ -27,3 +27,10 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: b5d7d2f581f331b4d831fa54a1c6b3fa, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: d888cda0c8967b34fb26c66e64cc48c0, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: 4b0e0d175b330914187833c36f180ace, type: 3}
+  _fighterDescription: puppets and stuff
+  _gimmickName: literally flies
+  _gimmickVideo: {fileID: 0}
+  _gimmickDescription: whoosh
+  _superName: Jo Jo's
+  _superVideo: {fileID: 0}
+  _superDescription: ora ora ora ora

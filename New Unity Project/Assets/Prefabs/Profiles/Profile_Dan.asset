@@ -27,3 +27,10 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: b7634a76d7eee65459d59edab371bcc3, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: 076974c291d6deb488d2f873ac1a88d5, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: 78cc557e95f65214ebe504b20ccf8785, type: 3}
+  _fighterDescription: basic boy
+  _gimmickName: Double jump
+  _gimmickVideo: {fileID: 0}
+  _gimmickDescription: 2 jumps baybee
+  _superName: idk, probably an install
+  _superVideo: {fileID: 0}
+  _superDescription: grr

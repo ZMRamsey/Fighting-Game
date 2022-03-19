@@ -280,6 +280,8 @@ public class PauseMenu : MonoBehaviour
     public void ChangeSpecialCharacter()
     {
         _movelistOptions[4].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetName();
+        _movelistOptions[5].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetSuperName();
+        _movelistOptions[6].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetGimmickName();
 
         _rightSideSprites[4] = _fighterProfiles[_rIndex].GetIconSprite();
         _rightSideSprites[5] = _fighterProfiles[_rIndex].GetIconSprite();
