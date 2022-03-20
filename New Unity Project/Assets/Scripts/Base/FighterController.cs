@@ -839,6 +839,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void OnChangeDirection(bool isLeft) {
+        if (!_canAttack) {
+            return;
+        }
+
         if (isLeft) {
             _runningLeftVFX.Play();
         }
