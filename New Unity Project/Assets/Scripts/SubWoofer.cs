@@ -106,7 +106,7 @@ public class SubWoofer : ShuttleCock
                 Vector3 direction = shuttle.transform.position - transform.position;
                 direction.Normalize();
 
-                shuttle.GetComponent<Rigidbody>().velocity = direction * 20;
+                shuttle.GetComponent<Rigidbody>().velocity = direction * 30;
                 shuttle.SetOwner(FighterFilter.both);
             }
 

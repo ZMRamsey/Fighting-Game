@@ -5001,7 +5001,7 @@ MonoBehaviour:
   _maximumJail: 5
   _bouncesBeforeSpeedLoss: 2
   _canKillOnPercentSpeed: 0
-  _gainPerHit: 0.25
+  _gainPerHit: 2
   _canImpactFrame: 0
   _ballHolder: {fileID: 766030058610662237}
   _smoothing: 4
