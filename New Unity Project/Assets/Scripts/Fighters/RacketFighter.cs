@@ -54,7 +54,7 @@ public class RacketFighter : FighterController
 
     public override void OnFighterUpdate() {
 
-        var isBuilding = _inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack && GetGrounded() && _buildMeter < 1;
+        var isBuilding = !GameManager.Get().IsInKO() && _inputHandler.GetCrouch() && _myState == FighterState.inControl && (_mrHandyObject && !_mrHandyObject.activeSelf) && _canAttack && GetGrounded() && _buildMeter < 1;
 
         _animator.SetBool("charge", isBuilding);
 
