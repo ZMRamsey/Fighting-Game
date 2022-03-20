@@ -229,6 +229,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     void ReturnToMain()
     {
+        print("Test");
         opMenu.SetActive(false);
         mMenu.SetActive(true);
         bg.GetComponent<Image>().sprite = mBG;

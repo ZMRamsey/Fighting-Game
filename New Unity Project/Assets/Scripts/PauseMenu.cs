@@ -85,7 +85,7 @@ public class PauseMenu : MonoBehaviour
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
-        if (GlobalInputManager.Get().GetPauseInput())
+        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner))
         {
             GameManager.Get().Resume();
         }

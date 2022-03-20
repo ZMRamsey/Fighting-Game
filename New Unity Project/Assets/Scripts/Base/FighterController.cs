@@ -54,6 +54,8 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] AudioClip[] _swingSounds;
     [SerializeField] AudioClip[] _leftFootSounds;
     [SerializeField] AudioClip[] _rightFootSounds;
+    [SerializeField] AudioClip[] _grabSound;
+    [SerializeField] AudioClip[] _squeakSound;
 
     [SerializeField] ParticleSystem _hitSmashVFX;
     [SerializeField] ParticleSystem _hitChipVFX;
@@ -400,7 +402,22 @@ public abstract class FighterController : MonoBehaviour
     }
 
     float xCalculation = 0.0f;
+
+    float lastXTest;
     public virtual void OnGroundMovement() {
+        if(lastXTest > 0) {
+            if(_inputHandler.GetInputX() < 0) {
+                OnChangeDirection(false);
+            }
+        }
+
+        if (lastXTest < 0) {
+            if (_inputHandler.GetInputX() > 0) {
+                OnChangeDirection(true);
+            }
+        }
+
+        lastXTest = _inputHandler.GetInputX();
 
         if (_canAttack && !_inSuper && _myState == FighterState.inControl) {
             xCalculation = _inputHandler.GetInputX();
@@ -810,9 +827,26 @@ public abstract class FighterController : MonoBehaviour
             _hitImpactBig.Play();
         }
 
-        if (_hitSounds.Length > 0) {
-            _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
+        if (!isGrab) {
+            if (_hitSounds.Length > 0) {
+                _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
+            }
         }
+        else {
+            _source.PlayOneShot(_grabSound[UnityEngine.Random.Range(0, _grabSound.Length)], 0.5f);
+        }
+   
+    }
+
+    public void OnChangeDirection(bool isLeft) {
+        if (isLeft) {
+            _runningLeftVFX.Play();
+        }
+        else {
+            _runningRightVFX.Play();
+        }
+
+        _source.PlayOneShot(_squeakSound[UnityEngine.Random.Range(0, _squeakSound.Length)], 0.5f);
     }
 
     public bool IsDashing() {

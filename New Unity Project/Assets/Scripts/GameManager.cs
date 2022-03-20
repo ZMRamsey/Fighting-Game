@@ -447,16 +447,16 @@ public class GameManager : MonoBehaviour
         _stageCamera.SetActive(true);
 
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(2f);
             Time.timeScale = 1f;
             //Time.fixedDeltaTime = 0.02f;
             yield return new WaitForSecondsRealtime(1f);
         }
         else {
-            yield return new WaitForSecondsRealtime(4f);
+            yield return new WaitForSecondsRealtime(2f);
             Time.timeScale = 1f;
             //Time.fixedDeltaTime = 0.02f;
-            yield return new WaitForSecondsRealtime(4f);
+            yield return new WaitForSecondsRealtime(2f);
         }
         SetUpGame();
         KOCoroutine = null;
