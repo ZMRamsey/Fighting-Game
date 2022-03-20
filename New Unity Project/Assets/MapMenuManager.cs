@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 public class MapMenuManager : MonoBehaviour
 {
@@ -195,7 +195,7 @@ public class MapMenuManager : MonoBehaviour
         {
             if (!_mapSelected)
             {
-                if (Keyboard.current.aKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.left.wasPressedThisFrame))
+                if (GlobalInputManager.Get().GetLeftInput())
                 {
                     _rSelectionIndex -= 1;
                     MoveLeft();
@@ -205,7 +205,7 @@ public class MapMenuManager : MonoBehaviour
                         NotMove();
                     }
                 }
-                else if (Keyboard.current.dKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.right.wasPressedThisFrame))
+                else if (GlobalInputManager.Get().GetRightInput())
                 {
                     _rSelectionIndex += 1;
                     MoveRight();
@@ -217,7 +217,7 @@ public class MapMenuManager : MonoBehaviour
                 }
                 HighlightSelectedMap();
 
-                if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+                if (GlobalInputManager.Get().GetBackInput())
                 {
                     _moveAside = false;
                     opMan.ControlCharacterSelection();
@@ -226,19 +226,19 @@ public class MapMenuManager : MonoBehaviour
             
             if (_isReady)
             {
-                if(Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                if(GlobalInputManager.Get().GetSubmitInput())
                 {
                     //Need to reset the menus here.
                     GoToLoadingMenu();
                 }
             }
             
-            if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+            if (GlobalInputManager.Get().GetSubmitInput())
             {
                 SelectHighlightedMap();
                 _isReady = true;
             }
-            else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+            else if (GlobalInputManager.Get().GetBackInput())
             {
                 DeselectHighlightedMenu();
             }
