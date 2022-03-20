@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool IsInKO() {
-        return KOCoroutine == null;
+        return KOCoroutine != null;
     }
 
     public bool IsGameActive() {
