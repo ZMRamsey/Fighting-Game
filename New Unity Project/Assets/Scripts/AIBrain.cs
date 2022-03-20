@@ -57,7 +57,7 @@ public class AIBrain : MonoBehaviour
             targetPosition.x -= 0.5f;
         }
 
-        if (tick > 0.05f && GameManager.Get().IsInKO() && _shuttle.GetVelocity().magnitude > 1) {
+        if (tick > 0.05f && GameManager.Get().IsGameActive() && !GameManager.Get().IsInKO() && _shuttle.GetVelocity().magnitude > 1) {
             _handler._inputX = 0;
             RaycastHit netDetection;
 
