@@ -237,7 +237,7 @@ public class AIBrain : MonoBehaviour
             tick = 0.0f;
         }
 
-        if (!GameManager.Get().IsInKO()) {
+        if (GameManager.Get().IsInKO()) {
             _handler._inputX = 0;
         }
     }
