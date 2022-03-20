@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource _endMusic;
     [SerializeField] AudioClip _superSFX;
     [SerializeField] AudioClip _endGameSFX;
-    [SerializeField] AudioMixer _mixer;
+    [SerializeField] AudioMixer _musicMixer;
+    [SerializeField] AudioMixer _sfxMixer;
     [SerializeField] bool _spinDown;
 
     [Header("Stats")]
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
     int _targetRally = 10;
     bool _isPaused;
     bool _slowMusic;
+    bool _killSwitch;
 
     public static GameManager Get() {
         return _instance;
@@ -135,34 +137,52 @@ public class GameManager : MonoBehaviour
         _UIScoreF2.text = _settings.GetFighterTwoProfile().GetName();
 
         //ScoreManager.Get().SetPlayerTypes(_settings.GetFighterOneProfile().GetName(), _settings.GetFighterTwoProfile().GetName());
-
-
     }
 
-    public bool IsGameActive() {
+    public bool IsInKO() {
         return KOCoroutine == null;
     }
 
+    public bool IsGameActive() {
+        return !_killSwitch;
+    }
+
+    public void KillSwitch() {
+        _killSwitch = true;
+    }
+
     private void Start() {
+        Resume();
         SetUpGame();
     }
 
+    public void Resume() {
+        _sfxMixer.SetFloat("volume", (-80 + 0.8f * 100));
+        _musicMixer.SetFloat("lowpass", 22000);
+
+        Time.timeScale = 1;
+        _pauseController.Disable();
+
+        _uiCamera.SetActive(true);
+        _hasHeldPause = true;
+    }
+
     float _pauseTime;
+    bool _hasHeldPause;
     void Update() {
         if (_pauseController.IsActive()) {
-            _mixer.SetFloat("lowpass", 424);
+            _musicMixer.SetFloat("lowpass", 424);
+            _sfxMixer.SetFloat("volume", (-80 + 0 * 100));
             if (GlobalInputManager.Get().GetPauseInput() && _pauseController.ReturnLayer() == 0) {
-                Time.timeScale = 1;
-                _pauseController.Disable();
-                _uiCamera.SetActive(true);
+                Resume();
             }
         }
-        else
-        {
-            _mixer.SetFloat("lowpass", 22000);
+
+        if (_hasHeldPause) {
+            _hasHeldPause = GlobalInputManager.Get().GetPauseHeldInput();
         }
 
-        if (GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+        if (!_hasHeldPause && GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
             _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
                 _pauseController.Enable();
@@ -259,15 +279,14 @@ public class GameManager : MonoBehaviour
 
         _firstTrigger = true;
 
-        if (stageCoroutine != null) {
-            StopCoroutine(stageCoroutine);
-        }
-
         if (_lastSuperEvent != null) {
             _lastSuperEvent.DisableScreen();
         }
 
+        ResetCoroutines();
+
         _stageCamera.SetActive(true);
+        _music.pitch = 1f;
         _spinDown = false;
 
         _screenFader.SetAlpha(1);
@@ -330,6 +349,21 @@ public class GameManager : MonoBehaviour
         stageCoroutine = StartCoroutine(StageFlash(1, gEvent, filter, controller));
     }
 
+    void ResetCoroutines() {
+        if (impactCoroutine != null) {
+            StopCoroutine(impactCoroutine);
+        }
+
+        if (stageCoroutine != null) {
+            StopCoroutine(stageCoroutine);
+        }
+
+        if (impactCoroutine != null) {
+            StopCoroutine(impactCoroutine);
+        }
+    }
+
+
     Coroutine impactCoroutine;
     public void OnImpactFrame(float time) {
         if (impactCoroutine != null) {
@@ -373,6 +407,10 @@ public class GameManager : MonoBehaviour
         _stageCamera.SetActive(true);
         _music.pitch = 1f;
         stageCoroutine = null;
+    }
+
+    public bool IsSpecialScreen() {
+        return stageCoroutine != null;
     }
 
     public Coroutine KOCoroutine;
@@ -461,6 +499,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName: "WinScreenTest");
     }
 
+    public FighterController GetFighter(FighterFilter filter) {
+        if (filter == FighterFilter.one) {
+            return GetFighterOne();
+        }
+        return GetFighterTwo();
+    }
+
     public FighterController GetFighterOne() {
         return _fighterOne.GetController();
     }
@@ -493,12 +538,6 @@ public class GameManager : MonoBehaviour
     public void IncreaseRally() {
         _rally++;
         _successive = 1;
-
-        //if (_rally == _targetRally)
-        //{
-        //    _shuttle.increaseBounces();
-        //    _targetRally += 10;
-        //}
     }
 
     public void SuccessiveHit() {
@@ -565,8 +604,7 @@ public class GameManager : MonoBehaviour
         ScoreManager.Get().SetLastScorer(rand % 2);
     }
 
-    public void EnableUI()
-    {
+    public void EnableUI() {
         _uiCamera.SetActive(true);
     }
 

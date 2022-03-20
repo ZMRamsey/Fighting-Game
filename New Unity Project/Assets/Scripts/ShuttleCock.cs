@@ -567,6 +567,8 @@ public class ShuttleCock : MonoBehaviour
         if (_waitForHit) {
             _rb.isKinematic = false;
         }
+
+
         if (resetVelocity) {
             if (_storedHitVelocity != Vector3.zero) {
                 vel = _storedHitVelocity;
@@ -578,6 +580,7 @@ public class ShuttleCock : MonoBehaviour
         else {
             ProcessForce(message);
         }
+
     }
 
     public void SetOwner(FighterController owner) {
@@ -616,6 +619,10 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public void BoundToPlayer(FighterController player) {
+        if(shootCoroutine != null) {
+            StopCoroutine(shootCoroutine);
+        }
+
         grabbedTimer = 1;
         _grabber = player;
     }
@@ -632,12 +639,16 @@ public class ShuttleCock : MonoBehaviour
             return;
         }
 
+        _frozen = false;
+        _rb.isKinematic = false;
+
         if (inheritVel) {
             var own = _grabber.GetChipMove().GetHitDirection();
             if (_grabber.GetFilter() == FighterFilter.two) {
                 own.x *= -1;
             }
             _rb.velocity = own;
+            print("AAA");
         }
 
         _grabber.ResetGrab();

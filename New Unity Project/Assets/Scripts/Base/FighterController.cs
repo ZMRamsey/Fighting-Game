@@ -304,8 +304,11 @@ public abstract class FighterController : MonoBehaviour
 
     void FixedUpdate() {
         OnFixedFighterUpdate();
-        var isRunning = _myState == FighterState.inControl && _grounded && _inputHandler.GetInputX() != 0 && !_inputHandler.GetCrouch();
+        var canRun = (int)Mathf.Abs(_rigidbody.velocity.magnitude) > _speed / 2;
+        var isRunning = _myState == FighterState.inControl && _myStance == FighterStance.standing && canRun && !_inputHandler.GetCrouch();
+
         _animator.SetBool("running", isRunning);
+
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
 
         //if (isRunning && _inputHandler.GetInputX() > 0 && _runningLeftVFX != null) {
@@ -693,7 +696,6 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (_inputHandler.GetLift() && _canAttack) {
-            print("lift");
             _canAttack = false;
             ResetHitbox();
 
@@ -703,7 +705,6 @@ public abstract class FighterController : MonoBehaviour
 
 
         if (_inputHandler.GetChip() && _canAttack) {
-            print("chip");
             _canAttack = false;
             ResetHitbox();
 

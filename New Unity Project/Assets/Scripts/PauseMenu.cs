@@ -104,6 +104,7 @@ public class PauseMenu : MonoBehaviour
                 case (3):
                     //SceneManager.LoadScene(sceneName: "MenuTest");
                     Resume();
+                    GameManager.Get().KillSwitch();
                     GameLogic.Get().LoadScene("MenuTest", "Base");
                     break;
 
@@ -165,8 +166,8 @@ public class PauseMenu : MonoBehaviour
     }
 
     void Resume() {
-        Time.timeScale = 1;
         Disable();
+        GameManager.Get().Resume();
         GameManager.Get().EnableUI();
     }
 

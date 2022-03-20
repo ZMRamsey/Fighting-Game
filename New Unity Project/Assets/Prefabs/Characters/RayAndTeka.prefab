@@ -39346,7 +39346,6 @@ MonoBehaviour:
     _hitFrame: 8
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
-  _grabTimer: 0
   _superMove:
     _animationPath: super
     _clipName: Raket_Super
@@ -39356,6 +39355,7 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
     _hitDirection: {x: 3, y: 5, z: 0}
   _hitboxes: {fileID: 4874520955026096318}
+  _hurtBox: {fileID: 0}
   _hitType: 1
   _groundLayers:
     serializedVersion: 2
@@ -39397,13 +39397,13 @@ MonoBehaviour:
   _hitChipVFX: {fileID: 1005256505748736543}
   _hitDriveVFX: {fileID: 2796237797765262638}
   _hitLiftVFX: {fileID: 5932669594008363679}
-  _hitImpactSmall: {fileID: 0}
   _hitImpactBig: {fileID: 7259541367755033637}
   _runningLeftVFX: {fileID: 0}
   _runningRightVFX: {fileID: 0}
   _jumpDust: {fileID: 0}
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
+  _extraVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
   _rayPrefab: {fileID: 4874520954667380368, guid: d539df2f5cb7f6449b9ba21474b10893, type: 3}
@@ -39480,7 +39480,7 @@ AudioSource:
   m_GameObject: {fileID: 4874520954667380368}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

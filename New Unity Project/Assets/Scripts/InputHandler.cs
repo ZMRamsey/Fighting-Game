@@ -47,7 +47,7 @@ public class InputHandler : MonoBehaviour
     }
 
     void Update() {
-        if(Time.timeScale <= 0) {
+        if(Time.timeScale <= 0 || !GameManager.Get().IsGameActive()) {
             return;
         }
 

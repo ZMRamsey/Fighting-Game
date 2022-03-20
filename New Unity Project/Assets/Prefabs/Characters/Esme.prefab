@@ -29590,6 +29590,7 @@ MonoBehaviour:
   _jumpDust: {fileID: 0}
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
+  _extraVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
   _fighterUI: {fileID: 0}
   _netPrefab: {fileID: 4507918572103632661, guid: ae2ffeb16ddb0fe45bb456be4197bb27, type: 3}
@@ -29663,7 +29664,7 @@ AudioSource:
   m_GameObject: {fileID: 4874520954667380368}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

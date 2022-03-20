@@ -4575,7 +4575,7 @@ AudioSource:
   m_GameObject: {fileID: 738294637}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
   m_audioClip: {fileID: 8300000, guid: b27c78d2e09725e42b9f1d5ca16f3f11, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.3
@@ -11778,7 +11778,8 @@ MonoBehaviour:
   _endMusic: {fileID: 1614203411}
   _superSFX: {fileID: 8300000, guid: af412dc5c539a1f4ba81c5f78573454e, type: 3}
   _endGameSFX: {fileID: 8300000, guid: 8b8ca6e00cc72fa43a521bb6662f16db, type: 3}
-  _mixer: {fileID: 24100000, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
+  _musicMixer: {fileID: 24100000, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
+  _sfxMixer: {fileID: 24100000, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
   _spinDown: 0
   _serveSpeed: 7.5
   needNewRound: 0
@@ -17532,6 +17533,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1311307399, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
+    - target: {fileID: 975072594694678410, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
@@ -17580,6 +17589,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194830, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
 --- !u!23 &6721750681636284679

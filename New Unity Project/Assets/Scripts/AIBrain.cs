@@ -32,6 +32,10 @@ public class AIBrain : MonoBehaviour
     }
 
     void Update() {
+        if (Time.timeScale <= 0 || !GameManager.Get().IsGameActive()) {
+            return;
+        }
+
         bool moveAwayOverride = false;
         bool inRangeOfSubWoofer = false;
         bool inHittingRangeOfSubWoofer = false;
@@ -53,7 +57,7 @@ public class AIBrain : MonoBehaviour
             targetPosition.x -= 0.5f;
         }
 
-        if (tick > 0.05f && GameManager.Get().IsGameActive() && _shuttle.GetVelocity().magnitude > 1) {
+        if (tick > 0.05f && GameManager.Get().IsInKO() && _shuttle.GetVelocity().magnitude > 1) {
             _handler._inputX = 0;
             RaycastHit netDetection;
 
@@ -233,7 +237,7 @@ public class AIBrain : MonoBehaviour
             tick = 0.0f;
         }
 
-        if (!GameManager.Get().IsGameActive()) {
+        if (!GameManager.Get().IsInKO()) {
             _handler._inputX = 0;
         }
     }

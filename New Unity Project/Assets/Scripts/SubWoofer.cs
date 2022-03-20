@@ -48,7 +48,7 @@ public class SubWoofer : ShuttleCock
 
     bool _tick;
     public override void ShuttleUpdate() {
-        if (IsFrozen()) {
+        if (IsFrozen() || GameManager.Get().IsSpecialScreen()) {
             return;
         }
 
