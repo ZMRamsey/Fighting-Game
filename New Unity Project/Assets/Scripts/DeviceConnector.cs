@@ -7,9 +7,9 @@ public class DeviceConnector : MonoBehaviour
 {
     Keyboard _keyboard;
     Gamepad _gamepad;
-    InputTest _test;
+    ControllerAssignment _test;
     bool _assignedPlayer;
-    public void AddDevice(Keyboard keyboard, Gamepad gamepad, InputTest test) {
+    public void AddDevice(Keyboard keyboard, Gamepad gamepad, ControllerAssignment test) {
         _keyboard = keyboard;
         _gamepad = gamepad;
         _test = test;

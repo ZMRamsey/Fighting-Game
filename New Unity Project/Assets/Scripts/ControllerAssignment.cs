@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class InputTest : MonoBehaviour
+enum GameType { pvp, pva};
+public class ControllerAssignment : MonoBehaviour
 {
 
     public OptionsMenuManager op;
@@ -37,30 +38,27 @@ public class InputTest : MonoBehaviour
     public GameObject characterSelectScreen;
     public GameObject inputSelectorScreen;
 
+    GameType _type;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //_f1Char.color = Color.grey;
-        //_f2Char.color = Color.grey;
-
-        //_f1Char.text = _profiles[0].GetName();
-        //_f2Char.text = _profiles[0].GetName();
-
-        //_settings.SetFighterOneProfile(_profiles[op.player1Char]);
-        //_settings.SetFighterTwoProfile(_profiles[op.player2Char]);
-
         if(rot._PlayerOptionSelected == 0)
         {
             SetPVAI();
             Debug.Log("Player VS AI");
+        }
+        if (rot._PlayerOptionSelected == 0) {
+            SetPVAI();
+            Debug.Log("Player VS Player");
         }
     }
 
     void Update() {
         if (readyToPlay)
         {
-            if((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) && (_player1Player && (_player2AI || _player2Player)))
+            if(GlobalInputManager.Get().GetSubmitInput() && (_player1Player && (_player2AI || _player2Player)))
             {
                 Debug.Log("Delayed Selection Active");
                     inputSelectorScreen.SetActive(false);
@@ -88,22 +86,21 @@ public class InputTest : MonoBehaviour
                 }
             }
 
-            if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
-            {
-                if (!setPlayerOne && !setPlayerTwo)
-                {
-                    SetAIVAI();
-                }
-                else if (setPlayerOne && setPlayerTwo)
-                {
-                    SetPVP();
-                    print("PVP");
-                }
-                else if (setPlayerOne)
-                {
-                    SetPVAI();
-                }
-            }
+            //if (GlobalInputManager.Get().GetSubmitInput()) {
+            //    if (!setPlayerOne && !setPlayerTwo)
+            //    {
+            //        SetAIVAI();
+            //    }
+            //    else if (setPlayerOne && setPlayerTwo)
+            //    {
+            //        SetPVP();
+            //        print("PVP");
+            //    }
+            //    else if (setPlayerOne)
+            //    {
+            //        SetPVAI();
+            //    }
+            //}
         }
         
 
@@ -193,14 +190,14 @@ public class InputTest : MonoBehaviour
     }
 
     public void SetPVAI() {
-        Debug.Log("Test");
+        _type = GameType.pva;
         _player2AI = true;
         _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
         rightSelectors[0].SetActive(true);
     }
 
     public void SetPVP() {
-
+        _type = GameType.pvp;
     }
 
     public void SetPlayer(Keyboard keyboard) {

@@ -768,14 +768,14 @@ public abstract class FighterController : MonoBehaviour
         _successHitsCoolDown = 2;
 
 
-        if (GameManager.Get().GetSuccessive() > 0) {
+        if (GameManager.Get().GetSuccessive() > 1) {
             GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(GameManager.Get().GetSuccessive());
         }
 
         _isDashing = false;
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
 
-        if (!isGrab && GameManager.Get().GetSuccessive() > 1) {
+        if (!isGrab && _successfulHits > 1) {
             _extraVelocity.x = 8;
             if (GetFilter() == FighterFilter.two) {
                 _extraVelocity.x = -8;

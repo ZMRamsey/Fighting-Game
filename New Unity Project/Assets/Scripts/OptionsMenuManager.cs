@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 public class OptionsMenuManager : MonoBehaviour
 {
@@ -259,7 +259,7 @@ public class OptionsMenuManager : MonoBehaviour
         if (!_isSelectingMap)
         {
             
-            if (Keyboard.current.aKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.left.wasPressedThisFrame))
+            if (GlobalInputManager.Get().GetLeftInput())
             {
                 _selectionIndex -= 1;
                 MoveLeft();
@@ -269,7 +269,7 @@ public class OptionsMenuManager : MonoBehaviour
                     NotMove();
                 }
             }
-            else if (Keyboard.current.dKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.right.wasPressedThisFrame))
+            else if (GlobalInputManager.Get().GetRightInput())
             {
                 _selectionIndex += 1;
                 MoveRight();
@@ -279,11 +279,11 @@ public class OptionsMenuManager : MonoBehaviour
                     NotMove();
                 }
             }
-            else if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+            else if (GlobalInputManager.Get().GetSubmitInput())
             {
                 SelectHighlightedCharacter();
             }
-            else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+            else if (GlobalInputManager.Get().GetBackInput())
             {
                 if(_confirmedIndex == 0)
                 {

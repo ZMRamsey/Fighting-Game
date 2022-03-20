@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class rotaterCircle : MonoBehaviour
@@ -161,16 +161,14 @@ public class rotaterCircle : MonoBehaviour
     private void Update()
     {
         Debug.Log(_PlayerOptionSelected);
-        if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-        {
+        if (GlobalInputManager.Get().GetSubmitInput()) {
             if (sceneIndex == 0)
             {
                 controlSubMenu();
             }
 
         }
-        else if (Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
-        {
+        else if (GlobalInputManager.Get().GetBackInput()) {
             controlSelectionWheel();
         }
 
@@ -190,8 +188,7 @@ public class rotaterCircle : MonoBehaviour
             
             
             //optionsScript.GetComponent<optionsRotatorCircle>().enabled = false;
-            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
-            {
+            if (GlobalInputManager.Get().GetUpInput()) {
                 if (!_optionsSelected)
                 {
                     _rotatorConstant -= 30.0f;
@@ -204,8 +201,7 @@ public class rotaterCircle : MonoBehaviour
                 }
 
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
-            {
+            else if (GlobalInputManager.Get().GetDownInput()) {
                 if (!_optionsSelected)
                 {
                     _rotatorConstant += 30.0f;
@@ -217,8 +213,7 @@ public class rotaterCircle : MonoBehaviour
                     Debug.Log(_rotatorConstant);
                 }
             }
-            else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-            {
+            else if (GlobalInputManager.Get().GetSubmitInput()) {
                 if (!_optionsSelected)
                 {
                     loadSelectedMenu();
@@ -262,16 +257,14 @@ public class rotaterCircle : MonoBehaviour
         {
             if (_readyToPlay)
             {
-                if (Keyboard.current.spaceKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-                {
+                if (GlobalInputManager.Get().GetSubmitInput()) {
                     Debug.Log("Play 2");
                     PressPlay();
                 }
             }
             _readyToPlay = true;
             Debug.Log(_playSubSceneIndex);
-            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
-            {
+            if (GlobalInputManager.Get().GetUpInput()) {
                 _playSubSceneIndex -= 1;
                 if (_playSubSceneIndex < _firstOption)
                 {
@@ -282,8 +275,7 @@ public class rotaterCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
-            {
+            else if (GlobalInputManager.Get().GetDownInput()) {
                 _playSubSceneIndex += 1;
                 if (_playSubSceneIndex > _lastOption)
                 {
