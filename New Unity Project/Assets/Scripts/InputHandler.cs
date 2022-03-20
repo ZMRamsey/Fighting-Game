@@ -30,6 +30,7 @@ public class InputHandler : MonoBehaviour
 
     Gamepad _gamepad;
     Keyboard _keyboard;
+    private bool _pauseHeld;
 
     public void SetDevice(PlayerDevice device) {
         //_playerDevice = device;
@@ -52,7 +53,9 @@ public class InputHandler : MonoBehaviour
         }
 
         if (_keyboard != null) {
-            
+
+            _pauseHeld = _keyboard.escapeKey.IsPressed();
+
             _inputX = 0.0f;
             if (_keyboard.aKey.IsPressed()) {
                 _inputX = 1;
@@ -123,6 +126,8 @@ public class InputHandler : MonoBehaviour
 
         if (_gamepad != null)
         {
+            _pauseHeld = _gamepad.startButton.IsPressed();
+
             _inputX = 0.0f;
             if (_gamepad.leftStick.left.ReadValue() > 0.5 || _gamepad.dpad.left.isPressed)
             {
@@ -308,5 +313,9 @@ public class InputHandler : MonoBehaviour
     public bool GetGrab()
     {
         return _chipHeld;
+    }
+
+    public bool GetPause() {
+        return _pauseHeld;
     }
 }

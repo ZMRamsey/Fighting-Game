@@ -105,16 +105,19 @@ public class GlobalInputManager : MonoBehaviour
     }
 
     public void RefreshDevices(FighterFilter filter) {
-        _controller = Gamepad.current;
-        _keyboard = Keyboard.current;
+        _controller = null;
+        _keyboard = null;
         PlayerDevice device = null;
 
         if(filter == FighterFilter.one) {
             device = GameLogic.Get().GetSettings().GetFighterOneDevice();
         }
-
-        if (filter == FighterFilter.two) {
+        else if (filter == FighterFilter.two) {
             device = GameLogic.Get().GetSettings().GetFighterTwoDevice();
+        }
+        else {
+            _controller = Gamepad.current;
+            _keyboard = Keyboard.current;
         }
 
         if (device != null) {
@@ -123,9 +126,11 @@ public class GlobalInputManager : MonoBehaviour
             }
 
             if (device.GetDeviceType() == InputDeviceType.gamepad) {
+                print("PAD");
                 foreach (Gamepad pad in Gamepad.all) {
                     if (pad.deviceId == device.GetDeviceID()) {
                         _controller = pad;
+                        print("PAD");
                     }
                 }
             }

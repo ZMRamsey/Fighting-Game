@@ -183,10 +183,21 @@ public class GameManager : MonoBehaviour
         }
 
         if (!_hasHeldPause && GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+            FighterFilter pauser = FighterFilter.none;
             _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
+                if (_fighterTwo.GetController().GetComponent<InputHandler>().GetPause()) {
+                    pauser = _fighterTwo.GetController().GetFilter();
+                    print("F" + pauser);
+                }
+
+                if (_fighterOne.GetController().GetComponent<InputHandler>().GetPause()) {
+                    pauser = _fighterOne.GetController().GetFilter();
+                    print("E" + pauser);
+                }
+
                 _pauseController.Enable();
-                _pauseController.SetPauseOwner(FighterFilter.one);
+                _pauseController.SetPauseOwner(pauser);
                 _uiCamera.SetActive(false);
                 _pauseTime = 0;
                 Time.timeScale = 0;
