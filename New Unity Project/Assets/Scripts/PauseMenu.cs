@@ -85,6 +85,11 @@ public class PauseMenu : MonoBehaviour
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
+        if (GlobalInputManager.Get().GetPauseInput())
+        {
+            GameManager.Get().Resume();
+        }
+
         if (GlobalInputManager.Get().GetSubmitInput(_pauseOwner))
         {
             switch (_index)
@@ -116,7 +121,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnMoveList()
     {
-        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner))
+        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner) || GlobalInputManager.Get().GetBackInput())
         {
             DeselectLeftSide();
             SetMainPause();
@@ -172,7 +177,8 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Enable() 
-    { 
+    {
+        GameManager.Get().SetSounds(0, 424);
         _active = true;
         _options[_index].color = Color.black;
         _index = 0;

@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _debugCamera;
 
     [Header("Pause")]
-    [SerializeField] GameObject _pausePanel;
     [SerializeField] Image _pauseArt;
     [SerializeField] Image _pauseArtBack;
     [SerializeField] PauseMenu _pauseController;
@@ -157,8 +156,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Resume() {
-        _sfxMixer.SetFloat("volume", (-80 + 0.8f * 100));
-        _musicMixer.SetFloat("lowpass", 22000);
+        SetSounds(0.8f, 22000);
 
         Time.timeScale = 1;
         _pauseController.Disable();
@@ -170,13 +168,6 @@ public class GameManager : MonoBehaviour
     float _pauseTime;
     bool _hasHeldPause;
     void Update() {
-        if (_pauseController.IsActive()) {
-            _musicMixer.SetFloat("lowpass", 424);
-            _sfxMixer.SetFloat("volume", (-80 + 0 * 100));
-            if (GlobalInputManager.Get().GetPauseInput() && _pauseController.ReturnLayer() == 0) {
-                Resume();
-            }
-        }
 
         if (_hasHeldPause) {
             _hasHeldPause = GlobalInputManager.Get().GetPauseHeldInput();
@@ -186,15 +177,18 @@ public class GameManager : MonoBehaviour
             FighterFilter pauser = FighterFilter.none;
             _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
-                if (_fighterTwo.GetController().GetComponent<InputHandler>().GetPause()) {
+                pauser = _fighterOne.GetController().GetFilter();
+                if (_fighterTwo.GetController().GetComponent<InputHandler>().GetPause())
+                {
                     pauser = _fighterTwo.GetController().GetFilter();
-                    print("F" + pauser);
                 }
-
-                if (_fighterOne.GetController().GetComponent<InputHandler>().GetPause()) {
-                    pauser = _fighterOne.GetController().GetFilter();
-                    print("E" + pauser);
-                }
+                //    print("F" + pauser);
+                //}
+                //if (_fighterOne.GetController().GetComponent<InputHandler>().GetPause()) {
+                //    pauser = _fighterOne.GetController().GetFilter();
+                //    print("E" + pauser);
+                //}
+                //print("F" + pauser);
 
                 _pauseController.Enable();
                 _pauseController.SetPauseOwner(pauser);
@@ -253,13 +247,6 @@ public class GameManager : MonoBehaviour
             SetUpGame();
             NewRoundNeeded(false);
         }
-
-        //if (_fighterOne.GetController().GetFighterAction() == FighterAction.dead || _fighterTwo.GetController().GetFighterAction() == FighterAction.dead)
-        //{
-        //    _fighterOne.GetController().SetFighterAction(FighterAction.none);
-        //    _fighterTwo.GetController().SetFighterAction(FighterAction.none);
-        //    KOEvent();
-        //}
     }
 
     public void SlowDownMusic() {
@@ -619,4 +606,9 @@ public class GameManager : MonoBehaviour
         _uiCamera.SetActive(true);
     }
 
+    public void SetSounds(float volumeMult, float lowpass)
+    {
+        _musicMixer.SetFloat("lowpass", lowpass);
+        _sfxMixer.SetFloat("volume", (-80 + volumeMult * 100));
+    }
 }
