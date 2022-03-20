@@ -11,14 +11,16 @@ public class HitMessage
     public bool isPlayer;
     public bool muteVelocity;
     public FighterFilter sender;
+    public ShotType shot;
 
-    public HitMessage(Vector3 hitDirection, VelocityInfluence velocityInfluence, bool slowDownVelocity, FighterFilter sentBy)
+    public HitMessage(Vector3 hitDirection, VelocityInfluence velocityInfluence, bool slowDownVelocity, FighterFilter sentBy, ShotType shotType)
     {
         direction = hitDirection;
         influence = velocityInfluence;
         isPlayer = sentBy != FighterFilter.both;
         muteVelocity = slowDownVelocity;
         sender = sentBy;
+        shot = shotType;
     }
 }
 

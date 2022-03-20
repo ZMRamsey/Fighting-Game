@@ -24,7 +24,7 @@ public class GanzHurtbox : Hurtbox
         {
             GameManager.Get().GetCameraShaker().SetShake(0.1f, 2.0f, true);
             //hurt._speed = 1;
-            var hitMes = new HitMessage(new Vector3(axis, 5, 0), new VelocityInfluence(), false, FighterFilter.both);
+            var hitMes = new HitMessage(new Vector3(axis, 5, 0), new VelocityInfluence(), false, FighterFilter.both, ShotType.chip);
             hurt.SetOwner(FighterFilter.both);
             hurt. ProcessForce(hitMes);
             Damage();

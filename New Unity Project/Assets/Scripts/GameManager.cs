@@ -527,7 +527,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (_rally == 0 && _successive == 0) {
             _shuttle.ResetShuttle(true);
-            var hitMes = new HitMessage(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new VelocityInfluence(), false, FighterFilter.both);
+            var hitMes = new HitMessage(new Vector3(_shuttle.transform.position.x / -4f, _serveSpeed, 0f), new VelocityInfluence(), false, FighterFilter.both, ShotType.lift);
             _shuttle.Shoot(hitMes);
         }
         TimerManager.Get().SetTimerState(true);

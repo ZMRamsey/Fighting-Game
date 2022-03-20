@@ -15,6 +15,8 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] bool _canKillOnPercentSpeed;
     [SerializeField] float _gainPerHit = 0.25f;
     [SerializeField] bool _canImpactFrame;
+    [SerializeField] bool _useGravity = true;
+    [SerializeField] bool _flipGravity = false;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
@@ -62,6 +64,7 @@ public class ShuttleCock : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _source = GetComponent<AudioSource>();
         _speed = 1;
+        _rb.useGravity = false;
     }
 
     private void Start() {
@@ -201,7 +204,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        if (GetSpeedPercent() >= _killActiveOnPercent && _canImpactFrame && _filter != message.sender) {
+        if (CanKill() && _canImpactFrame && _filter != message.sender) {
             GameManager.Get().OnImpactFrame(0.1f);
             if (_impactFrameEffect) {
                 _impactFrameEffect.Play();
@@ -212,13 +215,13 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public virtual void Shoot(HitMessage message, FighterController owner) {
-        SetOwner(owner);
         Shoot(message);
+        SetOwner(owner);
     }
 
     public void Bounce(float axis) {
         _speed = 1;
-        var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both);
+        var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both, ShotType.drive);
         ProcessForce(hitMes);
     }
 
@@ -509,7 +512,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        var hitMes = new HitMessage(Vector3.zero, new VelocityInfluence(), false, FighterFilter.current);
+        var hitMes = new HitMessage(Vector3.zero, new VelocityInfluence(), false, FighterFilter.current, ShotType.drive);
         shootCoroutine = StartCoroutine(ShootProccess(hitMes, true, timer));
     }
 
@@ -538,6 +541,17 @@ public class ShuttleCock : MonoBehaviour
         //    _rb.velocity = _speed * 10 * (_rb.velocity.normalized);
         //}
 
+        if (_useGravity) {
+            var gravity = Physics.gravity * _rb.mass;
+
+            if (_flipGravity) {
+                gravity = -Physics.gravity * _rb.mass;
+            }
+
+            if (!CanKill()) {
+                _rb.AddForce(gravity, ForceMode.Acceleration);
+            }
+        }
         if (_influence != null && _canGimic && _influence.type == InfluenceType.overtime && !_frozen && _accelerationTimer < 1f) {
             _accelerationTimer += Time.fixedDeltaTime;
             _acceleration += Time.fixedDeltaTime;
@@ -555,7 +569,7 @@ public class ShuttleCock : MonoBehaviour
         Vector3 vel = _rb.velocity;
         vel.x = -vel.x;
         vel = vel.normalized * 6;
-        var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none);
+        var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none, ShotType.drive);
         Shoot(hitMes);
     }
 

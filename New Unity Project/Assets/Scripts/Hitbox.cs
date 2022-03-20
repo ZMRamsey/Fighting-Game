@@ -67,7 +67,7 @@ public class Hitbox : MonoBehaviour
                 //ball.BoundToPlayer(_character);
 
                 var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
-                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter());
+                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _currentMove.GetType());
 
                 bool isGrab = false;
 

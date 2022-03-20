@@ -11770,7 +11770,6 @@ MonoBehaviour:
   _stageCamera: {fileID: 1897574291}
   _uiCamera: {fileID: 1809863013}
   _debugCamera: {fileID: 2005752492}
-  _pausePanel: {fileID: 1487734429}
   _pauseArt: {fileID: 1692038489}
   _pauseArtBack: {fileID: 771949848}
   _pauseController: {fileID: 1172071211}
@@ -13238,7 +13237,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 10368
+    m_Bits: 75904
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -17533,14 +17532,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1311307399, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: OutputAudioMixerGroup
+    - target: {fileID: 1359552021, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552022, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552022, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552022, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552023, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552023, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_Material
       value: 
-      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
-    - target: {fileID: 975072594694678410, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359552023, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
@@ -17589,10 +17608,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6655499867361194830, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 24300002, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
 --- !u!23 &6721750681636284679

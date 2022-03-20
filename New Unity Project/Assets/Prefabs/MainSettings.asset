@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MainSettings
   m_EditorClassIdentifier: 
   _fighterOne: {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
-  _fighterTwo: {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
+  _fighterTwo: {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
   _fighterOneDevice:
     _id: 1
     _device: 0

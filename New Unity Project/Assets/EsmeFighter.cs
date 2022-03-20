@@ -107,7 +107,7 @@ public class EsmeFighter : FighterController
                 ball.SetBounciness(0.2f);
             }
 
-            var hitMes = new HitMessage(dir, new VelocityInfluence(), _currentMove.GetType() == ShotType.chip, GetFilter());
+            var hitMes = new HitMessage(dir, new VelocityInfluence(), _currentMove.GetType() == ShotType.chip, GetFilter(), _currentMove.GetType());
             ball.Shoot(hitMes, this);
 
             OnSuccessfulHit(ball.transform.position, dir, false, _currentMove.GetType(), false);
