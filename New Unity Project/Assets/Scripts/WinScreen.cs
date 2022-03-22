@@ -295,6 +295,7 @@ public class WinScreen : MonoBehaviour
                 break;
         }
         _quote.GetComponent<Scroller>().text = text;
+        //winnerAnimation.GetComponent<SpriteRenderer>().material = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideGameWinner()).GetPallete(GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideGameWinner()).GetPalleteIndex());
     }
 
     IEnumerator DisplayPause()

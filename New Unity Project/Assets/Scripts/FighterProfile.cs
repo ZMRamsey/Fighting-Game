@@ -24,6 +24,8 @@ public class FighterProfile : ScriptableObject
     [SerializeField] GameObject _superVideo;
     [SerializeField] string _superDescription;
 
+    [SerializeField] int _selectedIndex;
+
     public string GetName() {
         return _fighterName;
     }
@@ -37,7 +39,13 @@ public class FighterProfile : ScriptableObject
     }
 
     public Material GetRandomPallete() {
-        return _fighterPalettes[Random.Range(1, _fighterPalettes.Length)];
+        _selectedIndex = Random.Range(1, _fighterPalettes.Length);
+        return _fighterPalettes[_selectedIndex];
+    }
+
+    public int GetPalleteIndex()
+    {
+        return _selectedIndex;
     }
 
     public Sprite GetIconSprite() {
