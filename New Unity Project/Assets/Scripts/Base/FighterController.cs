@@ -247,17 +247,17 @@ public abstract class FighterController : MonoBehaviour
 
         ProcessInput();
 
-        if(_grabCoolDown > 0) {
+        if (_grabCoolDown > 0) {
             _grabCoolDown -= Time.fixedDeltaTime;
         }
 
-        if(_dashCoolDown > 0) {
+        if (_dashCoolDown > 0) {
             _dashCoolDown -= Time.fixedDeltaTime;
         }
 
-        if(_successHitsCoolDown > 0) {
+        if (_successHitsCoolDown > 0) {
             _successHitsCoolDown -= Time.fixedDeltaTime;
-            if(_successHitsCoolDown <= 0 || GameManager.Get().GetShuttle().GetFilter() != GetFilter()) {
+            if (_successHitsCoolDown <= 0 || GameManager.Get().GetShuttle().GetFilter() != GetFilter()) {
                 _successHitsCoolDown = 0.0f;
                 _successfulHits = 0;
             }
@@ -405,8 +405,8 @@ public abstract class FighterController : MonoBehaviour
 
     float lastXTest;
     public virtual void OnGroundMovement() {
-        if(lastXTest > 0) {
-            if(_inputHandler.GetInputX() < 0) {
+        if (lastXTest > 0) {
+            if (_inputHandler.GetInputX() < 0) {
                 OnChangeDirection(false);
             }
         }
@@ -833,13 +833,15 @@ public abstract class FighterController : MonoBehaviour
             }
         }
         else {
-            _source.PlayOneShot(_grabSound[UnityEngine.Random.Range(0, _grabSound.Length)], 0.5f);
+            if (_grabSound.Length > 0) {
+                _source.PlayOneShot(_grabSound[UnityEngine.Random.Range(0, _grabSound.Length)], 1f);
+            }
         }
-   
+
     }
 
     public void OnChangeDirection(bool isLeft) {
-        if(_runningLeftVFX == null || _runningRightVFX == null) {
+        if (_runningLeftVFX == null || _runningRightVFX == null) {
             return;
         }
 
