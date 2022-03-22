@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator _UIStage;
     [SerializeField] Animator _UIScore;
     [SerializeField] Animator _UICurrentSet;
+    [SerializeField] Animator _UIHealthBars;
     [SerializeField] TextMeshProUGUI _UISetWhite;
     [SerializeField] TextMeshProUGUI _UISetBlack;
     [SerializeField] TextMeshProUGUI _UIScoreText;
@@ -375,6 +376,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RoundSetUp(bool hideScore) {
         _killSwitch = true;
+        _UIHealthBars.SetTrigger("Out");
         yield return new WaitForSeconds(1);
 
         if (!hideScore) {
@@ -388,6 +390,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine("ServeTimer");
         yield return new WaitForSeconds(1);
+        _UIHealthBars.SetTrigger("In");
         _killSwitch = false;
     }
 
