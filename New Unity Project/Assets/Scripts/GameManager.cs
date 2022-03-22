@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator _UIBars;
     [SerializeField] Animator _UIStage;
     [SerializeField] Animator _UIScore;
+    [SerializeField] Animator _UICurrentSet;
+    [SerializeField] TextMeshProUGUI _UISetWhite;
+    [SerializeField] TextMeshProUGUI _UISetBlack;
     [SerializeField] TextMeshProUGUI _UIScoreText;
     [SerializeField] TextMeshProUGUI _UIScoreF1;
     [SerializeField] TextMeshProUGUI _UIScoreF2;
@@ -263,6 +266,7 @@ public class GameManager : MonoBehaviour
         var pointTwo = string.Format("{0:00}", ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
         _UIScoreText.text = $"{pointOne} - {pointTwo}";
     }
+
     bool _firstTrigger;
     void SetUpGame() {
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
@@ -301,6 +305,12 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
         _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
+
+
+        _UISetWhite.text = "SET " + ScoreManager.Get().GetCurrentRound();
+        _UISetBlack.text = "SET " + ScoreManager.Get().GetCurrentRound();
+
+        _UICurrentSet.SetTrigger("Set");
 
 
         if (ScoreManager.Get().GetLastScorer() == 0) {
