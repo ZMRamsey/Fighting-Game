@@ -267,19 +267,13 @@ public class GameManager : MonoBehaviour
         _UIScoreText.text = $"{pointOne} - {pointTwo}";
     }
 
-    bool _firstTrigger;
+    bool _hasFirstTriggered;
     void SetUpGame() {
         if (ScoreManager.Get().gameOver != FighterFilter.both) {
             EndGame();
             return;
         }
-        else {
-            if (_firstTrigger) {
-                FlashScore();
-            }
-        }
 
-        _firstTrigger = true;
 
         if (_lastSuperEvent != null) {
             _lastSuperEvent.DisableScreen();
@@ -306,12 +300,7 @@ public class GameManager : MonoBehaviour
         _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
         _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
 
-
-        _UISetWhite.text = "SET " + ScoreManager.Get().GetCurrentRound();
-        _UISetBlack.text = "SET " + ScoreManager.Get().GetCurrentRound();
-
-        _UICurrentSet.SetTrigger("Set");
-
+        StartCoroutine(RoundSetUp(!_hasFirstTriggered && ScoreManager.Get().gameOver == FighterFilter.both));
 
         if (ScoreManager.Get().GetLastScorer() == 0) {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
@@ -331,8 +320,11 @@ public class GameManager : MonoBehaviour
         _shuttle.SetBounciness(1f);
         TimerManager.Get().ResetPointTimer();
         SetLastHitter(FighterFilter.both);
+
+        _hasFirstTriggered = true;
+
         //_shuttle.transform.position = _shuttleSpawn;
-        StartCoroutine("ServeTimer");
+        _shuttle.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public Shaker GetCameraShaker() {
@@ -379,6 +371,24 @@ public class GameManager : MonoBehaviour
         }
 
         impactCoroutine = StartCoroutine(ImpactFrameProcess(time));
+    }
+
+    IEnumerator RoundSetUp(bool hideScore) {
+        _killSwitch = true;
+        yield return new WaitForSeconds(1);
+
+        if (!hideScore) {
+            FlashScore();
+            yield return new WaitForSeconds(2);
+        }
+
+        _UISetWhite.text = "SET " + (ScoreManager.Get().GetCurrentPoint() + 1);
+        _UISetBlack.text = "SET " + (ScoreManager.Get().GetCurrentPoint() + 1);
+        _UICurrentSet.SetTrigger("Set");
+        yield return new WaitForSeconds(1);
+        StartCoroutine("ServeTimer");
+        yield return new WaitForSeconds(1);
+        _killSwitch = false;
     }
 
     IEnumerator ImpactFrameProcess(float time) {

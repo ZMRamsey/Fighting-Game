@@ -48,7 +48,15 @@ public class InputHandler : MonoBehaviour
     }
 
     void Update() {
-        if(Time.timeScale <= 0 || !GameManager.Get().IsGameActive()) {
+        _inputX = 0.0f;
+        if (Time.timeScale <= 0 || !GameManager.Get().IsGameActive()) {
+            _jumpInput = false;
+            _jumpHeld = false;
+            _crouchInput = false;
+            _smashInput = false;
+            _smashInput = false;
+            _driveInput = false;
+            _dropInput = false;
             return;
         }
 
@@ -56,7 +64,6 @@ public class InputHandler : MonoBehaviour
 
             _pauseHeld = _keyboard.escapeKey.IsPressed();
 
-            _inputX = 0.0f;
             if (_keyboard.aKey.IsPressed()) {
                 _inputX = 1;
             }
