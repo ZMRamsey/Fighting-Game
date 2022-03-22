@@ -39,7 +39,6 @@ public class MrHandyHitBox : MonoBehaviour
             }
 
             shuttle.SetVelocity(calcVel);
-            print("vel");
             _handy.AddHit();
             transform.root.GetComponent<AudioSource>().PlayOneShot(_smacks[Random.Range(0, _smacks.Length)], 1.5f);
         }

@@ -83,7 +83,7 @@ public class Hitbox : MonoBehaviour
                     ball.Shoot(hiMes, _self);
                 }
 
-                _self.OnSuccessfulHit(collision.ClosestPointOnBounds(transform.position), dir, ball.CanKill(), _currentMove.GetType(), isGrab);
+                _self.OnSuccessfulHit(collision.bounds.center, dir, ball.CanKill(), _currentMove.GetType(), isGrab);
 
                 UpdateDebug(collision);
             }

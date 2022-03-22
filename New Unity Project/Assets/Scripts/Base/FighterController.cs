@@ -189,9 +189,17 @@ public abstract class FighterController : MonoBehaviour
 
         if (_filter == FighterFilter.one) {
             _hitboxFlipper.localScale = new Vector3(1, 1, 1);
+            _renderer.sortingOrder = -1;
+            if (_rgbRenderer) {
+                _rgbRenderer.sortingOrder = 0;
+            }
         }
         else {
             _hitboxFlipper.localScale = new Vector3(-1, 1, 1);
+            _renderer.sortingOrder = -3;
+            if (_rgbRenderer) {
+                _rgbRenderer.sortingOrder = -2;
+            }
         }
 
         if (_filter == FighterFilter.one) {
