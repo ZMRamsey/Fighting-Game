@@ -219,8 +219,6 @@ public class AIBrain : MonoBehaviour
 
             bool canShoot = true;
 
-            print(_shuttle.IsGrabbed(_controller));
-
             if (_shuttle.IsGrabbed(_controller)) {
                 _handler._jumpInput = true;
                 _handler._jumpHeld = true;
