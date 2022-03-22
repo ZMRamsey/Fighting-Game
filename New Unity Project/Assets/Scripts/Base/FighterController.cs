@@ -265,7 +265,7 @@ public abstract class FighterController : MonoBehaviour
 
         if (_successHitsCoolDown > 0) {
             _successHitsCoolDown -= Time.fixedDeltaTime;
-            if (_successHitsCoolDown <= 0 || GameManager.Get().GetShuttle().GetFilter() != GetFilter()) {
+            if (_successHitsCoolDown <= 0) {
                 _successHitsCoolDown = 0.0f;
                 _successfulHits = 0;
             }
@@ -356,8 +356,7 @@ public abstract class FighterController : MonoBehaviour
             }
 
             if (_isDashing) {
-                //_rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
-                _extraVelocity = new Vector3(_lastTapAxis.x * 10, _lastTapAxis.y * 2, 0);
+                _rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
             }
 
             _extraVelocity *= 0.9f;
@@ -793,14 +792,14 @@ public abstract class FighterController : MonoBehaviour
         _successHitsCoolDown = 2;
 
 
-        if (GameManager.Get().GetSuccessive() > 1) {
-            GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(GameManager.Get().GetSuccessive());
+        if (_successfulHits > 1) {
+            GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(_successfulHits);
         }
 
         _isDashing = false;
         AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
 
-        if (!isGrab && _successfulHits > 1) {
+        if (!isGrab && _successfulHits > 2) {
             _extraVelocity.x = 8;
             if (GetFilter() == FighterFilter.two) {
                 _extraVelocity.x = -8;
