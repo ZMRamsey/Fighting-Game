@@ -38,7 +38,7 @@ public class ScoreManager : MonoBehaviour
             scorerN = 1;
         }
         _scores[_roundIndex, scorerN]++;
-        Debug.Log("Round " + (_roundIndex+1) + " Point: " + GetCurrentPoint() + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
+        Debug.Log("Round " + (_roundIndex+1) + " Point: " + (GetCurrentPoint()-1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
         if (_scores[_roundIndex, scorerN] == _pointsToWin)
         {
             NextRound();
@@ -173,6 +173,6 @@ public class ScoreManager : MonoBehaviour
 
     public int GetCurrentPoint()
     {
-        return (GetScores()[GetCurrentRound() - 1, 1] + GetScores()[GetCurrentRound() - 1, 0]);
+        return (GetScores()[GetCurrentRound() - 1, 1] + GetScores()[GetCurrentRound() - 1, 0] + 1);
     }
 }
