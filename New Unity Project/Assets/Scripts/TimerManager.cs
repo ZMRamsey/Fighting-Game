@@ -53,7 +53,7 @@ public class TimerManager : MonoBehaviour
     void Update()
     {
 
-        if (timerActive && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null)
+        if (timerActive && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null && GameManager.Get().roundCoroutine == null)
         {
             currentTime -= Time.deltaTime;
             if (timerActive && currentTime <= 0)
@@ -64,7 +64,7 @@ public class TimerManager : MonoBehaviour
 
             if (timerActive)
             {
-                currentTimeText.text = currentTime.ToString().Split('.')[0];
+                currentTimeText.text = Mathf.Ceil(currentTime).ToString().Split('.')[0];
                 if (currentTimeText.text == "30" && !redFlag)
                 {
                     redTimer();

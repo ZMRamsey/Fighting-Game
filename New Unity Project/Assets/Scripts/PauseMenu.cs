@@ -24,8 +24,12 @@ public class PauseMenu : MonoBehaviour
     [Header("Movelist Left Side")]
     [SerializeField] GameObject[] _movelistOptions;
     [SerializeField] Color[] _colorSet;
-    [SerializeField] GameObject _arrows;
+    [SerializeField] GameObject _universalArrows;
+    [SerializeField] GameObject _characterArrows;
     private int _mIndex;
+
+    [SerializeField] MoveListOption[] _topSideStrikes;
+    [SerializeField] MoveListOption[] _topSideUniversal;
 
     [Header("Movelist Right Side")]
     [SerializeField] GameObject[] _movelistRightSide;
@@ -131,7 +135,7 @@ public class PauseMenu : MonoBehaviour
         {
             DeselectLeftSide();
             _mIndex++;
-            if (_mIndex == 7)
+            if (_mIndex == 8)
             {
                 _mIndex = 0;
             }
@@ -144,12 +148,25 @@ public class PauseMenu : MonoBehaviour
             _mIndex--;
             if (_mIndex == -1)
             {
-                _mIndex = 6;
+                _mIndex = 7;
             }
             SelectLeftSide();
         }
 
-        if (GlobalInputManager.Get().GetRightInput(_pauseOwner) && _mIndex == 4)
+
+        if ((GlobalInputManager.Get().GetLeftInput(_pauseOwner) || GlobalInputManager.Get().GetRightInput(_pauseOwner)) && _mIndex == 0)
+        {
+            if(_movelistOptions[0].GetComponentInChildren<TextMeshProUGUI>().text == "Strike")
+            {
+                SetTopSet(_topSideUniversal);
+            }
+            else
+            {
+                SetTopSet(_topSideStrikes);
+            }
+        }
+
+        if (GlobalInputManager.Get().GetRightInput(_pauseOwner) && _mIndex == 5)
         {
             _rIndex++;
             if (_rIndex == 8)
@@ -159,7 +176,7 @@ public class PauseMenu : MonoBehaviour
             ChangeSpecialCharacter();
         }
 
-        if (GlobalInputManager.Get().GetLeftInput(_pauseOwner) && _mIndex == 4)
+        if (GlobalInputManager.Get().GetLeftInput(_pauseOwner) && _mIndex == 5)
         {
             _rIndex--;
             if (_rIndex == -1)
@@ -236,7 +253,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ResetLeftSide()
     {
-        _arrows.GetComponent<Image>().color = _colorSet[1];
+        _universalArrows.GetComponent<Image>().color = Color.white;
+        _characterArrows.GetComponent<Image>().color = _colorSet[1];
         _movelistOptions[0].GetComponent<Image>().color = _colorSet[1];
         _movelistOptions[0].GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
     }
@@ -248,10 +266,16 @@ public class PauseMenu : MonoBehaviour
         {
             textbox.color = _colorSet[0];
         }
-        if (_mIndex == 4)
+        if (_mIndex == 0)
         {
-            _arrows.GetComponent<Image>().color = _colorSet[1];
-            _arrows.GetComponent<Animator>().SetBool("Idle", true);
+            _universalArrows.GetComponent<Image>().color = _colorSet[1];
+            _universalArrows.GetComponent<Animator>().SetBool("Idle", true);
+            UpdateRightSide();
+        }
+        else if (_mIndex == 5)
+        {
+            _characterArrows.GetComponent<Image>().color = _colorSet[1];
+            _characterArrows.GetComponent<Animator>().SetBool("Idle", true);
         }
     }
 
@@ -262,10 +286,16 @@ public class PauseMenu : MonoBehaviour
         {
             textbox.color = Color.white;
         }
-        if (_mIndex == 4)
+        if (_mIndex == 0)
         {
-            _arrows.GetComponent<Image>().color = Color.white;
-            _arrows.GetComponent<Animator>().SetBool("Idle", false);
+            _universalArrows.GetComponent<Image>().color = Color.white;
+            _universalArrows.GetComponent<Animator>().SetBool("Idle", false);
+            UpdateRightSide();
+        }
+        else if (_mIndex == 5)
+        {
+            _characterArrows.GetComponent<Image>().color = Color.white;
+            _characterArrows.GetComponent<Animator>().SetBool("Idle", false);
             ChangeSpecialCharacter();
         }
         else
@@ -286,18 +316,28 @@ public class PauseMenu : MonoBehaviour
 
     public void ChangeSpecialCharacter()
     {
-        _movelistOptions[4].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetName();
-        _movelistOptions[5].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetSuperName();
-        _movelistOptions[6].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetGimmickName();
+        _movelistOptions[5].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetName();
+        _movelistOptions[6].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetSuperName();
+        _movelistOptions[7].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetGimmickName();
 
-        _rightSideSprites[4] = _fighterProfiles[_rIndex].GetIconSprite();
         _rightSideSprites[5] = _fighterProfiles[_rIndex].GetIconSprite();
         _rightSideSprites[6] = _fighterProfiles[_rIndex].GetIconSprite();
+        _rightSideSprites[7] = _fighterProfiles[_rIndex].GetIconSprite();
 
-        _rightSideDescriptions[4] = _fighterProfiles[_rIndex].GetFighterDesc();
-        _rightSideDescriptions[5] = _fighterProfiles[_rIndex].GetSuperDesc();
-        _rightSideDescriptions[6] = _fighterProfiles[_rIndex].GetGimmickDesc();
+        _rightSideDescriptions[5] = _fighterProfiles[_rIndex].GetFighterDesc();
+        _rightSideDescriptions[6] = _fighterProfiles[_rIndex].GetSuperDesc();
+        _rightSideDescriptions[7] = _fighterProfiles[_rIndex].GetGimmickDesc();
 
+        UpdateRightSide();
+    }
+    public void SetTopSet(MoveListOption[] set)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            _movelistOptions[i].GetComponentInChildren<TextMeshProUGUI>().text = set[i].GetOptionName();
+            //_rightSideSprites[0] = _fighterProfiles[_rIndex].GetIconSprite();
+            _rightSideDescriptions[i] = set[i].GetOptionDesc();
+        }
         UpdateRightSide();
     }
 }

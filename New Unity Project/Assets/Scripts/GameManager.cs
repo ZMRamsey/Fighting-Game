@@ -378,7 +378,7 @@ public class GameManager : MonoBehaviour
         impactCoroutine = StartCoroutine(ImpactFrameProcess(time));
     }
 
-    Coroutine roundCoroutine;
+    public Coroutine roundCoroutine;
     IEnumerator RoundSetUp(bool hideScore) {
         _killSwitch = true;
         _UIHealthBars.SetTrigger("Out");
