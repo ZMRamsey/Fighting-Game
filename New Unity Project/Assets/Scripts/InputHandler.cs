@@ -48,8 +48,8 @@ public class InputHandler : MonoBehaviour
     }
 
     void Update() {
-        _inputX = 0.0f;
         if (Time.timeScale <= 0 || !GameManager.Get().IsGameActive()) {
+            _inputX = 0.0f;
             _jumpInput = false;
             _jumpHeld = false;
             _crouchInput = false;
@@ -63,6 +63,8 @@ public class InputHandler : MonoBehaviour
         if (_keyboard != null) {
 
             _pauseHeld = _keyboard.escapeKey.IsPressed();
+
+            _inputX = 0.0f;
 
             if (_keyboard.aKey.IsPressed()) {
                 _inputX = 1;
