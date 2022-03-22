@@ -159,6 +159,10 @@ public class GameManager : MonoBehaviour
         SetUpGame();
     }
 
+    public bool NoActiveCoroutines() {
+        return KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null && roundCoroutine == null;
+    }
+
     public void Resume() {
         SetSounds(0.8f, 22000);
 
@@ -177,13 +181,12 @@ public class GameManager : MonoBehaviour
             _hasHeldPause = GlobalInputManager.Get().GetPauseHeldInput();
         }
 
-        if (!_hasHeldPause && GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && KOCoroutine == null && EndGameCoroutine == null && stageCoroutine == null && impactCoroutine == null) {
+        if (!_hasHeldPause && GlobalInputManager.Get().GetPauseHeldInput() && !_isPaused && NoActiveCoroutines()) {
             FighterFilter pauser = FighterFilter.none;
             _pauseTime += Time.fixedDeltaTime * 2;
             if (_pauseTime >= 1) {
                 pauser = _fighterOne.GetController().GetFilter();
-                if (_fighterTwo.GetController().GetComponent<InputHandler>().GetPause())
-                {
+                if (_fighterTwo.GetController().GetComponent<InputHandler>().GetPause()) {
                     pauser = _fighterTwo.GetController().GetFilter();
                 }
                 //    print("F" + pauser);
@@ -301,7 +304,7 @@ public class GameManager : MonoBehaviour
         _fighterOne.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 0]);
         _fighterTwo.UpdateScore(ScoreManager.Get().GetScores()[ScoreManager.Get().GetCurrentRound() - 1, 1]);
 
-        StartCoroutine(RoundSetUp(!_hasFirstTriggered && ScoreManager.Get().gameOver == FighterFilter.both));
+        roundCoroutine = StartCoroutine(RoundSetUp(!_hasFirstTriggered && ScoreManager.Get().gameOver == FighterFilter.both));
 
         if (ScoreManager.Get().GetLastScorer() == 0) {
             _shuttle.transform.position = new Vector3(_shuttleSpawn.x + 5, _shuttleSpawn.y, _shuttleSpawn.z);
@@ -374,6 +377,7 @@ public class GameManager : MonoBehaviour
         impactCoroutine = StartCoroutine(ImpactFrameProcess(time));
     }
 
+    Coroutine roundCoroutine;
     IEnumerator RoundSetUp(bool hideScore) {
         _killSwitch = true;
         _UIHealthBars.SetTrigger("Out");
@@ -392,6 +396,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         _UIHealthBars.SetTrigger("In");
         _killSwitch = false;
+
+        roundCoroutine = null;
+    }
+
+    public bool IsInRoundSetup() {
+        return roundCoroutine != null;
     }
 
     IEnumerator ImpactFrameProcess(float time) {
@@ -629,8 +639,7 @@ public class GameManager : MonoBehaviour
         _uiCamera.SetActive(true);
     }
 
-    public void SetSounds(float volumeMult, float lowpass)
-    {
+    public void SetSounds(float volumeMult, float lowpass) {
         _musicMixer.SetFloat("lowpass", lowpass);
         _sfxMixer.SetFloat("volume", (-80 + volumeMult * 100));
     }
