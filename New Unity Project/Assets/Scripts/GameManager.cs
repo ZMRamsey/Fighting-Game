@@ -319,6 +319,7 @@ public class GameManager : MonoBehaviour
         _shuttle.SetOwner(FighterFilter.both);
 
         _rally = 0;
+        _successive = 0;
         _targetRally = 10;
         _shuttle.resetBounces();
         _shuttle.SetBounciness(1f);

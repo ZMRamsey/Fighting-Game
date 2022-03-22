@@ -11878,6 +11878,8 @@ GameObject:
   - component: {fileID: 1720483489}
   - component: {fileID: 1720483491}
   - component: {fileID: 1720483490}
+  - component: {fileID: 1720483493}
+  - component: {fileID: 1720483492}
   m_Layer: 0
   m_Name: Holder
   m_TagString: Untagged
@@ -11949,6 +11951,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720483488}
   m_CullTransparentMesh: 1
+--- !u!95 &1720483492
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720483488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 33c0d3a277ed91a4ebe5963ffbcca74c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1720483493
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720483488}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1733681238
 GameObject:
   m_ObjectHideFlags: 0
@@ -12249,6 +12282,7 @@ MonoBehaviour:
   _UIStage: {fileID: 1637076496}
   _UIScore: {fileID: 1127503480}
   _UICurrentSet: {fileID: 1621743070}
+  _UIHealthBars: {fileID: 1720483492}
   _UISetWhite: {fileID: 2110277491}
   _UISetBlack: {fileID: 165401086}
   _UIScoreText: {fileID: 1701530020}

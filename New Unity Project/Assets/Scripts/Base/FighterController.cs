@@ -73,7 +73,6 @@ public abstract class FighterController : MonoBehaviour
     float _commandMeter;
     float _yVelocity;
     Vector3 _lastTapAxis;
-    float _meterPenaltyTimer;
     float _grabCoolDown;
     float _dashCoolDown;
     float _successHitsCoolDown;
@@ -230,6 +229,7 @@ public abstract class FighterController : MonoBehaviour
 
         _commandMeter = 0.0f;
         _currentJumps = 0;
+        _successfulHits = 0;
         _canJump = true;
         _canAttack = true;
         _hasBounced = false;
