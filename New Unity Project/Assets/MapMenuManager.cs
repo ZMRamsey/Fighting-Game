@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class MapMenuManager : MonoBehaviour
 {
-
     //For resetting menus
     public GameObject completeMainMenu;
     public GameObject completeCharacterSelection;
@@ -182,9 +181,11 @@ public class MapMenuManager : MonoBehaviour
 
     void Update()
     {
+        
         if (_moveAside)
         {
             MoveAside();
+            //opMan.EnableCharacters();
         }
         else if (!_moveAside)
         {

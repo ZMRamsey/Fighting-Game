@@ -16214,9 +16214,9 @@ MonoBehaviour:
   - {fileID: 1693861505}
   - {fileID: 2114403264}
   - {fileID: 657925353}
+  - {fileID: 2110113987}
   - {fileID: 1693861505}
   - {fileID: 2114403264}
-  - {fileID: 2110113987}
   spriteDeselected: {fileID: 21300000, guid: 4bc0331491e9a8146b888e6a6a6fbfb6, type: 3}
   spriteSelected: {fileID: 21300000, guid: 862a2d572f251774daaad2870d63f79c, type: 3}
   randSelected: {fileID: 21300000, guid: a61647b8a3b08b849a8f28e2d183f2ab, type: 3}
