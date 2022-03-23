@@ -52,7 +52,6 @@ public class AIBrain : MonoBehaviour
             _verticalTarget = _shuttle.transform.position + _shuttle.GetVelocity();
             _horizontalTarget = _verticalTarget;
             _verticalTarget.y = 0;
-            _horizontalTarget.x = transform.position.x;
             _horizontalTarget.y = Mathf.Clamp(_horizontalTarget.y, 0, _shuttle.transform.position.y);
 
             var grabbed = _shuttle.IsGrabbed(_controller);
@@ -80,8 +79,14 @@ public class AIBrain : MonoBehaviour
                 }
             }
 
+            Vector3 hitOffset = Vector3.right * 0.5f;
 
-            if (!grabbed && Vector3.Distance(transform.position, _shuttle.transform.position) < Mathf.Clamp(Mathf.Sqrt(_shuttle.GetVelocity().magnitude), 2, 20)) {
+            if(_controller.GetFilter() == FighterFilter.one) {
+                hitOffset = -Vector3.right * 0.5f;
+            }
+
+
+            if (!grabbed && Vector3.Distance(transform.position + hitOffset, _shuttle.transform.position) < Mathf.Clamp(Mathf.Sqrt(_shuttle.GetVelocity().magnitude), 2, 20)) {
                 ProcessHit();
             }
 
@@ -367,7 +372,7 @@ public class AIBrain : MonoBehaviour
         }
 
 
-        if (_horizontalTarget.y >= transform.position.y + 1) {
+        if (IsTargetOnMySide() && HeadingMyDirection() && _horizontalTarget.y >= transform.position.y + 1) {
             _handler._jumpInput = true;
             _handler._jumpHeld = true;
         }
@@ -487,6 +492,15 @@ public class AIBrain : MonoBehaviour
         }
         else {
             return _shuttle.transform.position.x < 0f;
+        }
+    }
+
+    bool IsTargetOnMySide() {
+        if (_controller.GetFilter() == FighterFilter.one) {
+            return _verticalTarget.x > 0f;
+        }
+        else {
+            return _verticalTarget.x < 0f;
         }
     }
 
