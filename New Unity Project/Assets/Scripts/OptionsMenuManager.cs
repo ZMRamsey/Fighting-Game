@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.InputSystem;
 
+
+//Need to figure out why the characters are suddenly just dissappearing for seemingly no reason now when the map selection is active.
 public class OptionsMenuManager : MonoBehaviour
 {
 
@@ -13,6 +15,9 @@ public class OptionsMenuManager : MonoBehaviour
     }
 
     public GameObject MMenuScript;
+
+    int c1 = 0;
+    int c2 = 0;
 
     public int _selectionIndex = 0;
     public int _confirmedIndex = 0;
@@ -70,6 +75,12 @@ public class OptionsMenuManager : MonoBehaviour
 
     public int _maxCharacters = 6;
 
+    public void EnableCharacters()
+    {
+        animatedCharactersLeft[c1].SetActive(true);
+        animatedCharactersRight[c2].SetActive(true);
+    }
+
     void SelectHighlightedCharacter()
     {
         if(_confirmedIndex == 0)
@@ -85,6 +96,7 @@ public class OptionsMenuManager : MonoBehaviour
                 animatedCharactersLeft[_selectionIndex].SetActive(true);
             }
             _settings.SetFighterOneProfile(_profiles[_selectionIndex]);
+            c1 = _selectionIndex;
         }
         else
         {
@@ -99,6 +111,7 @@ public class OptionsMenuManager : MonoBehaviour
                 animatedCharactersRight[_selectionIndex].SetActive(true);
             }
             _settings.SetFighterTwoProfile(_profiles[_selectionIndex]);
+            c2 = _selectionIndex;
         }
         
 
@@ -114,8 +127,9 @@ public class OptionsMenuManager : MonoBehaviour
 
     void LoadRuleSetSelect()
     {
-
-        animatedCharactersCentre[_selectionIndex].SetActive(false);
+        for(int i = 0; i < 7; i++){
+            animatedCharactersCentre[i].SetActive(false);
+        }
         Debug.Log("Selection Index: " + _selectionIndex);
         man._moveAside = true;
         _isSelectingMap = true;
@@ -127,7 +141,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
             buttons[_selectionIndex].GetComponent<Image>().sprite = randDeSelected;
         }
-        
+        EnableCharacters();
 
 
     }
@@ -150,6 +164,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     void DeselectCharacter()
     {
+        Debug.Log("Deselect Test");
         if(_confirmedIndex == 0)
         {
             for (int i = 0; i < 7; i++)
