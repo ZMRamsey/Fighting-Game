@@ -32,6 +32,8 @@ public class ControllerAssignment : MonoBehaviour
     public GameObject[] leftSelectors;
     public GameObject[] rightSelectors;
 
+    public GameObject text;
+
     [SerializeField] GameSettings _settings;
     [SerializeField] FighterProfile[] _profiles;
 
@@ -218,6 +220,7 @@ public class ControllerAssignment : MonoBehaviour
             if(rot._PlayerOptionSelected == 0)
             {
                 readyToPlay = true;
+                text.SetActive(true);
             }
             return;
         }
@@ -234,6 +237,7 @@ public class ControllerAssignment : MonoBehaviour
             rightSelectors[2].SetActive(true);
             _player2Player = true;
             readyToPlay = true;
+            text.SetActive(true);
             return;
         }
     }
@@ -256,6 +260,7 @@ public class ControllerAssignment : MonoBehaviour
             if (rot._PlayerOptionSelected == 0)
             {
                 readyToPlay = true;
+                text.SetActive(true);
             }
             return;
         }
@@ -272,6 +277,7 @@ public class ControllerAssignment : MonoBehaviour
             rightSelectors[1].SetActive(true);
             _player2Player = true;
             readyToPlay = true;
+            text.SetActive(true);
             return;
         }
     }
