@@ -16,8 +16,8 @@ MonoBehaviour:
   _fighterTwo: {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
   _fighterOneDevice:
     _id: 1
-    _device: 0
-    _inputState: 2
+    _device: 1
+    _inputState: 1
   _fighterTwoDevice:
     _id: 1
     _device: 1

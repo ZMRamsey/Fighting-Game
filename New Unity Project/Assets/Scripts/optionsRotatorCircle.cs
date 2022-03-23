@@ -27,6 +27,10 @@ public class optionsRotatorCircle : MonoBehaviour
     //Display Options
     int resIndex = 0;
 
+    //Options Border
+    public GameObject border50opac;
+    public GameObject border100opac;
+
     bool _hasGoneUp = false;
     bool _hasGoneDown = false;
     bool _hasWrappedAroundToPlay = false;
@@ -183,11 +187,11 @@ public class optionsRotatorCircle : MonoBehaviour
         }
     }
 
-    void ConfirmSettingsChoices()
-    {
-        confirmSelectionBox.SetActive(true);
-        _isConfirmingOptions = true;
-    }
+    //void ConfirmSettingsChoices()
+    //{
+    //    confirmSelectionBox.SetActive(true);
+    //    _isConfirmingOptions = true;
+    //}
     void controlSelectionWheel()
     {
         _isControllingSubMenu = false;
@@ -199,7 +203,7 @@ public class optionsRotatorCircle : MonoBehaviour
 
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         subSceneIndex = 10;
-        ConfirmSettingsChoices();
+        //ConfirmSettingsChoices();
     }
 
     void ReturnToMenu()
@@ -241,6 +245,27 @@ public class optionsRotatorCircle : MonoBehaviour
         {
             ChangeToAudio();
         }
+
+        if(sceneIndex == 2)
+        {
+            DisableAllBorders();
+        }
+    }
+
+    void EnableOptionsBorder()
+    {
+        border50opac.SetActive(false);
+        border100opac.SetActive(true);
+    }
+    void DisableOptionsBorder()
+    {
+        border50opac.SetActive(true);
+        border100opac.SetActive(false);
+    }
+    void DisableAllBorders()
+    {
+        border50opac.SetActive(false);
+        border100opac.SetActive(false);
     }
 
     void ResetOptions()
@@ -268,13 +293,14 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             
         }
-        else if (Keyboard.current.zKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+        else if ((Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
         {
             controlSelectionWheel();
         }
 
         if (_isControllingSubMenu == false)
         {
+            DisableOptionsBorder();
             if (!_isConfirmingOptions)
             {
                 if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
@@ -290,6 +316,7 @@ public class optionsRotatorCircle : MonoBehaviour
                 }
                 else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
                 {
+                    Debug.Log("Options Move Down Submenu");
                     _rotatorConstant -= 30.0f;
                     sceneIndex += 1;
                     MoveUp();
@@ -309,6 +336,7 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             else
             {
+                
                 if((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
                 {
                     _hasConfirmedOptions = true;
@@ -325,7 +353,8 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         else
         {
-            if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+            EnableOptionsBorder();
+            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
             {
                 subSceneIndex -= 1;
                 if(subSceneIndex < firstOption)
@@ -337,7 +366,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
             {
                 subSceneIndex += 1;
                 if (subSceneIndex > lastOption)
