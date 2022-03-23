@@ -95,27 +95,11 @@ public class ShuttleCock : MonoBehaviour
     Vector3 _lastVelocity;
     Vector3 _lastShootDirection;
     public void ProcessForce(HitMessage message) {
-        var charge = 0;
         InputHandler handler = null;
         Vector3 influence = Vector3.zero;
 
         if (_grabber != null) {
             ReleaseFromPlayer(false);
-        }
-
-
-        if (message.sender == FighterFilter.one) {
-            handler = GameManager.Get().GetFighterOne().GetComponent<InputHandler>();
-            if (handler.GetCharge()) {
-                charge = 1;
-            }
-        }
-
-        if (message.sender == FighterFilter.two) {
-            handler = GameManager.Get().GetFighterTwo().GetComponent<InputHandler>();
-            if (handler.GetCharge()) {
-                charge = 1;
-            }
         }
 
         if (handler != null) {
@@ -136,7 +120,7 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        _canGimic = !message.muteVelocity && charge <= 0.1f;
+        _canGimic = !message.muteVelocity;
 
         float processedSpeed = _speed;
         _acceleration = 0;
@@ -145,10 +129,6 @@ public class ShuttleCock : MonoBehaviour
 
         if (message.muteVelocity) {
             processedSpeed = 2f;
-        }
-
-        if (charge <= 0.1f) {
-            processedSpeed = 1f;
         }
 
         _hit.Play();
