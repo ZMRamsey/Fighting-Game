@@ -74,6 +74,7 @@ public class ShuttleCock : MonoBehaviour
     [ContextMenu("Reset Ball")]
     public virtual void ResetShuttle(bool freeze) {
         _speed = 1;
+        ReleaseFromPlayer(false);
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);

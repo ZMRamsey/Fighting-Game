@@ -175,6 +175,8 @@ public class GameManager : MonoBehaviour
 
     float _pauseTime;
     bool _hasHeldPause;
+
+    float _groundTime;
     void Update() {
 
         if (_hasHeldPause) {
@@ -241,13 +243,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && !_shuttle.IsFrozen() && KOCoroutine == null && EndGameCoroutine == null) {
+        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && NoActiveCoroutines()) {
             string scorer = "one";
             if (_shuttle.transform.position.x < 0) {
                 scorer = "two";
             }
-            ScoreManager.Get().UpdateScore(scorer, "GroundOut");
-            SetUpGame();
+            _groundTime += Time.fixedDeltaTime;
+            if (_groundTime > 2)
+            {
+                ScoreManager.Get().UpdateScore(scorer, "GroundOut");
+                SetUpGame();
+                _groundTime = 0;
+            }
         }
 
         if (NewRound() && KOCoroutine == null && EndGameCoroutine == null) {
@@ -283,6 +290,7 @@ public class GameManager : MonoBehaviour
             _lastSuperEvent.DisableScreen();
         }
 
+        _killSwitch = true;
         ResetCoroutines();
 
         _stageCamera.SetActive(true);
