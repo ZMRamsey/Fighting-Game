@@ -247,6 +247,7 @@ public class PauseMenu : MonoBehaviour
         _mIndex = 0;
         _pauseLayer = 2;
         ChangeSpecialCharacter();
+        SetTopSet(_topSideStrikes);
         _movelistPanel.SetActive(true);
         _pausePanel.SetActive(false);
     }
