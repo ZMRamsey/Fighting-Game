@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -33,7 +34,8 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Movelist Right Side")]
     [SerializeField] GameObject[] _movelistRightSide;
-    [SerializeField] Sprite[] _rightSideSprites;
+    [SerializeField] VideoClip[] _rightSideSprites;
+    [SerializeField] GameObject _videoHolder;
     [SerializeField] string[] _rightSideDescriptions;
     [SerializeField] FighterProfile[] _fighterProfiles;
     private int _rIndex;
@@ -309,9 +311,13 @@ public class PauseMenu : MonoBehaviour
     {
         //Final
         _movelistRightSide[0].GetComponent<TextMeshProUGUI>().text = _movelistOptions[_mIndex].GetComponentInChildren<TextMeshProUGUI>().text;
-        //Temp
-        _movelistRightSide[1].GetComponent<Image>().sprite = _rightSideSprites[_mIndex];
         //Temp?
+        _videoHolder.SetActive(true);
+        if (_rightSideSprites[_mIndex] == null)
+        {
+            _videoHolder.SetActive(false);
+        }
+        _movelistRightSide[1].GetComponentInChildren<VideoPlayer>().clip = _rightSideSprites[_mIndex];
         _movelistRightSide[2].GetComponent<TextMeshProUGUI>().text = _rightSideDescriptions[_mIndex];
     }
 
@@ -321,9 +327,9 @@ public class PauseMenu : MonoBehaviour
         _movelistOptions[6].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetSuperName();
         _movelistOptions[7].GetComponentInChildren<TextMeshProUGUI>().text = _fighterProfiles[_rIndex].GetGimmickName();
 
-        _rightSideSprites[5] = _fighterProfiles[_rIndex].GetIconSprite();
-        _rightSideSprites[6] = _fighterProfiles[_rIndex].GetIconSprite();
-        _rightSideSprites[7] = _fighterProfiles[_rIndex].GetIconSprite();
+        //_rightSideSprites[5] = _fighterProfiles[_rIndex].GetIconSprite();
+        //_rightSideSprites[6] = _fighterProfiles[_rIndex].GetIconSprite();
+        //_rightSideSprites[7] = _fighterProfiles[_rIndex].GetIconSprite();
 
         _rightSideDescriptions[5] = _fighterProfiles[_rIndex].GetFighterDesc();
         _rightSideDescriptions[6] = _fighterProfiles[_rIndex].GetSuperDesc();
@@ -336,7 +342,7 @@ public class PauseMenu : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             _movelistOptions[i].GetComponentInChildren<TextMeshProUGUI>().text = set[i].GetOptionName();
-            //_rightSideSprites[0] = _fighterProfiles[_rIndex].GetIconSprite();
+            _rightSideSprites[i] = set[i].GetClip();
             _rightSideDescriptions[i] = set[i].GetOptionDesc();
         }
         UpdateRightSide();

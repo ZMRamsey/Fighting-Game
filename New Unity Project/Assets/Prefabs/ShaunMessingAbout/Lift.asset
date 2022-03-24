@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Lift
   m_EditorClassIdentifier: 
   _optionName: Lift
-  _optionVideo: {fileID: 0}
+  _optionVideo: {fileID: 32900000, guid: 2921815e516d72c4f99b03c01ee45c3f, type: 3}
   _optionDescription: Lift

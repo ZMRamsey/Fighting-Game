@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Smash
   m_EditorClassIdentifier: 
   _optionName: Smash
-  _optionVideo: {fileID: 0}
+  _optionVideo: {fileID: 32900000, guid: 4c983eb9aad00344f813846c4115e2bd, type: 3}
   _optionDescription: Smash

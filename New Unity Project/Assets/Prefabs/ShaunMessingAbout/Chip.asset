@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Chip
   m_EditorClassIdentifier: 
   _optionName: Chip
-  _optionVideo: {fileID: 0}
+  _optionVideo: {fileID: 32900000, guid: a482ab0e0faa8214eb63fa0e81699f26, type: 3}
   _optionDescription: Chip
