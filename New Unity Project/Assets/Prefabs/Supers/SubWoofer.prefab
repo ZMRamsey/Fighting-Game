@@ -4968,7 +4968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766030058933936881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.863, y: 6.79, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5073132642640408135}
@@ -5003,6 +5003,8 @@ MonoBehaviour:
   _canKillOnPercentSpeed: 0
   _gainPerHit: 2
   _canImpactFrame: 0
+  _useGravity: 1
+  _flipGravity: 0
   _ballHolder: {fileID: 766030058610662237}
   _smoothing: 4
   _squishThreshold: 0.1
@@ -39252,7 +39254,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5087764183840820510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.273, y: -0.099999905, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 766030058933936887}
