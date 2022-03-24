@@ -27,11 +27,14 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: 282c63517c0187647a218f39f2b0ff36, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: 9e8953c7749e6bb4097dd12dd7df3bc3, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: 3f84919b86223094cb938d5ab922af01, type: 3}
-  _fighterDescription: High jumps, movement speed, and good strike strength
+  _fighterDescription: She is fast and agile, and can reach areas of the court in
+    a flash.
   _gimmickName: Mr Hands
   _gimmickVideo: {fileID: 0}
-  _gimmickDescription: Raket can build a Mr Hands robot to deflect incoming shots
-    and speed up her own
-  _superName: Subwoofer
+  _gimmickDescription: Her gimmick, Mr Hands, allows racket to build a robot friend
+    that will boost her own attacks, while slowing down the opponents.
+  _superName: SubWoofer
   _superVideo: {fileID: 0}
-  _superDescription: haha subwoofer go xd boom
+  _superDescription: Her super, SubWoofer, allows Raket to throw a new projectile
+    onto the battlefield.
+  _selectedIndex: 8

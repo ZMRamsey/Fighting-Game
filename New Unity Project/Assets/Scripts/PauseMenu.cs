@@ -310,15 +310,15 @@ public class PauseMenu : MonoBehaviour
     public void UpdateRightSide()
     {
         //Final
-        _movelistRightSide[0].GetComponent<TextMeshProUGUI>().text = _movelistOptions[_mIndex].GetComponentInChildren<TextMeshProUGUI>().text;
+        //_movelistRightSide[0].GetComponent<TextMeshProUGUI>().text = _movelistOptions[_mIndex].GetComponentInChildren<TextMeshProUGUI>().text;
         //Temp?
         _videoHolder.SetActive(true);
         if (_rightSideSprites[_mIndex] == null)
         {
             _videoHolder.SetActive(false);
         }
-        _movelistRightSide[1].GetComponentInChildren<VideoPlayer>().clip = _rightSideSprites[_mIndex];
-        _movelistRightSide[2].GetComponent<TextMeshProUGUI>().text = _rightSideDescriptions[_mIndex];
+        _movelistRightSide[0].GetComponentInChildren<VideoPlayer>().clip = _rightSideSprites[_mIndex];
+        _movelistRightSide[1].GetComponent<TextMeshProUGUI>().text = _rightSideDescriptions[_mIndex];
     }
 
     public void ChangeSpecialCharacter()

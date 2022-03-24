@@ -2086,8 +2086,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 369.25497, y: -172.50636}
-  m_SizeDelta: {x: 493.3781, y: 483.916}
+  m_AnchoredPosition: {x: 369.25497, y: -135.23077}
+  m_SizeDelta: {x: 493.3781, y: 558.4672}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284537782
 MonoBehaviour:
@@ -2111,8 +2111,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: high jumps, movement speed, and good strike strength
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
-  m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f80b0963819cf04469b92df26183c48f, type: 2}
+  m_sharedMaterial: {fileID: -4839083665482572372, guid: f80b0963819cf04469b92df26183c48f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2136,8 +2136,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -13322,7 +13322,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8a95f3a5f3a56c4fb5a45e79ae7bcc0, type: 2}
   - {fileID: 11400000, guid: 3912f61f175279f4bb58aa74e7dc52e1, type: 2}
   _movelistRightSide:
-  - {fileID: 1682799270}
   - {fileID: 1491501191}
   - {fileID: 284537780}
   _rightSideSprites:
@@ -16533,7 +16532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1682799271
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17668,7 +17667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51fdbe9e84733342bec985eea44fe38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMinutes: 5
+  startMinutes: 0
   currentTimeText: {fileID: 1315896169}
   anim: {fileID: 1315896171}
   targetTime: 10
@@ -19764,7 +19763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 368.86868, y: -65}
+  m_AnchoredPosition: {x: 370, y: 10}
   m_SizeDelta: {x: 706.8238, y: 393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045100979

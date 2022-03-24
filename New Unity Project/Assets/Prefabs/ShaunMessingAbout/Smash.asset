@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _optionName: Smash
   _optionVideo: {fileID: 32900000, guid: 4c983eb9aad00344f813846c4115e2bd, type: 3}
-  _optionDescription: Smash
+  _optionDescription: 'The Smash is the most offensive attack of the 4 variations.
+    On a successful hit this will shoot the ball in a 300 - 330 degree angle (Facing
+    Left Reference). '

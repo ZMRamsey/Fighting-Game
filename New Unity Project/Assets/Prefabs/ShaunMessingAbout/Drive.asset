@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _optionName: Drive
   _optionVideo: {fileID: 32900000, guid: 9d2ee4620f9a8244c98590297234ea76, type: 3}
-  _optionDescription: Drive
+  _optionDescription: 'The Drive is the most basic attack, but will serve use in
+    ball hogging. On a successful hit this will shoot the shuttlecock straight forward,
+    with a slight incline to give more interesting angles and options to the player. '

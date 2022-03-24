@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _optionName: Lift
   _optionVideo: {fileID: 32900000, guid: 2921815e516d72c4f99b03c01ee45c3f, type: 3}
-  _optionDescription: Lift
+  _optionDescription: The Lift is a very useful setup attack. On a successful hit
+    this will shoot the shuttlecock in a 60 degree angle (Facing Left Reference).

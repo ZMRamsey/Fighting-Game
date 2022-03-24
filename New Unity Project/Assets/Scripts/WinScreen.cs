@@ -96,10 +96,12 @@ public class WinScreen : MonoBehaviour
         _quote.SetActive(true);
     }
 
+    bool hasContinued;
     public void Update()
     {
-        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        if (Keyboard.current.enterKey.wasPressedThisFrame && !hasContinued)
         {
+            hasContinued = true;
             GameLogic.Get().LoadScene("MenuTest", "WinScreen");
         }
         winnerAnimation.SetActive(true);
@@ -110,7 +112,7 @@ public class WinScreen : MonoBehaviour
     {
         switch (winner)
         {
-            case "Danny":
+            case "Dan":
                 winnerAnimation = DannyA;
                 switch (loser)
                 {
@@ -144,7 +146,7 @@ public class WinScreen : MonoBehaviour
                 winnerAnimation = HunterA;
                 switch (loser)
                 {
-                    case "Danny":
+                    case "Dan":
                         text = "You’re right to be jealous of me. I’m just naturally better than you, lil man.";
                         break;
 
@@ -174,7 +176,7 @@ public class WinScreen : MonoBehaviour
                 winnerAnimation = RaketA;
                 switch (loser)
                 {
-                    case "Danny":
+                    case "Dan":
                         text = "BORING! Mix it up a bit, it’s like playing against my grandad.";
                         break;
 
@@ -204,7 +206,7 @@ public class WinScreen : MonoBehaviour
                 winnerAnimation = EsmeA;
                 switch (loser)
                 {
-                    case "Danny":
+                    case "Dan":
                         text = "You might be good at the sport, but you’re out of your depth with us.";
                         break;
 
@@ -234,7 +236,7 @@ public class WinScreen : MonoBehaviour
                 winnerAnimation = GanzA;
                 switch (loser)
                 {
-                    case "Danny":
+                    case "Dan":
                         text = "HONK (Your fighting spirit can only take you so far, true badminton prowess comes from intellect and invention)";
                         break;
 
@@ -264,7 +266,7 @@ public class WinScreen : MonoBehaviour
                 winnerAnimation = RayA;
                 switch (loser)
                 {
-                    case "Danny":
+                    case "Dan":
                         text = "Placeholder.txt";
                         break;
 
