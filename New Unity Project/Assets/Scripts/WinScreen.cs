@@ -130,7 +130,7 @@ public class WinScreen : MonoBehaviour
                         text = "Woah! You were a goose this whole time? What a plot twist!";
                         break;
 
-                    case "Ray & Teka":
+                    case "Ray + Teka":
                         text = "Placeholder.txt";
                         break;
 
@@ -160,7 +160,7 @@ public class WinScreen : MonoBehaviour
                         text = "I’ve got to get a new agent, I’m playing against weirdos now. What are you, a chicken or something?";
                         break;
 
-                    case "Ray & Teka":
+                    case "Ray + Teka":
                         text = "Placeholder.txt";
                         break;
 
@@ -190,7 +190,7 @@ public class WinScreen : MonoBehaviour
                         text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets.";
                         break;
 
-                    case "Ray & Teka":
+                    case "Ray + Teka":
                         text = "Placeholder.txt";
                         break;
 
@@ -220,7 +220,7 @@ public class WinScreen : MonoBehaviour
                         text = "Your emotions, I can feel them so strong. What happened to you?";
                         break;
 
-                    case "Ray & Teka":
+                    case "Ray + Teka":
                         text = "Placeholder.txt";
                         break;
 
@@ -250,7 +250,7 @@ public class WinScreen : MonoBehaviour
                         text = "HONK (Your powers intrigue me young witch, what a goose you could have been. Alas, your failure only proves that you are the inferior species).";
                         break;
 
-                    case "Ray & Teka":
+                    case "Ray + Teka":
                         text = "Placeholder.txt";
                         break;
 
@@ -260,7 +260,7 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Ray & Teka":
+            case "Ray + Teka":
                 winnerAnimation = RayA;
                 switch (loser)
                 {
