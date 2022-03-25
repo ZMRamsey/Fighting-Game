@@ -24573,64 +24573,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _smashMove:
-    _animationPath: smash
-    _clipName: Test_Shoot
-    _shotType: 3
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _chipMove:
-    _animationPath: smash
-    _clipName: Test_Shoot
-    _shotType: 0
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _driveMove:
-    _animationPath: smash
-    _clipName: Test_Shoot
-    _shotType: 1
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _dropMove:
-    _animationPath: smash
-    _clipName: Test_Shoot
-    _shotType: 2
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _superMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
+  _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 0}
-  _hitType: 0
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   _hitboxFlipper: {fileID: 4874520953896087310}
-  _speed: 14
-  _height: 2
-  _meterIncreaseValue: 0
-  _maxJumps: 0
-  _jumpForce: 40
-  _fallMultiplier: 12
-  _jumpFalloff: 0.9
-  _airSpeed: 0
-  _fastFallSpeed: 20
-  _hasDash: 0
-  _hasJump: 0
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 4528345394989312034}
   _renderer: {fileID: 4874520954698666500}
@@ -24653,6 +24599,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 206ea55499eceef45bc5318ec0b745f9, type: 3}
   _leftFootSounds: []
   _rightFootSounds: []
+  _grabSound: []
+  _squeakSound: []
   _hitSmashVFX: {fileID: 0}
   _hitChipVFX: {fileID: 0}
   _hitDriveVFX: {fileID: 0}
@@ -25017,8 +24965,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentMove:
     _animationPath: 
-    _clipName: 
-    _shotType: 0
     _frames: 0
     _hitFrame: 0
     _clip: {fileID: 0}

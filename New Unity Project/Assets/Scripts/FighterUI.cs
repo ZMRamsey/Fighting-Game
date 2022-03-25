@@ -11,6 +11,7 @@ public class FighterUI : MonoBehaviour
     [SerializeField] Image _arrowNegBar;
     [SerializeField] Image _superEffectBar;
     [SerializeField] Gradient _superPulse;
+    [SerializeField] GameObject _flash;
     float _targetAmount;
 
     float _positiveTimer;
@@ -64,10 +65,12 @@ public class FighterUI : MonoBehaviour
         _targetAmount = value;
 
         if (_targetAmount >= 1) {
+            _flash.SetActive(true);
             _superEffectBar.material.SetFloat("_Opacity", 1);
             return;
         }
         else {
+            _flash.SetActive(false);
             _superEffectBar.material.SetFloat("_Opacity", 0);
         }
 

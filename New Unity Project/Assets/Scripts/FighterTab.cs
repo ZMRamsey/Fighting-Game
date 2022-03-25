@@ -13,6 +13,7 @@ public class FighterTab
     [SerializeField] TextMeshProUGUI _fighterName;
     [SerializeField] TextMeshProUGUI _fighterScore;
     [SerializeField] Animator _scoreAnim;
+    [SerializeField] Image _icon;
 
     public FighterUI GetUI() {
         return _fighterUI;
@@ -38,5 +39,9 @@ public class FighterTab
     public void UpdateRallyScore(int rally) {
         _scoreAnim.SetTrigger("Score");
         _scoreAnim.GetComponent<TextMeshProUGUI>().text = rally.ToString();
+    }
+
+    public void UpdateIcon(Sprite sprite) {
+        _icon.sprite = sprite;
     }
 }

@@ -210,7 +210,7 @@ public class RayAndTekaFighter : FighterController
         Vector3 movementProcessing = new Vector3(_inputHandler._inputX, _verticalProcess, 0);
         movementProcessing.Normalize();
         movementProcessing.y *= 2;
-        movementProcessing *= _speed;
+        movementProcessing *= _settings.GetSpeed();
 
         if (movementProcessing != Vector3.zero || _verticalProcess != 0)
         {

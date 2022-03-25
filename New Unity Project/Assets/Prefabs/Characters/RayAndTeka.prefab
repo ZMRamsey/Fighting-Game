@@ -39314,64 +39314,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _smashMove:
-    _animationPath: smash
-    _clipName: Raket_Smash
-    _shotType: 3
-    _frames: 11
-    _hitFrame: 5
-    _clip: {fileID: 7400000, guid: 89212665f3b0b1540bd50248506a1b6b, type: 2}
-    _hitDirection: {x: 12, y: -6, z: 0}
-  _chipMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 0
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0.1, y: 2, z: 0}
-  _driveMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 1
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 12, y: 0.5, z: 0}
-  _dropMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 2
-    _frames: 15
-    _hitFrame: 8
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 6, y: 8, z: 0}
-  _superMove:
-    _animationPath: super
-    _clipName: Raket_Super
-    _shotType: 2
-    _frames: 12
-    _hitFrame: 0
-    _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
-    _hitDirection: {x: 3, y: 5, z: 0}
+  _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 0}
-  _hitType: 1
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   _hitboxFlipper: {fileID: 1540060562962152633}
-  _speed: 9
-  _height: 2
-  _meterIncreaseValue: 14
-  _maxJumps: 0
-  _jumpForce: 60
-  _fallMultiplier: 12
-  _jumpFalloff: 0.85
-  _airSpeed: 8
-  _fastFallSpeed: 16
-  _hasDash: 0
-  _hasJump: 0
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}
@@ -39393,6 +39339,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6bc7fb6b374974c498ef22bb76061047, type: 3}
   _leftFootSounds: []
   _rightFootSounds: []
+  _grabSound: []
+  _squeakSound: []
   _hitSmashVFX: {fileID: 5191671763934594254}
   _hitChipVFX: {fileID: 1005256505748736543}
   _hitDriveVFX: {fileID: 2796237797765262638}
@@ -39761,8 +39709,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentMove:
     _animationPath: 
-    _clipName: 
-    _shotType: 0
     _frames: 0
     _hitFrame: 0
     _clip: {fileID: 0}

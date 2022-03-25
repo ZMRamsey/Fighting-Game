@@ -10,36 +10,13 @@ public enum FighterState { inControl, restricted, dead };
 public abstract class FighterController : MonoBehaviour
 {
     [SerializeField] protected FighterFilter _filter;
-    [Header("Moves")]
-    [SerializeField] FighterMove _smashMove;
-    [SerializeField] FighterMove _chipMove;
-    [SerializeField] FighterMove _driveMove;
-    [SerializeField] FighterMove _dropMove;
-    [SerializeField] protected FighterMove _superMove;
-    protected FighterMove _currentMove;
+    [Header("Settings")]
+    [SerializeField] protected FighterSettings _settings;
+
+    [Header("Controller Components")]
     [SerializeField] Hitbox _hitboxes;
     [SerializeField] Hurtbox _hurtBox;
-    [SerializeField] InfluenceType _hitType;
-
-    [Header("Base Settings")]
-    [SerializeField] LayerMask _groundLayers;
     [SerializeField] Transform _hitboxFlipper;
-    [SerializeField] protected float _speed;
-    [SerializeField] float _height;
-    [SerializeField] float _meterIncreaseValue;
-    [SerializeField] int _maxJumps;
-
-    [Header("Air Settings")]
-    [SerializeField] float _jumpForce;
-    [SerializeField] float _fallMultiplier;
-    [SerializeField] float _jumpFalloff;
-    [SerializeField] float _airSpeed;
-    [SerializeField] float _fastFallSpeed = 20;
-    float _failSafeAttack;
-
-    [Header("Functions")]
-    [SerializeField] bool _hasDash;
-    [SerializeField] bool _hasJump;
 
     [Header("Aesthetic")]
     [SerializeField] Transform _controllerScaler;
@@ -70,16 +47,18 @@ public abstract class FighterController : MonoBehaviour
     [Header("Controller Values")]
     [SerializeField] protected Vector3 _controllerVelocity;
     [SerializeField] protected Vector3 _extraVelocity;
+        Vector3 _lastTapAxis;
+    protected FighterMove _currentMove;
+    protected bool _canAttack;
     float _commandMeter;
     float _yVelocity;
-    Vector3 _lastTapAxis;
     float _grabCoolDown;
     float _dashCoolDown;
     float _successHitsCoolDown;
+    float _failSafeAttack;
     int _currentJumps;
     int _successfulHits;
     bool _canJump;
-    protected bool _canAttack;
     bool _freeze;
     bool _isDashing;
     bool _hasBounced;
@@ -106,14 +85,6 @@ public abstract class FighterController : MonoBehaviour
         FighterAwake();
     }
 
-    public float GetSpeed() {
-        return _speed;
-    }
-
-    public bool InSuper() {
-        return _inSuper;
-    }
-
     public bool HurtBoxActive() {
         return _hurtBox.isActiveAndEnabled;
     }
@@ -127,19 +98,19 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public FighterMove GetSmashMove() {
-        return _smashMove;
+        return _settings.GetSmashMove();
     }
 
     public FighterMove GetChipMove() {
-        return _chipMove;
+        return _settings.GetChipMove();
     }
 
     public FighterMove GetDriveMove() {
-        return _driveMove;
+        return _settings.GetDriveMove();
     }
 
     public FighterMove GetLiftMove() {
-        return _dropMove;
+        return _settings.GetLiftMove();
     }
 
     public virtual Transform GetFocusTransform() {
@@ -178,7 +149,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public InfluenceType GetHitType() {
-        return _hitType;
+        return _settings.GetHitType();
     }
 
     public virtual void InitializeFighter() {
@@ -271,8 +242,7 @@ public abstract class FighterController : MonoBehaviour
             }
         }
 
-
-        if (_hasDash && _dashCoolDown <= 0 && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
+        if (_settings.HasDash() && _dashCoolDown <= 0 && _inputHandler.GetDash() && !_isDashing && _myState == FighterState.inControl) {
             _lastTapAxis.x = _inputHandler.GetInputX();
             _lastTapAxis.y = 0;
             if (_inputHandler.GetJumpHeld()) {
@@ -314,27 +284,12 @@ public abstract class FighterController : MonoBehaviour
 
     void FixedUpdate() {
         OnFixedFighterUpdate();
-        var canRun = (int)Mathf.Abs(_rigidbody.velocity.magnitude) > _speed / 2;
+        var canRun = (int)Mathf.Abs(_rigidbody.velocity.magnitude) > _settings.GetSpeed() / 2;
         var isRunning = _myState == FighterState.inControl && _myStance == FighterStance.standing && canRun && !_inputHandler.GetCrouch();
 
         _animator.SetBool("running", isRunning);
 
         _animator.SetBool("falling", _myStance == FighterStance.air && _rigidbody.velocity.y < 0);
-
-        //if (isRunning && _inputHandler.GetInputX() > 0 && _runningLeftVFX != null) {
-        //    _runningLeftVFX.Play();
-        //}
-        //else {
-        //    _runningLeftVFX.Stop();
-        //}
-
-        //if (isRunning && _inputHandler.GetInputX() < 0 && _runningRightVFX != null) {
-        //    _runningRightVFX.Play();
-        //}
-        //else {
-        //    _runningRightVFX.Stop();
-        //}
-
 
         if (!_freeze) {
             if (_myStance == FighterStance.standing) {
@@ -345,12 +300,12 @@ public abstract class FighterController : MonoBehaviour
                 OnAirMovement();
             }
 
-            if (_hasJump && _inputHandler.GetDoubleJump(!_canJump && !_grounded && _currentJumps < _maxJumps) && _canAttack && _myState == FighterState.inControl) {
+            if (_settings.HasJump() && _inputHandler.GetDoubleJump(!_canJump && !_grounded && _currentJumps < _settings.GetMaxJumps() && _canAttack && _myState == FighterState.inControl)) {
                 OnJump();
                 return;
             }
 
-            if (_hasJump && _inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
+            if (_settings.HasJump() && _inputHandler.GetJump(_canJump) && _canJump && _myAction != FighterAction.jumping && _canAttack && _myState == FighterState.inControl) {
                 OnJump();
                 return;
             }
@@ -362,25 +317,6 @@ public abstract class FighterController : MonoBehaviour
             _extraVelocity *= 0.9f;
 
             _rigidbody.velocity = _controllerVelocity + _extraVelocity;
-
-            //if (_hitboxes != null) {
-            //    _holdingShuttle = _hitboxes.HasShuttle();
-            //}
-
-            //if (_holdingShuttle)
-            //{
-            //    _grabbingTime -= 0.1f;
-            //}
-            //else
-            //{
-            //    _grabbingTime = 2;
-            //}
-
-            //if (_grabbingTime < 0)
-            //{
-            //    Debug.Log("Out of grab time");
-            //    //_hitboxes.SetGrab(false);
-            //}
         }
     }
 
@@ -428,7 +364,7 @@ public abstract class FighterController : MonoBehaviour
 
         if (_canAttack && !_inSuper && _myState == FighterState.inControl) {
             xCalculation = _inputHandler.GetInputX();
-            xCalculation *= _speed;
+            xCalculation *= _settings.GetSpeed();
         }
         else {
             if (!_isDashing) {
@@ -446,7 +382,7 @@ public abstract class FighterController : MonoBehaviour
 
         AdjustControllerHeight();
 
-        xCalculation = Mathf.Clamp(xCalculation, -_speed, _speed);
+        xCalculation = Mathf.Clamp(xCalculation, -_settings.GetSpeed(), _settings.GetSpeed());
 
         _controllerVelocity = new Vector3(xCalculation, _yVelocity, 0);
     }
@@ -502,7 +438,6 @@ public abstract class FighterController : MonoBehaviour
         _fighterUI.SetBarValue(GetMeter());
     }
 
-
     void ResetMeter() {
         _commandMeter = 0;
         _fighterUI.SetBarValue(GetMeter());
@@ -536,7 +471,7 @@ public abstract class FighterController : MonoBehaviour
 
         float relativeVel = targetDirVel - groundDirVel;
 
-        float x = _groundHit.distance - _height;
+        float x = _groundHit.distance - _settings.GetHeight();
         float springForce = (x * 1) - (relativeVel * 0.01f);
 
         Vector3 result = rayDirection * springForce;
@@ -574,11 +509,6 @@ public abstract class FighterController : MonoBehaviour
             PlayRightFoot();
         }
 
-        //if (_myAction == FighterAction.dashing) {
-        //    _myAction = FighterAction.none;
-        //}
-
-
         _animator.SetTrigger("land");
 
         _canJump = true;
@@ -615,7 +545,7 @@ public abstract class FighterController : MonoBehaviour
         _myAction = FighterAction.jumping;
 
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-        _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _jumpForce, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.up * GetComponent<Rigidbody>().mass * _settings.GetJumpForce(), ForceMode.Impulse);
     }
 
     //Plays a swing sound for the attack
@@ -632,7 +562,7 @@ public abstract class FighterController : MonoBehaviour
         if (_myAction != FighterAction.jumping) {
 
             if (_rigidbody.velocity.y < 0) {
-                _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * (_fallMultiplier - 1));
+                _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * (_settings.GetFallMultiplier() - 1));
             }
             else {
                 _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass);
@@ -643,7 +573,7 @@ public abstract class FighterController : MonoBehaviour
                 velocityY *= 0.6f;
             }
             else if (_rigidbody.velocity.y > 0) {
-                velocityY *= _jumpFalloff;
+                velocityY *= _settings.GetFallOff();
             }
             else {
                 _myAction = FighterAction.none;
@@ -651,14 +581,14 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (CanFastFall() && _inputHandler.GetCrouch()) {
-            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * _fastFallSpeed);
+            _rigidbody.AddForce(Physics.gravity * GetComponent<Rigidbody>().mass * _settings.GetFastFallSpeed());
         }
 
         var xCalculation = _inputHandler.GetInputX();
 
         if (_myState == FighterState.inControl) {
-            _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _speed * _airSpeed);
-            velocityX = Mathf.Clamp(velocityX, -_airSpeed, _airSpeed);
+            _rigidbody.AddForce(new Vector3(xCalculation, 0, 0) * _settings.GetSpeed() * _settings.GetAirSpeed());
+            velocityX = Mathf.Clamp(velocityX, -_settings.GetAirSpeed(), _settings.GetAirSpeed());
         }
 
         _controllerVelocity = new Vector3(velocityX, velocityY, 0);
@@ -698,7 +628,7 @@ public abstract class FighterController : MonoBehaviour
             _myStance = FighterStance.air;
         }
 
-        if (_freeze || _inSuper || _myState != FighterState.inControl) {
+        if (_freeze || _inSuper || _myState != FighterState.inControl || GameManager.Get().IsInKO()) {
             return;
         }
 
@@ -706,16 +636,15 @@ public abstract class FighterController : MonoBehaviour
             _canAttack = false;
             ResetHitbox();
 
-            _currentMove = _smashMove;
+            _currentMove = _settings.GetSmashMove();
             UpdateMove();
         }
-
 
         if (_inputHandler.GetDrive() && _canAttack) {
             _canAttack = false;
             ResetHitbox();
 
-            _currentMove = _driveMove;
+            _currentMove = _settings.GetDriveMove();
             UpdateMove();
         }
 
@@ -723,7 +652,7 @@ public abstract class FighterController : MonoBehaviour
             _canAttack = false;
             ResetHitbox();
 
-            _currentMove = _dropMove;
+            _currentMove = _settings.GetLiftMove();
             UpdateMove();
         }
 
@@ -732,25 +661,9 @@ public abstract class FighterController : MonoBehaviour
             _canAttack = false;
             ResetHitbox();
 
-            _currentMove = _chipMove;
+            _currentMove = _settings.GetChipMove();
             UpdateMove();
         }
-
-        //if(!_inputHandler.GetGrab() && !_canAttack && _holdingShuttle)
-        //{
-        //    _canAttack = false;
-        //    ResetHitbox();
-
-        //    _currentMove = _chipMove;
-
-        //    OnAttack();
-        //    _hitboxes.SetGrab(false);
-        //    _animator.SetTrigger(_currentMove.GetPath());
-        //    _failSafeAttack = _currentMove.GetClip().length;
-        //    _holdingShuttle = false;
-        //    Debug.Log("Released the cock");
-
-        //}
 
         if (_inputHandler.GetSuper() && _canAttack && _commandMeter >= 100) {
             _canAttack = false;
@@ -759,7 +672,7 @@ public abstract class FighterController : MonoBehaviour
 
             _animator.SetLayerWeight(2, 1);
 
-            _currentMove = _superMove;
+            _currentMove = _settings.GetSuperMove();
             OnSuperMechanic();
 
             UpdateMove();
@@ -769,11 +682,6 @@ public abstract class FighterController : MonoBehaviour
         if (_failSafeAttack > 0 && !_freeze) {
             _failSafeAttack -= Time.fixedDeltaTime;
             if (_failSafeAttack <= 0) {
-                //if (!_holdingShuttle)
-                //{
-                //    Debug.Log("Not holding shuttle");
-                //    ResetAttack();
-                //}
                 ResetAttack();
             }
         }
@@ -797,7 +705,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
         _isDashing = false;
-        AddMeter(_meterIncreaseValue / GameManager.Get().GetSuccessive());
+        AddMeter(_settings.GetMeterIncreaseValue() / GameManager.Get().GetSuccessive());
 
         if (!isGrab && _successfulHits > 2) {
             _extraVelocity.x = 8;
@@ -875,7 +783,7 @@ public abstract class FighterController : MonoBehaviour
             return false;
         }
 
-        var groundCheck = Physics.Raycast(transform.position, Vector3.down, out _groundHit, _height, _groundLayers);
+        var groundCheck = Physics.Raycast(transform.position, Vector3.down, out _groundHit, _settings.GetHeight(), _settings.GetGroundMask());
 
         if (groundCheck && _myStance == FighterStance.air) {
             OnLand();

@@ -44,7 +44,7 @@ public class RacketFighter : FighterController
         _subWooferObject.SetActive(true);
         _subWooferObject.transform.position = transform.position;
 
-        var dir = _superMove.GetHitDirection();
+        var dir = _settings.GetSuperMove().GetHitDirection();
         if (_renderer.flipX) {
             dir.x *= -1;
         }

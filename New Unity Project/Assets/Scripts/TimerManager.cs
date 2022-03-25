@@ -75,7 +75,7 @@ public class TimerManager : MonoBehaviour
             
             if (GetCurrentPointTime() >= internalTarget)
             {
-                GameManager.Get().GetShuttle().increaseBounces();
+                GameManager.Get().GetShuttle().OnBounce();
                 internalTarget += targetTime;
             }
         }

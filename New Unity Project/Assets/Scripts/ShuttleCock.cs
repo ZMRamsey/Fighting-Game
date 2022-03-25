@@ -47,18 +47,21 @@ public class ShuttleCock : MonoBehaviour
 
     [Header("Stats")]
     FighterFilter _filter;
-    bool _canGimic;
-    VelocityInfluence _influence;
     bool _frozen;
     bool _waitForHit;
+    bool _windTrailActive;
+    bool _redKillActive;
+    bool _blueKillActive;
+    bool _yellowKillActive;
     protected float _squishTimer;
     float _speed;
-    float _magnitude;
+    float _windVolume;
+    float _killVolume;
+    Vector3 _lastVelocity;
+    float grabbedTimer;
     int _bouncesSinceShoot;
     FighterController _grabber;
     Vector3 _storedHitVelocity;
-    //int _bouncesSinceShoot;
-    float grabbedTimer;
 
     void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -67,14 +70,31 @@ public class ShuttleCock : MonoBehaviour
         _rb.useGravity = false;
     }
 
-    private void Start() {
+    void Start() {
         ResetShuttle(true);
     }
 
-    [ContextMenu("Reset Ball")]
+    void FixedUpdate() {
+        if (_useGravity) {
+            var gravity = Physics.gravity * _rb.mass;
+
+            if (_flipGravity) {
+                gravity = -Physics.gravity * _rb.mass;
+            }
+
+            if (!CanKill()) {
+                _rb.AddForce(gravity, ForceMode.Acceleration);
+            }
+        }
+    }
+
+    void OnCollisionStay(Collision collision) {
+        _rb.velocity *= 0.9f;
+    }
+
     public virtual void ResetShuttle(bool freeze) {
         _speed = 1;
-        ReleaseFromPlayer(false);
+        UnboundFromPlayer(false);
 
         if (shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
@@ -93,40 +113,12 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = Vector3.zero;
     }
 
-    Vector3 _lastVelocity;
-    Vector3 _lastShootDirection;
-    public void ProcessForce(HitMessage message) {
-        InputHandler handler = null;
-        Vector3 influence = Vector3.zero;
-
+    void ProcessForce(HitMessage message) {
         if (_grabber != null) {
-            ReleaseFromPlayer(false);
+            UnboundFromPlayer(false);
         }
-
-        if (handler != null) {
-            if (handler.GetJumpHeld()) {
-                influence.y = 2;
-            }
-
-            if (handler.GetCrouch()) {
-                influence.y = -2;
-            }
-
-            if (handler.GetInputX() > 0) {
-                influence.x = 2;
-            }
-
-            if (handler.GetInputX() < 0) {
-                influence.x = -2;
-            }
-        }
-
-        _canGimic = !message.muteVelocity;
 
         float processedSpeed = _speed;
-        _acceleration = 0;
-        _accelerationTimer = 0;
-        _lastShootDirection = message.direction;
 
         if (message.muteVelocity) {
             processedSpeed = 2f;
@@ -138,14 +130,13 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 proceDir = message.direction + influence;
+        Vector3 proceDir = message.direction;
 
         _storedHitVelocity = Vector3.zero;
 
         Vector3 targetVelocity = proceDir * processedSpeed;
 
         _rb.isKinematic = false;
-
         _rb.velocity = targetVelocity;
 
         _speed += _gainPerHit;
@@ -164,6 +155,7 @@ public class ShuttleCock : MonoBehaviour
     Coroutine shootCoroutine;
     public virtual void Shoot(HitMessage message) {
         transform.right = message.direction.normalized;
+
         _storedHitVelocity = message.direction * _speed;
 
         var hitStun = 0.3f;
@@ -192,18 +184,12 @@ public class ShuttleCock : MonoBehaviour
             }
         }
 
-        shootCoroutine = StartCoroutine(ShootProccess(message, false, hitStun));
+        shootCoroutine = StartCoroutine(OnFreezeProcess(message, hitStun));
     }
 
     public virtual void Shoot(HitMessage message, FighterController owner) {
         Shoot(message);
         SetOwner(owner);
-    }
-
-    public void Bounce(float axis) {
-        _speed = 1;
-        var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both, ShotType.drive);
-        ProcessForce(hitMes);
     }
 
     public FighterController GetOwner() {
@@ -218,14 +204,8 @@ public class ShuttleCock : MonoBehaviour
         return _canKillOnPercentSpeed && GetSpeedPercent() >= _killActiveOnPercent && _rb.velocity.magnitude > 35f;
     }
 
-    bool isPlaying;
-    bool redKillActive;
-    bool blueKillActive;
-    bool yellowKillActive;
-    float volume;
-    float killVolume;
     void Update() {
-        _speed = Mathf.Clamp(_speed, 0, _maximumJail);
+        _speed = Mathf.Clamp(_speed, 1, _maximumJail);
 
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
@@ -233,59 +213,59 @@ public class ShuttleCock : MonoBehaviour
 
 
         if (GetSpeedPercent() > _trailActiveOnPercent && _rb.velocity.magnitude > 10 && !CanKill()) {
-            if (!isPlaying && _trailParticle) {
+            if (!_windTrailActive && _trailParticle) {
                 _trailParticle.Play();
-                isPlaying = true;
+                _windTrailActive = true;
             }
         }
         else {
-            if (isPlaying && _trailParticle) {
+            if (_windTrailActive && _trailParticle) {
                 _trailParticle.Stop();
-                isPlaying = false;
+                _windTrailActive = false;
             }
         }
 
         if (_trailRed != null) {
             if (CanKill() && _filter == FighterFilter.one) {
-                if (!redKillActive && _trailRed) {
+                if (!_redKillActive && _trailRed) {
                     _trailRed.Play();
-                    redKillActive = true;
+                    _redKillActive = true;
                 }
             }
             else {
-                if (redKillActive && _trailRed) {
+                if (_redKillActive && _trailRed) {
                     _trailRed.Stop();
-                    redKillActive = false;
+                    _redKillActive = false;
                 }
             }
         }
 
         if (_trailBlue != null) {
             if (CanKill() && _filter == FighterFilter.two) {
-                if (!blueKillActive && _trailBlue) {
+                if (!_blueKillActive && _trailBlue) {
                     _trailBlue.Play();
-                    blueKillActive = true;
+                    _blueKillActive = true;
                 }
             }
             else {
-                if (blueKillActive && _trailBlue) {
+                if (_blueKillActive && _trailBlue) {
                     _trailBlue.Stop();
-                    blueKillActive = false;
+                    _blueKillActive = false;
                 }
             }
         }
 
         if (_trailYellow != null) {
             if (CanKill() && _filter != FighterFilter.one && _filter != FighterFilter.two) {
-                if (!yellowKillActive && _trailYellow) {
+                if (!_yellowKillActive && _trailYellow) {
                     _trailYellow.Play();
-                    yellowKillActive = true;
+                    _yellowKillActive = true;
                 }
             }
             else {
-                if (yellowKillActive && _trailYellow) {
+                if (_yellowKillActive && _trailYellow) {
                     _trailYellow.Stop();
-                    yellowKillActive = false;
+                    _yellowKillActive = false;
                 }
             }
         }
@@ -302,13 +282,13 @@ public class ShuttleCock : MonoBehaviour
 
 
             if (GetSpeedPercent() > _windActiveOnPercent && _rb.velocity.magnitude > 10 && GetSpeedPercent() < _killActiveOnPercent) {
-                volume = Mathf.Lerp(volume, 1, Time.fixedDeltaTime * 2);
+                _windVolume = Mathf.Lerp(_windVolume, 1, Time.fixedDeltaTime * 2);
             }
             else {
-                volume = Mathf.Lerp(volume, 0, Time.fixedDeltaTime * 10);
+                _windVolume = Mathf.Lerp(_windVolume, 0, Time.fixedDeltaTime * 10);
             }
 
-            _windSource.volume = volume;
+            _windSource.volume = _windVolume;
         }
 
         if (_killSource != null) {
@@ -317,17 +297,15 @@ public class ShuttleCock : MonoBehaviour
 
 
             if (CanKill()) {
-                killVolume = 1;
+                _killVolume = 1;
                 GameManager.Get().GetCameraShaker().SetShake(0.2f, 2f, true);
             }
             else {
-                killVolume = Mathf.Lerp(killVolume, 0, Time.fixedDeltaTime * 2);
+                _killVolume = Mathf.Lerp(_killVolume, 0, Time.fixedDeltaTime * 2);
             }
 
-            _killSource.volume = killVolume;
+            _killSource.volume = _killVolume;
         }
-
-        _magnitude = _rb.velocity.magnitude;
 
         Vector3 velocity = _rb.velocity;
 
@@ -354,7 +332,7 @@ public class ShuttleCock : MonoBehaviour
             transform.position = _grabber.transform.position;
 
             if (grabbedTimer <= 0 || (_grabber.GetComponent<InputHandler>().GetCrouch() && _grabber.GetGrounded()) || _grabber.IsDashing()) {
-                ReleaseFromPlayer(true);
+                UnboundFromPlayer(true);
             }
         }
 
@@ -362,7 +340,6 @@ public class ShuttleCock : MonoBehaviour
 
         ShuttleUpdate();
     }
-
 
     public void SetVelocity(Vector3 dir) {
         _rb.velocity = dir * 4;
@@ -372,7 +349,6 @@ public class ShuttleCock : MonoBehaviour
         Vector3 scale = Vector3.one;
         scale.x = Mathf.Clamp(vel.magnitude * 0.15f, 1, 3);
 
-        //Negative Check
         if (vel.magnitude < 0) {
             scale.x = Mathf.Clamp(vel.magnitude * 0.15f, -1, -3);
         }
@@ -409,7 +385,7 @@ public class ShuttleCock : MonoBehaviour
             _speed -= _gainPerHit;
         }
 
-        volume = 0;
+        _windVolume = 0;
         if (force > 80) {
             GameManager.Get().GetStageShaker().SetShake(0.1f, 2.5f, true);
         }
@@ -465,9 +441,6 @@ public class ShuttleCock : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        _acceleration = 0;
-        _influence = new VelocityInfluence();
-
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
 
@@ -493,8 +466,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        var hitMes = new HitMessage(Vector3.zero, new VelocityInfluence(), false, FighterFilter.current, ShotType.drive);
-        shootCoroutine = StartCoroutine(ShootProccess(hitMes, true, timer));
+        shootCoroutine = StartCoroutine(OnFreezeProcess(null, timer));
     }
 
     public void ForceFreeze() {
@@ -509,70 +481,20 @@ public class ShuttleCock : MonoBehaviour
 
         if (_storedHitVelocity != Vector3.zero) {
             _lastVelocity = _storedHitVelocity;
-            _storedHitVelocity = Vector3.zero;
         }
 
         _rb.velocity = _lastVelocity;
+        _storedHitVelocity = Vector3.zero;
     }
 
-    float _acceleration;
-    float _accelerationTimer;
-    void FixedUpdate() {
-        //if (_bouncesSinceShoot < _bouncesBeforeSpeedLoss) {
-        //    _rb.velocity = _speed * 10 * (_rb.velocity.normalized);
-        //}
+    IEnumerator OnFreezeProcess(HitMessage message, float time) {
+        ForceFreeze();
 
-        if (_useGravity) {
-            var gravity = Physics.gravity * _rb.mass;
-
-            if (_flipGravity) {
-                gravity = -Physics.gravity * _rb.mass;
-            }
-
-            if (!CanKill()) {
-                _rb.AddForce(gravity, ForceMode.Acceleration);
-            }
-        }
-        if (_influence != null && _canGimic && _influence.type == InfluenceType.overtime && !_frozen && _accelerationTimer < 1f) {
-            _accelerationTimer += Time.fixedDeltaTime;
-            _acceleration += Time.fixedDeltaTime;
-            _rb.velocity += _influence.velocity * _acceleration;
-        }
-    }
-
-    void OnCollisionStay(Collision collision) {
-        _rb.velocity *= 0.9f;
-    }
-
-    public void Reverse(FighterFilter filter) {
-        SetOwner(filter);
-
-        Vector3 vel = _rb.velocity;
-        vel.x = -vel.x;
-        vel = vel.normalized * 6;
-        var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none, ShotType.drive);
-        Shoot(hitMes);
-    }
-
-    IEnumerator ShootProccess(HitMessage message, bool resetVelocity, float time) {
-        var vel = _rb.velocity;
-        _frozen = true;
         yield return new WaitForSeconds(time);
-        _frozen = false;
-        if (_waitForHit) {
-            _rb.isKinematic = false;
-        }
 
+        ForceUnfreeze();
 
-        if (resetVelocity) {
-            if (_storedHitVelocity != Vector3.zero) {
-                vel = _storedHitVelocity;
-                _storedHitVelocity = Vector3.zero;
-            }
-
-            _rb.velocity = vel;
-        }
-        else {
+        if (message != null) {
             ProcessForce(message);
         }
 
@@ -604,12 +526,16 @@ public class ShuttleCock : MonoBehaviour
         }
     }
 
-    public void increaseBounces() {
+    public void OnBounce() {
         _bouncesBeforeSpeedLoss++;
-        //print("Bounces: " + _bouncesBeforeSpeedLoss);
+    }
+    public void Bounce(float axis) {
+        _speed = 1;
+        var hitMes = new HitMessage(new Vector3(axis, 1, 0), new VelocityInfluence(), false, FighterFilter.both, ShotType.drive);
+        ProcessForce(hitMes);
     }
 
-    public void resetBounces() {
+    public void ResetBounce() {
         _bouncesBeforeSpeedLoss = 2;
     }
 
@@ -622,14 +548,7 @@ public class ShuttleCock : MonoBehaviour
         _grabber = player;
     }
 
-    public bool IsGrabbed(FighterController me) {
-        if (_grabber == null) {
-            return false;
-        }
-        return _grabber.GetInstanceID() == me.GetInstanceID();
-    }
-
-    public void ReleaseFromPlayer(bool inheritVel) {
+    public void UnboundFromPlayer(bool inheritVel) {
         if (_grabber == null) {
             return;
         }
@@ -649,6 +568,23 @@ public class ShuttleCock : MonoBehaviour
         _grabber.ResetGrab();
         _grabber = null;
         grabbedTimer = 0;
+    }
+
+    public bool IsGrabbed(FighterController me) {
+        if (_grabber == null) {
+            return false;
+        }
+        return _grabber.GetInstanceID() == me.GetInstanceID();
+    }
+
+    public void ReverseVelocity(FighterFilter filter) {
+        SetOwner(filter);
+
+        Vector3 vel = _rb.velocity;
+        vel.x = -vel.x;
+        vel = vel.normalized * 6;
+        var hitMes = new HitMessage(vel, new VelocityInfluence(), false, FighterFilter.none, ShotType.drive);
+        Shoot(hitMes);
     }
 
 }

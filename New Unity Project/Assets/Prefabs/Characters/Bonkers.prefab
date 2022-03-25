@@ -29639,64 +29639,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _smashMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 3
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 12, y: -6, z: 0}
-  _chipMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 0
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0.4, y: 6, z: 0}
-  _driveMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 1
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 12, y: 0.5, z: 0}
-  _dropMove:
-    _animationPath: drive
-    _clipName: Test_Shoot
-    _shotType: 2
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 6, y: 6, z: 0}
-  _superMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
+  _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 4874520953896087311}
-  _hitType: 1
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   _hitboxFlipper: {fileID: 1540060562962152633}
-  _speed: 14
-  _height: 2
-  _meterIncreaseValue: 16
-  _maxJumps: 0
-  _jumpForce: 60
-  _fallMultiplier: 12
-  _jumpFalloff: 0.85
-  _airSpeed: 8
-  _fastFallSpeed: 16
-  _hasDash: 1
-  _hasJump: 1
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 8223740252825536706}
   _renderer: {fileID: 4874520954698666500}
@@ -30106,8 +30052,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentMove:
     _animationPath: 
-    _clipName: 
-    _shotType: 0
     _frames: 0
     _hitFrame: 0
     _clip: {fileID: 0}

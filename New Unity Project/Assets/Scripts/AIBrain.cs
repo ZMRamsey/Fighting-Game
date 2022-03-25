@@ -54,6 +54,16 @@ public class AIBrain : MonoBehaviour
             _verticalTarget.y = 0;
             _horizontalTarget.y = Mathf.Clamp(_horizontalTarget.y, 0, _shuttle.transform.position.y);
 
+            if (_controller.GetFilter() == FighterFilter.one) {
+                _verticalTarget.x += 1;
+
+                _verticalTarget.x = Mathf.Clamp(_verticalTarget.x, _shuttle.transform.position.x, Mathf.Infinity);
+            }
+            else {
+                _verticalTarget.x -= 1;
+                _verticalTarget.x = Mathf.Clamp(_verticalTarget.x, -Mathf.Infinity, _shuttle.transform.position.x);
+            }
+
             var grabbed = _shuttle.IsGrabbed(_controller);
 
             if (grabbed) {
@@ -470,7 +480,6 @@ public class AIBrain : MonoBehaviour
 
     void ProcessRaket() {
         if (!IsOnMySide() && _raket.GetMeter() >= 1) {
-            print("raket");
             _handler._jumpHeld = true;
             _handler._jumpInput = true;
             if (transform.position.y > 6) {

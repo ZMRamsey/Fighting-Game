@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f57a7ff459b3e684d818dd43aa88987b, type: 2}
   - {fileID: 2100000, guid: 0bc801160be78ab45a7182b760808b6f, type: 2}
   - {fileID: 2100000, guid: 4106c6054c5be254cb35081d379cdebf, type: 2}
-  _fighterIconSprite: {fileID: 0}
+  _fighterIconSprite: {fileID: 21300000, guid: b3ccbb70379550a4aa5d7c5bd271abd6, type: 3}
   _fighterNameLSprite: {fileID: 0}
   _fighterNameRSprite: {fileID: 0}
   _fighterDescription: Gun
@@ -34,3 +34,4 @@ MonoBehaviour:
   _superName: Gun
   _superVideo: {fileID: 0}
   _superDescription: Gun
+  _selectedIndex: 0

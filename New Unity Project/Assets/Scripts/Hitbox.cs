@@ -79,7 +79,7 @@ public class Hitbox : MonoBehaviour
                 }
                 else
                 {
-                    ball.ReleaseFromPlayer(false);
+                    ball.UnboundFromPlayer(false);
                     ball.Shoot(hiMes, _self);
                 }
 

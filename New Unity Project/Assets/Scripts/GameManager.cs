@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.SetUpFighter(fOneObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
         _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterTwoProfile().GetName());
+        _fighterOne.UpdateIcon(_settings.GetFighterOneProfile().GetIconSprite());
+        _fighterTwo.UpdateIcon(_settings.GetFighterTwoProfile().GetIconSprite());
 
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {
@@ -215,7 +217,9 @@ public class GameManager : MonoBehaviour
         _pauseArtBack.fillAmount = _pauseArt.fillAmount;
 
         _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.fixedDeltaTime * 12);
-        _speedRotator.eulerAngles = -Vector3.Slerp(new Vector3(0, 0, -75f), new Vector3(0, 0, 75f), _rotateTarget);
+        var vec = Vector3.Lerp(new Vector3(0, 0, -80f), new Vector3(0, 0, 80f), _rotateTarget);
+        vec.x = 0;
+        _speedRotator.localEulerAngles = vec;
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
             SetUpGame();
@@ -285,7 +289,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
         if (_lastSuperEvent != null) {
             _lastSuperEvent.DisableScreen();
         }
@@ -329,7 +332,7 @@ public class GameManager : MonoBehaviour
         _rally = 0;
         _successive = 0;
         _targetRally = 10;
-        _shuttle.resetBounces();
+        _shuttle.ResetBounce();
         _shuttle.SetBounciness(1f);
         TimerManager.Get().ResetPointTimer();
         SetLastHitter(FighterFilter.both);
@@ -359,7 +362,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stageCoroutine);
         }
 
-        stageCoroutine = StartCoroutine(StageFlash(1, gEvent, filter, controller));
+        stageCoroutine = StartCoroutine(EventFlash(1, gEvent, filter, controller));
     }
 
     void ResetCoroutines() {
@@ -435,7 +438,7 @@ public class GameManager : MonoBehaviour
         return _shuttle;
     }
 
-    IEnumerator StageFlash(float time, GameEvent gEvent, FighterFilter filter, FighterController controller) {
+    IEnumerator EventFlash(float time, GameEvent gEvent, FighterFilter filter, FighterController controller) {
         gEvent.SetOrientation(filter);
         _music.pitch = -1f;
         gEvent.EnableScreen();

@@ -6,15 +6,18 @@ using UnityEngine;
 public class FighterMove
 {
     [SerializeField] string _animationPath;
-    [SerializeField] string _clipName;
-    [SerializeField] ShotType _shotType;
     [SerializeField] float _frames;
     [SerializeField] float _hitFrame;
     [SerializeField] AnimationClip _clip;
     [SerializeField] Vector3 _hitDirection;
+    ShotType _shotType;
 
     public string GetPath() {
         return _animationPath;
+    }
+
+    public void SetUp(ShotType type) {
+        _shotType = type;
     }
 
     public ShotType GetType() {
@@ -22,7 +25,7 @@ public class FighterMove
     }
 
     public string GetClipName() {
-        return _clipName;
+        return _clip.name;
     }
 
     public float GetFrames() {

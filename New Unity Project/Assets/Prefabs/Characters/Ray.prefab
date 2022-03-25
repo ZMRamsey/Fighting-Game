@@ -19773,64 +19773,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _smashMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _chipMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _driveMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _dropMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
-  _superMove:
-    _animationPath: 
-    _clipName: 
-    _shotType: 0
-    _frames: 0
-    _hitFrame: 0
-    _clip: {fileID: 0}
-    _hitDirection: {x: 0, y: 0, z: 0}
+  _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
   _hitboxes: {fileID: 0}
   _hurtBox: {fileID: 4874520953896087311}
-  _hitType: 0
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   _hitboxFlipper: {fileID: 1540060562962152633}
-  _speed: 6
-  _height: 2
-  _meterIncreaseValue: 16
-  _maxJumps: 0
-  _jumpForce: 40
-  _fallMultiplier: 12
-  _jumpFalloff: 0.85
-  _airSpeed: 8
-  _fastFallSpeed: 20
-  _hasDash: 0
-  _hasJump: 0
   _controllerScaler: {fileID: 4874520953764879583}
   _effects: {fileID: 2723939782792330346}
   _renderer: {fileID: 4874520954698666500}
@@ -19849,6 +19795,8 @@ MonoBehaviour:
   _rightFootSounds:
   - {fileID: 8300000, guid: d9f301596c9466e41875928bf8edeba3, type: 3}
   - {fileID: 8300000, guid: 969cbcbb10ceb2d45bbb9c5f2b769ec3, type: 3}
+  _grabSound: []
+  _squeakSound: []
   _hitSmashVFX: {fileID: 0}
   _hitChipVFX: {fileID: 0}
   _hitDriveVFX: {fileID: 0}
