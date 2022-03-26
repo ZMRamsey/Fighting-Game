@@ -72,7 +72,7 @@ public abstract class FighterController : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] protected Animator _animator;
-    [SerializeField] FighterUI _fighterUI;
+    FighterUI _fighterUI;
     protected InputHandler _inputHandler;
     protected Rigidbody _rigidbody;
 
@@ -779,7 +779,7 @@ public abstract class FighterController : MonoBehaviour
         return _isDashing;
     }
 
-    public bool IsGrounded() {
+    public virtual bool IsGrounded() {
         if (_myAction == FighterAction.jumping) {
             return false;
         }

@@ -86,7 +86,7 @@ public class SubWoofer : ShuttleCock
             FighterController controller = hit.GetComponent<FighterController>();
 
             //We need to decide who dies in the event of double explosion KO
-            if(controller != null && controller.HurtBoxActive() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null && !controller.GetComponent<RayAndTekaFighter>()) {
+            if(controller != null && controller.HurtBoxActive() && GameManager.Get().KOCoroutine == null && GameManager.Get().EndGameCoroutine == null && !controller.GetComponent<TekaFighter>()) {
                 Vector3 direction = controller.transform.position - transform.position;
                 direction.Normalize();
 

@@ -247,18 +247,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.GetVelocity().magnitude < 0.005 && _shuttle.transform.position.y < 0.75001 && NoActiveCoroutines()) {
+        if (_shuttle.CanTimeOut() && NoActiveCoroutines()) {
             string scorer = "one";
             if (_shuttle.transform.position.x < 0) {
                 scorer = "two";
             }
-            _groundTime += Time.fixedDeltaTime;
-            if (_groundTime > 2)
-            {
-                ScoreManager.Get().UpdateScore(scorer, "GroundOut");
-                SetUpGame();
-                _groundTime = 0;
-            }
+
+            ScoreManager.Get().UpdateScore(scorer, "GroundOut");
+            SetUpGame();
+            //_groundTime += Time.fixedDeltaTime;
+            //if (_groundTime > 2)
+            //{
+            //    ScoreManager.Get().UpdateScore(scorer, "GroundOut");
+            //    SetUpGame();
+            //    _groundTime = 0;
+            //}
         }
 
         if (NewRound() && KOCoroutine == null && EndGameCoroutine == null) {

@@ -17140,6 +17140,18 @@ PrefabInstance:
       value: 0.8502884
       objectReference: {fileID: 0}
     - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _maxSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _canTimeOut
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
+      propertyPath: _gainPerHit
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: _flipGravity
       value: 0
       objectReference: {fileID: 0}

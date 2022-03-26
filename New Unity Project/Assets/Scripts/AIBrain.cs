@@ -24,7 +24,7 @@ public class AIBrain : MonoBehaviour
 
     EsmeFighter _esme;
     RacketFighter _raket;
-    RayAndTekaFighter _ray;
+    TekaFighter _teka;
 
     void Start() {
         _netDetection = LayerMask.GetMask("Net");
@@ -34,7 +34,7 @@ public class AIBrain : MonoBehaviour
         _controller = GetComponent<FighterController>();
         _esme = GetComponent<EsmeFighter>();
         _raket = GetComponent<RacketFighter>();
-        _ray = GetComponent<RayAndTekaFighter>();
+        _teka = GetComponent<TekaFighter>();
         _enemy = GameManager.Get().GetFighterOne();
         if (_controller == _enemy) {
             _enemy = GameManager.Get().GetFighterTwo();
@@ -73,8 +73,12 @@ public class AIBrain : MonoBehaviour
 
             ProcessMovement();
 
-            if(_raket != null) {
+            if (_raket != null) {
                 ProcessRaket();
+            }
+
+            if (_teka != null) {
+                ProcessRay();
             }
 
             if (grabbed) {
@@ -88,7 +92,7 @@ public class AIBrain : MonoBehaviour
 
             Vector3 hitOffset = Vector3.right * 0.5f;
 
-            if(_controller.GetFilter() == FighterFilter.one) {
+            if (_controller.GetFilter() == FighterFilter.one) {
                 hitOffset = -Vector3.right * 0.5f;
             }
 
@@ -99,209 +103,6 @@ public class AIBrain : MonoBehaviour
 
             _tick = 0.0f;
         }
-
-        //bool moveAwayOverride = false;
-        //bool inRangeOfSubWoofer = false;
-        //bool inHittingRangeOfSubWoofer = false;
-        //bool isWooferOnMySide = false;
-        //bool isTimeToMove = false;
-
-        //tick += Time.deltaTime;
-        //float dist = Vector3.Distance(transform.position, _shuttle.transform.position);
-        //float time = dist / _controller.GetSpeed();
-        //targetPosition = _shuttle.transform.position + _shuttle.GetVelocity() / 4;
-        //targetPosition.y = Mathf.Clamp(targetPosition.y, 1, 10);
-
-        //float shuttleXDist = Vector3.Distance(new Vector3(transform.position.x, transform.position.y, 0), new Vector3(_shuttle.transform.position.x, transform.position.y, 0));
-
-        //if (_controller.GetFilter() == FighterFilter.one) {
-        //    targetPosition.x += 0.5f;
-        //}
-        //else {
-        //    targetPosition.x -= 0.5f;
-        //}
-
-        //if (tick > 0.05f && GameManager.Get().IsGameActive() && !GameManager.Get().IsInKO() && _shuttle.GetVelocity().magnitude > 1) {
-        //    _handler._inputX = 0;
-        //    RaycastHit netDetection;
-
-        //    Collider[] colliders = Physics.OverlapSphere(transform.position, 4);
-        //    foreach (Collider hit in colliders) {
-        //        SubWoofer woofer = hit.GetComponent<SubWoofer>();
-
-
-        //        if (woofer != null) {
-        //            if (IsOnMySide(woofer.transform)) {
-        //                isWooferOnMySide = true;
-        //            }
-
-        //            isTimeToMove = woofer.GetTimer() > 3.5f;
-
-        //            inRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 6f;
-        //            inHittingRangeOfSubWoofer = Vector3.Distance(transform.position, woofer.transform.position) < 1f;
-
-        //            if (!isTimeToMove && IsOnMySide(woofer.transform) && !IsOnMySide()) {
-        //                if (woofer.transform.position.x < transform.position.x) {
-        //                    _handler._inputX = -1;
-        //                }
-
-        //                if (woofer.transform.position.x > transform.position.x) {
-        //                    _handler._inputX = 1;
-        //                }
-        //            }
-        //            else {
-        //                if (inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
-        //                    _handler._inputX = -1;
-        //                    if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
-        //                        _handler._jumpHeld = true;
-        //                        _handler._jumpInput = true;
-        //                    }
-        //                }
-
-        //                if (inRangeOfSubWoofer && !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.one) {
-        //                    _handler._inputX = 1;
-        //                    if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
-        //                        _handler._jumpHeld = true;
-        //                        _handler._jumpInput = true;
-        //                    }
-        //                }
-
-
-        //                if (inRangeOfSubWoofer && IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
-        //                    _handler._inputX = 1;
-        //                    if (Physics.Raycast(transform.position, new Vector3(1, 0, 0), out netDetection, 2, _netDetection)) {
-        //                        _handler._jumpHeld = true;
-        //                        _handler._jumpInput = true;
-        //                    }
-        //                }
-
-        //                if (inRangeOfSubWoofer && !IsOnMySide(woofer.transform) && _controller.GetFilter() == FighterFilter.two) {
-        //                    _handler._inputX = -1;
-        //                    if (Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out netDetection, 2, _netDetection)) {
-        //                        _handler._jumpHeld = true;
-        //                        _handler._jumpInput = true;
-        //                    }
-        //                }
-        //            }
-
-        //            moveAwayOverride = true;
-        //        }
-        //    }
-
-
-        //    if (!moveAwayOverride) {
-        //        if (IsOnMySide() || HeadingMyDirection()) {
-        //            _handler._jumpHeld = IsBallAbovePlayer() && transform.position.y < _shuttle.transform.position.y;
-        //            _handler._jumpInput = IsBallAbovePlayer();
-        //        }
-
-        //        if (IsOnMySide() || HeadingMyDirection() || _controller.InSuper()) {
-
-        //            if (IsBallOnRight()) {
-        //                _handler._inputX = 1;
-        //            }
-
-        //            if (IsBallOnLeft()) {
-        //                _handler._inputX = -1;
-        //            }
-
-        //        }
-
-        //        if (!IsOnMySide() && !IsOnMySide(transform) && !isWooferOnMySide && Vector3.Distance(transform.position, _shuttle.transform.position) > 2) {
-
-        //            if (_controller.GetFilter() == FighterFilter.one) {
-        //                _handler._inputX = 1;
-        //                if (Physics.Raycast(transform.position, new Vector3(2, 0, 0), out netDetection, 2, _netDetection)) {
-        //                    _handler._jumpHeld = true;
-        //                    _handler._jumpInput = true;
-        //                }
-        //            }
-        //            else {
-        //                _handler._inputX = -1;
-        //                if (Physics.Raycast(transform.position, new Vector3(-2, 0, 0), out netDetection, 2, _netDetection)) {
-        //                    _handler._jumpHeld = true;
-        //                    _handler._jumpInput = true;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    if (_esme != null) {
-        //        _handler._crouchInput = false;
-        //        if (_esme.GetComponent<Rigidbody>().velocity.y < 0 && IsBallAbovePlayer()) {
-        //            _handler._jumpExtraInput = true;
-        //        }
-
-        //        if (_esme.CanGhostShot() && _controller.GetGrounded() && Vector3.Distance(transform.position, targetPosition) > 4f) {
-        //            _handler._crouchInput = true;
-        //            ProcessHit();
-        //        }
-
-        //        if (!IsOnMySide() && _esme.GetMeter() >= 1) {
-        //            _handler._specialInput = true;
-        //        }
-        //    }
-
-        //    if (_raket != null) {
-        //        _handler._crouchInput = false;
-
-        //        if (_raket.GetBuildMeter() < 1f && !IsOnMySide() && !HeadingMyDirection() && !isTimeToMove && !inRangeOfSubWoofer) {
-        //            _handler._crouchInput = true;
-        //        }
-
-        //        if (_raket.GetBuildMeter() >= 1) {
-        //            _handler._crouchInput = true;
-        //            _handler._chipInput = true;
-        //        }
-
-        //        if (!IsOnMySide() && _raket.GetMeter() >= 1) {
-        //            _handler._jumpHeld = true;
-        //            _handler._jumpInput = true;
-        //            if (transform.position.y > 6) {
-        //                _handler._specialInput = true;
-        //            }
-        //        }
-        //    }
-
-
-        //    if (_ray != null) {
-        //        _handler._specialInput = false;
-        //        if (HeadingMyDirection() || IsOnMySide()) {
-        //            if (_shuttle.transform.position.y < transform.position.y) {
-        //                _handler._crouchInput = true;
-        //            }
-        //            else {
-        //                _handler._crouchInput = false;
-
-        //            }
-        //        }
-
-        //        if (IsOnMySide() && _ray.GetMeter() >= 1 && ((_shuttle.GetComponent<Rigidbody>().velocity.y > 6 && HeadingMyDirection()) || Vector3.Distance(_shuttle.transform.position, _ray.GetRayPos()) < 3)) {
-        //            _handler._specialInput = true;
-        //        }
-        //    }
-
-        //    bool canShoot = true;
-
-        //    if (_shuttle.IsGrabbed(_controller)) {
-        //        _handler._jumpInput = true;
-        //        _handler._jumpHeld = true;
-
-        //        if(transform.position.y < 5) {
-        //            canShoot = false;
-        //        }
-        //    }
-
-        //    if (canShoot && (!isTimeToMove && inHittingRangeOfSubWoofer) || Vector3.Distance(transform.position, targetPosition) < 1.5f || (Vector3.Distance(transform.position, _shuttle.transform.position) < 1.5f && shuttleXDist < 0.6f)) {
-        //        ProcessHit();
-        //    }
-
-        //    tick = 0.0f;
-        //}
-
-        //if (GameManager.Get().IsInKO()) {
-        //    _handler._inputX = 0;
-        //}
     }
 
     void MovementSuperAvoidance() {
@@ -394,7 +195,7 @@ public class AIBrain : MonoBehaviour
             _handler._chipInput = true;
         }
         else {
-            var enemyRay = _enemy.GetComponent<RayAndTekaFighter>();
+            var enemyRay = _enemy.GetComponent<TekaFighter>();
             var enemyAngle = (transform.position - _enemy.transform.position).normalized;
 
             if (enemyRay != null) {
@@ -483,6 +284,35 @@ public class AIBrain : MonoBehaviour
                 _handler._specialInput = true;
             }
         }
+    }
+    void ProcessRay() {
+        _handler._crouchInput = false;
+
+        if (IsTargetOnMySide() && HeadingMyDirection() && _horizontalTarget.y < transform.position.y + 1) {
+            _handler._crouchInput = true;
+        }
+
+        if (IsOnMySide()) {
+            if (Vector3.Distance(_teka.GetRayPos(), _shuttle.transform.position) < 3 && _teka.GetMeter() >= 1 && HeadingMyDirection()) {
+                _handler._specialInput = true;
+            }
+        }
+    }
+
+    void ProcessEsme() {
+
+    }
+
+    void ProcessGanz() {
+
+    }
+
+    void ProcessDan() {
+
+    }
+
+    void ProcessHunter() {
+
     }
 
     bool HeadingMyDirection() {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ShuttleCock : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] bool _canImpactFrame;
     [SerializeField] bool _useGravity = true;
     [SerializeField] bool _flipGravity = false;
+    [SerializeField] bool _canTimeOut;
+    float _timeOutValue;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
@@ -24,6 +27,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] float _squishThreshold = 0.1f;
     [SerializeField] GameObject _wind;
     [SerializeField] Transform _circle;
+    [SerializeField] Image _timeOutVisual;
 
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
@@ -67,6 +71,7 @@ public class ShuttleCock : MonoBehaviour
         _source = GetComponent<AudioSource>();
         _speed = 1;
         _rb.useGravity = false;
+        _timeOutValue = 0;
     }
 
     void Start() {
@@ -89,10 +94,19 @@ public class ShuttleCock : MonoBehaviour
 
     void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
+
+        if(_rb.velocity.magnitude < 0.01f && _canTimeOut) {
+            _timeOutValue += Time.deltaTime;
+        }
+        else {
+            _timeOutValue = 0;
+        }
     }
 
     public virtual void ResetShuttle(bool freeze) {
         _speed = 1;
+        _timeOutValue = 0;
+
         UnboundFromPlayer(false);
 
         if (shootCoroutine != null) {
@@ -135,7 +149,9 @@ public class ShuttleCock : MonoBehaviour
         _rb.isKinematic = false;
         _rb.velocity = targetVelocity;
 
-        _speed += _gainPerHit;
+        if (message.shot != ShotType.chip) {
+            _speed += _gainPerHit;
+        }
 
         _bouncesSinceShoot = 0;
     }
@@ -146,6 +162,10 @@ public class ShuttleCock : MonoBehaviour
 
     public bool IsFalling() {
         return GetVelocity().y < 0;
+    }
+
+    public bool CanTimeOut() {
+        return _timeOutValue >= 1;
     }
 
     Coroutine shootCoroutine;
@@ -203,6 +223,10 @@ public class ShuttleCock : MonoBehaviour
     void Update() {
         _speed = Mathf.Clamp(_speed, 1, _maximumJail);
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
+
+        if (_canTimeOut) {
+            _timeOutVisual.fillAmount = Mathf.Clamp(_timeOutValue, 0, 1) / 1;
+        }
 
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
@@ -331,8 +355,6 @@ public class ShuttleCock : MonoBehaviour
                 UnboundFromPlayer(true);
             }
         }
-
-        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
 
         ShuttleUpdate();
     }

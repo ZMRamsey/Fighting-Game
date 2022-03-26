@@ -5691,7 +5691,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: raket
+  m_text: name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
   m_sharedMaterial: {fileID: -5531688717143653278, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
@@ -5754,7 +5754,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 201.06668, y: -7.2726555, z: -14.011597, w: 10}
+  m_margin: {x: 201.06668, y: -7.2726555, z: -194.09283, w: 10}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6786,9 +6786,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'RAKET
-
-'
+  m_text: name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
   m_sharedMaterial: {fileID: -5531688717143653278, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
@@ -6851,7 +6849,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -63.20349, y: -7.2726555, z: 209.00644, w: 10}
+  m_margin: {x: -255.97803, y: -7.2726555, z: 209.00644, w: 10}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
