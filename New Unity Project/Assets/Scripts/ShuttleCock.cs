@@ -48,7 +48,6 @@ public class ShuttleCock : MonoBehaviour
     [Header("Stats")]
     FighterFilter _filter;
     bool _frozen;
-    bool _waitForHit;
     bool _windTrailActive;
     bool _redKillActive;
     bool _blueKillActive;
@@ -102,7 +101,6 @@ public class ShuttleCock : MonoBehaviour
 
         if (freeze) {
             _rb.isKinematic = true;
-            _waitForHit = true;
         }
         else {
             _rb.isKinematic = false;
@@ -130,11 +128,9 @@ public class ShuttleCock : MonoBehaviour
 
         _rb.velocity = Vector3.zero;
 
-        Vector3 proceDir = message.direction;
-
         _storedHitVelocity = Vector3.zero;
 
-        Vector3 targetVelocity = proceDir * processedSpeed;
+        Vector3 targetVelocity = message.direction * processedSpeed;
 
         _rb.isKinematic = false;
         _rb.velocity = targetVelocity;
@@ -206,11 +202,11 @@ public class ShuttleCock : MonoBehaviour
 
     void Update() {
         _speed = Mathf.Clamp(_speed, 1, _maximumJail);
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
 
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
         }
-
 
         if (GetSpeedPercent() > _trailActiveOnPercent && _rb.velocity.magnitude > 10 && !CanKill()) {
             if (!_windTrailActive && _trailParticle) {
@@ -422,10 +418,6 @@ public class ShuttleCock : MonoBehaviour
 
     public float GetMaxJailSpeed() {
         return _maximumJail;
-    }
-
-    public bool IsBallActive() {
-        return _waitForHit == false;
     }
 
     public bool IsHeadingRight() {

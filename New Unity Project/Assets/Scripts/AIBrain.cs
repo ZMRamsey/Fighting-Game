@@ -55,12 +55,9 @@ public class AIBrain : MonoBehaviour
             _horizontalTarget.y = Mathf.Clamp(_horizontalTarget.y, 0, _shuttle.transform.position.y);
 
             if (_controller.GetFilter() == FighterFilter.one) {
-                _verticalTarget.x += 1;
-
                 _verticalTarget.x = Mathf.Clamp(_verticalTarget.x, _shuttle.transform.position.x, Mathf.Infinity);
             }
             else {
-                _verticalTarget.x -= 1;
                 _verticalTarget.x = Mathf.Clamp(_verticalTarget.x, -Mathf.Infinity, _shuttle.transform.position.x);
             }
 

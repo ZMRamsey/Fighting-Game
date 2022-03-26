@@ -153,6 +153,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public virtual void InitializeFighter() {
+        _settings.InitializeSettings();
         _renderer.flipX = _filter == FighterFilter.one;
         if (_rgbRenderer) {
             _rgbRenderer.flipX = _filter == FighterFilter.one;
