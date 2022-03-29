@@ -403,8 +403,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
 
-        _UISetWhite.text = "SET " + ScoreManager.Get().GetCurrentPoint();
-        _UISetBlack.text = "SET " + ScoreManager.Get().GetCurrentPoint();
+        _UISetWhite.text = "BREAK " + ScoreManager.Get().GetCurrentPoint();
+        _UISetBlack.text = "BREAK " + ScoreManager.Get().GetCurrentPoint();
         _UICurrentSet.SetTrigger("Set");
         yield return new WaitForSeconds(1);
         StartCoroutine("ServeTimer");
