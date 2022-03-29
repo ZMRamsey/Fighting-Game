@@ -44,7 +44,7 @@ public class Hitbox : MonoBehaviour
                 if (_self != ball.GetOwner())
                 {
                     GameManager.Get().IncreaseRally();
-                    if (ball.GetFilter() == FighterFilter.both && !TimerManager.Get().GetTimerState())
+                    if (ball.GetFilter() == FighterFilter.both)
                     {
                         GameManager.Get().GetFighterTab(_self.GetFilter()).UpdateMessage("steal!");
                     }
