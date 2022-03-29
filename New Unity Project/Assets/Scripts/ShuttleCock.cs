@@ -581,7 +581,6 @@ public class ShuttleCock : MonoBehaviour
                 own.x *= -1;
             }
             _rb.velocity = own;
-            print("AAA");
         }
 
         _grabber.ResetGrab();

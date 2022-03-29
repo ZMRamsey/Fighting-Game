@@ -5317,6 +5317,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: baec479534702f541a0b165815897e15, type: 3}
   - {fileID: 8300000, guid: 1c1e8dcda558d014abf2f934c44b0a4c, type: 3}
   _animator: {fileID: 4953018871853891402}
+  _renderer: {fileID: 4953018871853891403}
+  _redOutline: {fileID: 0}
+  _blueOutline: {fileID: 0}
 --- !u!54 &4953018871932507930
 Rigidbody:
   m_ObjectHideFlags: 0

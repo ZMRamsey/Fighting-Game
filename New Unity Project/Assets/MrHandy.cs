@@ -18,9 +18,7 @@ public class MrHandy : MonoBehaviour
     [SerializeField] AudioClip[] _spawnVoiceSounds;
     [SerializeField] AudioClip[] _deathVoiceSounds;
     [SerializeField] Animator _animator;
-
-    [SerializeField] Material _redOutline;
-    [SerializeField] Material _blueOutline;
+    [SerializeField] SpriteRenderer _renderer;
     bool _frozen;
     float _buldtime;
     int hits;
@@ -37,7 +35,7 @@ public class MrHandy : MonoBehaviour
         _scaler.transform.localScale = Vector3.one * 0.2f;
 
         float x = 1;
-        if(_filter == FighterFilter.one) {
+        if (_filter == FighterFilter.one) {
             x = -1;
         }
         _rb.velocity = new Vector3(x * 2, 7, 0);
@@ -54,12 +52,12 @@ public class MrHandy : MonoBehaviour
     public void OnSpawn(FighterFilter filter) {
         _filter = filter;
 
-        if(filter == FighterFilter.one) {
-            GameManager.Get().GetRedOutline();
+        if (filter == FighterFilter.one) {
+            _renderer.material = GameManager.Get().GetRedOutline();
         }
 
         if (filter == FighterFilter.two) {
-            GameManager.Get().GetBlueOutline();
+            _renderer.material = GameManager.Get().GetBlueOutline();
         }
     }
 
@@ -79,8 +77,7 @@ public class MrHandy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (_buldtime > 1.0f) {
             var y = GameManager.Get().GetShuttle().transform.position.y;
             y = Mathf.Clamp(y, 4, 9f);

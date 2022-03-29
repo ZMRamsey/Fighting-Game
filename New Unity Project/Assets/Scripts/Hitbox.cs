@@ -41,7 +41,7 @@ public class Hitbox : MonoBehaviour
                     facing = -1;
                 }
 
-                if (_self != ball.GetOwner())
+                if (_self != ball.GetOwner() && ball.CanKill())
                 {
                     GameManager.Get().IncreaseRally();
                     if (ball.GetFilter() == FighterFilter.both)

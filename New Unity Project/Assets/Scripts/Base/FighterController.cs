@@ -315,7 +315,9 @@ public abstract class FighterController : MonoBehaviour
                 _rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
             }
 
-            _extraVelocity *= 0.9f;
+            if (_animator.speed == 1) {
+                _extraVelocity *= 0.9f;
+            }
 
             _rigidbody.velocity = _controllerVelocity + _extraVelocity;
         }
@@ -699,6 +701,11 @@ public abstract class FighterController : MonoBehaviour
     public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab) {
         _successfulHits++;
         _successHitsCoolDown = 2;
+
+        if (isGrab) {
+            _failSafeAttack = 0;
+            ResetAttack();
+        }
 
 
         if (_successfulHits > 1) {
