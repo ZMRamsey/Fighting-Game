@@ -20,20 +20,20 @@ MonoBehaviour:
     _hitDirection: {x: 12, y: -6, z: 0}
   _chipMove:
     _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
+    _frames: 8
+    _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 0.4, y: 2, z: 0}
   _driveMove:
     _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
+    _frames: 8
+    _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 12, y: 0.5, z: 0}
   _liftMove:
     _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
+    _frames: 8
+    _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
   _specialMove:

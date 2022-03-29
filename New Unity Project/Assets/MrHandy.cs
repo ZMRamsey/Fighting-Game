@@ -18,6 +18,9 @@ public class MrHandy : MonoBehaviour
     [SerializeField] AudioClip[] _spawnVoiceSounds;
     [SerializeField] AudioClip[] _deathVoiceSounds;
     [SerializeField] Animator _animator;
+
+    [SerializeField] Material _redOutline;
+    [SerializeField] Material _blueOutline;
     bool _frozen;
     float _buldtime;
     int hits;
@@ -27,15 +30,14 @@ public class MrHandy : MonoBehaviour
         _death.transform.SetParent(null);
     }
 
-    public void ResetHandy(FighterFilter filter) {
+    public void ResetHandy() {
         _rb = GetComponent<Rigidbody>();
         hits = 0;
         _buldtime = 0;
-        _filter = filter;
         _scaler.transform.localScale = Vector3.one * 0.2f;
 
         float x = 1;
-        if(filter == FighterFilter.one) {
+        if(_filter == FighterFilter.one) {
             x = -1;
         }
         _rb.velocity = new Vector3(x * 2, 7, 0);
@@ -47,6 +49,18 @@ public class MrHandy : MonoBehaviour
 
     public bool MaxHits() {
         return hits >= _hitThreshold;
+    }
+
+    public void OnSpawn(FighterFilter filter) {
+        _filter = filter;
+
+        if(filter == FighterFilter.one) {
+            GameManager.Get().GetRedOutline();
+        }
+
+        if (filter == FighterFilter.two) {
+            GameManager.Get().GetBlueOutline();
+        }
     }
 
     public void OnDeath(bool instant) {

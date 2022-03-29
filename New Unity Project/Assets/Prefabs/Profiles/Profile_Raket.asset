@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f57a7ff459b3e684d818dd43aa88987b, type: 2}
   - {fileID: 2100000, guid: 0bc801160be78ab45a7182b760808b6f, type: 2}
   - {fileID: 2100000, guid: 4106c6054c5be254cb35081d379cdebf, type: 2}
-  _fighterIconSprite: {fileID: 21300000, guid: 79322e2691d07b640b9352286617b69a, type: 3}
+  _fighterIconSprite: {fileID: 21300000, guid: de66342e9162e674b99b195d1ee1877e, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: 9e8953c7749e6bb4097dd12dd7df3bc3, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: 3f84919b86223094cb938d5ab922af01, type: 3}
   _fighterDescription: She is fast and agile, and can reach areas of the court in
@@ -37,4 +37,4 @@ MonoBehaviour:
   _superVideo: {fileID: 0}
   _superDescription: Her super, SubWoofer, allows Raket to throw a new projectile
     onto the battlefield.
-  _selectedIndex: 6
+  _selectedIndex: 2

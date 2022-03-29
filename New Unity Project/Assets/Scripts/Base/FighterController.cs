@@ -680,8 +680,8 @@ public abstract class FighterController : MonoBehaviour
             ResetMeter();
         }
 
-        if (_failSafeAttack > 0 && !_freeze) {
-            _failSafeAttack -= Time.fixedDeltaTime;
+        if (_failSafeAttack > 0 && _animator.speed == 1) {
+            _failSafeAttack -= Time.deltaTime;
             if (_failSafeAttack <= 0) {
                 ResetAttack();
             }

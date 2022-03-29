@@ -73,7 +73,7 @@ public class RacketFighter : FighterController
         if (_inputHandler.GetCrouch() && _inputHandler.GetChip() && !_mrHandyObject.activeSelf && _buildMeter >= 1 && _myState == FighterState.inControl) {
             _buildMeter = 0;
             _mrHandyObject.transform.position = transform.position;
-            _mrHandyObject.GetComponent<MrHandy>().ResetHandy(_filter);
+            _mrHandyObject.GetComponent<MrHandy>().ResetHandy();
             _mrHandyObject.SetActive(true);
         }
     }
@@ -85,6 +85,7 @@ public class RacketFighter : FighterController
         _subWooferObject.SetActive(false);
 
         _mrHandyObject = Instantiate(_mrHandyPrefab, transform.position, Quaternion.identity);
+        _mrHandyObject.GetComponent<MrHandy>().OnSpawn(_filter);
         _mrHandyObject.SetActive(false);
     }
 

@@ -66,8 +66,20 @@ public class Hitbox : MonoBehaviour
 
                 //ball.BoundToPlayer(_character);
 
+                bool mute = _currentMove.GetType() == ShotType.chip;
+
+                var esme = _self.GetComponent<EsmeFighter>();
+                float overSpeed = 0;
+
+                if (esme != null) {
+                    if (esme.CanGhostShot()) {
+                        mute = true;
+                        overSpeed = 1.25f;
+                    }
+                }
+
                 var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());
-                var hiMes = new HitMessage(dir, velInf, _currentMove.GetType() == ShotType.chip, _self.GetFilter(), _currentMove.GetType());
+                var hiMes = new HitMessage(dir, velInf, mute, _self.GetFilter(), _currentMove.GetType(), overSpeed);
 
                 bool isGrab = false;
 

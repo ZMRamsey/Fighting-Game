@@ -136,6 +136,10 @@ public class ShuttleCock : MonoBehaviour
             processedSpeed = 2f;
         }
 
+        if(message.overrideSpeed != 0) {
+            processedSpeed = message.overrideSpeed;
+        }
+
         _hit.Play();
 
         SquishBall();
@@ -459,6 +463,7 @@ public class ShuttleCock : MonoBehaviour
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
 
         if (CanKill()) {
+            _lastVelocity = _rb.velocity;
             FreezeShuttle(0.15f);
         }
 
@@ -524,13 +529,13 @@ public class ShuttleCock : MonoBehaviour
         _filter = owner;
 
         if (_filter == FighterFilter.one) {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.red);
+            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetRedOutline();
         }
         else if (_filter == FighterFilter.two) {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.blue);
+            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetBlueOutline();
         }
         else {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material.SetColor("OutlineColor", Color.yellow);
+            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetYellowOutline();
         }
     }
 
