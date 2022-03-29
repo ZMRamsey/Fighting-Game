@@ -705,6 +705,8 @@ public abstract class FighterController : MonoBehaviour
             GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(_successfulHits);
         }
 
+        //GameManager.Get().GetFighterTab(GetFilter()).UpdateMessage("beans");
+
         _isDashing = false;
         AddMeter(_settings.GetMeterIncreaseValue() / GameManager.Get().GetSuccessive());
 

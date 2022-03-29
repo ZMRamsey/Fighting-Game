@@ -112,6 +112,11 @@ public class TimerManager : MonoBehaviour
         timerActive = state;
     }
 
+    public bool GetTimerState()
+    {
+        return timerActive;
+    }
+
     private int GetCurrentPointTime()
     {
         return (int)Math.Floor(currentPointTimer);
