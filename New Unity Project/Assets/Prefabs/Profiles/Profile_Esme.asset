@@ -27,12 +27,12 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: b3ccbb70379550a4aa5d7c5bd271abd6, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: d85bcf0ef5c8d7544bdbb583d6a264b1, type: 3}
   _fighterNameRSprite: {fileID: 21300000, guid: af8a6056faa461a4782d264a3e02e378, type: 3}
-  _fighterDescription: Psychic tecwear girl innit
+  _fighterDescription: Psychic tecwear girl
   _gimmickName: Double hit
   _gimmickVideo: {fileID: 0}
   _gimmickDescription: can hit twice by holding down and using a shot while she owns
     the shuttle
   _superName: wall
   _superVideo: {fileID: 0}
-  _superDescription: mexico paid for it
+  _superDescription: wall
   _selectedIndex: 0
