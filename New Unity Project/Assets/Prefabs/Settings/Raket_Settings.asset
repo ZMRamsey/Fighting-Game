@@ -22,7 +22,7 @@ MonoBehaviour:
     _animationPath: drive
     _frames: 8
     _hitFrame: 11
-    _clip: {fileID: 7400000, guid: 79efde88b1d18b64bb6a8da96b9a80dc, type: 2}
+    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 0.4, y: 2, z: 0}
   _driveMove:
     _animationPath: drive
