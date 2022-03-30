@@ -39,7 +39,7 @@ public class TextLoadingController : MonoBehaviour
 
         fadeoutCount += 1;
 
-        if (fadeoutCount > 150)
+        if (fadeoutCount > 450)
         {
             loadingText.text = "Continue";
         }
