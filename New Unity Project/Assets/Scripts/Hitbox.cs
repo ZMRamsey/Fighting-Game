@@ -41,7 +41,7 @@ public class Hitbox : MonoBehaviour
                     facing = -1;
                 }
 
-                if (_self != ball.GetOwner() && ball.CanKill())
+                if (_self != ball.GetOwner() && ball == GameManager.Get().GetShuttle())
                 {
                     GameManager.Get().IncreaseRally();
                     if (ball.GetFilter() == FighterFilter.both)
@@ -49,7 +49,7 @@ public class Hitbox : MonoBehaviour
                         GameManager.Get().GetFighterTab(_self.GetFilter()).UpdateMessage("steal!");
                     }
                 }
-                else
+                else if (_self != ball.GetOwner() && ball == GameManager.Get().GetShuttle())
                 {
                     GameManager.Get().SuccessiveHit();
                 }
