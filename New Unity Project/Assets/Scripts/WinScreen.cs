@@ -99,7 +99,7 @@ public class WinScreen : MonoBehaviour
     bool hasContinued;
     public void Update()
     {
-        if (Keyboard.current.enterKey.wasPressedThisFrame && !hasContinued)
+        if (GlobalInputManager.Get().GetSubmitInput() && !hasContinued)
         {
             hasContinued = true;
             GameLogic.Get().LoadScene("MenuTest", "WinScreen");

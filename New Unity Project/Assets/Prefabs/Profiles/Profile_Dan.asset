@@ -30,8 +30,8 @@ MonoBehaviour:
   _fighterDescription: basic boy
   _gimmickName: Double jump
   _gimmickVideo: {fileID: 0}
-  _gimmickDescription: 2 jumps baybee
-  _superName: idk, probably an install
+  _gimmickDescription: better grab
+  _superName: install
   _superVideo: {fileID: 0}
-  _superDescription: grr
+  _superDescription: just install
   _selectedIndex: 0

@@ -27,11 +27,11 @@ MonoBehaviour:
   _fighterIconSprite: {fileID: 21300000, guid: b3ccbb70379550a4aa5d7c5bd271abd6, type: 3}
   _fighterNameLSprite: {fileID: 0}
   _fighterNameRSprite: {fileID: 0}
-  _fighterDescription: prick
-  _gimmickName: prick
+  _fighterDescription: the bad guy
+  _gimmickName: stronger shots
   _gimmickVideo: {fileID: 0}
-  _gimmickDescription: hes a prick
+  _gimmickDescription: hits harder
   _superName: lion
   _superVideo: {fileID: 0}
-  _superDescription: lion hates him too
+  _superDescription: licks screen
   _selectedIndex: 0

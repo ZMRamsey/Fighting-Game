@@ -33,7 +33,7 @@ public class FullScreenRotator : MonoBehaviour
         if(rot.subSceneIndex < 1)
         {
             Debug.Log("Fullscreen");
-            if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.leftStick.left.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame)
+            if (GlobalInputManager.Get().GetLeftInput() || GlobalInputManager.Get().GetRightInput())
             {
                 fullscreenEnabled = !fullscreenEnabled;
             }

@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class rotaterCircle : MonoBehaviour
 {
+    public TextMeshProUGUI[] _options;
+    public TextMeshProUGUI[] _playOptions;
+
     public GameObject MainMenuScript;
 
     public moveMenus men;
@@ -143,6 +147,60 @@ public class rotaterCircle : MonoBehaviour
         //}
     }
 
+    void SetPlayTextWhite()
+    {
+        _options[0].color = Color.white;
+        _options[3].color = Color.white;
+        _options[6].color = Color.white;
+        _options[9].color = Color.white;
+
+        _options[1].color = Color.black;
+        _options[4].color = Color.black;
+        _options[7].color = Color.black;
+        _options[10].color = Color.black;
+
+        _options[2].color = Color.black;
+        _options[5].color = Color.black;
+        _options[8].color = Color.black;
+        _options[11].color = Color.black;
+    }
+
+    void SetOptionsTextWhite()
+    {
+        _options[0].color = Color.black;
+        _options[3].color = Color.black;
+        _options[6].color = Color.black;
+        _options[9].color = Color.black;
+
+        _options[1].color = Color.white;
+        _options[4].color = Color.white;
+        _options[7].color = Color.white;
+        _options[10].color = Color.white;
+
+        _options[2].color = Color.black;
+        _options[5].color = Color.black;
+        _options[8].color = Color.black;
+        _options[11].color = Color.black;
+    }
+
+    void SetReturnTextWhite()
+    {
+        _options[0].color = Color.black;
+        _options[3].color = Color.black;
+        _options[6].color = Color.black;
+        _options[9].color = Color.black;
+
+        _options[1].color = Color.black;
+        _options[4].color = Color.black;
+        _options[7].color = Color.black;
+        _options[10].color = Color.black;
+
+        _options[2].color = Color.white;
+        _options[5].color = Color.white;
+        _options[8].color = Color.white;
+        _options[11].color = Color.white;
+    }
+
     void PressPlay()
     {
         if(_playSubSceneIndex == 0)
@@ -158,8 +216,33 @@ public class rotaterCircle : MonoBehaviour
 
     }
 
+    void SetCPUTextWhite()
+    {
+        _playOptions[0].color = Color.white;
+        _playOptions[1].color = Color.black;
+    }
+
+    void SetP2TextWhite()
+    {
+        _playOptions[1].color = Color.white;
+        _playOptions[0].color = Color.black;
+    }
+
     private void Update()
     {
+        if(sceneIndex == 0)
+        {
+            SetPlayTextWhite();
+        }
+        else if(sceneIndex == 1)
+        {
+            SetOptionsTextWhite();
+        }
+        else
+        {
+            SetReturnTextWhite();
+        }
+
         Debug.Log(_PlayerOptionSelected);
         if (GlobalInputManager.Get().GetSubmitInput()) {
             if (sceneIndex == 0)
@@ -286,8 +369,15 @@ public class rotaterCircle : MonoBehaviour
                     SubMenuMoveDown();
                 }
             }
-           
 
+            //if (_playSubSceneIndex == 0)
+            //{
+            //    SetCPUTextWhite();
+            //}
+            //else
+            //{
+            //    SetP2TextWhite();
+            //}
         }
 
 
