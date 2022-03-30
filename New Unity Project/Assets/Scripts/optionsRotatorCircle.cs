@@ -10,6 +10,8 @@ public class optionsRotatorCircle : MonoBehaviour
     public moveMenus men;
     public FullScreenRotator fullRot;
 
+    public TextMeshProUGUI[] _options;
+
     public float turningRate = 0.75f;
     int sceneIndex = 0;
     public int subSceneIndex = 10;
@@ -132,8 +134,8 @@ public class optionsRotatorCircle : MonoBehaviour
 
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex+1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        fullRot.qualArrSelector = 0;
-        fullRot.resolutionsArrSelector = 0;
+        //fullRot.qualArrSelector = 0;
+        //fullRot.resolutionsArrSelector = 0;
     }
     void SubMenuMoveDown()
     {
@@ -149,8 +151,8 @@ public class optionsRotatorCircle : MonoBehaviour
         }
         subMenuOptions[subSceneIndex].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         subMenuOptions[subSceneIndex-1].GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        fullRot.qualArrSelector = 0;
-        fullRot.resolutionsArrSelector = 0;
+        //fullRot.qualArrSelector = 0;
+        //fullRot.resolutionsArrSelector = 0;
     }
 
     void WrapAroundToPlay()
@@ -282,10 +284,77 @@ public class optionsRotatorCircle : MonoBehaviour
         _isConfirmingOptions = false;
     }
 
+    void SetDisplayTextWhite()
+    {
+        _options[0].color = Color.white;
+        _options[3].color = Color.white;
+        _options[6].color = Color.white;
+        _options[9].color = Color.white;
+
+        _options[1].color = Color.black;
+        _options[4].color = Color.black;
+        _options[7].color = Color.black;
+        _options[10].color = Color.black;
+
+        _options[2].color = Color.black;
+        _options[5].color = Color.black;
+        _options[8].color = Color.black;
+        _options[11].color = Color.black;
+    }
+
+    void SetAudioTextWhite()
+    {
+        _options[0].color = Color.black;
+        _options[3].color = Color.black;
+        _options[6].color = Color.black;
+        _options[9].color = Color.black;
+
+        _options[1].color = Color.white;
+        _options[4].color = Color.white;
+        _options[7].color = Color.white;
+        _options[10].color = Color.white;
+
+        _options[2].color = Color.black;
+        _options[5].color = Color.black;
+        _options[8].color = Color.black;
+        _options[11].color = Color.black;
+    }
+
+    void SetReturnTextWhite()
+    {
+        _options[0].color = Color.black;
+        _options[3].color = Color.black;
+        _options[6].color = Color.black;
+        _options[9].color = Color.black;
+
+        _options[1].color = Color.black;
+        _options[4].color = Color.black;
+        _options[7].color = Color.black;
+        _options[10].color = Color.black;
+
+        _options[2].color = Color.white;
+        _options[5].color = Color.white;
+        _options[8].color = Color.white;
+        _options[11].color = Color.white;
+    }
+
     private void Update()
     {
+        if (sceneIndex == 0)
+        {
+            SetDisplayTextWhite();
+        }
+        else if (sceneIndex == 1)
+        {
+            SetAudioTextWhite();
+        }
+        else
+        {
+            SetReturnTextWhite();
+        }
+
         mainMenuScript.GetComponent<rotaterCircle>().enabled = false;
-        if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+        if (GlobalInputManager.Get().GetSubmitInput())
         {
             if (sceneIndex != 2)
             {
@@ -293,7 +362,7 @@ public class optionsRotatorCircle : MonoBehaviour
             }
             
         }
-        else if ((Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+        else if (GlobalInputManager.Get().GetBackInput())
         {
             controlSelectionWheel();
         }
@@ -303,7 +372,7 @@ public class optionsRotatorCircle : MonoBehaviour
             DisableOptionsBorder();
             if (!_isConfirmingOptions)
             {
-                if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+                if (GlobalInputManager.Get().GetUpInput())
                 {
                     _rotatorConstant += 30.0f;
                     sceneIndex -= 1;
@@ -314,7 +383,7 @@ public class optionsRotatorCircle : MonoBehaviour
                         WrapAroundToQuit();
                     }
                 }
-                else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+                else if (GlobalInputManager.Get().GetDownInput())
                 {
                     Debug.Log("Options Move Down Submenu");
                     _rotatorConstant -= 30.0f;
@@ -326,7 +395,7 @@ public class optionsRotatorCircle : MonoBehaviour
                         WrapAroundToPlay();
                     }
                 }
-                else if ((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                else if (GlobalInputManager.Get().GetSubmitInput())
                 {
                     if (sceneIndex == 2)
                     {
@@ -337,16 +406,16 @@ public class optionsRotatorCircle : MonoBehaviour
             else
             {
                 
-                if((Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
-                {
-                    _hasConfirmedOptions = true;
-                    HasSelectedOptions();
-                }
-                else if(Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
-                {
-                    _hasConfirmedOptions = false;
-                    HasSelectedOptions();
-                }
+                //if(GlobalInputManager.Get().GetSubmitInput())
+                //{
+                //    _hasConfirmedOptions = true;
+                //    HasSelectedOptions();
+                //}
+                //else if(GlobalInputManager.Get().GetBackInput())
+                //{
+                //    _hasConfirmedOptions = false;
+                //    HasSelectedOptions();
+                //}
             }
             
 
@@ -354,7 +423,7 @@ public class optionsRotatorCircle : MonoBehaviour
         else
         {
             EnableOptionsBorder();
-            if (Keyboard.current.wKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.up.wasPressedThisFrame))
+            if (GlobalInputManager.Get().GetUpInput())
             {
                 subSceneIndex -= 1;
                 if(subSceneIndex < firstOption)
@@ -366,7 +435,7 @@ public class optionsRotatorCircle : MonoBehaviour
                     SubMenuMoveUp();
                 }
             }
-            else if (Keyboard.current.sKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.leftStick.down.wasPressedThisFrame))
+            else if (GlobalInputManager.Get().GetDownInput())
             {
                 subSceneIndex += 1;
                 if (subSceneIndex > lastOption)

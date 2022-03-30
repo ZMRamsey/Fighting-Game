@@ -369,15 +369,15 @@ public class rotaterCircle : MonoBehaviour
                     SubMenuMoveDown();
                 }
             }
-           
-            if(_playSubSceneIndex == 0)
-            {
-                SetCPUTextWhite();
-            }
-            else
-            {
-                SetP2TextWhite();
-            }
+
+            //if (_playSubSceneIndex == 0)
+            //{
+            //    SetCPUTextWhite();
+            //}
+            //else
+            //{
+            //    SetP2TextWhite();
+            //}
         }
 
 
