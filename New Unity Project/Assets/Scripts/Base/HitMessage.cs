@@ -12,6 +12,7 @@ public class HitMessage
     public bool muteVelocity;
     public FighterFilter sender;
     public ShotType shot;
+    public float overrideSpeed;
 
     public HitMessage(Vector3 hitDirection, VelocityInfluence velocityInfluence, bool slowDownVelocity, FighterFilter sentBy, ShotType shotType)
     {
@@ -21,6 +22,17 @@ public class HitMessage
         muteVelocity = slowDownVelocity;
         sender = sentBy;
         shot = shotType;
+        overrideSpeed = 0;
+    }
+
+    public HitMessage(Vector3 hitDirection, VelocityInfluence velocityInfluence, bool slowDownVelocity, FighterFilter sentBy, ShotType shotType, float newSpeed) {
+        direction = hitDirection;
+        influence = velocityInfluence;
+        isPlayer = sentBy != FighterFilter.both;
+        muteVelocity = slowDownVelocity;
+        sender = sentBy;
+        shot = shotType;
+        overrideSpeed = newSpeed;
     }
 }
 

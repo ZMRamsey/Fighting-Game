@@ -29737,51 +29737,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _filter: 0
   _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
-  _smashMove:
-    _animationPath: smash
-    _frames: 11
-    _hitFrame: 5
-    _clip: {fileID: 7400000, guid: 89212665f3b0b1540bd50248506a1b6b, type: 2}
-    _hitDirection: {x: 12, y: -6, z: 0}
-  _chipMove:
-    _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 0.4, y: 2, z: 0}
-  _driveMove:
-    _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 12, y: 0.5, z: 0}
-  _dropMove:
-    _animationPath: drive
-    _frames: 20
-    _hitFrame: 13
-    _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
-    _hitDirection: {x: 6, y: 8, z: 0}
-  _superMove:
-    _animationPath: super
-    _frames: 12
-    _hitFrame: 0
-    _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
-    _hitDirection: {x: 6, y: 4, z: 0}
-  _hitType: 1
-  _groundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
-  _speed: 14
-  _height: 2
-  _meterIncreaseValue: 16
-  _maxJumps: 0
-  _jumpForce: 60
-  _fallMultiplier: 12
-  _jumpFalloff: 0.85
-  _airSpeed: 8
-  _fastFallSpeed: 16
-  _hasDash: 1
-  _hasJump: 1
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 4874520953896087311}
   _hitboxFlipper: {fileID: 1540060562962152633}
@@ -29839,7 +29794,6 @@ MonoBehaviour:
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _extraVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
-  _fighterUI: {fileID: 0}
   _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
   _mrHandyPrefab: {fileID: 4953018871932507929, guid: e4fa35645e5b0064c955dd98649419a2, type: 3}
   _raketUI: {fileID: 2704477212194689817}

@@ -315,7 +315,9 @@ public abstract class FighterController : MonoBehaviour
                 _rigidbody.AddForce(new Vector3(_lastTapAxis.x * 20, _lastTapAxis.y * 4, 0), ForceMode.Impulse);
             }
 
-            _extraVelocity *= 0.9f;
+            if (_animator.speed == 1) {
+                _extraVelocity *= 0.9f;
+            }
 
             _rigidbody.velocity = _controllerVelocity + _extraVelocity;
         }
@@ -680,8 +682,8 @@ public abstract class FighterController : MonoBehaviour
             ResetMeter();
         }
 
-        if (_failSafeAttack > 0 && !_freeze) {
-            _failSafeAttack -= Time.fixedDeltaTime;
+        if (_failSafeAttack > 0 && _animator.speed == 1) {
+            _failSafeAttack -= Time.deltaTime;
             if (_failSafeAttack <= 0) {
                 ResetAttack();
             }
@@ -700,10 +702,17 @@ public abstract class FighterController : MonoBehaviour
         _successfulHits++;
         _successHitsCoolDown = 2;
 
+        if (isGrab) {
+            _failSafeAttack = 0;
+            ResetAttack();
+        }
+
 
         if (_successfulHits > 1) {
             GameManager.Get().GetFighterTab(GetFilter()).UpdateRallyScore(_successfulHits);
         }
+
+        //GameManager.Get().GetFighterTab(GetFilter()).UpdateMessage("beans");
 
         _isDashing = false;
         AddMeter(_settings.GetMeterIncreaseValue() / GameManager.Get().GetSuccessive());

@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     [Header("Speedometer")]
     [SerializeField] Transform _speedRotator;
 
+    [Header("Outlines")]
+    [SerializeField] Material _redMaterial;
+    [SerializeField] Material _blueMaterial;
+    [SerializeField] Material _yellowMaterial;
+
+
     [Header("UI")]
     [SerializeField] GameObject _debugCanvas;
     [SerializeField] UIFader _screenFader;
@@ -87,6 +93,19 @@ public class GameManager : MonoBehaviour
 
         InitializeGame();
     }
+
+    public Material GetRedOutline() {
+        return _redMaterial;
+    }
+
+    public Material GetYellowOutline() {
+        return _yellowMaterial;
+    }
+
+    public Material GetBlueOutline() {
+        return _blueMaterial;
+    }
+
 
     void InitializeGame() {
 
@@ -403,8 +422,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
 
-        _UISetWhite.text = "SET " + ScoreManager.Get().GetCurrentPoint();
-        _UISetBlack.text = "SET " + ScoreManager.Get().GetCurrentPoint();
+        _UISetWhite.text = "BREAK " + ScoreManager.Get().GetCurrentPoint();
+        _UISetBlack.text = "BREAK " + ScoreManager.Get().GetCurrentPoint();
         _UICurrentSet.SetTrigger("Set");
         yield return new WaitForSeconds(1);
         StartCoroutine("ServeTimer");
