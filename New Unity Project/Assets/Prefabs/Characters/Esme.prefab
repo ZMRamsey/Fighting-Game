@@ -29505,7 +29505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
+  _settings: {fileID: 11400000, guid: e7e3a1885c0d894409664bf5ea509f47, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 4874520953896087311}
   _hitboxFlipper: {fileID: 1540060562962152633}
@@ -29540,7 +29540,6 @@ MonoBehaviour:
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _extraVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 4874520954698666501}
-  _fighterUI: {fileID: 0}
   _netPrefab: {fileID: 4507918572103632661, guid: ae2ffeb16ddb0fe45bb456be4197bb27, type: 3}
   _magicRaketPrefab: {fileID: 8556203721664482339, guid: 9026df3f6b5aeb74391e55c4fad03826, type: 3}
 --- !u!114 &4874520954667380375

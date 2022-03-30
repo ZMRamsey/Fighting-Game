@@ -236,7 +236,7 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (_successHitsCoolDown > 0) {
-            _successHitsCoolDown -= Time.fixedDeltaTime;
+            _successHitsCoolDown -= Time.deltaTime;
             if (_successHitsCoolDown <= 0) {
                 _successHitsCoolDown = 0.0f;
                 _successfulHits = 0;

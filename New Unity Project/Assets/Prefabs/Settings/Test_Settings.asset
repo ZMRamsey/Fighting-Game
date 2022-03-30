@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e3b3ab25ea4b8479a49aa619b0002c, type: 3}
-  m_Name: Raket_Settings
+  m_Name: Test_Settings
   m_EditorClassIdentifier: 
   _smashMove:
     _animationPath: smash
