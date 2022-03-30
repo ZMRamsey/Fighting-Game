@@ -26,18 +26,20 @@ public class TextLoadingController : MonoBehaviour
             currentOpac *= -1;
         }
 
-        if(currentOpac < 0.1)
-        {
-            fadeoutCount += 1;
-            Debug.Log(fadeoutCount);
-        }
-        loadingText.color = new Color(0f,0f,0f,currentOpac);
+        //if(currentOpac < 0.1)
+        //{
+        //    fadeoutCount += 1;
+        //    Debug.Log(fadeoutCount);
+        //}
+        //loadingText.color = new Color(0f,0f,0f,currentOpac);
 
         //
         //fun.transform.Rotate(currentOpac, opac, currentOpac);
         //
 
-        if (fadeoutCount > 15)
+        fadeoutCount += 1;
+
+        if (fadeoutCount > 150)
         {
             loadingText.text = "Continue";
         }
