@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuPage : MonoBehaviour
 {
-    [SerializeField] Button _backButton;
+    public Button _backButton;
 
     public void Start()
     {

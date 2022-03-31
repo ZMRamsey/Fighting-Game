@@ -7,9 +7,9 @@ public class MainMenuSystem : MonoBehaviour
 {
     public static MainMenuSystem _instance;
     [SerializeField] MainMenuPage[] _mainMenuPages;
-    [SerializeField] Button[] _mainMenuButtons;
+    public Button[] _mainMenuButtons;
     [SerializeField] PlayMenuPage[] _playMenuPages;
-    [SerializeField] Button[] _playMenuButtons;
+    public Button[] _playMenuButtons;
     [SerializeField] GameObject[] _canvasArray;
 
     private void Awake()
