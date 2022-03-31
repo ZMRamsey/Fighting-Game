@@ -422,6 +422,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void AddMeter(float value) {
+        print("Added " + value + " to player " + _filter.ToString());
         _commandMeter += value;
 
         if (_commandMeter > 100) {
