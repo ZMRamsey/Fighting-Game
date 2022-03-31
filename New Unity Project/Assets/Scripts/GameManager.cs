@@ -602,7 +602,8 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseRally() {
         _rally++;
-        _successive = 1;
+        SuccessiveHit();
+        //_successive = 1;
     }
 
     public void SuccessiveHit() {

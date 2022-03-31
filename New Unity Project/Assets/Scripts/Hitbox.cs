@@ -43,13 +43,14 @@ public class Hitbox : MonoBehaviour
 
                 if (_self != ball.GetOwner() && ball == GameManager.Get().GetShuttle())
                 {
+                    GameManager.Get().ResetSuccessive();
                     GameManager.Get().IncreaseRally();
                     if (ball.GetFilter() == FighterFilter.both)
                     {
                         GameManager.Get().GetFighterTab(_self.GetFilter()).UpdateMessage("steal!");
                     }
                 }
-                else if (_self != ball.GetOwner() && ball == GameManager.Get().GetShuttle())
+                else if (_self == ball.GetOwner() && ball == GameManager.Get().GetShuttle())
                 {
                     GameManager.Get().SuccessiveHit();
                 }
