@@ -58,8 +58,8 @@ public class FlexibleGridLayout : LayoutGroup
         var cellWidth = (myWidth / (float)_columns) - spacingCalc.x - paddingCalc.x;
         var cellHeight = (myHeight / (float)_rows) - spacingCalc.y - paddingCalc.y;
 
-        _cellSize.x = cellWidth;
-        _cellSize.y = cellHeight;
+        _cellSize.x = _fitX ? cellWidth : _cellSize.x;
+        _cellSize.y = _fitY ? cellHeight : _cellSize.y;
 
         var columnCount = 0;
         var rowCount = 0;
