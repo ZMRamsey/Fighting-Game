@@ -26,9 +26,10 @@ public class CharacterSelectSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalInputManager.Get().GetBackInput())
-        {
-            LoadToMainMenu();
+        if (_canvas.activeSelf) {
+            if (GlobalInputManager.Get().GetBackInput()) {
+                LoadToMainMenu();
+            }
         }
     }
 

@@ -49,6 +49,10 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _isFocused = false;
     }
 
+    public bool IsFocused() {
+        return _isFocused;
+    }
+
     public virtual void OnSubmit() {
         _onClick = true;
     }

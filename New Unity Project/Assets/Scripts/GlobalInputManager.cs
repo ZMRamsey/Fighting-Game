@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 /// <summary>
 /// Global Input Manger to sync menu controls so everythings consistent.
@@ -55,6 +57,12 @@ public class GlobalInputManager : MonoBehaviour
 
     public bool GetPauseInput() {
         return GetPauseInput(FighterFilter.none);
+    }
+
+    public bool GetAnyButton() {
+        RefreshDevices(FighterFilter.none);
+        var gamepadButtonPressed = HasController() && _controller.allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic);
+        return gamepadButtonPressed || (HasKeyboard() && _keyboard.anyKey.wasPressedThisFrame);
     }
 
     public bool GetUpInput(FighterFilter filter) {
@@ -135,6 +143,10 @@ public class GlobalInputManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool ControllerOrKeyboardInUse() {
+        return (HasController() && _controller.lastUpdateTime < 5.0f) || (HasKeyboard() && _keyboard.lastUpdateTime < 5.0f);
     }
 
     bool HasController() {
