@@ -7,7 +7,7 @@ public class MainMenuPage : MonoBehaviour
 {
     public Button _backButton;
 
-    public void Start()
+    public virtual void Start()
     {
         if (_backButton)
         {

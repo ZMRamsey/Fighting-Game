@@ -27,11 +27,11 @@ public class MainMenuSystem : MonoBehaviour
             _mainMenuButtons[i].onClick.AddListener(() => SetPage(steve));
         }
 
-        //for (int i = 0; i < _playMenuButtons.Length; i++)
-        //{
-        //    int steve = i + 1;
-        //    _playMenuButtons[i].onClick.AddListener(() => SetPage(steve));
-        //}
+        for (int i = 0; i < _playMenuButtons.Length; i++)
+        {
+            int steve = i;
+            _playMenuButtons[i].onClick.AddListener(() => LoadToCharacterSelect());
+        }
     }
 
     public void SetPage(int ID)
@@ -54,7 +54,8 @@ public class MainMenuSystem : MonoBehaviour
 
     public void LoadToCharacterSelect()
     {
-
+        DisableCanvas();
+        CharacterSelectSystem.Get().SetCanvas();
     }
 
     public static MainMenuSystem Get()
@@ -85,5 +86,4 @@ public class MainMenuSystem : MonoBehaviour
             canvas.SetActive(false);
         }
     }
-
 }
