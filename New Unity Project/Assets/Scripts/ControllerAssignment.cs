@@ -5,280 +5,280 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-enum GameType { pvp, pva};
+//enum GameType { pvp, pva};
 public class ControllerAssignment : MonoBehaviour
 {
 
-    public OptionsMenuManager op;
-    public rotaterCircle rot;
+    //public OptionsMenuManager op;
+    //public rotaterCircle rot;
 
-    PlayerDevice _playerOne;
-    Gamepad _playerOneGamepad;
-    Keyboard _playerOneKeyboard;
-    PlayerDevice _playerTwo;
-    Gamepad _playerTwoGamepad;
-    Keyboard _playerTwoKeyboard;
-    bool setPlayerOne;
-    bool setPlayerTwo;
-    int _f1Index;
-    int _f2Index;
+    //PlayerDevice _playerOne;
+    //Gamepad _playerOneGamepad;
+    //Keyboard _playerOneKeyboard;
+    //PlayerDevice _playerTwo;
+    //Gamepad _playerTwoGamepad;
+    //Keyboard _playerTwoKeyboard;
+    //bool setPlayerOne;
+    //bool setPlayerTwo;
+    //int _f1Index;
+    //int _f2Index;
 
-    bool _player2AI = false;
-    bool _player2Player = false;
-    bool _player1Player = false;
+    //bool _player2AI = false;
+    //bool _player2Player = false;
+    //bool _player1Player = false;
 
-    bool readyToPlay = false;
+    //bool readyToPlay = false;
 
-    public GameObject[] leftSelectors;
-    public GameObject[] rightSelectors;
+    //public GameObject[] leftSelectors;
+    //public GameObject[] rightSelectors;
 
-    public GameObject text;
+    //public GameObject text;
 
-    [SerializeField] GameSettings _settings;
-    [SerializeField] FighterProfile[] _profiles;
+    //[SerializeField] GameSettings _settings;
+    //[SerializeField] FighterProfile[] _profiles;
 
-    public GameObject characterSelectScreen;
-    public GameObject inputSelectorScreen;
+    //public GameObject characterSelectScreen;
+    //public GameObject inputSelectorScreen;
 
-    GameType _type;
+    //GameType _type;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(rot._PlayerOptionSelected == 0)
-        {
-            SetPVAI();
-            Debug.Log("Player VS AI");
-        }
-        if (rot._PlayerOptionSelected == 0) {
-            SetPVAI();
-            Debug.Log("Player VS Player");
-        }
-    }
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    if(rot._PlayerOptionSelected == 0)
+    //    {
+    //        SetPVAI();
+    //        Debug.Log("Player VS AI");
+    //    }
+    //    if (rot._PlayerOptionSelected == 0) {
+    //        SetPVAI();
+    //        Debug.Log("Player VS Player");
+    //    }
+    //}
 
-    void Update() {
-        if (readyToPlay)
-        {
-            if(GlobalInputManager.Get().GetSubmitInput() && (_player1Player && (_player2AI || _player2Player)))
-            {
-                Debug.Log("Delayed Selection Active");
-                    inputSelectorScreen.SetActive(false);
-                    characterSelectScreen.SetActive(true);
-            }
+    //void Update() {
+    //    if (readyToPlay)
+    //    {
+    //        if(GlobalInputManager.Get().GetSubmitInput() && (_player1Player && (_player2AI || _player2Player)))
+    //        {
+    //            Debug.Log("Delayed Selection Active");
+    //                inputSelectorScreen.SetActive(false);
+    //                characterSelectScreen.SetActive(true);
+    //        }
             
-        }
-        else
-        {
-            var allGamepads = Gamepad.all;
+    //    }
+    //    else
+    //    {
+    //        var allGamepads = Gamepad.all;
 
-            foreach (Gamepad device in allGamepads)
-            {
-                if (device.aButton.wasPressedThisFrame)
-                {
-                    SetPlayer(device);
-                }
-            }
+    //        foreach (Gamepad device in allGamepads)
+    //        {
+    //            if (device.aButton.wasPressedThisFrame)
+    //            {
+    //                SetPlayer(device);
+    //            }
+    //        }
 
-            if (Keyboard.current != null)
-            {
-                if (Keyboard.current.enterKey.wasPressedThisFrame)
-                {
-                    SetPlayer(Keyboard.current);
-                }
-            }
+    //        if (Keyboard.current != null)
+    //        {
+    //            if (Keyboard.current.enterKey.wasPressedThisFrame)
+    //            {
+    //                SetPlayer(Keyboard.current);
+    //            }
+    //        }
 
-            //if (GlobalInputManager.Get().GetSubmitInput()) {
-            //    if (!setPlayerOne && !setPlayerTwo)
-            //    {
-            //        SetAIVAI();
-            //    }
-            //    else if (setPlayerOne && setPlayerTwo)
-            //    {
-            //        SetPVP();
-            //        print("PVP");
-            //    }
-            //    else if (setPlayerOne)
-            //    {
-            //        SetPVAI();
-            //    }
-            //}
-        }
+    //        //if (GlobalInputManager.Get().GetSubmitInput()) {
+    //        //    if (!setPlayerOne && !setPlayerTwo)
+    //        //    {
+    //        //        SetAIVAI();
+    //        //    }
+    //        //    else if (setPlayerOne && setPlayerTwo)
+    //        //    {
+    //        //        SetPVP();
+    //        //        print("PVP");
+    //        //    }
+    //        //    else if (setPlayerOne)
+    //        //    {
+    //        //        SetPVAI();
+    //        //    }
+    //        //}
+    //    }
         
 
         
 
-        //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
-        //    if (_playerOneKeyboard != null) {
-        //        if (_playerOneKeyboard.leftArrowKey.wasPressedThisFrame || _playerOneKeyboard.aKey.wasPressedThisFrame) {
-        //            _f1Index++;
-        //            if (_f1Index > _profiles.Length - 1) {
-        //                _f1Index = 0;
-        //            }
-        //            _f1Char.text = _profiles[_f1Index].GetName();
-        //        }
+    //    //DONT NEED TO REFERENCE THIS, TEMPORARY CHARACTER SELECTION
+    //    //    if (_playerOneKeyboard != null) {
+    //    //        if (_playerOneKeyboard.leftArrowKey.wasPressedThisFrame || _playerOneKeyboard.aKey.wasPressedThisFrame) {
+    //    //            _f1Index++;
+    //    //            if (_f1Index > _profiles.Length - 1) {
+    //    //                _f1Index = 0;
+    //    //            }
+    //    //            _f1Char.text = _profiles[_f1Index].GetName();
+    //    //        }
 
-        //        if (_playerOneKeyboard.rightArrowKey.wasPressedThisFrame || _playerOneKeyboard.dKey.wasPressedThisFrame) {
-        //            _f1Index--;
-        //            if (_f1Index < 0) {
-        //                _f1Index = _profiles.Length - 1;
-        //            }
-        //            _f1Char.text = _profiles[_f1Index].GetName();
-        //            _settings.SetFighterOneProfile(_profiles[_f1Index]);
-        //        }
-        //    }
+    //    //        if (_playerOneKeyboard.rightArrowKey.wasPressedThisFrame || _playerOneKeyboard.dKey.wasPressedThisFrame) {
+    //    //            _f1Index--;
+    //    //            if (_f1Index < 0) {
+    //    //                _f1Index = _profiles.Length - 1;
+    //    //            }
+    //    //            _f1Char.text = _profiles[_f1Index].GetName();
+    //    //            _settings.SetFighterOneProfile(_profiles[_f1Index]);
+    //    //        }
+    //    //    }
 
-        //    if (_playerTwoKeyboard != null) {
-        //        if (_playerTwoKeyboard.leftArrowKey.wasPressedThisFrame || _playerTwoKeyboard.aKey.wasPressedThisFrame) {
-        //            _f2Index++;
-        //            if (_f2Index > _profiles.Length - 1) {
-        //                _f2Index = 0;
-        //            }
-        //            _f2Char.text = _profiles[_f2Index].GetName();
-        //        }
+    //    //    if (_playerTwoKeyboard != null) {
+    //    //        if (_playerTwoKeyboard.leftArrowKey.wasPressedThisFrame || _playerTwoKeyboard.aKey.wasPressedThisFrame) {
+    //    //            _f2Index++;
+    //    //            if (_f2Index > _profiles.Length - 1) {
+    //    //                _f2Index = 0;
+    //    //            }
+    //    //            _f2Char.text = _profiles[_f2Index].GetName();
+    //    //        }
 
-        //        if (_playerTwoKeyboard.rightArrowKey.wasPressedThisFrame || _playerTwoKeyboard.dKey.wasPressedThisFrame) {
-        //            _f2Index--;
-        //            if (_f2Index < 0) {
-        //                _f2Index = _profiles.Length - 1;
-        //            }
-        //            _f2Char.text = _profiles[_f2Index].GetName();
-        //            _settings.SetFighterTwoProfile(_profiles[_f2Index]);
-        //        }
-        //    }
+    //    //        if (_playerTwoKeyboard.rightArrowKey.wasPressedThisFrame || _playerTwoKeyboard.dKey.wasPressedThisFrame) {
+    //    //            _f2Index--;
+    //    //            if (_f2Index < 0) {
+    //    //                _f2Index = _profiles.Length - 1;
+    //    //            }
+    //    //            _f2Char.text = _profiles[_f2Index].GetName();
+    //    //            _settings.SetFighterTwoProfile(_profiles[_f2Index]);
+    //    //        }
+    //    //    }
 
-        //    if (_playerOneGamepad != null) {
-        //        if (_playerOneGamepad.dpad.left.wasPressedThisFrame || _playerOneGamepad.leftStick.left.wasPressedThisFrame) {
-        //            _f1Index++;
-        //            if (_f1Index > _profiles.Length - 1) {
-        //                _f1Index = 0;
-        //            }
-        //            _f1Char.text = _profiles[_f1Index].GetName();
-        //        }
+    //    //    if (_playerOneGamepad != null) {
+    //    //        if (_playerOneGamepad.dpad.left.wasPressedThisFrame || _playerOneGamepad.leftStick.left.wasPressedThisFrame) {
+    //    //            _f1Index++;
+    //    //            if (_f1Index > _profiles.Length - 1) {
+    //    //                _f1Index = 0;
+    //    //            }
+    //    //            _f1Char.text = _profiles[_f1Index].GetName();
+    //    //        }
 
-        //        if (_playerOneGamepad.dpad.right.wasPressedThisFrame || _playerOneGamepad.leftStick.right.wasPressedThisFrame) {
-        //            _f1Index--;
-        //            if (_f1Index < 0) {
-        //                _f1Index = _profiles.Length - 1;
-        //            }
-        //            _f1Char.text = _profiles[_f1Index].GetName();
-        //            _settings.SetFighterOneProfile(_profiles[_f1Index]);
-        //        }
-        //    }
+    //    //        if (_playerOneGamepad.dpad.right.wasPressedThisFrame || _playerOneGamepad.leftStick.right.wasPressedThisFrame) {
+    //    //            _f1Index--;
+    //    //            if (_f1Index < 0) {
+    //    //                _f1Index = _profiles.Length - 1;
+    //    //            }
+    //    //            _f1Char.text = _profiles[_f1Index].GetName();
+    //    //            _settings.SetFighterOneProfile(_profiles[_f1Index]);
+    //    //        }
+    //    //    }
 
-        //    if (_playerTwoGamepad!= null) {
-        //        if (_playerTwoGamepad.dpad.left.wasPressedThisFrame || _playerTwoGamepad.leftStick.left.wasPressedThisFrame) {
-        //            _f2Index++;
-        //            if (_f2Index > _profiles.Length - 1) {
-        //                _f2Index = 0;
-        //            }
-        //            _f2Char.text = _profiles[_f2Index].GetName();
-        //        }
+    //    //    if (_playerTwoGamepad!= null) {
+    //    //        if (_playerTwoGamepad.dpad.left.wasPressedThisFrame || _playerTwoGamepad.leftStick.left.wasPressedThisFrame) {
+    //    //            _f2Index++;
+    //    //            if (_f2Index > _profiles.Length - 1) {
+    //    //                _f2Index = 0;
+    //    //            }
+    //    //            _f2Char.text = _profiles[_f2Index].GetName();
+    //    //        }
 
-        //        if (_playerTwoGamepad.dpad.right.wasPressedThisFrame || _playerTwoGamepad.leftStick.right.wasPressedThisFrame) {
-        //            _f2Index--;
-        //            if (_f2Index < 0) {
-        //                _f2Index = _profiles.Length - 1;
-        //            }
-        //            _f2Char.text = _profiles[_f2Index].GetName();
-        //            _settings.SetFighterTwoProfile(_profiles[_f2Index]);
-        //        }
-        //    }
-    }
+    //    //        if (_playerTwoGamepad.dpad.right.wasPressedThisFrame || _playerTwoGamepad.leftStick.right.wasPressedThisFrame) {
+    //    //            _f2Index--;
+    //    //            if (_f2Index < 0) {
+    //    //                _f2Index = _profiles.Length - 1;
+    //    //            }
+    //    //            _f2Char.text = _profiles[_f2Index].GetName();
+    //    //            _settings.SetFighterTwoProfile(_profiles[_f2Index]);
+    //    //        }
+    //    //    }
+    //}
 
-    public void SetAIVAI() {
-        _settings.GetFighterOneDevice().SetInputState(InputState.ai);
-        _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
-    }
+    //public void SetAIVAI() {
+    //    _settings.GetFighterOneDevice().SetInputState(InputState.ai);
+    //    _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
+    //}
 
-    public void SetPVAI() {
-        _type = GameType.pva;
-        _player2AI = true;
-        _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
-        rightSelectors[0].SetActive(true);
-    }
+    //public void SetPVAI() {
+    //    _type = GameType.pva;
+    //    _player2AI = true;
+    //    _settings.GetFighterTwoDevice().SetInputState(InputState.ai);
+    //    rightSelectors[0].SetActive(true);
+    //}
 
-    public void SetPVP() {
-        _type = GameType.pvp;
-    }
+    //public void SetPVP() {
+    //    _type = GameType.pvp;
+    //}
 
-    public void SetPlayer(Keyboard keyboard) {
-        if(setPlayerOne && _playerOne.GetDeviceID() == keyboard.deviceId) {
-            return;
-        }
+    //public void SetPlayer(Keyboard keyboard) {
+    //    if(setPlayerOne && _playerOne.GetDeviceID() == keyboard.deviceId) {
+    //        return;
+    //    }
 
-        if (!setPlayerOne) {
-            //_f1Char.color = Color.white;
-            //_f1Text.text = "KEYBOARD";
-            _playerOne = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
-            _settings.GetFighterOneDevice().SetDevice(_playerOne);
-            _settings.GetFighterOneDevice().SetInputState(InputState.player);
-            setPlayerOne = true;
-            _playerOneKeyboard = keyboard;
-            leftSelectors[2].SetActive(true);
-            _player1Player = true;
-            if(rot._PlayerOptionSelected == 0)
-            {
-                readyToPlay = true;
-                text.SetActive(true);
-            }
-            return;
-        }
+    //    if (!setPlayerOne) {
+    //        //_f1Char.color = Color.white;
+    //        //_f1Text.text = "KEYBOARD";
+    //        _playerOne = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
+    //        _settings.GetFighterOneDevice().SetDevice(_playerOne);
+    //        _settings.GetFighterOneDevice().SetInputState(InputState.player);
+    //        setPlayerOne = true;
+    //        _playerOneKeyboard = keyboard;
+    //        leftSelectors[2].SetActive(true);
+    //        _player1Player = true;
+    //        if(rot._PlayerOptionSelected == 0)
+    //        {
+    //            readyToPlay = true;
+    //            text.SetActive(true);
+    //        }
+    //        return;
+    //    }
 
-        if (!setPlayerTwo && !_player2AI) {
-            //_f2Char.color = Color.white;
-            //_f2Text.text = "KEYBOARD";
-            _playerTwo = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
-            _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
-            _settings.GetFighterTwoDevice().SetInputState(InputState.player);
-            setPlayerTwo = true;
-            _playerTwoKeyboard = keyboard;
-            //Application.LoadLevel("Base");
-            rightSelectors[2].SetActive(true);
-            _player2Player = true;
-            readyToPlay = true;
-            text.SetActive(true);
-            return;
-        }
-    }
+    //    if (!setPlayerTwo && !_player2AI) {
+    //        //_f2Char.color = Color.white;
+    //        //_f2Text.text = "KEYBOARD";
+    //        _playerTwo = new PlayerDevice(InputDeviceType.keyboard, keyboard.deviceId);
+    //        _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
+    //        _settings.GetFighterTwoDevice().SetInputState(InputState.player);
+    //        setPlayerTwo = true;
+    //        _playerTwoKeyboard = keyboard;
+    //        //Application.LoadLevel("Base");
+    //        rightSelectors[2].SetActive(true);
+    //        _player2Player = true;
+    //        readyToPlay = true;
+    //        text.SetActive(true);
+    //        return;
+    //    }
+    //}
 
-    public void SetPlayer(Gamepad gamepad) {
-        if (setPlayerOne && _playerOne.GetDeviceID() == gamepad.deviceId) {
-            return;
-        }
+    //public void SetPlayer(Gamepad gamepad) {
+    //    if (setPlayerOne && _playerOne.GetDeviceID() == gamepad.deviceId) {
+    //        return;
+    //    }
 
-        if (!setPlayerOne) {
-            //_f1Char.color = Color.white;
-            //_f1Text.text = "GAMEPAD";
-            _playerOne = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
-            _settings.GetFighterOneDevice().SetDevice(_playerOne) ;
-            _settings.GetFighterOneDevice().SetInputState(InputState.player);
-            setPlayerOne = true;
-            _playerOneGamepad = gamepad;
-            leftSelectors[1].SetActive(true);
-            _player1Player = true;
-            if (rot._PlayerOptionSelected == 0)
-            {
-                readyToPlay = true;
-                text.SetActive(true);
-            }
-            return;
-        }
+    //    if (!setPlayerOne) {
+    //        //_f1Char.color = Color.white;
+    //        //_f1Text.text = "GAMEPAD";
+    //        _playerOne = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
+    //        _settings.GetFighterOneDevice().SetDevice(_playerOne) ;
+    //        _settings.GetFighterOneDevice().SetInputState(InputState.player);
+    //        setPlayerOne = true;
+    //        _playerOneGamepad = gamepad;
+    //        leftSelectors[1].SetActive(true);
+    //        _player1Player = true;
+    //        if (rot._PlayerOptionSelected == 0)
+    //        {
+    //            readyToPlay = true;
+    //            text.SetActive(true);
+    //        }
+    //        return;
+    //    }
 
-        if (!setPlayerTwo && !_player2AI) {
-            //_f2Char.color = Color.white;
-            //_f2Text.text = "GAMEPAD";
-            _playerTwo = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
-            _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
-            _settings.GetFighterTwoDevice().SetInputState(InputState.player);
-            setPlayerTwo = true;
-            _playerTwoGamepad = gamepad;
-            //Application.LoadLevel("Base");
-            rightSelectors[1].SetActive(true);
-            _player2Player = true;
-            readyToPlay = true;
-            text.SetActive(true);
-            return;
-        }
-    }
+    //    if (!setPlayerTwo && !_player2AI) {
+    //        //_f2Char.color = Color.white;
+    //        //_f2Text.text = "GAMEPAD";
+    //        _playerTwo = new PlayerDevice(InputDeviceType.gamepad, gamepad.deviceId);
+    //        _settings.GetFighterTwoDevice().SetDevice(_playerTwo);
+    //        _settings.GetFighterTwoDevice().SetInputState(InputState.player);
+    //        setPlayerTwo = true;
+    //        _playerTwoGamepad = gamepad;
+    //        //Application.LoadLevel("Base");
+    //        rightSelectors[1].SetActive(true);
+    //        _player2Player = true;
+    //        readyToPlay = true;
+    //        text.SetActive(true);
+    //        return;
+    //    }
+    //}
 }
