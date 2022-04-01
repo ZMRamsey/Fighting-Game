@@ -10,6 +10,7 @@ public class MainMenuSystem : MonoBehaviour
     public Button[] _mainMenuButtons;
     [SerializeField] PlayMenuPage[] _playMenuPages;
     public Button[] _playMenuButtons;
+    [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
 
     private void Awake()
@@ -59,6 +60,16 @@ public class MainMenuSystem : MonoBehaviour
     public static MainMenuSystem Get()
     {
         return _instance;
+    }
+
+    public void SetCanvas()
+    {
+        _canvas.SetActive(true);
+    }
+
+    public void DisableCanvas()
+    {
+        _canvas.SetActive(false);
     }
 
     public void SetCanvas(int ID)
