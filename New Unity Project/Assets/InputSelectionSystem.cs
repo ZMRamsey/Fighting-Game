@@ -51,6 +51,9 @@ public class InputSelectionSystem : MonoBehaviour
     }
 
     public void OnPageOpened(GameType type) {
+        _hasLeft = false;
+        _hasRight = false;
+
         _type = type;
 
         foreach(GameObject prefab in _currentControllerPrefabs) {

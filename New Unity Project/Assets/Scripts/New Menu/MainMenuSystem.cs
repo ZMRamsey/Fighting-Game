@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MainMenuSystem : MonoBehaviour
 {
     public static MainMenuSystem _instance;
     [SerializeField] MainMenuPage[] _mainMenuPages;
-    public Button[] _mainMenuButtons;
+    public UIButton[] _mainMenuButtons;
     [SerializeField] PlayMenuPage[] _playMenuPages;
-    public Button[] _playMenuButtons;
+    public UIButton[] _playMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
 
@@ -21,16 +22,38 @@ public class MainMenuSystem : MonoBehaviour
     void Start()
     {
         SetPage(0);
-        for (int i = 0; i < _mainMenuButtons.Length; i++)
-        {
+        //for (int i = 0; i < _mainMenuButtons.Length; i++)
+        //{
+        //    int steve = i + 1;
+        //    _mainMenuButtons[i].onClick.AddListener(() => SetPage(steve));
+        //}
+
+        //for (int i = 0; i < _playMenuButtons.Length; i++)
+        //{
+        //    int steve = i;
+        //    _playMenuButtons[i].onClick.AddListener(() => LoadToCharacterSelect());
+        //}
+
+    }
+
+    void Update() {
+        for (int i = 0; i < _mainMenuButtons.Length; i++) {
             int steve = i + 1;
-            _mainMenuButtons[i].onClick.AddListener(() => SetPage(steve));
+            if (_mainMenuButtons[i].OnClick()) {
+                SetPage(steve);
+            }
         }
 
-        for (int i = 0; i < _playMenuButtons.Length; i++)
-        {
-            int steve = i;
-            _playMenuButtons[i].onClick.AddListener(() => LoadToCharacterSelect());
+        for (int i = 0; i < _playMenuButtons.Length; i++) {
+            if (_playMenuButtons[i].OnClick()) {
+                GameType type = GameType.pva;
+
+                if(i == 1) {
+                    type = GameType.pvp;
+                }
+
+                LoadToCharacterSelect(type);
+            }
         }
     }
 
@@ -52,10 +75,10 @@ public class MainMenuSystem : MonoBehaviour
         }
     }
 
-    public void LoadToCharacterSelect()
+    public void LoadToCharacterSelect(GameType type)
     {
         DisableCanvas();
-        CharacterSelectSystem.Get().SetCanvas();
+        CharacterSelectSystem.Get().SetCanvas(type);
     }
 
     public static MainMenuSystem Get()

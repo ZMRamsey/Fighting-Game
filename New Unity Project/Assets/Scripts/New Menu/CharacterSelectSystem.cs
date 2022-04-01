@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class CharacterSelectSystem : MonoBehaviour
 {
     public static CharacterSelectSystem _instance;
+    [SerializeField] InputSelectionSystem _inputSelectionSystem;
     [SerializeField] CharacterSelectPage[] _characterSelectPages;
     [SerializeField] GameObject _canvas;
 
@@ -25,7 +26,7 @@ public class CharacterSelectSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (GlobalInputManager.Get().GetBackInput())
         {
             LoadToMainMenu();
         }
@@ -42,9 +43,10 @@ public class CharacterSelectSystem : MonoBehaviour
         MainMenuSystem.Get().SetCanvas();
     }
 
-    public void SetCanvas()
+    public void SetCanvas(GameType type)
     {
         _canvas.SetActive(true);
+        _inputSelectionSystem.OnPageOpened(type);
     }
 
     public void DisableCanvas()

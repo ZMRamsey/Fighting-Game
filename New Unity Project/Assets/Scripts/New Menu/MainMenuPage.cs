@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class MainMenuPage : MonoBehaviour
 {
-    public Button _backButton;
+    public UIButton _backButton;
 
-    public virtual void Start()
-    {
-        if (_backButton)
-        {
-            _backButton.onClick.AddListener(() => MainMenuSystem.Get().SetPage(0));
+    void Update() {
+        if (_backButton && _backButton.OnClick()) {
+            MainMenuSystem.Get().SetPage(0);
         }
     }
 
