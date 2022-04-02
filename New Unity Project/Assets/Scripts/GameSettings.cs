@@ -13,12 +13,30 @@ public class GameSettings : ScriptableObject
     [SerializeField] FighterProfile _fighterTwo;
     [SerializeField] PlayerDevice _fighterOneDevice;
     [SerializeField] PlayerDevice _fighterTwoDevice;
+    [SerializeField] int _skinOneID;
+    [SerializeField] int _skinTwoID;
 
     public FighterProfile GetFighterOneProfile() {
         return _fighterOne;
     }
     public FighterProfile GetFighterTwoProfile() {
         return _fighterTwo;
+    }
+
+    public int GetSkinOneID() {
+        return _skinOneID;
+    }
+
+    public int GetSkinTwoID() {
+        return _skinTwoID;
+    }
+
+    public void SetSkinOneID(int value) {
+        _skinOneID = value;
+    }
+
+    public void SetSkinTwoID(int value) {
+        _skinTwoID = value;
     }
 
     public FighterProfile GetFighterProfile(FighterFilter filter)

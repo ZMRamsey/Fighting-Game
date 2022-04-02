@@ -38,6 +38,10 @@ public class FighterProfile : ScriptableObject
         return _fighterPalettes[ID];
     }
 
+    public int GetPalleteLength() {
+        return _fighterPalettes.Length;
+    }
+
     public Material GetRandomPallete() {
         _selectedIndex = Random.Range(1, _fighterPalettes.Length);
         return _fighterPalettes[_selectedIndex];

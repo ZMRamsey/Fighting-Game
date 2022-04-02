@@ -149,8 +149,11 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.GetController().SetPallette(false, null);
 
-        var pallete2 = _settings.GetFighterTwoProfile().GetRandomPallete();
-        _fighterTwo.GetController().SetPallette(true, pallete2);
+        var pallete1 = _settings.GetFighterOneProfile().GetPallete(_settings.GetSkinOneID());
+        _fighterOne.GetController().SetPallette(_settings.GetSkinOneID() > 0, pallete1);
+
+        var pallete2 = _settings.GetFighterTwoProfile().GetPallete(_settings.GetSkinTwoID());
+        _fighterTwo.GetController().SetPallette(_settings.GetSkinTwoID() > 0, pallete2);
 
         PerformCoinToss();
 

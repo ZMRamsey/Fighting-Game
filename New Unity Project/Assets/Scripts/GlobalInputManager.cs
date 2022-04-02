@@ -43,6 +43,14 @@ public class GlobalInputManager : MonoBehaviour
         return GetRightInput(FighterFilter.none);
     }
 
+    public bool GetSkinToggleLeft() {
+        return GetSkinToggleLeft(FighterFilter.none);
+    }
+
+    public bool GetSkinToggleRight() {
+        return GetSkinToggleRight(FighterFilter.none);
+    }
+
     public bool GetSubmitInput() {
         return GetSubmitInput(FighterFilter.none);
     }
@@ -87,6 +95,18 @@ public class GlobalInputManager : MonoBehaviour
         RefreshDevices(filter);
         return (HasController() && (_controller.dpad.right.wasPressedThisFrame || _controller.leftStick.right.wasPressedThisFrame))
             || (HasKeyboard() && (_keyboard.dKey.wasPressedThisFrame || _keyboard.rightArrowKey.wasPressedThisFrame));
+    }
+
+    public bool GetSkinToggleLeft(FighterFilter filter) {
+        RefreshDevices(filter);
+        return (HasController() && (_controller.leftShoulder.wasPressedThisFrame))
+            || (HasKeyboard() && (_keyboard.qKey.wasPressedThisFrame));
+    }
+
+    public bool GetSkinToggleRight(FighterFilter filter) {
+        RefreshDevices(filter);
+        return (HasController() && (_controller.rightShoulder.wasPressedThisFrame))
+            || (HasKeyboard() && (_keyboard.eKey.wasPressedThisFrame));
     }
 
     public bool GetSubmitInput(FighterFilter filter) {

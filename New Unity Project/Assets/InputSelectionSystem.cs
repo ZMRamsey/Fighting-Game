@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using TMPro;
 
-public enum GameType { pvp, pva };
+public enum GameType { pvp, pva, watch, tutorial};
 public class InputSelectionSystem : MonoBehaviour
 {
     [SerializeField] GameObject _connectorPrefab;
@@ -28,7 +28,7 @@ public class InputSelectionSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OnPageOpened(GameType.pvp);
+        OnPageOpened();
     }
 
     public bool CanControl() {
@@ -48,9 +48,18 @@ public class InputSelectionSystem : MonoBehaviour
             else {
                 _informative.text = "PRESS TO CONTINUE";
                 if (GlobalInputManager.Get().GetSubmitInput()) {
+                    GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
+                    GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.player);
+
                     CharacterSelectSystem.Get().SetPage(1);
                 }
             }
+        }
+        else if (_type == GameType.watch) {
+            GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.ai);
+            GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
+
+            CharacterSelectSystem.Get().SetPage(1);
         }
         else {
             if (!HasLeft() && !HasRight()) {
@@ -59,19 +68,28 @@ public class InputSelectionSystem : MonoBehaviour
             else {
                 _informative.text = "PRESS TO CONTINUE";
                 if (GlobalInputManager.Get().GetSubmitInput()) {
+                    if (HasLeft()) {
+                        GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
+                        GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
+                    }
+                    else {
+                        GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.ai);
+                        GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.player);
+                    }
+
                     CharacterSelectSystem.Get().SetPage(1);
                 }
             }
         }
     }
 
-    public void OnPageOpened(GameType type) {
+    public void OnPageOpened() {
         _hasLeft = false;
         _hasRight = false;
 
-        _type = type;
+        _type = CharacterSelectSystem.Get().GetGameType();
 
-        foreach(GameObject prefab in _currentControllerPrefabs) {
+        foreach (GameObject prefab in _currentControllerPrefabs) {
             Destroy(prefab);
         }
 
