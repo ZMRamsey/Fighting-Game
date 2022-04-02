@@ -235,10 +235,10 @@ public class GameManager : MonoBehaviour
         _pauseArt.fillAmount = Mathf.Clamp(_pauseTime, 0, 1);
         _pauseArtBack.fillAmount = _pauseArt.fillAmount;
 
-        _rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.fixedDeltaTime * 12);
-        var vec = Vector3.Lerp(new Vector3(0, 0, -80f), new Vector3(0, 0, 80f), _rotateTarget);
-        vec.x = 0;
-        _speedRotator.localEulerAngles = vec;
+        //_rotateTarget = Mathf.Lerp(_rotateTarget, _shuttle.GetSpeed() / _shuttle.GetMaxJailSpeed(), Time.fixedDeltaTime * 12);
+        //var vec = Vector3.Lerp(new Vector3(0, 0, -80f), new Vector3(0, 0, 80f), _rotateTarget);
+        //vec.x = 0;
+        //_speedRotator.localEulerAngles = vec;
 
         if (Keyboard.current.rKey.wasPressedThisFrame) {
             SetUpGame();
