@@ -14,6 +14,7 @@ public class MainMenuSystem : MonoBehaviour
     public UIButton[] _playMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
+    [SerializeField] CanvasGroup _group;
     int _currentPage;
     int _mainSelectionIndex;
     int _playSelectionIndex;
@@ -57,7 +58,7 @@ public class MainMenuSystem : MonoBehaviour
                     type = GameType.pvp;
                 }
 
-                LoadToCharacterSelect(type);
+                PorceedToInputSelection(type);
             }
         }
 
@@ -168,9 +169,16 @@ public class MainMenuSystem : MonoBehaviour
         }
     }
 
-    public void LoadToCharacterSelect(GameType type) {
+    public void PorceedToInputSelection(GameType type) {
+        _group.alpha = 1;
         DisableCanvas();
         CharacterSelectSystem.Get().SetCanvas(type);
+    }
+
+    public void SkipToCharacterSelect() {
+        _group.alpha = 1;
+        DisableCanvas();
+        CharacterSelectSystem.Get().SkipToCharacterSelect();
     }
 
     public static MainMenuSystem Get() {
@@ -178,6 +186,7 @@ public class MainMenuSystem : MonoBehaviour
     }
 
     public void SetCanvas() {
+        _group.alpha = 1;
         _canvas.SetActive(true);
     }
 

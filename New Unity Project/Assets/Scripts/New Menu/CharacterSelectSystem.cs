@@ -46,8 +46,14 @@ public class CharacterSelectSystem : MonoBehaviour
 
     public void SetCanvas(GameType type)
     {
+        SetPage(0);
         _canvas.SetActive(true);
         _inputSelectionSystem.OnPageOpened(type);
+    }
+
+    public void SkipToCharacterSelect() {
+        _canvas.SetActive(true);
+        SetPage(1);
     }
 
     public void DisableCanvas()
@@ -66,10 +72,7 @@ public class CharacterSelectSystem : MonoBehaviour
     {
         foreach (CharacterSelectPage page in _characterSelectPages)
         {
-            if (page.isActiveAndEnabled)
-            {
-                page.DisablePage();
-            }
+            page.DisablePage();
         }
     }
 

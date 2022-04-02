@@ -51,6 +51,10 @@ public class DeviceConnector : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _currentTarget, Time.deltaTime * 1000);
         }
 
+        if (!_root.CanControl()) {
+            return;
+        }
+
         if(_pos == ConnectorPos.middle) {
             _currentTarget = _homeTarget.transform.position;
 

@@ -19,6 +19,7 @@ public class InputSelectionSystem : MonoBehaviour
     [SerializeField] Transform _controllerTab;
 
     [SerializeField] TextMeshProUGUI _informative;
+    [SerializeField] Transform _panel;
     GameType _type;
 
     bool _hasLeft;
@@ -30,14 +31,25 @@ public class InputSelectionSystem : MonoBehaviour
         OnPageOpened(GameType.pvp);
     }
 
+    public bool CanControl() {
+        return _panel.gameObject.activeSelf;
+    }
+
     void Update()
     {
+        if (!CanControl()) {
+            return;
+        }
+
         if (_type == GameType.pvp) {
             if (!HasLeft() || !HasRight()) {
                 _informative.text = "WAITING...";
             }
             else {
                 _informative.text = "PRESS TO CONTINUE";
+                if (GlobalInputManager.Get().GetSubmitInput()) {
+                    CharacterSelectSystem.Get().SetPage(1);
+                }
             }
         }
         else {
@@ -46,6 +58,9 @@ public class InputSelectionSystem : MonoBehaviour
             }
             else {
                 _informative.text = "PRESS TO CONTINUE";
+                if (GlobalInputManager.Get().GetSubmitInput()) {
+                    CharacterSelectSystem.Get().SetPage(1);
+                }
             }
         }
     }

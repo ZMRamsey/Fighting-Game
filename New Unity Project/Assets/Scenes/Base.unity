@@ -10319,6 +10319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: _UIElements
       objectReference: {fileID: 0}
+    - target: {fileID: 2888926209519477265, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1809863017}
     - target: {fileID: 2888926210009191886, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10367,6 +10371,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8031607700255332915, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1809863017}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
 --- !u!114 &2888926208990030880 stripped
