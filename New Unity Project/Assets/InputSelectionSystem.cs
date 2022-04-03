@@ -74,12 +74,12 @@ public class InputSelectionSystem : MonoBehaviour
             else {
                 _informative.text = "PRESS TO CONTINUE";
                 if (GlobalInputManager.Get().GetSubmitInput()) {
-                    if (HasLeft()) {
+                    if (HasLeftRaw()) {
                         GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
                     }
 
-                    if (HasRight()) {
+                    if (HasRightRaw()) {
                         GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.ai);
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.player);
                     }
@@ -163,10 +163,24 @@ public class InputSelectionSystem : MonoBehaviour
     }
 
     public bool HasLeft() {
+        if (_type == GameType.pva) {
+            return _hasRight || _hasLeft;
+        }
         return _hasLeft;
     }
 
     public bool HasRight() {
+        if (_type == GameType.pva) {
+            return _hasRight || _hasLeft;
+        }
+        return _hasRight;
+    }
+
+    public bool HasLeftRaw() {
+        return _hasLeft;
+    }
+
+    public bool HasRightRaw() {
         return _hasRight;
     }
 

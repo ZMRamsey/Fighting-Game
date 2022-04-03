@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -18,6 +19,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [Header("Global Settings")]
     [SerializeField] float _crossfadeSpeed = 10;
     [SerializeField] Transform _effectorObject;
+    [SerializeField] Image _extraHighlight;
     bool _isFocused = false;
     bool _onClick = false;
 
@@ -25,6 +27,9 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (_useColourTint) {
             _currentColorTarget = _isFocused ? _highlightedColor : _defaultColor;
             _effectorObject.GetComponent<TextMeshProUGUI>().color = Color.Lerp(_effectorObject.GetComponent<TextMeshProUGUI>().color, _currentColorTarget, Time.deltaTime * _crossfadeSpeed);
+            if (_extraHighlight) {
+                _extraHighlight.color = Color.Lerp(_effectorObject.GetComponent<TextMeshProUGUI>().color, _currentColorTarget, Time.deltaTime * _crossfadeSpeed);
+            }
         }
 
         if (_useSize) {

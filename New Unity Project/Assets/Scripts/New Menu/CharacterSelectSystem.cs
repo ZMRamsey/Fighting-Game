@@ -18,6 +18,12 @@ public class CharacterSelectSystem : MonoBehaviour
 
     [SerializeField] Animator _fadeWhite;
 
+    [Header("SFX")]
+    [SerializeField] AudioClip _readySFX;
+    [SerializeField] AudioClip _toggleLeftSFX, _toggleRightSFX;
+    [SerializeField] AudioClip _skinToggleSFX;
+    [SerializeField] AudioClip _transitionSFX;
+
 
     FighterFilter _fighterOneFilter;
     FighterFilter _fighterTwoFilter;
@@ -71,19 +77,23 @@ public class CharacterSelectSystem : MonoBehaviour
             if (_currentPage == 1) {
                 if (!_fighterOne.IsReady) {
                     if (GlobalInputManager.Get().GetLeftInput(_fighterOneFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_toggleLeftSFX);
                         _fighterOne.DecreaseCharacterIndex(_profiles.Length);
                         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
                     if (GlobalInputManager.Get().GetRightInput(_fighterOneFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_toggleRightSFX);
                         _fighterOne.IncreaseCharacterIndex(_profiles.Length);
                         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
 
                     if (GlobalInputManager.Get().GetSkinToggleLeft(_fighterOneFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_skinToggleSFX);
                         _fighterOne.DecreaseSkinIndex(_profiles[_fighterOne.GetSelection()]);
                         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
                     if (GlobalInputManager.Get().GetSkinToggleRight(_fighterOneFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_skinToggleSFX);
                         _fighterOne.IncreaseSkinIndex(_profiles[_fighterOne.GetSelection()]);
                         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
@@ -93,6 +103,8 @@ public class CharacterSelectSystem : MonoBehaviour
                         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                         _fighterOne.SetAsReady();
 
+                        MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
+
                         if (_type != GameType.pvp) {
                             _canSelectSecondCharacter = true;
                             return;
@@ -101,6 +113,9 @@ public class CharacterSelectSystem : MonoBehaviour
 
                     if (GlobalInputManager.Get().GetSubmitInput(_fighterOneFilter)) {
                         _fighterOne.SetAsReady();
+
+                        MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
+
                         if (_type != GameType.pvp) {
                             _canSelectSecondCharacter = true;
                             return;
@@ -120,19 +135,23 @@ public class CharacterSelectSystem : MonoBehaviour
                 //f2
                 if (_canSelectSecondCharacter && !_fighterTwo.IsReady) {
                     if (GlobalInputManager.Get().GetLeftInput(_fighterTwoFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_toggleLeftSFX);
                         _fighterTwo.DecreaseCharacterIndex(_profiles.Length);
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
                     if (GlobalInputManager.Get().GetRightInput(_fighterTwoFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_toggleRightSFX);
                         _fighterTwo.IncreaseCharacterIndex(_profiles.Length);
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
 
                     if (GlobalInputManager.Get().GetSkinToggleLeft(_fighterTwoFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_skinToggleSFX);
                         _fighterTwo.DecreaseSkinIndex(_profiles[_fighterTwo.GetSelection()]);
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
                     if (GlobalInputManager.Get().GetSkinToggleRight(_fighterTwoFilter)) {
+                        MainMenuSystem.Get().PlaySFX(_skinToggleSFX);
                         _fighterTwo.IncreaseSkinIndex(_profiles[_fighterTwo.GetSelection()]);
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
@@ -141,10 +160,12 @@ public class CharacterSelectSystem : MonoBehaviour
                         _fighterTwo.RandomCharacter(_profiles.Length);
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                         _fighterTwo.SetAsReady();
+                        MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
                     }
 
                     if (GlobalInputManager.Get().GetSubmitInput(_fighterTwoFilter)) {
                         _fighterTwo.SetAsReady();
+                        MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
                     }
                 }
                 else {

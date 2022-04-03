@@ -14,6 +14,7 @@ public class MainMenuSystem : MonoBehaviour
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
     [SerializeField] CanvasGroup _group;
+    [SerializeField] AudioSource _sfxSource, _sfxMainSource;
     int _currentPage;
     int _mainSelectionIndex;
     int _playSelectionIndex;
@@ -39,6 +40,16 @@ public class MainMenuSystem : MonoBehaviour
         //    _playMenuButtons[i].onClick.AddListener(() => LoadToCharacterSelect());
         //}
 
+    }
+
+    public void PlaySFX(AudioClip clip) {
+        _sfxSource.Stop();
+        _sfxSource.clip = clip;
+        _sfxSource.Play();
+    }
+
+    public void PlaySFXOverlap(AudioClip clip) {
+        _sfxMainSource.PlayOneShot(clip);
     }
 
     void Update() {

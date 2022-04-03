@@ -102,7 +102,7 @@ public class WinScreen : MonoBehaviour
         if (GlobalInputManager.Get().GetSubmitInput() && !hasContinued)
         {
             hasContinued = true;
-            GameLogic.Get().LoadScene("MenuTest", "WinScreen");
+            GameLogic.Get().LoadScene("Menu", "WinScreen");
         }
         winnerAnimation.SetActive(true);
         imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
