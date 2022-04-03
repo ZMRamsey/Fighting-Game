@@ -493,10 +493,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 142553308917321440, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 330185028374327389, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -476.2533
@@ -573,10 +569,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -77.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2682988782868980786, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3043089492323912047, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -600,18 +592,6 @@ PrefabInstance:
     - target: {fileID: 3043089492323912047, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -77.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3198067904706610166, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3393958822822381478, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4919008516382690266, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5450885306290023109, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -760,10 +740,6 @@ PrefabInstance:
     - target: {fileID: 6722224927453814809, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8221799798167092926, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
-      propertyPath: _RGBMask
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbb00f8b5219b4e4d8c9cdb38f5c48d0, type: 3}
@@ -1661,10 +1637,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7386093061118891704, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 48.660004
-      objectReference: {fileID: 0}
     - target: {fileID: 7853911126058192010, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_Camera
       value: 
