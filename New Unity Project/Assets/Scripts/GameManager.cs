@@ -180,7 +180,12 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         Resume();
-        SetUpGame();
+        if (GameLogic.Get()._type == GameType.tutorial) {
+            _fighterTwo.GetController().gameObject.SetActive(false);
+        }
+        else {
+            SetUpGame();
+        }
     }
 
     public bool NoActiveCoroutines() {
@@ -243,10 +248,6 @@ public class GameManager : MonoBehaviour
         //vec.x = 0;
         //_speedRotator.localEulerAngles = vec;
 
-        if (Keyboard.current.rKey.wasPressedThisFrame) {
-            SetUpGame();
-        }
-
         if (Keyboard.current.f10Key.wasPressedThisFrame) {
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
             _debugCamera.SetActive(_debugCanvas.activeSelf);
@@ -277,13 +278,6 @@ public class GameManager : MonoBehaviour
 
             ScoreManager.Get().UpdateScore(scorer, "GroundOut");
             SetUpGame();
-            //_groundTime += Time.fixedDeltaTime;
-            //if (_groundTime > 2)
-            //{
-            //    ScoreManager.Get().UpdateScore(scorer, "GroundOut");
-            //    SetUpGame();
-            //    _groundTime = 0;
-            //}
         }
 
         if (NewRound() && KOCoroutine == null && EndGameCoroutine == null) {

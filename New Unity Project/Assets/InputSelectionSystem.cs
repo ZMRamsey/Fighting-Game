@@ -61,6 +61,12 @@ public class InputSelectionSystem : MonoBehaviour
 
             CharacterSelectSystem.Get().SetPage(1);
         }
+        else if (_type == GameType.tutorial) {
+            GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
+            GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
+
+            CharacterSelectSystem.Get().SetPage(1);
+        }
         else {
             if (!HasLeft() && !HasRight()) {
                 _informative.text = "WAITING...";
@@ -73,7 +79,7 @@ public class InputSelectionSystem : MonoBehaviour
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
                     }
 
-                    if(HasRight()) {
+                    if (HasRight()) {
                         GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.ai);
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.player);
                     }

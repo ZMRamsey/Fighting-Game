@@ -174,6 +174,11 @@ public class CharacterSelectSystem : MonoBehaviour
             _fighterOneFilter = FighterFilter.one;
             _fighterTwoFilter = FighterFilter.two;
         }
+
+        if(_type == GameType.tutorial) {
+            _fighterOne.SetAsReady();
+            _fighterTwo.SetAsReady();
+        }
     }
 
     public static CharacterSelectSystem Get() {

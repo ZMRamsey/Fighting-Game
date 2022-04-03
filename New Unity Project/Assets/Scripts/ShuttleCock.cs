@@ -174,6 +174,8 @@ public class ShuttleCock : MonoBehaviour
 
     Coroutine shootCoroutine;
     public virtual void Shoot(HitMessage message) {
+        _timeOutValue = 0.0f;
+
         transform.right = message.direction.normalized;
 
         _storedHitVelocity = message.direction * _speed;
