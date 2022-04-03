@@ -109,14 +109,18 @@ public class PauseMenu : MonoBehaviour
                     break;
 
                 case (2):
-                    //SceneManager.LoadScene(sceneName: "WinScreenTest");
+                    Resume();
+                    GameManager.Get().KillSwitch();
+                    GameLogic.Get()._loadInToCharacterSelect = true;
+                    GameLogic.Get().LoadScene("Menu", "Base");
                     break;
 
                 case (3):
                     //SceneManager.LoadScene(sceneName: "MenuTest");
                     Resume();
                     GameManager.Get().KillSwitch();
-                    GameLogic.Get().LoadScene("MenuTest", "Base");
+                    GameLogic.Get()._loadInToCharacterSelect = false;
+                    GameLogic.Get().LoadScene("Menu", "Base");
                     break;
 
                 default:

@@ -72,7 +72,8 @@ public class InputSelectionSystem : MonoBehaviour
                         GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
                     }
-                    else {
+
+                    if(HasRight()) {
                         GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.ai);
                         GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.player);
                     }
@@ -156,16 +157,10 @@ public class InputSelectionSystem : MonoBehaviour
     }
 
     public bool HasLeft() {
-        if (_type == GameType.pva) {
-            return _hasLeft || _hasRight;
-        }
         return _hasLeft;
     }
 
     public bool HasRight() {
-        if (_type == GameType.pva) {
-            return _hasRight || _hasLeft;
-        }
         return _hasRight;
     }
 

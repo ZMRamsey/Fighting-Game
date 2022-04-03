@@ -12,6 +12,8 @@ public class GameLogic : MonoBehaviour
     [SerializeField] GameObject _versusScreenCanvas;
     GameObject _screen;
     bool _hasLoaded;
+    public bool _loadInToCharacterSelect;
+    public GameType _type;
 
     public static GameLogic Get() {
         return _logic;
@@ -35,6 +37,7 @@ public class GameLogic : MonoBehaviour
     void Start() {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 120;
+        _loadInToCharacterSelect = false;
     }
 
     public GameSettings GetSettings() {
@@ -50,6 +53,12 @@ public class GameLogic : MonoBehaviour
                 FinishLoad();
             }
             _hasLoaded = false;
+        }
+
+        if(MainMenuSystem.Get() && _loadInToCharacterSelect) {
+            CharacterSelectSystem.Get().SetGameType(_type);
+            MainMenuSystem.Get().SkipToCharacterSelect();
+            _loadInToCharacterSelect = false;
         }
     }
 

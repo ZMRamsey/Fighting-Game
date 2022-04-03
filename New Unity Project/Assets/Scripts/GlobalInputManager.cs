@@ -55,6 +55,10 @@ public class GlobalInputManager : MonoBehaviour
         return GetSubmitInput(FighterFilter.none);
     }
 
+    public bool GetRandomInput() {
+        return GetRandomInput(FighterFilter.none);
+    }
+
     public bool GetBackInput() {
         return GetBackInput(FighterFilter.none);
     }
@@ -113,6 +117,12 @@ public class GlobalInputManager : MonoBehaviour
         RefreshDevices(filter);
         return (HasController() && (_controller.aButton.wasPressedThisFrame)
             || (HasKeyboard() && (_keyboard.spaceKey.wasPressedThisFrame || _keyboard.enterKey.wasPressedThisFrame)));
+    }
+
+    public bool GetRandomInput(FighterFilter filter) {
+        RefreshDevices(filter);
+        return (HasController() && (_controller.yButton.wasPressedThisFrame)
+            || (HasKeyboard() && (_keyboard.rKey.wasPressedThisFrame)));
     }
 
     public bool GetBackInput(FighterFilter filter) {

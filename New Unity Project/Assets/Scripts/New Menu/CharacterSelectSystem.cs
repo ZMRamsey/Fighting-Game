@@ -16,10 +16,13 @@ public class CharacterSelectSystem : MonoBehaviour
     [SerializeField] CharacterSelectFighter _fighterOne;
     [SerializeField] CharacterSelectFighter _fighterTwo;
 
+    [SerializeField] Animator _fadeWhite;
+
 
     FighterFilter _fighterOneFilter;
     FighterFilter _fighterTwoFilter;
     bool _canSelectSecondCharacter;
+    bool _hasGameStated;
 
     GameType _type;
     int _currentPage = 0;
@@ -33,17 +36,30 @@ public class CharacterSelectSystem : MonoBehaviour
         RefreshCharacterSelect();
     }
 
+
+
     public bool IsSelectionSame() {
         return (_fighterOne.GetSelection() == _fighterTwo.GetSelection()) && (_fighterOne.GetSkinSelection() == _fighterTwo.GetSkinSelection());
     }
 
     // Update is called once per frame
     void Update() {
+        if(!_hasGameStated && _fighterOne.IsReady && _fighterTwo.IsReady) {
+            StartCoroutine(StartGame());
+            _hasGameStated = true;
+        }
+
+        if (_hasGameStated) {
+            return;
+        }
+
         if (_canvas.activeSelf) {
             if (_currentPage == 1 && _type != GameType.watch) {
-                if (GlobalInputManager.Get().GetBackInput()) {
-                    SetPage(0);
-                    _inputSelectionSystem.OnPageOpened();
+                if (!_fighterOne.IsReady && !_fighterTwo.IsReady) {
+                    if (GlobalInputManager.Get().GetBackInput()) {
+                        SetPage(0);
+                        _inputSelectionSystem.OnPageOpened();
+                    }
                 }
             }
             else {
@@ -52,36 +68,51 @@ public class CharacterSelectSystem : MonoBehaviour
                 }
             }
 
-            if(_currentPage == 1) {
+            if (_currentPage == 1) {
                 if (!_fighterOne.IsReady) {
                     if (GlobalInputManager.Get().GetLeftInput(_fighterOneFilter)) {
                         _fighterOne.DecreaseCharacterIndex(_profiles.Length);
-                        GameLogic.Get().GetSettings().SetFighterOneProfile(_profiles[_fighterOne.GetSelection()]);
-                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()]);
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
                     if (GlobalInputManager.Get().GetRightInput(_fighterOneFilter)) {
                         _fighterOne.IncreaseCharacterIndex(_profiles.Length);
-                        GameLogic.Get().GetSettings().SetFighterOneProfile(_profiles[_fighterOne.GetSelection()]);
-                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()]);
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
 
                     if (GlobalInputManager.Get().GetSkinToggleLeft(_fighterOneFilter)) {
                         _fighterOne.DecreaseSkinIndex(_profiles[_fighterOne.GetSelection()]);
-                        GameLogic.Get().GetSettings().SetSkinOneID(_fighterOne.GetSkinSelection());
-                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()]);
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
                     if (GlobalInputManager.Get().GetSkinToggleRight(_fighterOneFilter)) {
                         _fighterOne.IncreaseSkinIndex(_profiles[_fighterOne.GetSelection()]);
-                        GameLogic.Get().GetSettings().SetSkinOneID(_fighterOne.GetSkinSelection());
-                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()]);
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                     }
 
+                    if (GlobalInputManager.Get().GetRandomInput(_fighterOneFilter)) {
+                        _fighterOne.RandomCharacter(_profiles.Length);
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+                        _fighterOne.SetAsReady();
 
-                    if (GlobalInputManager.Get().GetSubmitInput(_fighterOneFilter)) {
-                        _fighterOne.IsReady = true;
-                        if (!_canSelectSecondCharacter) {
+                        if (_type != GameType.pvp) {
                             _canSelectSecondCharacter = true;
                             return;
+                        }
+                    }
+
+                    if (GlobalInputManager.Get().GetSubmitInput(_fighterOneFilter)) {
+                        _fighterOne.SetAsReady();
+                        if (_type != GameType.pvp) {
+                            _canSelectSecondCharacter = true;
+                            return;
+                        }
+                    }
+                }
+                else {
+                    if (GlobalInputManager.Get().GetBackInput(_fighterOneFilter)) {
+                        _fighterOne.SetAsUnready();
+                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+                        if(_type != GameType.pvp) {
+                            _canSelectSecondCharacter = false;
                         }
                     }
                 }
@@ -90,50 +121,53 @@ public class CharacterSelectSystem : MonoBehaviour
                 if (_canSelectSecondCharacter && !_fighterTwo.IsReady) {
                     if (GlobalInputManager.Get().GetLeftInput(_fighterTwoFilter)) {
                         _fighterTwo.DecreaseCharacterIndex(_profiles.Length);
-                        GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[_fighterTwo.GetSelection()]);
-                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()]);
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
                     if (GlobalInputManager.Get().GetRightInput(_fighterTwoFilter)) {
                         _fighterTwo.IncreaseCharacterIndex(_profiles.Length);
-                        GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[_fighterTwo.GetSelection()]);
-                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()]);
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
 
                     if (GlobalInputManager.Get().GetSkinToggleLeft(_fighterTwoFilter)) {
                         _fighterTwo.DecreaseSkinIndex(_profiles[_fighterTwo.GetSelection()]);
-                        GameLogic.Get().GetSettings().SetSkinTwoID(_fighterTwo.GetSkinSelection());
-                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()]);
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
                     if (GlobalInputManager.Get().GetSkinToggleRight(_fighterTwoFilter)) {
                         _fighterTwo.IncreaseSkinIndex(_profiles[_fighterTwo.GetSelection()]);
-                        GameLogic.Get().GetSettings().SetSkinTwoID(_fighterTwo.GetSkinSelection());
-                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()]);
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+                    }
+
+                    if (GlobalInputManager.Get().GetRandomInput(_fighterTwoFilter)) {
+                        _fighterTwo.RandomCharacter(_profiles.Length);
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+                        _fighterTwo.SetAsReady();
                     }
 
                     if (GlobalInputManager.Get().GetSubmitInput(_fighterTwoFilter)) {
-                        _fighterTwo.IsReady = true;
+                        _fighterTwo.SetAsReady();
                     }
                 }
-
-                //
-                if (GlobalInputManager.Get().GetPauseInput()) {
-                    GameLogic.Get().LoadScene("Base", "Menu");
+                else {
+                    if (GlobalInputManager.Get().GetBackInput(_fighterTwoFilter)) {
+                        _fighterTwo.SetAsUnready();
+                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.one);
+                    }
                 }
             }
         }
     }
 
     public void RefreshCharacterSelect() {
-        _fighterOne.Reset();
-        _fighterTwo.Reset();
+        _fighterOne.Reset(2);
+        _fighterTwo.Reset(3);
 
-        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()]);
+        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
         _fighterTwo.IncreaseSkinIndex(_profiles[_fighterTwo.GetSelection()]);
-        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()]);
+        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
 
         _canSelectSecondCharacter = false;
-        _fighterOneFilter = FighterFilter.one;
-        _fighterTwoFilter = FighterFilter.one;
+        _fighterOneFilter = FighterFilter.none;
+        _fighterTwoFilter = FighterFilter.none;
 
         if (_type == GameType.pvp) {
             _canSelectSecondCharacter = true;
@@ -158,6 +192,7 @@ public class CharacterSelectSystem : MonoBehaviour
     }
 
     public void SkipToCharacterSelect() {
+        RefreshCharacterSelect(); 
         _canvas.SetActive(true);
         SetPage(1);
     }
@@ -170,7 +205,7 @@ public class CharacterSelectSystem : MonoBehaviour
         _currentPage = ID;
         DisablePages();
 
-        if(ID == 1) {
+        if (ID == 1) {
             RefreshCharacterSelect();
         }
 
@@ -185,10 +220,18 @@ public class CharacterSelectSystem : MonoBehaviour
 
     public void SetGameType(GameType type) {
         _type = type;
+        GameLogic.Get()._type = type;
     }
 
     public GameType GetGameType() {
         return _type;
+    }
+
+    IEnumerator StartGame() {
+        yield return new WaitForSeconds(1);
+        _fadeWhite.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        GameLogic.Get().LoadScene("Base", "Menu");
     }
 }
 
@@ -199,15 +242,17 @@ public class CharacterSelectFighter
     [SerializeField] TextMeshProUGUI _characterName;
     [SerializeField] TextMeshProUGUI _characterSkin;
     [SerializeField] Animator _characterPopin;
+    [SerializeField] GameObject _readyObject;
     public bool IsReady;
 
     int _currentSelection;
     int _currentSkinSelection;
 
-    public void Reset() {
-        _currentSelection = 0;
+    public void Reset(int selection) {
+        _currentSelection = selection;
         _currentSkinSelection = 0;
         IsReady = false;
+        _readyObject.SetActive(false);
     }
 
     public int GetSelection() {
@@ -224,8 +269,30 @@ public class CharacterSelectFighter
     }
 
     public void DisableVisuals() {
-        foreach(CharacterUI character in _characterVisuals) {
+        foreach (CharacterUI character in _characterVisuals) {
             character.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetAsReady() {
+        _characterPopin.SetTrigger("Select");
+        _readyObject.SetActive(true);
+        IsReady = true;
+        _characterName.text = "";
+        _characterSkin.text = "";
+    }
+
+    public void SetAsUnready() {
+        IsReady = false;
+        _readyObject.SetActive(false);
+    }
+
+    public void RandomCharacter(int length) {
+        _currentSelection = Random.Range(0, length);
+        _characterPopin.SetTrigger("Pop");
+
+        if (CharacterSelectSystem.Get().IsSelectionSame()) {
+            _currentSkinSelection = 1;
         }
     }
 
@@ -259,7 +326,7 @@ public class CharacterSelectFighter
 
     public void IncreaseSkinIndex(FighterProfile current) {
         _currentSkinSelection++;
-        if(_currentSkinSelection > current.GetPalleteLength() - 1) {
+        if (_currentSkinSelection > current.GetPalleteLength() - 1) {
             _currentSkinSelection = 0;
         }
 
@@ -283,9 +350,18 @@ public class CharacterSelectFighter
         return _characterVisuals[_currentSelection];
     }
 
-    public void Refresh(FighterProfile profile) {
+    public void Refresh(FighterProfile profile, FighterFilter filter) {
         EnableVisual();
         _characterName.text = profile.GetName();
+
+        if (filter == FighterFilter.one) {
+            GameLogic.Get().GetSettings().SetSkinOneID(_currentSkinSelection);
+            GameLogic.Get().GetSettings().SetFighterOneProfile(profile);
+        }
+        else {
+            GameLogic.Get().GetSettings().SetSkinTwoID(_currentSkinSelection);
+            GameLogic.Get().GetSettings().SetFighterTwoProfile(profile);
+        }
 
         if (_currentSkinSelection == 0) {
             GetCharacter().SetState(false);
