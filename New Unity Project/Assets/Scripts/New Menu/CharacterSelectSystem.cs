@@ -23,6 +23,7 @@ public class CharacterSelectSystem : MonoBehaviour
     [SerializeField] Transform _selectorOne;
     [SerializeField] Transform _selectorTwo;
     [SerializeField] Transform _selectorJoint;
+    [SerializeField] Vector2[] _selectorPositions;
 
     [Header("SFX")]
     [SerializeField] AudioClip _readySFX;
@@ -187,6 +188,27 @@ public class CharacterSelectSystem : MonoBehaviour
                     }
                 }
             }
+
+            RefreshSelectors();
+        }
+    }
+
+    public void RefreshSelectors()
+    {
+        _selectorOne.localPosition = _selectorPositions[_fighterOne.GetSelection()];
+        _selectorTwo.localPosition = _selectorPositions[_fighterTwo.GetSelection()];
+        _selectorJoint.localPosition = _selectorPositions[_fighterOne.GetSelection()];
+        if (_fighterOne.GetSelection() == _fighterTwo.GetSelection())
+        {
+            _selectorJoint.gameObject.SetActive(true);
+            _selectorOne.gameObject.SetActive(false);
+            _selectorTwo.gameObject.SetActive(false);
+        }
+        else
+        {
+            _selectorJoint.gameObject.SetActive(false);
+            _selectorOne.gameObject.SetActive(true);
+            _selectorTwo.gameObject.SetActive(true);
         }
     }
 
