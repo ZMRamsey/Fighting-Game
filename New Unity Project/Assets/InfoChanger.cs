@@ -14,12 +14,9 @@ public class InfoChanger : MonoBehaviour
 
     void Update()
     {
-        var gamepadButtonPressed = Gamepad.current != null && Gamepad.current.allControls.Any(x => x is UnityEngine.InputSystem.Controls.ButtonControl button && x.IsPressed() && !x.synthetic) 
-            || Gamepad.current.leftStick.left.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame;
+        var gamepadButtonPressed = Gamepad.current != null && (Gamepad.current.allControls.Any(x => x is UnityEngine.InputSystem.Controls.ButtonControl button && x.IsPressed() && !x.synthetic) 
+            || Gamepad.current.leftStick.left.wasPressedThisFrame || Gamepad.current.leftStick.right.wasPressedThisFrame);
         var keyboardPressed = Keyboard.current.anyKey.wasPressedThisFrame;
-
-        print(gamepadButtonPressed);
-        print(keyboardPressed);
 
         if (gamepadButtonPressed) {
             if (Gamepad.current is DualShockGamepad) {
