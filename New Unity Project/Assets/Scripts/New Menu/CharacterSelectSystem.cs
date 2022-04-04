@@ -18,6 +18,11 @@ public class CharacterSelectSystem : MonoBehaviour
 
     [SerializeField] Animator _fadeWhite;
 
+    [Header("Selectors")]
+    [SerializeField] Transform _selectorOne;
+    [SerializeField] Transform _selectorTwo;
+    [SerializeField] Transform _selectorJoint;
+
     [Header("SFX")]
     [SerializeField] AudioClip _readySFX;
     [SerializeField] AudioClip _toggleLeftSFX, _toggleRightSFX;

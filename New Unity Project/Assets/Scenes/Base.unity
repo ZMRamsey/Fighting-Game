@@ -12286,18 +12286,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _redMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 1c86055fc0778ba4faa88dbd6b5a6a68, type: 2}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _blueMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: a315ae1d6101899489f6c69e9363266d, type: 2}
-    - target: {fileID: 6655499867361194826, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
-      propertyPath: _yellowMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: cc34123033baaad4395316bc56ce2bfe, type: 2}
     - target: {fileID: 6655499867361194827, guid: 55369e6ba30188047bccf6fb51249ddb, type: 3}
       propertyPath: m_Name
       value: ShuttleCock
