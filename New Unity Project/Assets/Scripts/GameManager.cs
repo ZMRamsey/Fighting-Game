@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         Resume();
-        if (GameLogic.Get()._type == GameType.tutorial) {
+        if (GameLogic.Get()._type == GameType.tutorial || GameLogic.Get()._type == GameType.training) {
             _fighterTwo.GetController().gameObject.SetActive(false);
         }
         else {
@@ -270,7 +270,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (_shuttle.CanTimeOut() && NoActiveCoroutines()) {
+        if (_shuttle.CanTimeOut() && NoActiveCoroutines() && !(GameLogic.Get()._type == GameType.training || GameLogic.Get()._type == GameType.tutorial)) {
             string scorer = "one";
             if (_shuttle.transform.position.x < 0) {
                 scorer = "two";

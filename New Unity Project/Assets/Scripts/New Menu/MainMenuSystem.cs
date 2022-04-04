@@ -70,6 +70,10 @@ public class MainMenuSystem : MonoBehaviour
                     type = GameType.pvp;
                 }
 
+                if (i == 2) {
+                    type = GameType.training;
+                }
+
                 if (i == 3) {
                     type = GameType.tutorial;
                 }
