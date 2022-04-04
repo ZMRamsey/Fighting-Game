@@ -352,8 +352,8 @@ public class ShuttleCock : MonoBehaviour
         _circle.gameObject.SetActive(_grabber != null);
 
         if (_grabber != null) {
-            grabbedTimer -= Time.fixedDeltaTime * 0.5f;
-            _circle.localScale = Vector3.one * grabbedTimer;
+            grabbedTimer -= Time.deltaTime;
+            _circle.localScale = Vector3.one * (grabbedTimer / _grabber.GetGrabThreshold());
             _rb.velocity = Vector3.zero;
             transform.position = _grabber.transform.position;
 
@@ -565,7 +565,7 @@ public class ShuttleCock : MonoBehaviour
             StopCoroutine(shootCoroutine);
         }
 
-        grabbedTimer = 1;
+        grabbedTimer = player.GetGrabThreshold();
         _grabber = player;
     }
 

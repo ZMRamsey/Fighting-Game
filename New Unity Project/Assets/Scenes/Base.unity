@@ -968,7 +968,7 @@ RectTransform:
   m_Children:
   - {fileID: 1946415840}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1081,7 +1081,7 @@ RectTransform:
   m_Children:
   - {fileID: 1110172210}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4786,7 +4786,7 @@ Transform:
   m_Children:
   - {fileID: 1778820962}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1204973665
 MonoBehaviour:
@@ -4911,7 +4911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7701450292703718122, guid: e2696bf5f39255c4bb2dd1d25b4c3d0b, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7701450292703718122, guid: e2696bf5f39255c4bb2dd1d25b4c3d0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5695,7 +5695,7 @@ RectTransform:
   - {fileID: 467244583}
   - {fileID: 2099430251}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6349,7 +6349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 766030058933936887, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 766030058933936887, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10273,7 +10273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2888926208732733497, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2888926208732733497, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13397,7 +13397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064227560509729116, guid: f8e2837433a23bc458ec8d6978d8a131, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9064227560509729116, guid: f8e2837433a23bc458ec8d6978d8a131, type: 3}
       propertyPath: m_LocalPosition.x

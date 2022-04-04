@@ -55,7 +55,7 @@ public abstract class FighterController : MonoBehaviour
     float _grabCoolDown;
     float _dashCoolDown;
     float _successHitsCoolDown;
-    float _failSafeAttack;
+    protected float _failSafeAttack;
     int _currentJumps;
     int _successfulHits;
     bool _canJump;
@@ -77,6 +77,10 @@ public abstract class FighterController : MonoBehaviour
     protected Rigidbody _rigidbody;
 
     bool test = false;
+
+    public void SetExternalForce(Vector3 force) {
+        _extraVelocity = force;
+    }
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -183,6 +187,10 @@ public abstract class FighterController : MonoBehaviour
 
         ResetFighter();
 
+    }
+
+    public float GetGrabThreshold() {
+        return _settings.GetGrabThreshold();
     }
 
     public void ResetGrab() {

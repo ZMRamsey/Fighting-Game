@@ -17,8 +17,10 @@ MonoBehaviour:
   _fighterOneDevice:
     _id: 1
     _device: 0
-    _inputState: 1
-  _fighterTwoDevice:
-    _id: 18
-    _device: 1
     _inputState: 2
+  _fighterTwoDevice:
+    _id: 1
+    _device: 0
+    _inputState: 2
+  _skinOneID: 0
+  _skinTwoID: 1

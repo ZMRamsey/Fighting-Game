@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EsmeFighter : FighterController
 {
-    [SerializeField] GameObject _netPrefab;
+    [SerializeField] GameObject _blachHolePrefab;
     [SerializeField] GameObject _magicRaketPrefab;
-    GameObject _netObject;
+    GameObject _blackHoleObject;
     GameObject _magicRaketObject;
+    [SerializeField] AnimationClip _clap;
     bool _ghostHitUsed;
     float _shieldTimer;
     float _coolDown;
@@ -18,23 +19,16 @@ public class EsmeFighter : FighterController
 
         GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetEsmetSuper(), _filter, this);
 
-        _netObject.SetActive(true);
-        //_timeStop = true;
-        //_timeStopTimer = 0.0f;
-        //FighterFilter filter = FighterFilter.one;
-        //if(GetFilter() == filter) {
-        //    filter = FighterFilter.two;
-        //}
-
-        //GameManager.Get().StunFrames(6.0f, filter);
+        _blackHoleObject.transform.position = transform.position;
+        _blackHoleObject.SetActive(true);
     }
 
     public override void InitializeFighter() {
         base.InitializeFighter();
 
-        _netObject = Instantiate(_netPrefab, new Vector3(0, 6.39f, -0.1f), Quaternion.identity);
+        _blackHoleObject = Instantiate(_blachHolePrefab, new Vector3(0, 6.39f, -0.1f), Quaternion.identity);
         _magicRaketObject = Instantiate(_magicRaketPrefab, Vector3.zero, Quaternion.identity);
-        _netObject.SetActive(false);
+        _blackHoleObject.SetActive(false);
         _magicRaketObject.SetActive(false);
     }
 
@@ -48,8 +42,8 @@ public class EsmeFighter : FighterController
 
         }
 
-        if (_netObject) {
-            _netObject.SetActive(false);
+        if (_blackHoleObject) {
+            _blackHoleObject.SetActive(false);
         }
         _shieldTimer = 0.0f;
     }
@@ -68,23 +62,12 @@ public class EsmeFighter : FighterController
 
         _coolDown += Time.deltaTime;
 
-        if (_netObject) {
+        if (_blackHoleObject) {
             _shieldTimer += Time.deltaTime;
             if (_shieldTimer > 8.0f) {
                 OnSuperEnd(false);
             }
         }
-
-        //if (_timeStop) {
-        //    _timeStopTimer += Time.deltaTime;
-        //    GameManager.Get().GetShuttle().ForceFreeze();
-        //    if (_timeStopTimer > 6.0f) {
-        //        GameManager.Get().GetShuttle().ForceUnfreeze();
-        //        _netObject.SetActive(false);
-        //        _timeStop = false;
-        //        _timeStopTimer = 0.0f;
-        //    }
-        //}
     }
 
     public override void UpdateMove() {
@@ -112,7 +95,10 @@ public class EsmeFighter : FighterController
 
             OnSuccessfulHit(ball.transform.position, dir, false, _currentMove.GetType(), false);
             _ghostHitUsed = true;
+
+            _canAttack = false;
             _animator.SetTrigger("gimicHit");
+            _failSafeAttack = _clap.length;
         }
         _coolDown = 0;
     }

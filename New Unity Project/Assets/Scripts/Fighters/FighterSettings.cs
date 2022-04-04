@@ -17,6 +17,7 @@ public class FighterSettings : ScriptableObject
     [SerializeField] float _speed;
     [SerializeField] float _height;
     [SerializeField] float _meterIncreaseValue;
+    [SerializeField] float _grabThreshold = 1;
     [SerializeField] int _maxJumps;
 
     [Header("Air Settings")]
@@ -61,6 +62,10 @@ public class FighterSettings : ScriptableObject
 
     public float GetFallMultiplier() {
         return _fallMultiplier;
+    }
+
+    public float GetGrabThreshold() {
+        return _grabThreshold;
     }
 
     public float GetFallOff() {
