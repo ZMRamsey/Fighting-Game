@@ -7,11 +7,15 @@ using UnityEngine.UI;
 
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] bool _useColourTint, _useSize;
+    [SerializeField] bool _useColourTint, _useSize, _useSpriteSwap;
     [Header("Colour Settings")]
     [SerializeField] Color _defaultColor = Color.white;
     [SerializeField] Color _highlightedColor = Color.white;
     Color _currentColorTarget;
+    [Header("Sprite Settings")]
+    [SerializeField] Sprite _defaultSprite;
+    [SerializeField] Sprite _highlightedSprite;
+    [SerializeField] Sprite _currentSprite;
     [Header("Size Settings")]
     [SerializeField] Vector3 _defaultSize = Vector3.one;
     [SerializeField] Vector3 _highlightedSize = Vector3.one;
@@ -35,6 +39,11 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (_useSize) {
             _currentSize = _isFocused ? _highlightedSize : _defaultSize;
             _effectorObject.transform.localScale = Vector3.Lerp(_effectorObject.transform.localScale, _currentSize, Time.deltaTime * _crossfadeSpeed);
+        }
+
+        if (_useSpriteSwap) {
+            _currentSprite = _isFocused ? _highlightedSprite : _defaultSprite;
+            _effectorObject.GetComponent<Image>().sprite = _currentSprite;
         }
     }
 
@@ -79,6 +88,11 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (_useColourTint) {
             _effectorObject.GetComponent<TextMeshProUGUI>().color = _defaultColor;
         }
+
+        if (_useSpriteSwap) {
+            transform.GetComponent<Image>().sprite = _defaultSprite;
+        }
+
         if (_useSize) {
             _effectorObject.transform.localScale = _defaultSize;
         }

@@ -35,7 +35,7 @@ public class DanFighter : FighterController
         base.OnSuperMechanic();
 
         _inFunnyMode = true;
-        _superTimer = 4;
+        _superTimer = 10;
         _currentSuper.gameObject.SetActive(true);
     }
 

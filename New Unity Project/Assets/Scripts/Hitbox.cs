@@ -62,6 +62,14 @@ public class Hitbox : MonoBehaviour
                 Vector3 dir = _currentMove.GetHitDirection();
                 dir.x = xFace;
 
+                var dan = _self.GetComponent<DanFighter>();
+
+                if (dan && dan.IfInSuper()) {
+                    dir *= 20;
+                    GameManager.Get().GetFighterTab(_self.GetFilter()).UpdateMessage("POWER!");
+                    ball.BoostShuttle();
+                }
+
 
                 ball.SetBounciness(1);
                 if (_currentMove.GetType() == ShotType.chip)

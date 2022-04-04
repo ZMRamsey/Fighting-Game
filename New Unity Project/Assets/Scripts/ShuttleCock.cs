@@ -401,6 +401,10 @@ public class ShuttleCock : MonoBehaviour
 
     }
 
+    public void BoostShuttle() {
+        _speed = (_maximumJail / 2) + 1;
+    }
+
 
     void OnWallHit(ContactPoint point, float force, string tag) {
         _bouncesSinceShoot++;
