@@ -8828,6 +8828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 0}
+  _quitButton: {fileID: 0}
 --- !u!95 &1842040212
 Animator:
   serializedVersion: 3
@@ -9484,6 +9485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 3583670624080133721}
+  _quitButton: {fileID: 0}
 --- !u!1 &7853911126248031167
 GameObject:
   m_ObjectHideFlags: 0
@@ -9948,6 +9950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 8072253735193937557}
+  _quitButton: {fileID: 0}
 --- !u!1 &7853911126635447347
 GameObject:
   m_ObjectHideFlags: 0
@@ -10475,6 +10478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 7365192705152317868}
+  _quitButton: {fileID: 0}
 --- !u!95 &1724669231
 Animator:
   serializedVersion: 3
@@ -11054,6 +11058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 1381490340184674394}
+  _quitButton: {fileID: 2714281766768853406}
 --- !u!1 &9220989912400087263
 GameObject:
   m_ObjectHideFlags: 0
