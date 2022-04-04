@@ -11,6 +11,7 @@ public class MainMenuSystem : MonoBehaviour
     [SerializeField] MainMenuPage[] _mainMenuPages;
     public UIButton[] _mainMenuButtons;
     public UIButton[] _playMenuButtons;
+    public UIButton[] _quitMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
     [SerializeField] CanvasGroup _group;
@@ -18,6 +19,7 @@ public class MainMenuSystem : MonoBehaviour
     int _currentPage;
     int _mainSelectionIndex;
     int _playSelectionIndex;
+    int _quitSelectionIndex;
 
     bool _usingMouse = true;
 
@@ -100,6 +102,11 @@ public class MainMenuSystem : MonoBehaviour
             if (_currentPage == 1) {
                 PlayMenuControls();
             }
+
+            if (_currentPage == 4)
+            {
+                QuitMenuControls();
+            }
         }
     }
 
@@ -165,6 +172,44 @@ public class MainMenuSystem : MonoBehaviour
         }
     }
 
+    void QuitMenuControls()
+    {
+        if (GlobalInputManager.Get().GetAnyButton())
+        {
+            _usingMouse = false;
+            _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        }
+        if (GlobalInputManager.Get().GetLeftInput())
+        {
+            _quitMenuButtons[_quitSelectionIndex].OnUnfocus();
+            _quitSelectionIndex--;
+            if (_quitSelectionIndex < 0)
+            {
+                _quitSelectionIndex = _quitMenuButtons.Length - 1;
+            }
+            _quitMenuButtons[_quitSelectionIndex].OnFocus();
+        }
+
+        if (GlobalInputManager.Get().GetRightInput())
+        {
+            _quitMenuButtons[_quitSelectionIndex].OnUnfocus();
+            _quitSelectionIndex++;
+            if (_quitSelectionIndex > _quitMenuButtons.Length - 1)
+            {
+                _quitSelectionIndex = 0;
+            }
+            _quitMenuButtons[_quitSelectionIndex].OnFocus();
+        }
+
+        if (_quitMenuButtons[_quitSelectionIndex].IsFocused())
+        {
+            if (GlobalInputManager.Get().GetSubmitInput())
+            {
+                _quitMenuButtons[_quitSelectionIndex].OnSubmit();
+            }
+        }
+    }
+
     public void SetPage(int ID) {
         _currentPage = ID;
         DisablePages();
@@ -172,10 +217,12 @@ public class MainMenuSystem : MonoBehaviour
         _mainMenuPages[ID].EnablePage();
 
         _playSelectionIndex = 0;
+        _quitSelectionIndex = 0;
 
         if (!_usingMouse) {
             _mainMenuButtons[_mainSelectionIndex].OnFocus();
             _playMenuButtons[0].OnFocus();
+            _quitMenuButtons[0].OnFocus();
         }
     }
 
