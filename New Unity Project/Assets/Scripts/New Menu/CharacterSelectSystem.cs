@@ -10,6 +10,7 @@ public class CharacterSelectSystem : MonoBehaviour
     [SerializeField] InputSelectionSystem _inputSelectionSystem;
     [SerializeField] CharacterSelectPage[] _characterSelectPages;
     [SerializeField] GameObject _canvas;
+    private bool _mainLoadFlag = false;
 
     [Header("Character Select")]
     [SerializeField] FighterProfile[] _profiles;
@@ -64,6 +65,12 @@ public class CharacterSelectSystem : MonoBehaviour
             return;
         }
 
+        if (_mainLoadFlag)
+        {
+            _mainLoadFlag = false;
+            LoadToMainMenu();
+        }
+
         if (_canvas.activeSelf) {
             if (_currentPage == 1 && _type != GameType.watch) {
                 if (!_fighterOne.IsReady && !_fighterTwo.IsReady) {
@@ -75,7 +82,7 @@ public class CharacterSelectSystem : MonoBehaviour
             }
             else {
                 if (GlobalInputManager.Get().GetBackInput()) {
-                    LoadToMainMenu();
+                    _mainLoadFlag = true;
                 }
             }
 
@@ -214,6 +221,7 @@ public class CharacterSelectSystem : MonoBehaviour
     public void LoadToMainMenu() {
         DisableCanvas();
         MainMenuSystem.Get().SetCanvas();
+        MainMenuSystem.Get().SetPage(1);
     }
 
     public void SetCanvas() {
