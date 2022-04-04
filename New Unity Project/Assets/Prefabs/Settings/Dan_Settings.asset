@@ -45,7 +45,7 @@ MonoBehaviour:
   _hitType: 1
   _speed: 12
   _height: 2
-  _meterIncreaseValue: 13
+  _meterIncreaseValue: 100
   _grabThreshold: 3
   _maxJumps: 0
   _jumpForce: 55

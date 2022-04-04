@@ -430,6 +430,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     void AddMeter(float value) {
+        if (_inSuper) {
+            return;
+        }
+
         print("Added " + value + " to player " + _filter.ToString());
         _commandMeter += value;
 
