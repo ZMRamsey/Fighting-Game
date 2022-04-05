@@ -11,6 +11,7 @@ public class MainMenuSystem : MonoBehaviour
     [SerializeField] MainMenuPage[] _mainMenuPages;
     public UIButton[] _mainMenuButtons;
     public UIButton[] _playMenuButtons;
+    public UIButton[] _settingsMenuButtons;
     public UIButton[] _quitMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
@@ -19,6 +20,7 @@ public class MainMenuSystem : MonoBehaviour
     int _currentPage;
     int _mainSelectionIndex;
     int _playSelectionIndex;
+    int _settingsSelectionIndex;
     int _quitSelectionIndex;
 
     bool _usingMouse = true;
@@ -108,6 +110,11 @@ public class MainMenuSystem : MonoBehaviour
                 PlayMenuControls();
             }
 
+            if (_currentPage == 3)
+            {
+                SettingsMenuControls();
+            }
+
             if (_currentPage == 4)
             {
                 QuitMenuControls();
@@ -177,6 +184,45 @@ public class MainMenuSystem : MonoBehaviour
         }
     }
 
+    void SettingsMenuControls()
+    {
+        if (GlobalInputManager.Get().GetAnyButton())
+        {
+            _usingMouse = false;
+            _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        }
+
+        if (GlobalInputManager.Get().GetLeftInput())
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            _settingsSelectionIndex--;
+            if (_settingsSelectionIndex < 0)
+            {
+                _settingsSelectionIndex = _settingsMenuButtons.Length - 1;
+            }
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }
+
+        if (GlobalInputManager.Get().GetRightInput())
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            _settingsSelectionIndex++;
+            if (_settingsSelectionIndex > _settingsMenuButtons.Length - 1)
+            {
+                _settingsSelectionIndex = 0;
+            }
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }
+
+        if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
+        {
+            if (GlobalInputManager.Get().GetSubmitInput())
+            {
+                _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
+            }
+        }
+    }
+
     void QuitMenuControls()
     {
         if (GlobalInputManager.Get().GetAnyButton())
@@ -222,11 +268,13 @@ public class MainMenuSystem : MonoBehaviour
         _mainMenuPages[ID].EnablePage();
 
         _playSelectionIndex = 0;
+        _settingsSelectionIndex = 0;
         _quitSelectionIndex = 0;
 
         if (!_usingMouse) {
             _mainMenuButtons[_mainSelectionIndex].OnFocus();
             _playMenuButtons[0].OnFocus();
+            _settingsMenuButtons[0].OnFocus();
             _quitMenuButtons[0].OnFocus();
         }
     }

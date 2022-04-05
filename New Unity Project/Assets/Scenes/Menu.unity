@@ -2025,6 +2025,12 @@ MonoBehaviour:
   - {fileID: 7333495048239372533}
   - {fileID: 393758560}
   - {fileID: 1078710926}
+  _settingsMenuButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _quitMenuButtons:
   - {fileID: 554514948}
   - {fileID: 114329054}
