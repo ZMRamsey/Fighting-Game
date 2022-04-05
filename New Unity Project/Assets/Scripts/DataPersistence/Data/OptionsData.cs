@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class OptionsData
 {
+
+    public float _defaultValue;
     public bool _fullScreen;
     public int _resolution;
     public int _quality;
