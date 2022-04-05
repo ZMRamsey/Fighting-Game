@@ -601,6 +601,10 @@ public class ShuttleCock : MonoBehaviour
         return _grabber.GetInstanceID() == me.GetInstanceID();
     }
 
+    public bool IsBeingHeld() {
+        return _grabber != null;
+    }
+
     public void ReverseVelocity(FighterFilter filter) {
         SetOwner(filter);
 

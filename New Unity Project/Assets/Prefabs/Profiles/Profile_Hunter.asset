@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Profile_Hunter
   m_EditorClassIdentifier: 
   _fighterName: Hunter
-  _fighterPrefab: {fileID: 4874520954667380368, guid: e241ba0e31a3eb442a8dc72213a2abe8, type: 3}
+  _fighterPrefab: {fileID: 4874520954667380368, guid: 8d7ed3146c67a4a42a89b66f38bb5b67, type: 3}
   _fighterPalettes:
   - {fileID: 0}
   - {fileID: 2100000, guid: c9e8b9e6ed248474596b0032b82b6fc1, type: 2}
