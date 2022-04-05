@@ -29836,7 +29836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: 0
-  _settings: {fileID: 11400000, guid: 10aae1bbb377c384891f791c1ccf2907, type: 2}
+  _settings: {fileID: 11400000, guid: abdfd602f86cb8c449912cf404b22ce6, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 4874520953896087311}
   _hitboxFlipper: {fileID: 1540060562962152633}

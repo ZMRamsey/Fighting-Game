@@ -15,7 +15,7 @@ public class MainMenuPage : MonoBehaviour
         if (_quitButton && _quitButton.OnClick())
         {
             Application.Quit();
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 

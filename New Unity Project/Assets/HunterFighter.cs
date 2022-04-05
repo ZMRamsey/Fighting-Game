@@ -12,7 +12,7 @@ public class HunterFighter : FighterController
     float _tetheredTimer;
     float _canTether;
     float _range = 7;
-    bool _inSuper;
+    bool _superProcess;
     float _superLenghth;
 
     public override void InitializeFighter() {
@@ -25,14 +25,14 @@ public class HunterFighter : FighterController
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
-        _inSuper = true;
+        _superProcess = true;
         _superLenghth = _lionClip.length;
         _lion.SetActive(true);
     }
 
     public override void OnSuperEnd(bool instant) {
         base.OnSuperEnd(instant);
-        _inSuper = false;
+        _superProcess = false;
         _lion.SetActive(false);
     }
 
@@ -73,11 +73,11 @@ public class HunterFighter : FighterController
             _canTether -= Time.deltaTime;
         }
 
-        if(_superLenghth > 0 && _inSuper) {
+        if(_superLenghth > 0 && _superProcess) {
             _superLenghth -= Time.deltaTime;
             if(_superLenghth <= 0) {
                 OnSuperEnd(false);
-                _inSuper = false;
+                _superProcess = false;
             }
         }
 

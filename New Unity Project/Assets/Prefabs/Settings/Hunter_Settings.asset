@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e3b3ab25ea4b8479a49aa619b0002c, type: 3}
-  m_Name: Raket_Settings
+  m_Name: Hunter_Settings
   m_EditorClassIdentifier: 
   _smashMove:
     _animationPath: smash
@@ -43,15 +43,15 @@ MonoBehaviour:
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
     _hitDirection: {x: 6, y: 4, z: 0}
   _hitType: 1
-  _speed: 14
+  _speed: 11
   _height: 2
-  _meterIncreaseValue: 11
+  _meterIncreaseValue: 12
   _grabThreshold: 1
   _maxJumps: 0
   _jumpForce: 60
   _fallMultiplier: 12
   _jumpFalloff: 0.85
-  _airSpeed: 8
+  _airSpeed: 6
   _fastFallSpeed: 16
   _groundLayers:
     serializedVersion: 2
