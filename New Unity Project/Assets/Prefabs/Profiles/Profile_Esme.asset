@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Profile_Esme
   m_EditorClassIdentifier: 
   _fighterName: Esme
+  _fighterTagLine: The mysterious psychic
+  _circleSprite: {fileID: 21300000, guid: 18992d08a98488940a1a8cf3df748620, type: 3}
   _fighterPrefab: {fileID: 4874520954667380368, guid: a6dd9c9e59e98e04e8745e34196ebafc, type: 3}
   _fighterPalettes:
   - {fileID: 0}

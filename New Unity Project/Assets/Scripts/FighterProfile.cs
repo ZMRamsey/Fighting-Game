@@ -7,6 +7,8 @@ using UnityEngine;
 public class FighterProfile : ScriptableObject
 {
     [SerializeField] string _fighterName;
+    [SerializeField] string _fighterTagLine;
+    [SerializeField] Sprite _circleSprite;
     [SerializeField] GameObject _fighterPrefab;
     [SerializeField] Material[] _fighterPalettes;
 
@@ -28,6 +30,16 @@ public class FighterProfile : ScriptableObject
 
     public string GetName() {
         return _fighterName;
+    }
+
+    public string GetTagLine()
+    {
+        return _fighterTagLine;
+    }
+
+    public Sprite GetCircleSprite()
+    {
+        return _circleSprite;
     }
 
     public GameObject GetPrefab() {

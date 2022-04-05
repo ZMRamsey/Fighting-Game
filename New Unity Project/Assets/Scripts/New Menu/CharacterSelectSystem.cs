@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 
@@ -25,6 +26,7 @@ public class CharacterSelectSystem : MonoBehaviour
     [SerializeField] Transform _selectorTwo;
     [SerializeField] Transform _selectorJoint;
     [SerializeField] Vector2[] _selectorPositions;
+    [SerializeField] GameObject[] _borders;
 
     [Header("SFX")]
     [SerializeField] AudioClip _readySFX;
@@ -191,6 +193,7 @@ public class CharacterSelectSystem : MonoBehaviour
             }
 
             RefreshSelectors();
+            RefreshBorders();
         }
     }
 
@@ -210,6 +213,18 @@ public class CharacterSelectSystem : MonoBehaviour
             _selectorJoint.gameObject.SetActive(false);
             _selectorOne.gameObject.SetActive(true);
             _selectorTwo.gameObject.SetActive(true);
+        }
+    }
+
+    public void RefreshBorders()
+    {
+        for (int i = 0; i < _borders.Length; i++)
+        {
+            _borders[i].SetActive(true);
+            if (i == _fighterOne.GetSelection() || i == _fighterTwo.GetSelection())
+            {
+                _borders[i].SetActive(false);
+            }
         }
     }
 
@@ -309,6 +324,8 @@ public class CharacterSelectFighter
     [SerializeField] CharacterUI[] _characterVisuals;
     [SerializeField] TextMeshProUGUI _characterName;
     [SerializeField] TextMeshProUGUI _characterSkin;
+    [SerializeField] TextMeshProUGUI _characterTagLine;
+    [SerializeField] Image _characterIcon;
     [SerializeField] Animator _characterPopin;
     [SerializeField] GameObject _readyObject;
     public bool IsReady;
@@ -348,6 +365,7 @@ public class CharacterSelectFighter
         IsReady = true;
         _characterName.text = "";
         _characterSkin.text = "";
+        _characterTagLine.text = "";
     }
 
     public void SetAsUnready() {
@@ -421,6 +439,8 @@ public class CharacterSelectFighter
     public void Refresh(FighterProfile profile, FighterFilter filter) {
         EnableVisual();
         _characterName.text = profile.GetName();
+        _characterTagLine.text = profile.GetTagLine();
+        _characterIcon.sprite = profile.GetCircleSprite();
 
         if (filter == FighterFilter.one) {
             GameLogic.Get().GetSettings().SetSkinOneID(_currentSkinSelection);
