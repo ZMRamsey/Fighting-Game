@@ -5,7 +5,9 @@ using UnityEngine;
 public class OptionsManager : MonoBehaviour, IDataPersistence
 {
 
-    float _musicVol = 100.0f;
+    public GameObject _musicSource;
+    private AudioSource _musicSrc;
+    float _musicVol = 1.0f;
     float _sfxVol = 100.0f;
 
     bool _fullscreen = true;
@@ -33,15 +35,29 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        
+        _musicSrc = _musicSource.GetComponent<AudioSource>();
+        _musicSrc.volume = this._musicVol;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GlobalInputManager.Get().GetSubmitInput())
+        if (GlobalInputManager.Get().GetDownInput())
         {
-            _musicVol -= 0.1f;
+            _musicVol -= 0.05f;
+            if(_musicVol < 0f)
+            {
+                _musicVol = 0f;
+            }
         }
+        else if (GlobalInputManager.Get().GetUpInput())
+        {
+            _musicVol += 0.05f;
+            if(_musicVol > 100.0f)
+            {
+                _musicVol = 100.0f;
+            }
+        }
+        _musicSrc.volume = _musicVol;
     }
 }

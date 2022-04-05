@@ -6,6 +6,10 @@ using System.Linq;
 public class DataPersistenceManager : MonoBehaviour
 {
 
+    [Header("File Storage Config")]
+    [SerializeField] private string fileName;
+    private FileDataHandler dataHandler;
+
     private List<IDataPersistence> dataPersistenceObjects;
 
     public static DataPersistenceManager instance { get; private set; }
@@ -23,6 +27,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
     }
@@ -41,10 +46,13 @@ public class DataPersistenceManager : MonoBehaviour
 
         Debug.Log("Saved Music Volume = " + optionsData._musicVol);
         Debug.Log("Saved SFX Volume = " + optionsData._sfxVol);
+
+        dataHandler.Save(optionsData);
     }
 
     public void LoadGame()
     {
+        this.optionsData = dataHandler.Load();
         if(this.optionsData == null)
         {
             Debug.Log("No data was found. Initialising to default values");
