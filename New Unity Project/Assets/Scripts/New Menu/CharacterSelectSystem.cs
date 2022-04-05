@@ -11,6 +11,7 @@ public class CharacterSelectSystem : MonoBehaviour
     [SerializeField] CharacterSelectPage[] _characterSelectPages;
     [SerializeField] GameObject _canvas;
     private bool _mainLoadFlag = false;
+    private int _selectedIndex = 0;
 
     [Header("Character Select")]
     [SerializeField] FighterProfile[] _profiles;
@@ -243,6 +244,7 @@ public class CharacterSelectSystem : MonoBehaviour
     public void LoadToMainMenu() {
         DisableCanvas();
         MainMenuSystem.Get().SetCanvas();
+        MainMenuSystem.Get()._playMenuButtons[_selectedIndex].OnFocus();
         MainMenuSystem.Get().SetPage(1);
     }
 
@@ -277,6 +279,11 @@ public class CharacterSelectSystem : MonoBehaviour
         foreach (CharacterSelectPage page in _characterSelectPages) {
             page.DisablePage();
         }
+    }
+
+    public void SetSelectedIndex(int index)
+    {
+        _selectedIndex = index;
     }
 
     public void SetGameType(GameType type) {

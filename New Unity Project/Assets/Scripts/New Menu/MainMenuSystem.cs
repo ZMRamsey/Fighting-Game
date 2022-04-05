@@ -82,6 +82,7 @@ public class MainMenuSystem : MonoBehaviour
                     type = GameType.watch;
                 }
 
+                CharacterSelectSystem.Get().SetSelectedIndex(i);
                 ProceedToInputSelection(type);
             }
         }
@@ -247,6 +248,7 @@ public class MainMenuSystem : MonoBehaviour
 
     public void SkipToCharacterSelect() {
         _group.alpha = 1;
+        _playMenuButtons[0].OnFocus();
         DisableCanvas();
         CharacterSelectSystem.Get().SkipToCharacterSelect();
     }

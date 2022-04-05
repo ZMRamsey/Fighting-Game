@@ -95,7 +95,7 @@ public class ShuttleCock : MonoBehaviour
     void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
 
-        if(_rb.velocity.magnitude < 0.01f && _canTimeOut && GameManager.Get().NoActiveCoroutines()) {
+        if(_rb.velocity.magnitude < 0.01f && _canTimeOut && collision.gameObject.layer != 14 && GameManager.Get().NoActiveCoroutines()) {
             _timeOutValue += Time.deltaTime;
         }
         else {
