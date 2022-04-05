@@ -163,7 +163,13 @@ public class MainMenuSystem : MonoBehaviour
             _playMenuButtons[_playSelectionIndex].OnUnfocus();
             _playSelectionIndex--;
             if (_playSelectionIndex < 0) {
-                _playSelectionIndex = _playMenuButtons.Length - 1;
+                //original
+                //_playSelectionIndex = _playMenuButtons.Length - 1;
+                //shaun
+                _playSelectionIndex = _playMenuButtons.Length - 2;
+            }else if (_playSelectionIndex == 3)
+            {
+                _playSelectionIndex--;
             }
             _playMenuButtons[_playSelectionIndex].OnFocus();
         }
@@ -171,8 +177,25 @@ public class MainMenuSystem : MonoBehaviour
         if (GlobalInputManager.Get().GetRightInput()) {
             _playMenuButtons[_playSelectionIndex].OnUnfocus();
             _playSelectionIndex++;
-            if (_playSelectionIndex > _playMenuButtons.Length - 1) {
+            //original
+            //if (_playSelectionIndex > _playMenuButtons.Length - 1) {
+            //shaun
+            if (_playSelectionIndex > _playMenuButtons.Length - 2) {
                 _playSelectionIndex = 0;
+            }
+            _playMenuButtons[_playSelectionIndex].OnFocus();
+        }
+
+        if ((GlobalInputManager.Get().GetUpInput() || GlobalInputManager.Get().GetDownInput()) && (_playSelectionIndex == 3 || _playSelectionIndex == 4))
+        {
+            _playMenuButtons[_playSelectionIndex].OnUnfocus();
+            if (_playSelectionIndex == 3)
+            {
+                _playSelectionIndex = 4;
+            }
+            else
+            {
+                _playSelectionIndex = 3;
             }
             _playMenuButtons[_playSelectionIndex].OnFocus();
         }
