@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HunterFighter : FighterController
 {
-	[SerializeField] LineRenderer _rope;
+    [SerializeField] LineRenderer _rope;
     [SerializeField] GameObject _lion;
     [SerializeField] AnimationClip _lionClip;
+    Transform _tetheredShuttle;
     bool _pullBack;
-    bool _tethered;
     float _tetheredTimer;
     float _canTether;
     float _range = 7;
@@ -18,7 +18,7 @@ public class HunterFighter : FighterController
     public override void InitializeFighter() {
         base.InitializeFighter();
 
-        if(GetFilter() == FighterFilter.two) {
+        if (GetFilter() == FighterFilter.two) {
             _lion.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
         }
     }
@@ -37,13 +37,15 @@ public class HunterFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
-        var shuttle = GameManager.Get().GetShuttle();
-        var rb = shuttle.GetComponent<Rigidbody>();
 
-		_rope.SetPosition(0, transform.position);
-		_rope.SetPosition(1, shuttle.transform.position);
 
-        if (_tethered) {
+        if (_tetheredShuttle != null) {
+            _rope.SetPosition(0, transform.position);
+            _rope.SetPosition(1, _tetheredShuttle.transform.position);
+
+            var shuttle = _tetheredShuttle.GetComponent<ShuttleCock>();
+            var rb = _tetheredShuttle.GetComponent<Rigidbody>();
+
             if (shuttle.IsBeingHeld() && !shuttle.IsGrabbed(GetComponent<FighterController>())) {
                 UnTether();
             }
@@ -60,41 +62,41 @@ public class HunterFighter : FighterController
                     UnTether();
                 }
             }
-        }
 
-        if(_tetheredTimer > 0) {
-            _tetheredTimer -= Time.deltaTime;
-            if(_tetheredTimer <= 0) {
-                _tethered = false;
+            if (_tetheredTimer > 0) {
+                _tetheredTimer -= Time.deltaTime;
+                if (_tetheredTimer <= 0) {
+                    _tetheredShuttle = null;
+                }
             }
         }
 
-        if(_canTether > 0) {
+        if (_canTether > 0) {
             _canTether -= Time.deltaTime;
         }
 
-        if(_superLenghth > 0 && _superProcess) {
+        if (_superLenghth > 0 && _superProcess) {
             _superLenghth -= Time.deltaTime;
-            if(_superLenghth <= 0) {
+            if (_superLenghth <= 0) {
                 OnSuperEnd(false);
                 _superProcess = false;
             }
         }
 
-        _rope.enabled = _tethered;
+        _rope.enabled = _tetheredShuttle != null;
 
     }
 
     public void UnTether() {
         _tetheredTimer = 0;
-        _tethered = false;
+        _tetheredShuttle = null;
     }
 
-    public override void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab) {
-        base.OnSuccessfulHit(point, dir, big, shot, isGrab);
+    public override void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab, ShuttleCock shuttle) {
+        base.OnSuccessfulHit(point, dir, big, shot, isGrab, shuttle);
 
-        if (isGrab && _canTether <=0) {
-            _tethered = true;
+        if (shuttle != null && isGrab && _canTether <= 0) {
+            _tetheredShuttle = shuttle.transform;
             _tetheredTimer = 2.0f;
             _canTether = 5.0f;
         }

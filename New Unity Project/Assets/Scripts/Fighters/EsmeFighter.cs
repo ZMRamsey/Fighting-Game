@@ -9,7 +9,7 @@ public class EsmeFighter : FighterController
     GameObject _blackHoleObject;
     GameObject _magicRaketObject;
     [SerializeField] AnimationClip _clap;
-    bool _ghostHitUsed;
+    ShuttleCock _ghostHitUsed;
     float _shieldTimer;
     float _coolDown;
 
@@ -32,9 +32,9 @@ public class EsmeFighter : FighterController
         _magicRaketObject.SetActive(false);
     }
 
-    public override void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab) {
-        base.OnSuccessfulHit(point, dir, big, shot, isGrab);
-        _ghostHitUsed = false;
+    public override void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab, ShuttleCock shuttle) {
+        base.OnSuccessfulHit(point, dir, big, shot, isGrab, shuttle);
+        _ghostHitUsed = shuttle;
     }
 
     public override void OnSuperEnd(bool instant) {
@@ -52,19 +52,22 @@ public class EsmeFighter : FighterController
     public override void OnFighterUpdate() {
         base.OnFighterUpdate();
 
-        var powered = !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f;
+        var powered = _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f;
 
         _animator.SetBool("charge", _inputHandler.GetCrouch());
         _animator.SetBool("power", powered);
 
         _magicRaketObject.SetActive(powered);
-        _magicRaketObject.transform.position = GameManager.Get().GetShuttle().transform.position;
+
+        if (powered) {
+            _magicRaketObject.transform.position = _ghostHitUsed.transform.position;
+        }
 
         _coolDown += Time.deltaTime;
 
         if (_blackHoleObject) {
             _shieldTimer += Time.deltaTime;
-            if (_shieldTimer > 8.0f) {
+            if (_shieldTimer > 10.0f) {
                 OnSuperEnd(false);
             }
         }
@@ -73,9 +76,7 @@ public class EsmeFighter : FighterController
     public override void UpdateMove() {
         base.UpdateMove();
          
-        if (_inputHandler.GetCrouch() && !_ghostHitUsed && GameManager.Get().GetShuttle().GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f) {
-            var ball = GameManager.Get().GetShuttle();
-
+        if (_inputHandler.GetCrouch() && _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f) {
             float facing = 1;
             if (_renderer.flipX) {
                 facing = -1;
@@ -85,16 +86,16 @@ public class EsmeFighter : FighterController
             Vector3 dir = _currentMove.GetHitDirection();
             dir.x = xFace;
 
-            ball.SetBounciness(1);
+            _ghostHitUsed.SetBounciness(1);
             if (_currentMove.GetType() == ShotType.chip) {
-                ball.SetBounciness(0.2f);
+                _ghostHitUsed.SetBounciness(0.2f);
             }
 
             var hitMes = new HitMessage(dir, new VelocityInfluence(), _currentMove.GetType() == ShotType.chip, GetFilter(), _currentMove.GetType());
-            ball.Shoot(hitMes, this);
+            _ghostHitUsed.Shoot(hitMes, this);
 
-            OnSuccessfulHit(ball.transform.position, dir, false, _currentMove.GetType(), false);
-            _ghostHitUsed = true;
+            OnSuccessfulHit(_ghostHitUsed.transform.position, dir, false, _currentMove.GetType(), false, null);
+            _ghostHitUsed = null;
 
             _canAttack = false;
             _animator.SetTrigger("gimicHit");

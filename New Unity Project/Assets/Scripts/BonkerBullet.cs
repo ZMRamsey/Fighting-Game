@@ -28,7 +28,7 @@ public class BonkerBullet : MonoBehaviour
             if (shuttle != null && _message != null) {
                 transform.position = shuttle.transform.position;
                 SuccessfulHit();
-                GameManager.Get().GetFighter(_message.sender).OnSuccessfulHit(hit.point, _message.direction, false, _message.shot, false);
+                GameManager.Get().GetFighter(_message.sender).OnSuccessfulHit(hit.point, _message.direction, false, _message.shot, false, null);
                 shuttle.Shoot(_message);
             }
         }
