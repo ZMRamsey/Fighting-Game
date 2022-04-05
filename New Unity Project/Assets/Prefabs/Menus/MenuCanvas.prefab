@@ -5363,7 +5363,7 @@ MonoBehaviour:
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: fade7e91e6ec99e4585c35d19352b4f5, type: 3}
-  _highlightedSprite: {fileID: 21300000, guid: d061c5acfc04db14b9bcfb4c2b3bc8a1, type: 3}
+  _highlightedSprite: {fileID: 21300000, guid: 2119a3a4495aa954d83a64237fc038e6, type: 3}
   _currentSprite: {fileID: 0}
   _defaultSize: {x: 1, y: 1, z: 1}
   _highlightedSize: {x: 1.1, y: 1.1, z: 1.1}
@@ -5485,7 +5485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8a89d25d180e42745bf5a3eb5706d42d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 24f83b7f207ae8741a5a60e78bbc25de, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10358,8 +10358,8 @@ MonoBehaviour:
   _useSpriteSwap: 1
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
-  _defaultSprite: {fileID: 21300000, guid: 8a89d25d180e42745bf5a3eb5706d42d, type: 3}
-  _highlightedSprite: {fileID: 21300000, guid: d6bb9300f2afd1b44bad00fb69452735, type: 3}
+  _defaultSprite: {fileID: 21300000, guid: 24f83b7f207ae8741a5a60e78bbc25de, type: 3}
+  _highlightedSprite: {fileID: 21300000, guid: a8665ed87d36b984b8d68d8d383acc01, type: 3}
   _currentSprite: {fileID: 0}
   _defaultSize: {x: 1, y: 1, z: 1}
   _highlightedSize: {x: 1.1, y: 1.1, z: 1.1}
