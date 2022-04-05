@@ -458,7 +458,7 @@ public class CharacterSelectFighter
         else {
             GetCharacter().SetState(true);
             GetCharacter().UpdatePallete(profile.GetPallete(_currentSkinSelection));
-            _characterSkin.text = $"<{profile.GetPallete(_currentSkinSelection).name.Split('_')[2]}>";
+            _characterSkin.text = $"<{profile.GetPallete(_currentSkinSelection).name}>";
         }
     }
 }

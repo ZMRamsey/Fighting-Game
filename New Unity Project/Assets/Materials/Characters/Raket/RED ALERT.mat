@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Global_02
+  m_Name: RED ALERT
   m_Shader: {fileID: -6465566751694194690, guid: 45fa76def56800747bc3df7ea7f3f377, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -118,9 +118,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - BChannel: {r: 0.82745105, g: 0.9843138, b: 0.8196079, a: 0}
-    - GChannel: {r: 0.28235295, g: 0.5568628, b: 0.25882354, a: 0}
-    - RChannel: {r: 0.28235295, g: 0.5568628, b: 0.25882354, a: 0}
+    - BChannel: {r: 0.83921576, g: 0.62352943, b: 0.62352943, a: 0}
+    - GChannel: {r: 0.70980394, g: 0.19215688, b: 0.19607845, a: 0}
+    - RChannel: {r: 0.70980394, g: 0.19215688, b: 0.19607845, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
