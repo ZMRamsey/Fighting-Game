@@ -9793,7 +9793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _height: 5
-  _speed: 2
+  _speed: 20
 --- !u!135 &2805937927403615700
 SphereCollider:
   m_ObjectHideFlags: 0

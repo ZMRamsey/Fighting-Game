@@ -6,16 +6,18 @@ public class BlackHole : MonoBehaviour
 {
     [SerializeField] float _height;
     [SerializeField] float _speed;
+    Rigidbody _rb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Rigidbody>().AddForce((new Vector3(0, 8, 0) - transform.position).normalized * _speed);
+        _rb.AddForce(100 * (new Vector3(0, 8, 0) - _rb.transform.position));
+        _rb.velocity *= 0.9f;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
         foreach (Collider hit in colliders) {

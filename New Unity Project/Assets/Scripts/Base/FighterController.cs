@@ -711,7 +711,7 @@ public abstract class FighterController : MonoBehaviour
         _failSafeAttack = _currentMove.GetClip().length;
     }
 
-    public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab) {
+    public virtual void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab, ShuttleCock shuttle) {
         _successfulHits++;
         _successHitsCoolDown = 2;
 
