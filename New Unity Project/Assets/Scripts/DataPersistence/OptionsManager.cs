@@ -7,8 +7,10 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
 
     public GameObject _musicSource;
     private AudioSource _musicSrc;
+
+    //Initiates default values
     float _musicVol = 1.0f;
-    float _sfxVol = 100.0f;
+    float _sfxVol = 1.0f;
 
     bool _fullscreen = true;
     int _resolution = 1920;
