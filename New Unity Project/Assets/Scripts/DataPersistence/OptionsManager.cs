@@ -49,6 +49,7 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
             {
                 _musicVol = 0f;
             }
+            _musicSrc.volume = _musicVol;
         }
         else if (GlobalInputManager.Get().GetUpInput())
         {
@@ -57,7 +58,7 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
             {
                 _musicVol = 100.0f;
             }
+            _musicSrc.volume = _musicVol;
         }
-        _musicSrc.volume = _musicVol;
     }
 }
