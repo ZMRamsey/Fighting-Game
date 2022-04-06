@@ -20,6 +20,7 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] bool _flipGravity = false;
     [SerializeField] bool _canTimeOut;
     float _timeOutValue;
+    [SerializeField] float _timeOutCounter;
 
     [Header("Aesthetic")]
     [SerializeField] protected Transform _ballHolder;
@@ -95,7 +96,7 @@ public class ShuttleCock : MonoBehaviour
     void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
 
-        if(_rb.velocity.magnitude < 0.01f && _canTimeOut && collision.gameObject.layer != 14 && GameManager.Get().NoActiveCoroutines()) {
+        if(_rb.velocity.magnitude < 0.01f && _canTimeOut && GameManager.Get().NoActiveCoroutines()) {
             _timeOutValue += Time.deltaTime;
         }
         else {
@@ -169,7 +170,7 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public bool CanTimeOut() {
-        return _timeOutValue >= 1;
+        return _timeOutValue >= _timeOutCounter;
     }
 
     Coroutine shootCoroutine;

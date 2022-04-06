@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] FighterTab _fighterOne;
     [SerializeField] FighterTab _fighterTwo;
     [SerializeField] GameEventManager _eventManager;
+    [SerializeField] GameObject _winScreen;
 
     [Header("Shuttle Settings")]
     [SerializeField] ShuttleCock _shuttle;
@@ -550,15 +551,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(_endGameSFX.length / 2);
         _endMusic.Play();
         yield return new WaitForSecondsRealtime(0.5f);
-        winController.PlayWin();
         loseController.PlayLose();
+        winController.PlayWin();
 
-        CameraContoller.Get().SetFocus(winController.GetFocusTransform());
-
-        yield return new WaitForSecondsRealtime(5f);
         CameraContoller.Get().SetFocus(loseController.GetFocusTransform());
         yield return new WaitForSecondsRealtime(5f);
-        SceneManager.LoadScene(sceneName: "WinScreenTest");
+        CameraContoller.Get().SetFocus(winController.GetFocusTransform());
+        yield return new WaitForSecondsRealtime(5f);
+        //SceneManager.LoadScene(sceneName: "WinScreenTest");
+        _winScreen.SetActive(true);
     }
 
     public FighterController GetFighter(FighterFilter filter) {

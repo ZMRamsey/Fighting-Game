@@ -6,12 +6,20 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour, IDataPersistence
 {
+    public UIButton _fullscreenToggle;
+    public UIButton _1080p;
+    public UIButton _720p;
+    public UIButton _576p;
+
 
     public Slider[] settingsSliders;
     int sliderIndex = 0;
 
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
+    [SerializeField] Slider fullscreenSlider;
+    [SerializeField] Slider resolutionSlider;
+
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
@@ -51,6 +59,9 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         _musicSrc.volume = this._musicVol;
         musicVolumeSlider.value = this._musicVol;
         sfxVolumeSlider.value = this._sfxVol;
+        Screen.fullScreen = _fullscreen;
+        InitialiseFullScreen();
+        InitialiseResolution();
     }
     public void SetMusicVolume()
     {
@@ -64,9 +75,113 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         sfxMixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolumeSlider.value)*20);
         _sfxVol = sfxVolumeSlider.value;
     }
+
+    void InitialiseResolution()
+    {
+        if(_resolution == 1920)
+        {
+            Screen.SetResolution(1920, 1080, _fullscreen);
+            resolutionSlider.value = 2;
+        }
+        else if(_resolution == 1280)
+        {
+            Screen.SetResolution(1280, 720, _fullscreen);
+            resolutionSlider.value = 1;
+        }
+        else
+        {
+            Screen.SetResolution(1024, 576, _fullscreen);
+            resolutionSlider.value = 0;
+        }
+    }
+
+    
+
+    void InitialiseFullScreen()
+    {
+        if (_fullscreen)
+        {
+            Screen.fullScreen = true;
+            fullscreenSlider.value = 1;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+            fullscreenSlider.value = 0;
+        }
+    }
+
+    public void ToggleFullScreen()
+    {
+        if (_fullscreen)
+        {
+            _fullscreen = false;
+        }
+        else
+        {
+            _fullscreen = true;
+        }
+        Screen.fullScreen = _fullscreen;
+        Debug.Log(_fullscreen);
+    }
+
+    //public void ChangeResolution()
+    //{
+    //    if(resolutionSlider.value == 2)
+    //    {
+    //        _resolution = 1920;
+    //    }
+    //    else if(resolutionSlider.value == 1)
+    //    {
+    //        _resolution = 1280;
+    //    }
+    //    else
+    //    {
+    //        _resolution = 1024;
+    //    }
+    //    InitialiseResolution();
+    //    Debug.Log(_resolution);
+    //}
+
+    void SetTo1080p()
+    {
+        _resolution = 1920;
+        InitialiseResolution();
+        Debug.Log(_resolution);
+    }
+    void SetTo720p()
+    {
+        _resolution = 1280;
+        InitialiseResolution();
+        Debug.Log(_resolution);
+    }
+    void SetTo576p()
+    {
+        _resolution = 1024;
+        InitialiseResolution();
+        Debug.Log(_resolution);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (_fullscreenToggle.OnClick())
+        {
+            ToggleFullScreen();
+        }
+
+        if (_1080p.OnClick())
+        {
+            SetTo1080p();
+        }
+        else if (_720p.OnClick())
+        {
+            SetTo720p();
+        }
+        else if (_576p.OnClick())
+        {
+            SetTo576p();
+        }
         //if (GlobalInputManager.Get().GetDownInput())
         //{
         //    _musicVol -= 0.05f;
