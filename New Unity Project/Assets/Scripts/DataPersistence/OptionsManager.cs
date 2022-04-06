@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour, IDataPersistence
 {
+
+    public Slider[] settingsSliders;
+    int sliderIndex = 0;
+
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
     public AudioMixer musicMixer;
