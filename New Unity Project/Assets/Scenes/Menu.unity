@@ -2864,7 +2864,7 @@ GameObject:
   - component: {fileID: 1308223836}
   - component: {fileID: 1308223835}
   m_Layer: 5
-  m_Name: SFXTitle
+  m_Name: ResolutionTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2910,7 +2910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SFX
+  m_text: Resolution
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
   m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
@@ -2973,7 +2973,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 48.692078, y: 0, z: 0, w: 0}
+  m_margin: {x: -98.45256, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3488,7 +3488,7 @@ GameObject:
   - component: {fileID: 1570302650}
   - component: {fileID: 1570302651}
   m_Layer: 5
-  m_Name: SFXSlider
+  m_Name: ResolutionSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
