@@ -20,7 +20,7 @@ public class OptionsData
         this._resolution = 1920;
         this._quality = 2;
 
-        this._musicVol = 100.0f;
-        this._sfxVol = 100.0f;
+        this._musicVol = 1.0f;
+        this._sfxVol = 1.0f;
     }
 }

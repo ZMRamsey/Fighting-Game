@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] Slider sfxVolumeSlider;
+    public AudioMixer musicMixer;
+    public AudioMixer sfxMixer;
 
     public GameObject _musicSource;
     private AudioSource _musicSrc;
@@ -39,28 +45,41 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
     {
         _musicSrc = _musicSource.GetComponent<AudioSource>();
         _musicSrc.volume = this._musicVol;
+        musicVolumeSlider.value = this._musicVol;
+        sfxVolumeSlider.value = this._sfxVol;
+    }
+    public void SetMusicVolume()
+    {
+        musicMixer.SetFloat("musicVol", Mathf.Log10(musicVolumeSlider.value) * 20);
+        _musicSrc.volume = musicVolumeSlider.value;
+        _musicVol = musicVolumeSlider.value;
     }
 
+    public void SetSFXVolume()
+    {
+        sfxMixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolumeSlider.value)*20);
+        _sfxVol = sfxVolumeSlider.value;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (GlobalInputManager.Get().GetDownInput())
-        {
-            _musicVol -= 0.05f;
-            if(_musicVol < 0f)
-            {
-                _musicVol = 0f;
-            }
-            _musicSrc.volume = _musicVol;
-        }
-        else if (GlobalInputManager.Get().GetUpInput())
-        {
-            _musicVol += 0.05f;
-            if(_musicVol > 100.0f)
-            {
-                _musicVol = 100.0f;
-            }
-            _musicSrc.volume = _musicVol;
-        }
+        //if (GlobalInputManager.Get().GetDownInput())
+        //{
+        //    _musicVol -= 0.05f;
+        //    if(_musicVol < 0f)
+        //    {
+        //        _musicVol = 0f;
+        //    }
+        //    _musicSrc.volume = _musicVol;
+        //}
+        //else if (GlobalInputManager.Get().GetUpInput())
+        //{
+        //    _musicVol += 0.05f;
+        //    if(_musicVol > 100.0f)
+        //    {
+        //        _musicVol = 100.0f;
+        //    }
+        //    _musicSrc.volume = _musicVol;
+        //}
     }
 }
