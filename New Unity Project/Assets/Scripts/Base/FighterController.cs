@@ -434,7 +434,7 @@ public abstract class FighterController : MonoBehaviour
             return;
         }
 
-        print("Added " + value + " to player " + _filter.ToString());
+        //print("Added " + value + " to player " + _filter.ToString());
         _commandMeter += value;
 
         if (_commandMeter > 100) {
