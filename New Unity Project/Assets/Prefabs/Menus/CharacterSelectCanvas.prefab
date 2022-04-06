@@ -8705,7 +8705,7 @@ GameObject:
   - component: {fileID: 7138680909295591580}
   - component: {fileID: 3393765112643034924}
   - component: {fileID: 8705211361253960153}
-  - component: {fileID: 8797588541209779964}
+  - component: {fileID: 4862822675748486725}
   m_Layer: 5
   m_Name: BadmintonWorld
   m_TagString: Untagged
@@ -8729,8 +8729,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -14, y: -417.76}
-  m_SizeDelta: {x: 0, y: 49.897}
+  m_AnchoredPosition: {x: -4.8241, y: -417.76}
+  m_SizeDelta: {x: -8.9804735, y: 49.897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3393765112643034924
 CanvasRenderer:
@@ -8830,7 +8830,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!95 &8797588541209779964
+--- !u!95 &4862822675748486725
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
