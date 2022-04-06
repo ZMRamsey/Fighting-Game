@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f57a7ff459b3e684d818dd43aa88987b, type: 2}
   - {fileID: 2100000, guid: 0bc801160be78ab45a7182b760808b6f, type: 2}
   - {fileID: 2100000, guid: 4106c6054c5be254cb35081d379cdebf, type: 2}
+  - {fileID: 2100000, guid: 47af6aff381d20c4291942b6f7e4adcf, type: 2}
   _fighterIconSprite: {fileID: 21300000, guid: b3ccbb70379550a4aa5d7c5bd271abd6, type: 3}
   _fighterNameLSprite: {fileID: 0}
   _fighterNameRSprite: {fileID: 0}
