@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour, IDataPersistence
 {
+    public UIButton _fullscreenToggle;
+    public UIButton _1080p;
+    public UIButton _720p;
+    public UIButton _576p;
+
 
     public Slider[] settingsSliders;
     int sliderIndex = 0;
@@ -90,6 +95,8 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    
+
     void InitialiseFullScreen()
     {
         if (_fullscreen)
@@ -106,39 +113,75 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
 
     public void ToggleFullScreen()
     {
-        if(fullscreenSlider.value == 1)
-        {
-            _fullscreen = true;
-        }
-        else
+        if (_fullscreen)
         {
             _fullscreen = false;
         }
-
+        else
+        {
+            _fullscreen = true;
+        }
         Screen.fullScreen = _fullscreen;
         Debug.Log(_fullscreen);
     }
 
-    public void ChangeResolution()
+    //public void ChangeResolution()
+    //{
+    //    if(resolutionSlider.value == 2)
+    //    {
+    //        _resolution = 1920;
+    //    }
+    //    else if(resolutionSlider.value == 1)
+    //    {
+    //        _resolution = 1280;
+    //    }
+    //    else
+    //    {
+    //        _resolution = 1024;
+    //    }
+    //    InitialiseResolution();
+    //    Debug.Log(_resolution);
+    //}
+
+    void SetTo1080p()
     {
-        if(resolutionSlider.value == 2)
-        {
-            _resolution = 1920;
-        }
-        else if(resolutionSlider.value == 1)
-        {
-            _resolution = 1280;
-        }
-        else
-        {
-            _resolution = 1024;
-        }
+        _resolution = 1920;
         InitialiseResolution();
         Debug.Log(_resolution);
     }
+    void SetTo720p()
+    {
+        _resolution = 1280;
+        InitialiseResolution();
+        Debug.Log(_resolution);
+    }
+    void SetTo576p()
+    {
+        _resolution = 1024;
+        InitialiseResolution();
+        Debug.Log(_resolution);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (_fullscreenToggle.OnClick())
+        {
+            ToggleFullScreen();
+        }
+
+        if (_1080p.OnClick())
+        {
+            SetTo1080p();
+        }
+        else if (_720p.OnClick())
+        {
+            SetTo720p();
+        }
+        else if (_576p.OnClick())
+        {
+            SetTo576p();
+        }
         //if (GlobalInputManager.Get().GetDownInput())
         //{
         //    _musicVol -= 0.05f;
