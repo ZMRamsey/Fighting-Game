@@ -13,6 +13,7 @@ public class FighterProfile : ScriptableObject
     [SerializeField] Material[] _fighterPalettes;
 
     [Header("VS Screen")]
+    [SerializeField] Sprite _fighterVSArtSprite;
     [SerializeField] Sprite _fighterIconSprite;
     [SerializeField] Sprite _fighterNameLSprite;
     [SerializeField] Sprite _fighterNameRSprite;
@@ -64,7 +65,11 @@ public class FighterProfile : ScriptableObject
         return _selectedIndex;
     }
 
-    public Sprite GetIconSprite() {
+    public Sprite GetFighterVSSprite() {
+        return _fighterVSArtSprite;
+    }
+
+    public Sprite GetFighterIcon() {
         return _fighterIconSprite;
     }
 

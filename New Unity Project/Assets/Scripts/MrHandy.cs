@@ -19,10 +19,21 @@ public class MrHandy : MonoBehaviour
     [SerializeField] AudioClip[] _deathVoiceSounds;
     [SerializeField] Animator _animator;
     [SerializeField] SpriteRenderer _renderer;
+    [SerializeField] SpriteRenderer _rgbRenderer;
     bool _frozen;
     float _buldtime;
     int hits;
     // Start is called before the first frame update
+
+    public void SetPallete(Material pallete) {
+        if(pallete == null) {
+            _rgbRenderer.enabled = false;
+        }
+        else {
+            _rgbRenderer.enabled = true;
+            _rgbRenderer.material = pallete;
+        }
+    }
 
     private void Start() {
         _death.transform.SetParent(null);

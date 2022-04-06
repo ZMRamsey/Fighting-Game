@@ -19,8 +19,8 @@ public class LoadingScreen : MonoBehaviour
             return;
         }
         _loadingText.text = "Prepare For The Upcoming Battle!";
-        _fighterOne.sprite = GameLogic.Get().GetSettings().GetFighterOneProfile().GetIconSprite();
-        _fighterTwo.sprite = GameLogic.Get().GetSettings().GetFighterTwoProfile().GetIconSprite();
+        _fighterOne.sprite = GameLogic.Get().GetSettings().GetFighterOneProfile().GetFighterVSSprite();
+        _fighterTwo.sprite = GameLogic.Get().GetSettings().GetFighterTwoProfile().GetFighterVSSprite();
         _fighterOneName.sprite = GameLogic.Get().GetSettings().GetFighterOneProfile().GetNameSprite(FighterFilter.one);
         _fighterTwoName.sprite = GameLogic.Get().GetSettings().GetFighterTwoProfile().GetNameSprite(FighterFilter.two);
     }

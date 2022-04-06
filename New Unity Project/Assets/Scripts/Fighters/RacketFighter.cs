@@ -12,6 +12,7 @@ public class RacketFighter : FighterController
     float _buildMeter;
     GameObject _subWooferObject;
     GameObject _mrHandyObject;
+    Material _pallete;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
@@ -26,7 +27,10 @@ public class RacketFighter : FighterController
     }
 
     public override void SetPallette(bool active, Material mat) {
-        if(_rgbRenderer != null) {
+        _pallete = mat;
+        _mrHandyObject.GetComponent<MrHandy>().SetPallete(_pallete);
+
+        if (_rgbRenderer != null) {
             _rgbRenderer.enabled = active;
 
             if (active) {

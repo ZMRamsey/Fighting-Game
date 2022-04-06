@@ -114,8 +114,8 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.SetUpFighter(fOneObject.GetComponent<FighterController>(), _settings.GetFighterOneProfile().GetName());
         _fighterTwo.SetUpFighter(fTwoObject.GetComponent<FighterController>(), _settings.GetFighterTwoProfile().GetName());
-        _fighterOne.UpdateIcon(_settings.GetFighterOneProfile().GetIconSprite());
-        _fighterTwo.UpdateIcon(_settings.GetFighterTwoProfile().GetIconSprite());
+        _fighterOne.UpdateIcon(_settings.GetFighterOneProfile().GetFighterIcon());
+        _fighterTwo.UpdateIcon(_settings.GetFighterTwoProfile().GetFighterIcon());
 
         if (_settings.GetFighterTwoState() != InputState.player) {
             if (_settings.GetFighterTwoState() == InputState.ai) {
