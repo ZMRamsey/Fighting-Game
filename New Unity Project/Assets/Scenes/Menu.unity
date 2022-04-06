@@ -1044,7 +1044,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1861184829}
+        m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
+        m_MethodName: ToggleFullScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &507428763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3569,7 +3581,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1861184829}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: SetSFXVolume
+        m_MethodName: ChangeResolution
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3924,6 +3936,8 @@ MonoBehaviour:
   settingsSliders: []
   musicVolumeSlider: {fileID: 108424168}
   sfxVolumeSlider: {fileID: 1761282179}
+  fullscreenSlider: {fileID: 468034777}
+  resolutionSlider: {fileID: 1570302651}
   musicMixer: {fileID: 24100000, guid: 466f8c3153b275246b4d0cef5c425ee2, type: 2}
   sfxMixer: {fileID: 24100000, guid: 380c014eacd112b41a353ccf807b6a78, type: 2}
   _musicSource: {fileID: 1550434631}

@@ -12,6 +12,9 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
+    [SerializeField] Slider fullscreenSlider;
+    [SerializeField] Slider resolutionSlider;
+
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
@@ -51,6 +54,9 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         _musicSrc.volume = this._musicVol;
         musicVolumeSlider.value = this._musicVol;
         sfxVolumeSlider.value = this._sfxVol;
+        Screen.fullScreen = _fullscreen;
+        InitialiseFullScreen();
+        InitialiseResolution();
     }
     public void SetMusicVolume()
     {
@@ -63,6 +69,72 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
     {
         sfxMixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolumeSlider.value)*20);
         _sfxVol = sfxVolumeSlider.value;
+    }
+
+    void InitialiseResolution()
+    {
+        if(_resolution == 1920)
+        {
+            Screen.SetResolution(1920, 1080, _fullscreen);
+            resolutionSlider.value = 2;
+        }
+        else if(_resolution == 1280)
+        {
+            Screen.SetResolution(1280, 720, _fullscreen);
+            resolutionSlider.value = 1;
+        }
+        else
+        {
+            Screen.SetResolution(1024, 576, _fullscreen);
+            resolutionSlider.value = 0;
+        }
+    }
+
+    void InitialiseFullScreen()
+    {
+        if (_fullscreen)
+        {
+            Screen.fullScreen = true;
+            fullscreenSlider.value = 1;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+            fullscreenSlider.value = 0;
+        }
+    }
+
+    public void ToggleFullScreen()
+    {
+        if(fullscreenSlider.value == 1)
+        {
+            _fullscreen = true;
+        }
+        else
+        {
+            _fullscreen = false;
+        }
+
+        Screen.fullScreen = _fullscreen;
+        Debug.Log(_fullscreen);
+    }
+
+    public void ChangeResolution()
+    {
+        if(resolutionSlider.value == 2)
+        {
+            _resolution = 1920;
+        }
+        else if(resolutionSlider.value == 1)
+        {
+            _resolution = 1280;
+        }
+        else
+        {
+            _resolution = 1024;
+        }
+        InitialiseResolution();
+        Debug.Log(_resolution);
     }
     // Update is called once per frame
     void Update()
