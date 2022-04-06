@@ -115,9 +115,10 @@ public class CharacterSelectSystem : MonoBehaviour
                     }
 
                     if (GlobalInputManager.Get().GetRandomInput(_fighterOneFilter)) {
-                        _fighterOne.RandomCharacter(_profiles.Length);
-                        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
-                        _fighterOne.SetAsReady();
+                        //_fighterOne.RandomCharacter(_profiles.Length);
+                        //_fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+                        StartCoroutine("RandomSelectFighterOne");
+                        //_fighterOne.SetAsReady();
 
                         MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
 
@@ -172,10 +173,12 @@ public class CharacterSelectSystem : MonoBehaviour
                         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
                     }
 
-                    if (GlobalInputManager.Get().GetRandomInput(_fighterTwoFilter)) {
-                        _fighterTwo.RandomCharacter(_profiles.Length);
-                        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
-                        _fighterTwo.SetAsReady();
+                    if (GlobalInputManager.Get().GetRandomInput(_fighterTwoFilter))
+                    {
+                        //_fighterTwo.RandomCharacter(_profiles.Length);
+                        //_fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+                        StartCoroutine("RandomSelectFighterTwo");
+                        //_fighterTwo.SetAsReady();
                         MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
                     }
 
@@ -308,6 +311,34 @@ public class CharacterSelectSystem : MonoBehaviour
 
     public GameType GetGameType() {
         return _type;
+    }
+
+    IEnumerator RandomSelectFighterOne()
+    {
+        _fighterOne.RandomCharacter(_profiles.Length);
+        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+        yield return new WaitForSeconds(0.3f);
+        _fighterOne.RandomCharacter(_profiles.Length);
+        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+        yield return new WaitForSeconds(0.3f);
+        _fighterOne.RandomCharacter(_profiles.Length);
+        _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
+        yield return new WaitForSeconds(0.3f);
+        _fighterOne.SetAsReady();
+    }
+
+    IEnumerator RandomSelectFighterTwo()
+    {
+        _fighterTwo.RandomCharacter(_profiles.Length);
+        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+        yield return new WaitForSeconds(0.3f);
+        _fighterTwo.RandomCharacter(_profiles.Length);
+        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+        yield return new WaitForSeconds(0.3f);
+        _fighterTwo.RandomCharacter(_profiles.Length);
+        _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
+        yield return new WaitForSeconds(0.3f);
+        _fighterTwo.SetAsReady();
     }
 
     IEnumerator StartGame() {
