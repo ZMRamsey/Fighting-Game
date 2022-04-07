@@ -31,13 +31,13 @@ public class Hurtbox : MonoBehaviour
         }
     }
 
-    public virtual void ProcessHurt(Collider collision, ShuttleCock hurt, float axis)
-    {
+    public virtual void ProcessHurt(Collider collision, ShuttleCock hurt, float axis) {
+        var self = transform.root.GetComponent<FighterController>();
         Vector3 prevVelocity = hurt.GetComponent<Rigidbody>().velocity;
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
         hurt.Bounce(axis);
         transform.root.GetComponent<FighterController>().KO(prevVelocity);
         ScoreManager.Get().UpdateScore(transform.root.GetComponent<FighterController>().GetFilter().ToString(), "KO");
-        GameManager.Get().KOEvent();
+        GameManager.Get().KOEvent(self.GetFilter());
     }
 }

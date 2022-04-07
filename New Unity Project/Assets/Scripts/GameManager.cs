@@ -19,10 +19,12 @@ public class GameManager : MonoBehaviour
     [Header("Shuttle Settings")]
     [SerializeField] ShuttleCock _shuttle;
     [SerializeField] Vector3 _shuttleSpawn;
+    
 
     [Header("Aesthetics")]
     [SerializeField] Shaker _cameraShaker;
     [SerializeField] Shaker _stageShaker;
+    [SerializeField] StageNet _net;
 
     [Header("Speedometer")]
     [SerializeField] Transform _speedRotator;
@@ -313,6 +315,8 @@ public class GameManager : MonoBehaviour
             _lastSuperEvent.DisableScreen();
         }
 
+        _net.OnIntro();
+
         _killSwitch = true;
         ResetCoroutines();
 
@@ -426,6 +430,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine("ServeTimer");
         yield return new WaitForSeconds(1);
+        _net.OnIntroEnd();
         _UIHealthBars.SetTrigger("In");
         _killSwitch = false;
 
@@ -477,9 +482,16 @@ public class GameManager : MonoBehaviour
     }
 
     public Coroutine KOCoroutine;
-    public void KOEvent() {
+    public void KOEvent(FighterFilter filter) {
         if (KOCoroutine != null) {
             return;
+        }
+
+        if(filter == FighterFilter.one) {
+            _net.OnKO(_settings.GetFighterOneProfile().GetCircleSprite());
+        }
+        else {
+            _net.OnKO(_settings.GetFighterTwoProfile().GetCircleSprite());
         }
 
         if (stageCoroutine != null) {

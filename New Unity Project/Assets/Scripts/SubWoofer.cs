@@ -93,7 +93,7 @@ public class SubWoofer : ShuttleCock
                 GameManager.Get().GetCameraShaker().SetShake(0.1f, 5.0f, true);
                 controller.KO(direction * 20);
                 ScoreManager.Get().UpdateScore(controller.GetFilter().ToString(), "KO");
-                GameManager.Get().KOEvent();
+                GameManager.Get().KOEvent(controller.GetFilter());
             }
         }
 
