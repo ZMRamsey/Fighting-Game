@@ -89,6 +89,22 @@ public class MainMenuSystem : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < _quitMenuButtons.Length; i++)
+        {
+            if (_quitMenuButtons[i].OnClick())
+            {
+                if (i == 0)
+                {
+                    SetPage(i);
+                }
+
+                if (i == 1)
+                {
+                    Application.Quit();
+                }
+            }
+        }
+
         if (Mouse.current.leftButton.wasPressedThisFrame) {
             _usingMouse = true;
         }
