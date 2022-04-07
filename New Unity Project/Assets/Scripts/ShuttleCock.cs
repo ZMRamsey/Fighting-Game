@@ -232,7 +232,7 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
 
         if (_canTimeOut) {
-            _timeOutVisual.fillAmount = Mathf.Clamp(_timeOutValue, 0, 1) / 1;
+            _timeOutVisual.fillAmount = Mathf.Clamp(_timeOutValue, 0, 1) / _timeOutCounter;
         }
 
         if (_wind) {

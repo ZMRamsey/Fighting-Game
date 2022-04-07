@@ -18,7 +18,6 @@ public class WinScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _winnerNumber;
     [SerializeField] GameObject _quote;
-    [SerializeField] AudioSource epicGamerVictoryRoyal;
     string text;
 
     string winner;
@@ -307,6 +306,6 @@ public class WinScreen : MonoBehaviour
         showWinner();
         showWinnerName();
         showQuote();
-        showCharacter();
+        //showCharacter();
     }
 }

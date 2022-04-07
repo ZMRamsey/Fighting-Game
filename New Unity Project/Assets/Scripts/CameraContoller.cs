@@ -12,6 +12,7 @@ public class CameraContoller : MonoBehaviour
 
     [SerializeField] Transform _fighterOne, _fighterTwo, _ball;
     [SerializeField] Vector3 _cameraPositionOffset;
+    [SerializeField] Vector3 _offset;
     [SerializeField] float _speed;
     [SerializeField] Transform _camera;
     [SerializeField] Vector2 _limitX;
@@ -90,14 +91,15 @@ public class CameraContoller : MonoBehaviour
             pos.x = Mathf.Clamp(pos.x, _limitX.x, _limitX.y);
         }
         else {
-            pos = Vector3.Lerp(transform.position, _focus.transform.position + transform.forward * -4f, Time.fixedDeltaTime * 6);
+            pos = Vector3.Lerp(transform.position, _focus.transform.position + _offset + transform.forward * -4f, Time.fixedDeltaTime * 6);
         }
 
         transform.position = pos;
     }
 
-    public void SetFocus(Transform focus) {
+    public void SetFocus(Transform focus, Vector3 offset) {
         _focus = focus;
+        _offset = offset;
     }
 
     public void  TeleportFocus() {
