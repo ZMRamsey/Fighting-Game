@@ -496,7 +496,10 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public void ForceFreeze() {
-        _lastVelocity = _rb.velocity;
+        if (_rb.velocity.magnitude > _lastVelocity.magnitude)
+        {
+            _lastVelocity = _rb.velocity;
+        }
         _rb.isKinematic = true;
         _frozen = true;
     }
