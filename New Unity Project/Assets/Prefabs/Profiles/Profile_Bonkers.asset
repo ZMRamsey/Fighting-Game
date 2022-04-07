@@ -15,6 +15,7 @@ MonoBehaviour:
   _fighterName: Bonkers
   _fighterTagLine: Pretty Crazy
   _circleSprite: {fileID: 21300000, guid: 18992d08a98488940a1a8cf3df748620, type: 3}
+  _digitalKOSprite: {fileID: 21300000, guid: 6e5c404a2ec3cf846b09b3699546c023, type: 3}
   _fighterPrefab: {fileID: 4874520954667380368, guid: 97c9dc0dc25b77549a11eadf3d0950e6, type: 3}
   _fighterPalettes:
   - {fileID: 0}

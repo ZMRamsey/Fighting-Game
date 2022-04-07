@@ -15,6 +15,7 @@ MonoBehaviour:
   _fighterName: Hunter
   _fighterTagLine: The arrogant champion
   _circleSprite: {fileID: 21300000, guid: eccbaef59804d0440bcdcc6f71ce45e4, type: 3}
+  _digitalKOSprite: {fileID: 21300000, guid: 9d9c196e0e6a2be4793c6b2070fa74bd, type: 3}
   _fighterPrefab: {fileID: 4874520954667380368, guid: 8d7ed3146c67a4a42a89b66f38bb5b67, type: 3}
   _fighterPalettes:
   - {fileID: 0}

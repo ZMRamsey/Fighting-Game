@@ -488,10 +488,10 @@ public class GameManager : MonoBehaviour
         }
 
         if(filter == FighterFilter.one) {
-            _net.OnKO(_settings.GetFighterOneProfile().GetCircleSprite());
+            _net.OnKO(_settings.GetFighterOneProfile().GetCircleKOSprite());
         }
         else {
-            _net.OnKO(_settings.GetFighterTwoProfile().GetCircleSprite());
+            _net.OnKO(_settings.GetFighterTwoProfile().GetCircleKOSprite());
         }
 
         if (stageCoroutine != null) {

@@ -15,6 +15,7 @@ MonoBehaviour:
   _fighterName: Esme
   _fighterTagLine: The mysterious psychic
   _circleSprite: {fileID: 21300000, guid: d3fc01ce7c7a4fe479a22516f6791609, type: 3}
+  _digitalKOSprite: {fileID: 21300000, guid: a1367257a25272c4bbf2fb31da58dcdf, type: 3}
   _fighterPrefab: {fileID: 4874520954667380368, guid: a6dd9c9e59e98e04e8745e34196ebafc, type: 3}
   _fighterPalettes:
   - {fileID: 0}

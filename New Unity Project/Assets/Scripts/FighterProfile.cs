@@ -9,6 +9,7 @@ public class FighterProfile : ScriptableObject
     [SerializeField] string _fighterName;
     [SerializeField] string _fighterTagLine;
     [SerializeField] Sprite _circleSprite;
+    [SerializeField] Sprite _digitalKOSprite;
     [SerializeField] GameObject _fighterPrefab;
     [SerializeField] Material[] _fighterPalettes;
 
@@ -41,6 +42,11 @@ public class FighterProfile : ScriptableObject
     public Sprite GetCircleSprite()
     {
         return _circleSprite;
+    }
+
+    public Sprite GetCircleKOSprite()
+    {
+        return _digitalKOSprite;
     }
 
     public GameObject GetPrefab() {

@@ -42,6 +42,11 @@ public class StageNet : MonoBehaviour
         _netScreen.SetTrigger("ADVERTEND");
     }
 
+    public void ONGroundOut()
+    {
+        _netScreen.SetTrigger("GROUND");
+    }
+
 
     private void Awake()
     {

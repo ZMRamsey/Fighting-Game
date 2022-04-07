@@ -15,6 +15,7 @@ MonoBehaviour:
   _fighterName: Ray + Teka
   _fighterTagLine: The reluctantly possessed
   _circleSprite: {fileID: 21300000, guid: 414543b37c28ae74caa478b3642c9726, type: 3}
+  _digitalKOSprite: {fileID: 21300000, guid: d1cb22b6122cca4499a55b083afdc448, type: 3}
   _fighterPrefab: {fileID: 4874520954667380368, guid: 6d3e80973129d8041b080768acf17d2f, type: 3}
   _fighterPalettes:
   - {fileID: 0}
