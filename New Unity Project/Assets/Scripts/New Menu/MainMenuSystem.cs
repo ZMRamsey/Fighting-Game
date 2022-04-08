@@ -13,6 +13,7 @@ public class MainMenuSystem : MonoBehaviour
     public UIButton[] _mainMenuButtons;
     public UIButton[] _playMenuButtons;
     public UIButton[] _settingsMenuButtons;
+    public GameObject[] _settingsMenuOptions;
     public UIButton[] _quitMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
@@ -144,7 +145,7 @@ public class MainMenuSystem : MonoBehaviour
 
             if (_currentPage == 3)
             {
-                //SettingsMenuControls();
+                SettingsMenuControls();
             }
 
             if (_currentPage == 4)
@@ -241,41 +242,41 @@ public class MainMenuSystem : MonoBehaviour
 
     void SettingsMenuControls()
     {
-        if (GlobalInputManager.Get().GetAnyButton())
-        {
-            _usingMouse = false;
-            _mainMenuButtons[_mainSelectionIndex].OnFocus();
-        }
+        //if (GlobalInputManager.Get().GetAnyButton())
+        //{
+        //    _usingMouse = false;
+        //    _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        //}
 
-        if (GlobalInputManager.Get().GetLeftInput())
-        {
-            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-            _settingsSelectionIndex--;
-            if (_settingsSelectionIndex < 0)
-            {
-                _settingsSelectionIndex = _settingsMenuButtons.Length - 1;
-            }
-            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        }
+        //if (GlobalInputManager.Get().GetLeftInput())
+        //{
+        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+        //    _settingsSelectionIndex--;
+        //    if (_settingsSelectionIndex < 0)
+        //    {
+        //        _settingsSelectionIndex = _settingsMenuButtons.Length - 1;
+        //    }
+        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        //}
 
-        if (GlobalInputManager.Get().GetRightInput())
-        {
-            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-            _settingsSelectionIndex++;
-            if (_settingsSelectionIndex > _settingsMenuButtons.Length - 1)
-            {
-                _settingsSelectionIndex = 0;
-            }
-            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        }
+        //if (GlobalInputManager.Get().GetRightInput())
+        //{
+        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+        //    _settingsSelectionIndex++;
+        //    if (_settingsSelectionIndex > _settingsMenuButtons.Length - 1)
+        //    {
+        //        _settingsSelectionIndex = 0;
+        //    }
+        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        //}
 
-        if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
-        {
-            if (GlobalInputManager.Get().GetSubmitInput())
-            {
-                _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
-            }
-        }
+        //if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
+        //{
+        //    if (GlobalInputManager.Get().GetSubmitInput())
+        //    {
+        //        _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
+        //    }
+        //}
     }
 
     void QuitMenuControls()
