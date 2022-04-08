@@ -64,6 +64,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(optionsData);
         }
 
+        optionsData._fullScreen = true;
         Debug.Log("Loaded Music Volume = " + optionsData._musicVol);
         Debug.Log("Loaded SFX Volume = " + optionsData._sfxVol);
         Debug.Log("Loaded Fullscreen: " + optionsData._fullScreen);

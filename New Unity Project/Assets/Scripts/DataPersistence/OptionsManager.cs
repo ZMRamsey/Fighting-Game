@@ -61,7 +61,7 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         sfxVolumeSlider.value = this._sfxVol;
         //Screen.fullScreen = _fullscreen;
         Screen.fullScreen = true;
-        InitialiseFullScreen();
+        //InitialiseFullScreen();
         InitialiseResolution();
     }
     public void SetMusicVolume()
@@ -114,14 +114,7 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
 
     public void ToggleFullScreen()
     {
-        if (_fullscreen)
-        {
-            _fullscreen = false;
-        }
-        else
-        {
-            _fullscreen = true;
-        }
+        _fullscreen = !_fullscreen;
         Screen.fullScreen = _fullscreen;
         Debug.Log(_fullscreen);
     }
@@ -168,7 +161,8 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
     {
         if (_fullscreenToggle.OnClick())
         {
-            ToggleFullScreen();
+            //ToggleFullScreen();
+            print("WJHAT HTHAT HFUCK"); 
         }
 
         if (_1080p.OnClick())
