@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 
 public class MainMenuSystem : MonoBehaviour
 {
@@ -25,6 +26,19 @@ public class MainMenuSystem : MonoBehaviour
 
     bool _usingMouse = true;
 
+    [Header("Sorry")]
+    [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] Slider sfxVolumeSlider;
+
+    public AudioMixer musicMixer;
+    public AudioMixer sfxMixer;
+
+    public GameObject _musicSource;
+    private AudioSource _musicSrc;
+
+    float _musicVol = 1.0f;
+    float _sfxVol = 1.0f;
+
     private void Awake() {
         _instance = this;
     }
@@ -32,6 +46,8 @@ public class MainMenuSystem : MonoBehaviour
     void Start() {
         SetPage(0);
         _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        musicMixer.SetFloat("lowpass", 22000);
+        Screen.fullScreen = true;
         //for (int i = 0; i < _mainMenuButtons.Length; i++)
         //{
         //    int steve = i + 1;
@@ -128,7 +144,7 @@ public class MainMenuSystem : MonoBehaviour
 
             if (_currentPage == 3)
             {
-                SettingsMenuControls();
+                //SettingsMenuControls();
             }
 
             if (_currentPage == 4)
@@ -313,7 +329,7 @@ public class MainMenuSystem : MonoBehaviour
         if (!_usingMouse) {
             _mainMenuButtons[_mainSelectionIndex].OnFocus();
             _playMenuButtons[0].OnFocus();
-            _settingsMenuButtons[0].OnFocus();
+            //_settingsMenuButtons[0].OnFocus();
             _quitMenuButtons[0].OnFocus();
         }
     }
@@ -363,4 +379,15 @@ public class MainMenuSystem : MonoBehaviour
             canvas.SetActive(false);
         }
     }
+
+    public void SetMusicVolume()
+    {
+        musicMixer.SetFloat("musicVol", Mathf.Log(musicVolumeSlider.value) * 20);
+    }
+
+    public void SetSFXVolume()
+    {
+        sfxMixer.SetFloat("sfxVolume", (-80 + sfxVolumeSlider.value * 100));
+    }
+
 }

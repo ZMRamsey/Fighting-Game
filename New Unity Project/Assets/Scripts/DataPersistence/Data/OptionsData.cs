@@ -7,7 +7,7 @@ public class OptionsData
 {
 
     public float _defaultValue;
-    public bool _fullScreen;
+    public bool _fullScreen = true;
     public int _resolution;
     public int _quality;
 
