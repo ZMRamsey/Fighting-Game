@@ -65,9 +65,9 @@ public class Hitbox : MonoBehaviour
                 var dan = _self.GetComponent<DanFighter>();
 
                 if (dan && dan.IfInSuper()) {
-                    dir *= 20;
+                    
                     GameManager.Get().GetFighterTab(_self.GetFilter()).UpdateMessage("POWER!");
-                    ball.BoostShuttle();
+                    ball.SetOverSpeed(20);
                 }
 
 
@@ -80,15 +80,11 @@ public class Hitbox : MonoBehaviour
                 //ball.BoundToPlayer(_character);
 
                 bool mute = _currentMove.GetType() == ShotType.chip;
-
-                var esme = _self.GetComponent<EsmeFighter>();
                 float overSpeed = 0;
 
-                if (esme != null) {
-                    if (esme.CanGhostShot()) {
-                        mute = true;
-                        overSpeed = 1.25f;
-                    }
+                if (_currentMove.GetMutes()) {
+                    mute = true;
+                    //overSpeed = 1.25f;
                 }
 
                 var velInf = new VelocityInfluence(handler.GetInput(), _self.GetHitType());

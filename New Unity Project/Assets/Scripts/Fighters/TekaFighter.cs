@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TekaFighter : FighterController
 {
@@ -8,35 +9,35 @@ public class TekaFighter : FighterController
     [SerializeField] RectTransform _timeStopCanvas;
     [SerializeField] RectTransform _timeCenter;
     [SerializeField] AudioClip _startTimeSFX, _stopTimeSFX;
+    [SerializeField] Image _tangibleBar;
     SpriteRenderer _rayRenderer;
     GameObject _rayObject;
     InputHandler _handler;
     float _verticalProcess = 0;
     bool _timeStop;
     float _timeStopTimer;
-    public override void InitializeFighter()
-    {
+    float _tangibleLevel;
+    bool _depleted;
+    public override void InitializeFighter() {
         base.InitializeFighter();
         _rigidbody.useGravity = false;
         _inputHandler.SetInputState(InputState.none);
         _handler = _rayObject.GetComponent<InputHandler>();
         _rayRenderer = _rayObject.GetComponent<RayAI>().GetSpriteRenderer();
         _timeStopCanvas.gameObject.SetActive(false);
+        _tangibleLevel = 1;
     }
 
-    public override void FighterAwake()
-    {
+    public override void FighterAwake() {
         _rayObject = Instantiate(_rayPrefab, transform.position, Quaternion.identity);
     }
 
-    public override void SetFilter(FighterFilter filter)
-    {
+    public override void SetFilter(FighterFilter filter) {
         base.SetFilter(filter);
         _rayObject.GetComponent<FighterController>().SetFilter(_filter);
     }
 
-    public override void OnSuperMechanic()
-    {
+    public override void OnSuperMechanic() {
         GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter, this);
     }
 
@@ -115,23 +116,19 @@ public class TekaFighter : FighterController
         }
     }
 
-    public override void ResetFighter()
-    {
+    public override void ResetFighter() {
         base.ResetFighter();
-        if (_rayObject != null)
-        {
+        if (_rayObject != null) {
             _rayObject.GetComponent<FighterController>().ResetFighter();
             _rayObject.transform.position = transform.position;
         }
     }
 
-    public override void OnAirMovement()
-    {
+    public override void OnAirMovement() {
 
     }
 
-    public override void OnGroundMovement()
-    {
+    public override void OnGroundMovement() {
 
     }
 
@@ -140,17 +137,43 @@ public class TekaFighter : FighterController
     }
 
     float _rayUpdateTimer;
-    public override void OnFighterUpdate()
-    {
+    public override void OnFighterUpdate() {
+        _renderer.enabled = IsGrabbing == null;
+
+        if (IsGrabbing != null) {
+            IsGrabbing.transform.right = Vector3.Lerp(IsGrabbing.transform.right, _rigidbody.velocity, Time.deltaTime * 2);
+        }
+
+
+        if (_depleted && _tangibleLevel >= 1) {
+            print("RESTOCK");
+            _depleted = false;
+            _canAttack = true;
+        }
+
+        if (!_depleted) {
+            Color color = _renderer.color;
+            color.a = 0.5f + (_tangibleLevel / 2);
+            _renderer.color = Color.Lerp(_renderer.color, color, Time.deltaTime);
+
+            if (_canAttack && _tangibleLevel < 1) {
+                _tangibleLevel += Time.deltaTime * 0.5f;
+            }
+            _tangibleBar.color = Color.white;
+        }
+        else {
+            _tangibleLevel += Time.deltaTime * 0.5f;
+            _tangibleBar.color = Color.red;
+        }
+
+        _tangibleBar.fillAmount = _tangibleLevel;
 
         _verticalProcess = 0;
-        if (_inputHandler.GetJumpHeld())
-        {
+        if (_inputHandler.GetJumpHeld()) {
             _verticalProcess = 1;
         }
 
-        if (_inputHandler.GetCrouch())
-        {
+        if (_inputHandler.GetCrouch()) {
             _verticalProcess = -1;
         }
 
@@ -160,27 +183,21 @@ public class TekaFighter : FighterController
         Vector3 distance = transform.position;
         distance.x = _rayObject.transform.position.x;
 
-        if (_rayObject.transform.position.x > transform.position.x)
-        {
+        if (_rayObject.transform.position.x > transform.position.x) {
             _rayRenderer.flipX = true;
         }
 
-        if (_rayObject.transform.position.x < transform.position.x)
-        {
+        if (_rayObject.transform.position.x < transform.position.x) {
             _rayRenderer.flipX = false;
         }
 
-        if (_rayUpdateTimer > 0.1f)
-        {
-            if (Vector3.Distance(transform.position, distance) > 2)
-            {
-                if (_rayObject.transform.position.x > transform.position.x)
-                {
+        if (_rayUpdateTimer > 0.1f) {
+            if (Vector3.Distance(transform.position, distance) > 2) {
+                if (_rayObject.transform.position.x > transform.position.x) {
                     _rayXTarget = -1;
                 }
 
-                if (_rayObject.transform.position.x < transform.position.x)
-                {
+                if (_rayObject.transform.position.x < transform.position.x) {
                     _rayXTarget = 1;
                 }
             }
@@ -205,8 +222,24 @@ public class TekaFighter : FighterController
 
     Vector3 _targetMovement;
 
-    public override void OnFixedFighterUpdate()
-    {
+    public override void UpdateMove() {
+        if (_depleted) {
+            _canAttack = true;
+            return;
+        }
+
+        base.UpdateMove();
+
+        if (!_timeStop) {
+            _tangibleLevel -= 0.35f;
+        }
+
+        if (_tangibleLevel <= 0) {
+            _depleted = true;
+        }
+    }
+
+    public override void OnFixedFighterUpdate() {
         base.OnFixedFighterUpdate();
 
         Vector3 movementProcessing = new Vector3(_inputHandler._inputX, _verticalProcess, 0);
@@ -214,8 +247,7 @@ public class TekaFighter : FighterController
         movementProcessing.y *= 2;
         movementProcessing *= _settings.GetSpeed();
 
-        if (movementProcessing != Vector3.zero || _verticalProcess != 0)
-        {
+        if (movementProcessing != Vector3.zero || _verticalProcess != 0) {
             _targetMovement = Vector3.Lerp(_targetMovement, movementProcessing, Time.deltaTime * 12);
         }
 

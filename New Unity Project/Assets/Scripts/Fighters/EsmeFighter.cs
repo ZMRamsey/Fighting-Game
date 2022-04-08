@@ -11,7 +11,7 @@ public class EsmeFighter : FighterController
     [SerializeField] AnimationClip _clap;
     ShuttleCock _ghostHitUsed;
     float _shieldTimer;
-    float _coolDown;
+    [SerializeField] FighterMove _gimicMove;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
@@ -52,7 +52,7 @@ public class EsmeFighter : FighterController
     public override void OnFighterUpdate() {
         base.OnFighterUpdate();
 
-        var powered = _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f;
+        var powered = _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl && _canAttack;
 
         _animator.SetBool("charge", _inputHandler.GetCrouch());
         _animator.SetBool("power", powered);
@@ -63,7 +63,6 @@ public class EsmeFighter : FighterController
             _magicRaketObject.transform.position = _ghostHitUsed.transform.position;
         }
 
-        _coolDown += Time.deltaTime;
 
         if (_blackHoleObject) {
             _shieldTimer += Time.deltaTime;
@@ -74,9 +73,9 @@ public class EsmeFighter : FighterController
     }
 
     public override void UpdateMove() {
-        base.UpdateMove();
-         
-        if (_inputHandler.GetCrouch() && _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl && _coolDown > 0.5f) {
+        Vector3 hitPos = _currentMove.GetHitDirection();
+
+        if (CanGhostShot() && _currentMove != null) {
             float facing = 1;
             if (_renderer.flipX) {
                 facing = -1;
@@ -98,13 +97,17 @@ public class EsmeFighter : FighterController
             _ghostHitUsed = null;
 
             _canAttack = false;
-            _animator.SetTrigger("gimicHit");
             _failSafeAttack = _clap.length;
+
+            _currentMove = _gimicMove;
+            _currentMove.SetHitDirection(hitPos);
         }
-        _coolDown = 0;
+
+        base.UpdateMove();
+
     }
 
     public bool CanGhostShot() {
-        return !_ghostHitUsed;
+        return _inputHandler.GetCrouch() && _ghostHitUsed != null && _ghostHitUsed.GetFilter() == GetFilter() && _myState == FighterState.inControl;
     }
 }

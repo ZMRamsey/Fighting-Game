@@ -33,7 +33,8 @@ public class BlackHole : MonoBehaviour
 
             if(shuttle != null) {
                 var dir = transform.position - shuttle.transform.position;
-                shuttle.GetComponent<Rigidbody>().AddForce(dir * 6);
+                shuttle.GetComponent<Rigidbody>().AddForce(dir * 8);
+                shuttle.IncreaseOverSpeed();
             }
         }
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 0.2f, true);

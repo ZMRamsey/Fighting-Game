@@ -10,10 +10,15 @@ public class FighterMove
     [SerializeField] float _hitFrame;
     [SerializeField] AnimationClip _clip;
     [SerializeField] Vector3 _hitDirection;
+    [SerializeField] bool _mutesVelocity;
     ShotType _shotType;
 
     public string GetPath() {
         return _animationPath;
+    }
+
+    public bool GetMutes() {
+        return _mutesVelocity;
     }
 
     public void SetUp(ShotType type) {
@@ -43,5 +48,9 @@ public class FighterMove
     public Vector3 GetHitDirection()
     {
         return _hitDirection;
+    }
+
+    public void SetHitDirection(Vector3 dir) {
+        _hitDirection = dir;
     }
 }

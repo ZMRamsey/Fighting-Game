@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
         Resume();
         if (GameLogic.Get()._type == GameType.tutorial || GameLogic.Get()._type == GameType.training) {
             _fighterTwo.GetController().gameObject.SetActive(false);
+            _debugCanvas.SetActive(!_debugCanvas.activeSelf);
         }
         else {
             SetUpGame();
@@ -254,6 +255,17 @@ public class GameManager : MonoBehaviour
         if (Keyboard.current.f10Key.wasPressedThisFrame) {
             _debugCanvas.SetActive(!_debugCanvas.activeSelf);
             _debugCamera.SetActive(_debugCanvas.activeSelf);
+        }
+
+        if(GameLogic.Get()._type == GameType.training) {
+            if (GlobalInputManager.Get().GetResetInput()) {
+                _shuttle.transform.position = _shuttleSpawn;
+                _shuttle.ResetShuttle(true);
+            }
+
+            if (GlobalInputManager.Get().GetHitboxInput()) {
+                _debugCamera.SetActive(!_debugCamera.activeSelf);
+            }
         }
 
         if (_slowMusic) {
@@ -638,6 +650,10 @@ public class GameManager : MonoBehaviour
     }
 
     public int GetSuccessive() {
+        if(GameLogic.Get()._type == GameType.training) {
+            return 1;
+        }
+
         return _successive;
     }
 

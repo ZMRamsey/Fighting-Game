@@ -59,7 +59,8 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         _musicSrc.volume = this._musicVol;
         musicVolumeSlider.value = this._musicVol;
         sfxVolumeSlider.value = this._sfxVol;
-        Screen.fullScreen = _fullscreen;
+        //Screen.fullScreen = _fullscreen;
+        Screen.fullScreen = true;
         InitialiseFullScreen();
         InitialiseResolution();
     }

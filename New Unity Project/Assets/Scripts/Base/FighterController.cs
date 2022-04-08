@@ -14,7 +14,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected FighterSettings _settings;
 
     [Header("Controller Components")]
-    [SerializeField] Hitbox _hitboxes;
+    [SerializeField] protected Hitbox _hitboxes;
     [SerializeField] Hurtbox _hurtBox;
     [SerializeField] Transform _hitboxFlipper;
 
@@ -62,6 +62,7 @@ public abstract class FighterController : MonoBehaviour
     bool _freeze;
     bool _isDashing;
     bool _hasBounced;
+    public ShuttleCock IsGrabbing;
     bool _grounded;
     bool _inSuper;
     RaycastHit _groundHit;
@@ -194,6 +195,7 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void ResetGrab() {
+        IsGrabbing = null;
         _grabCoolDown = 1;
     }
 
@@ -831,7 +833,9 @@ public abstract class FighterController : MonoBehaviour
         if (Stun != null) {
             StopCoroutine(Stun);
         }
-        Stun = StartCoroutine(StunFrame(time));
+        if (gameObject.activeSelf) {
+            Stun = StartCoroutine(StunFrame(time));
+        }
     }
 
 

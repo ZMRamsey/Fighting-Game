@@ -59,8 +59,10 @@ public class ShuttleCock : MonoBehaviour
     bool _yellowKillActive;
     protected float _squishTimer;
     float _speed;
+    float _overSpeed;
     float _windVolume;
     float _killVolume;
+    float _coolDownWallHit;
     Vector3 _lastVelocity;
     float grabbedTimer;
     int _bouncesSinceShoot;
@@ -148,6 +150,8 @@ public class ShuttleCock : MonoBehaviour
         _rb.velocity = Vector3.zero;
 
         _storedHitVelocity = Vector3.zero;
+
+        processedSpeed += Mathf.Clamp(_overSpeed, 0, Mathf.Infinity);
 
         Vector3 targetVelocity = message.direction * processedSpeed;
 
@@ -238,6 +242,11 @@ public class ShuttleCock : MonoBehaviour
         if (_wind) {
             _wind.SetActive(GetSpeedPercent() > _killActiveOnPercent);
         }
+
+        if(_coolDownWallHit > 0) {
+            _coolDownWallHit -= Time.deltaTime;
+        }
+
 
         if (GetSpeedPercent() > _trailActiveOnPercent && _rb.velocity.magnitude > 10 && !CanKill()) {
             if (!_windTrailActive && _trailParticle) {
@@ -341,6 +350,11 @@ public class ShuttleCock : MonoBehaviour
             velocity.x = velocity.x * 0.9f;
         }
 
+        if (_bouncesSinceShoot > 1) {
+            if (_overSpeed > 0) {
+                _overSpeed -= Time.deltaTime * 10;
+            }
+        }
 
         if (_frozen) {
             _rb.velocity = Vector3.zero;
@@ -364,6 +378,16 @@ public class ShuttleCock : MonoBehaviour
         }
 
         ShuttleUpdate();
+    }
+
+    public void SetOverSpeed(float speed) {
+        _bouncesSinceShoot = 0;
+        _overSpeed = speed;
+    }
+
+    public void IncreaseOverSpeed() {
+        _overSpeed += Time.deltaTime * 10;
+        _bouncesSinceShoot = 0;
     }
 
     public void SetVelocity(Vector3 dir) {
@@ -402,8 +426,8 @@ public class ShuttleCock : MonoBehaviour
 
     }
 
-    public void BoostShuttle() {
-        _speed = (_maximumJail / 2) + 1;
+    float GetShuttleSpeed() {
+        return _speed + Mathf.Clamp(_overSpeed, 0, 20);
     }
 
 
@@ -442,11 +466,19 @@ public class ShuttleCock : MonoBehaviour
     }
 
     public float GetSpeedPercent() {
-        return _speed / _maximumJail;
+        return  Mathf.Clamp(GetShuttleSpeed(), 0, _maximumJail) / _maximumJail;
     }
 
     public float GetSpeed() {
+        return GetShuttleSpeed();
+    }
+
+    public float GetRawSpeed() {
         return _speed;
+    }
+
+    public float GetOverSpeed() {
+        return _overSpeed;
     }
 
     public float GetMaxJailSpeed() {
@@ -469,9 +501,11 @@ public class ShuttleCock : MonoBehaviour
         SquishBall();
         OnWallHit(collision.contacts[0], collision.relativeVelocity.magnitude, collision.transform.tag);
 
-        if (CanKill()) {
+        if (CanKill() && _coolDownWallHit <=0) {
             _lastVelocity = _rb.velocity;
             FreezeShuttle(0.15f);
+            transform.position = collision.contacts[0].point;
+            _coolDownWallHit = 0.2f;
         }
 
         if (collision.gameObject.GetComponent<StageNet>()) {
@@ -572,6 +606,8 @@ public class ShuttleCock : MonoBehaviour
         if(shootCoroutine != null) {
             StopCoroutine(shootCoroutine);
         }
+
+        player.IsGrabbing = this;
 
         grabbedTimer = player.GetGrabThreshold();
         _grabber = player;

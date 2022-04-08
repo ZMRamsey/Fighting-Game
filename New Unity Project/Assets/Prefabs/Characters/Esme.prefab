@@ -34409,6 +34409,13 @@ MonoBehaviour:
   _blachHolePrefab: {fileID: 2805937927403615696, guid: e7b4b9a7d9ae15a49ad57e19ce03154b, type: 3}
   _magicRaketPrefab: {fileID: 8556203721664482339, guid: 9026df3f6b5aeb74391e55c4fad03826, type: 3}
   _clap: {fileID: 7400000, guid: 6a5e82fd73f713f48bce86df83770a64, type: 2}
+  _gimicMove:
+    _animationPath: gimicHit
+    _frames: 10
+    _hitFrame: 4
+    _clip: {fileID: 7400000, guid: 6a5e82fd73f713f48bce86df83770a64, type: 2}
+    _hitDirection: {x: 0, y: 0, z: 0}
+    _mutesVelocity: 1
 --- !u!114 &4874520954667380375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34763,6 +34770,7 @@ MonoBehaviour:
     _hitFrame: 0
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
+    _mutesVelocity: 0
   _character: {fileID: 4874520954698666502}
   _debugRenderer: {fileID: 2403464120828243230}
   cooldowns: []
