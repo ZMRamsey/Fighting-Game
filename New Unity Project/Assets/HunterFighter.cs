@@ -27,17 +27,34 @@ public class HunterFighter : FighterController
         base.OnSuperMechanic();
         _superProcess = true;
         _superLenghth = _lionClip.length;
-        _lion.SetActive(true);
+        //_lion.SetActive(true);
     }
 
     public override void OnSuperEnd(bool instant) {
         base.OnSuperEnd(instant);
         _superProcess = false;
-        _lion.SetActive(false);
+        //_lion.SetActive(false);
     }
 
     public override void OnFighterUpdate() {
+        if (_superProcess)
+        {
+            var shuttle = GameManager.Get().GetShuttle().transform;
+            var rb = shuttle.GetComponent<Rigidbody>();
 
+            _rope.SetPosition(0, transform.position);
+            _rope.SetPosition(1, shuttle.transform.position);
+
+            rb.AddForce(100f * (transform.position - shuttle.position));
+            rb.velocity *= 0.9f;
+
+            if (Vector3.Distance(shuttle.position, transform.position) < 1)
+            {
+                _canTether = 0;
+                GameManager.Get().GetShuttle().BoundToPlayer(this);
+                _superProcess = false;
+            }
+        }
 
         if (_tetheredShuttle != null) {
             _rope.SetPosition(0, transform.position);
@@ -75,15 +92,15 @@ public class HunterFighter : FighterController
             _canTether -= Time.deltaTime;
         }
 
-        if (_superLenghth > 0 && _superProcess) {
-            _superLenghth -= Time.deltaTime;
-            if (_superLenghth <= 0) {
-                OnSuperEnd(false);
-                _superProcess = false;
-            }
-        }
+        //if (_superLenghth > 0 && _superProcess) {
+        //    _superLenghth -= Time.deltaTime;
+        //    if (_superLenghth <= 0) {
+        //        OnSuperEnd(false);
+        //        _superProcess = false;
+        //    }
+        //}
 
-        _rope.enabled = _tetheredShuttle != null;
+        _rope.enabled = _tetheredShuttle != null || _superProcess;
 
     }
 

@@ -17,6 +17,7 @@ public class FighterControllerDebug : MonoBehaviour
     [SerializeField] Image _driveBtn;
     [SerializeField] Image _dropBtn;
     [SerializeField] GameObject _panel;
+    [SerializeField] GameObject _controlPanel;
     [SerializeField] Animator _controllerPopups;
 
     float x = 0;
@@ -34,6 +35,7 @@ public class FighterControllerDebug : MonoBehaviour
             _controller = GameManager.Get().GetFighterTwo();
             _UIName.text = GameManager.Get().GetGameSettings().GetFighterTwoProfile().GetName();
             _panel.SetActive(false);
+            _controlPanel.SetActive(false);
         }
 
         _handler = _controller.GetComponent<InputHandler>();
