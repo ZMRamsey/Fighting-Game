@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         Resume();
         if (GameLogic.Get()._type == GameType.tutorial || GameLogic.Get()._type == GameType.training) {
             _fighterTwo.GetController().gameObject.SetActive(false);
-            _debugCanvas.SetActive(!_debugCanvas.activeSelf);
+            _debugCanvas.SetActive(true);
         }
         else {
             SetUpGame();
@@ -265,6 +265,11 @@ public class GameManager : MonoBehaviour
 
             if (GlobalInputManager.Get().GetHitboxInput()) {
                 _debugCamera.SetActive(!_debugCamera.activeSelf);
+            }
+
+            if (Keyboard.current.yKey.wasPressedThisFrame)
+            {
+                _fighterOne.GetController().SetMeterToFull();
             }
         }
 

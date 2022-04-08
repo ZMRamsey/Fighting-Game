@@ -446,6 +446,12 @@ public abstract class FighterController : MonoBehaviour
         _fighterUI.SetBarValue(GetMeter());
     }
 
+    public void SetMeterToFull()
+    {
+        _commandMeter = 100;
+        _fighterUI.SetBarValue(GetMeter());
+    }
+
     public void ReduceMeter(float value) {
         _commandMeter -= value;
 

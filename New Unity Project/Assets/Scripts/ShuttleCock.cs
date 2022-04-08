@@ -551,6 +551,11 @@ public class ShuttleCock : MonoBehaviour
     }
 
     IEnumerator OnFreezeProcess(HitMessage message, float time) {
+        if(_grabber != null)
+        {
+            yield break;
+        }
+
         ForceFreeze();
 
         yield return new WaitForSeconds(time);
