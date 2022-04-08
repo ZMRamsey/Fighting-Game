@@ -47,6 +47,7 @@ public class MainMenuSystem : MonoBehaviour
         SetPage(0);
         _mainMenuButtons[_mainSelectionIndex].OnFocus();
         musicMixer.SetFloat("lowpass", 22000);
+        Screen.fullScreen = true;
         //for (int i = 0; i < _mainMenuButtons.Length; i++)
         //{
         //    int steve = i + 1;
@@ -127,10 +128,6 @@ public class MainMenuSystem : MonoBehaviour
         if (_currentPage != 0) {
             if (GlobalInputManager.Get().GetBackInput()) {
                 if (_canvas.activeSelf) {
-                    if (_currentPage == 3)
-                    {
-                        DataPersistenceManager.instance.SaveGame();
-                    }
                     SetPage(0);
                 }
             }
