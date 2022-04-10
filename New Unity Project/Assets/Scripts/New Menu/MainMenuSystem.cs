@@ -106,6 +106,27 @@ public class MainMenuSystem : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < _settingsMenuButtons.Length; i++)
+        {
+            if (_settingsMenuButtons[i].OnClick())
+            {
+                if (i == 0)
+                {
+                    FullScreenClick();
+                }
+
+                if (i == 1)
+                {
+                    ResolutionClick("Left");
+                }
+
+                if (i == 2)
+                {
+                    ResolutionClick("Right");
+                }
+            }
+        }
+
         for (int i = 0; i < _quitMenuButtons.Length; i++)
         {
             if (_quitMenuButtons[i].OnClick())
@@ -242,41 +263,40 @@ public class MainMenuSystem : MonoBehaviour
 
     void SettingsMenuControls()
     {
-        //if (GlobalInputManager.Get().GetAnyButton())
-        //{
-        //    _usingMouse = false;
-        //    _mainMenuButtons[_mainSelectionIndex].OnFocus();
-        //}
+        if (GlobalInputManager.Get().GetAnyButton())
+        {
+            _usingMouse = false;
+            _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        }
 
-        //if (GlobalInputManager.Get().GetLeftInput())
-        //{
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-        //    _settingsSelectionIndex--;
-        //    if (_settingsSelectionIndex < 0)
-        //    {
-        //        _settingsSelectionIndex = _settingsMenuButtons.Length - 1;
-        //    }
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        //}
+        if ((GlobalInputManager.Get().GetLeftInput() || GlobalInputManager.Get().GetRightInput()) && _settingsSelectionIndex != 0)
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            _settingsSelectionIndex = (2 / _settingsSelectionIndex);
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }       
 
-        //if (GlobalInputManager.Get().GetRightInput())
-        //{
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-        //    _settingsSelectionIndex++;
-        //    if (_settingsSelectionIndex > _settingsMenuButtons.Length - 1)
-        //    {
-        //        _settingsSelectionIndex = 0;
-        //    }
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        //}
+        if (GlobalInputManager.Get().GetUpInput() || GlobalInputManager.Get().GetDownInput())
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            if (_settingsSelectionIndex == 0)
+            {
+                _settingsSelectionIndex = 1;
+            }
+            else
+            {
+                _settingsSelectionIndex = 0;
+            }
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }
 
-        //if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
-        //{
-        //    if (GlobalInputManager.Get().GetSubmitInput())
-        //    {
-        //        _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
-        //    }
-        //}
+        if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
+        {
+            if (GlobalInputManager.Get().GetSubmitInput())
+            {
+                _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
+            }
+        }
     }
 
     void QuitMenuControls()
@@ -330,7 +350,7 @@ public class MainMenuSystem : MonoBehaviour
         if (!_usingMouse) {
             _mainMenuButtons[_mainSelectionIndex].OnFocus();
             _playMenuButtons[0].OnFocus();
-            //_settingsMenuButtons[0].OnFocus();
+            _settingsMenuButtons[0].OnFocus();
             _quitMenuButtons[0].OnFocus();
         }
     }
@@ -389,6 +409,18 @@ public class MainMenuSystem : MonoBehaviour
     public void SetSFXVolume()
     {
         sfxMixer.SetFloat("sfxVolume", (-80 + sfxVolumeSlider.value * 100));
+    }
+
+    public void FullScreenClick()
+    {
+        print("FSC");
+        UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
+        Screen.fullScreen = checkbox.GetChecked();
+    }
+
+    public void ResolutionClick(string side)
+    {
+        print("RC" + side);
     }
 
 }

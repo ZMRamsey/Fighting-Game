@@ -97,4 +97,10 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             _effectorObject.transform.localScale = _defaultSize;
         }
     }
+
+    public void SetSprites(Sprite sprite)
+    {
+        _defaultSprite = sprite;
+        _highlightedSprite = sprite;
+    }
 }
