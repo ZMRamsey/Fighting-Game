@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
+using TMPro;
 
 public class MainMenuSystem : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class MainMenuSystem : MonoBehaviour
     public UIButton[] _mainMenuButtons;
     public UIButton[] _playMenuButtons;
     public UIButton[] _settingsMenuButtons;
-    public GameObject[] _settingsMenuOptions;
     public UIButton[] _quitMenuButtons;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject[] _canvasArray;
@@ -40,6 +40,11 @@ public class MainMenuSystem : MonoBehaviour
     float _musicVol = 1.0f;
     float _sfxVol = 1.0f;
 
+    public Vector2[] _resolutionOptions;
+    public TextMeshProUGUI _resolutionText;
+    int _resolutionIndex;
+    Vector2 _savedResolution;
+
     private void Awake() {
         _instance = this;
     }
@@ -48,7 +53,7 @@ public class MainMenuSystem : MonoBehaviour
         SetPage(0);
         _mainMenuButtons[_mainSelectionIndex].OnFocus();
         musicMixer.SetFloat("lowpass", 22000);
-        Screen.fullScreen = true;
+        _resolutionText.text = Screen.currentResolution.width + " x " + Screen.currentResolution.height;
         //for (int i = 0; i < _mainMenuButtons.Length; i++)
         //{
         //    int steve = i + 1;
@@ -78,6 +83,10 @@ public class MainMenuSystem : MonoBehaviour
             int steve = i + 1;
             if (_mainMenuButtons[i].OnClick()) {
                 SetPage(steve);
+                if (steve == 3)
+                {
+                    SetUpSettings();
+                }
             }
         }
 
@@ -103,6 +112,27 @@ public class MainMenuSystem : MonoBehaviour
 
                 CharacterSelectSystem.Get().SetSelectedIndex(i);
                 ProceedToInputSelection(type);
+            }
+        }
+
+        for (int i = 0; i < _settingsMenuButtons.Length; i++)
+        {
+            if (_settingsMenuButtons[i].OnClick())
+            {
+                if (i == 0)
+                {
+                    FullScreenClick();
+                }
+
+                if (i == 1)
+                {
+                    ResolutionClick(-1);
+                }
+
+                if (i == 2)
+                {
+                    ResolutionClick(1);
+                }
             }
         }
 
@@ -242,41 +272,40 @@ public class MainMenuSystem : MonoBehaviour
 
     void SettingsMenuControls()
     {
-        //if (GlobalInputManager.Get().GetAnyButton())
-        //{
-        //    _usingMouse = false;
-        //    _mainMenuButtons[_mainSelectionIndex].OnFocus();
-        //}
+        if (GlobalInputManager.Get().GetAnyButton())
+        {
+            _usingMouse = false;
+            _mainMenuButtons[_mainSelectionIndex].OnFocus();
+        }
 
-        //if (GlobalInputManager.Get().GetLeftInput())
-        //{
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-        //    _settingsSelectionIndex--;
-        //    if (_settingsSelectionIndex < 0)
-        //    {
-        //        _settingsSelectionIndex = _settingsMenuButtons.Length - 1;
-        //    }
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        //}
+        if ((GlobalInputManager.Get().GetLeftInput() || GlobalInputManager.Get().GetRightInput()) && _settingsSelectionIndex != 0)
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            _settingsSelectionIndex = (2 / _settingsSelectionIndex);
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }       
 
-        //if (GlobalInputManager.Get().GetRightInput())
-        //{
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
-        //    _settingsSelectionIndex++;
-        //    if (_settingsSelectionIndex > _settingsMenuButtons.Length - 1)
-        //    {
-        //        _settingsSelectionIndex = 0;
-        //    }
-        //    _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
-        //}
+        if (GlobalInputManager.Get().GetUpInput() || GlobalInputManager.Get().GetDownInput())
+        {
+            _settingsMenuButtons[_settingsSelectionIndex].OnUnfocus();
+            if (_settingsSelectionIndex == 0)
+            {
+                _settingsSelectionIndex = 1;
+            }
+            else
+            {
+                _settingsSelectionIndex = 0;
+            }
+            _settingsMenuButtons[_settingsSelectionIndex].OnFocus();
+        }
 
-        //if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
-        //{
-        //    if (GlobalInputManager.Get().GetSubmitInput())
-        //    {
-        //        _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
-        //    }
-        //}
+        if (_settingsMenuButtons[_settingsSelectionIndex].IsFocused())
+        {
+            if (GlobalInputManager.Get().GetSubmitInput())
+            {
+                _settingsMenuButtons[_settingsSelectionIndex].OnSubmit();
+            }
+        }
     }
 
     void QuitMenuControls()
@@ -330,7 +359,7 @@ public class MainMenuSystem : MonoBehaviour
         if (!_usingMouse) {
             _mainMenuButtons[_mainSelectionIndex].OnFocus();
             _playMenuButtons[0].OnFocus();
-            //_settingsMenuButtons[0].OnFocus();
+            _settingsMenuButtons[0].OnFocus();
             _quitMenuButtons[0].OnFocus();
         }
     }
@@ -389,6 +418,54 @@ public class MainMenuSystem : MonoBehaviour
     public void SetSFXVolume()
     {
         sfxMixer.SetFloat("sfxVolume", (-80 + sfxVolumeSlider.value * 100));
+    }
+
+    public void SetUpSettings()
+    {
+        _resolutionText.text = GameLogic.Get().GetResolution().x + " x " + GameLogic.Get().GetResolution().y;
+        UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
+        if (!GameLogic.Get().GetFullScreen())
+        {
+            checkbox.UnCheck();
+        }
+        for (int i = 0; i < _resolutionOptions.Length; i++)
+        {
+            if (_resolutionOptions[i] == GameLogic.Get().GetResolution())
+            {
+                _resolutionIndex = i;
+            }
+        }
+
+    }
+
+    public void FullScreenClick()
+    {
+        print("FSC");
+        UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
+        Screen.fullScreen = checkbox.GetChecked();
+        GameLogic.Get().SetFullScreen(checkbox.GetChecked());
+    }
+
+    //+1 for right, -1 for left
+    public void ResolutionClick(int side)
+    {
+        _resolutionIndex += side;
+        if (_resolutionIndex < 0)
+        {
+            _resolutionIndex = _resolutionOptions.Length -1;
+        }
+
+        if (_resolutionIndex > _resolutionOptions.Length -1)
+        {
+            _resolutionIndex = 0;
+        }
+
+        _savedResolution = _resolutionOptions[_resolutionIndex];
+        GameLogic.Get().SetResolution(_savedResolution);
+        UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
+        Screen.SetResolution((int)_savedResolution.x, (int)_savedResolution.y, checkbox.GetChecked());
+        _resolutionText.text = _savedResolution.x + " x " + _savedResolution.y;
+        print("Resolution set to " + _savedResolution.x + " x " + _savedResolution.y);
     }
 
 }
