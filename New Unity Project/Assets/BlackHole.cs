@@ -6,6 +6,7 @@ public class BlackHole : MonoBehaviour
 {
     [SerializeField] float _height;
     [SerializeField] float _speed;
+    [SerializeField] GameObject _explode;
     Rigidbody _rb;
     // Start is called before the first frame update
     void Start()
@@ -38,5 +39,11 @@ public class BlackHole : MonoBehaviour
             }
         }
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 0.2f, true);
+    }
+
+    public void OnEnd() {
+        var exp = Instantiate(_explode, transform.position, Quaternion.identity);
+        exp.GetComponent<ParticleSystem>().Play();
+        Destroy(exp, 2);
     }
 }

@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e3b3ab25ea4b8479a49aa619b0002c, type: 3}
+  m_Name: Gans_Settings
+  m_EditorClassIdentifier: 
+  _smashMove:
+    _animationPath: drive
+    _frames: 11
+    _hitFrame: 15
+    _clip: {fileID: 7400000, guid: 1cd876f68aa88b94daf050e8fbaaf95d, type: 2}
+    _hitDirection: {x: 12, y: -6, z: 0}
+    _mutesVelocity: 0
+  _chipMove:
+    _animationPath: drive
+    _frames: 11
+    _hitFrame: 15
+    _clip: {fileID: 7400000, guid: 1cd876f68aa88b94daf050e8fbaaf95d, type: 2}
+    _hitDirection: {x: 0.4, y: 2, z: 0}
+    _mutesVelocity: 0
+  _driveMove:
+    _animationPath: drive
+    _frames: 11
+    _hitFrame: 15
+    _clip: {fileID: 7400000, guid: 1cd876f68aa88b94daf050e8fbaaf95d, type: 2}
+    _hitDirection: {x: 12, y: 0.5, z: 0}
+    _mutesVelocity: 0
+  _liftMove:
+    _animationPath: drive
+    _frames: 11
+    _hitFrame: 15
+    _clip: {fileID: 7400000, guid: 1cd876f68aa88b94daf050e8fbaaf95d, type: 2}
+    _hitDirection: {x: 6, y: 8, z: 0}
+    _mutesVelocity: 0
+  _specialMove:
+    _animationPath: super
+    _frames: 12
+    _hitFrame: 0
+    _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
+    _hitDirection: {x: 6, y: 4, z: 0}
+    _mutesVelocity: 0
+  _hitType: 1
+  _speed: 12
+  _height: 2.5
+  _meterIncreaseValue: 13
+  _grabThreshold: 1
+  _maxJumps: 0
+  _jumpForce: 55
+  _fallMultiplier: 20
+  _jumpFalloff: 0.85
+  _airSpeed: 6
+  _fastFallSpeed: 16
+  _groundLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  _hasDash: 0
+  _hasJump: 1

@@ -12,6 +12,7 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected FighterFilter _filter;
     [Header("Settings")]
     [SerializeField] protected FighterSettings _settings;
+    [SerializeField] protected FighterAudio _audioSettings;
 
     [Header("Controller Components")]
     [SerializeField] protected Hitbox _hitboxes;
@@ -25,14 +26,6 @@ public abstract class FighterController : MonoBehaviour
     [SerializeField] protected SpriteRenderer _rgbRenderer;
     [SerializeField] float _stretchSpeed;
     [SerializeField] protected AudioSource _source;
-    [SerializeField] AudioClip _jumpUpSFX, _jumpDownSFX;
-    [SerializeField] AudioClip[] _hitSounds;
-    [SerializeField] AudioClip[] _damageSounds;
-    [SerializeField] AudioClip[] _swingSounds;
-    [SerializeField] AudioClip[] _leftFootSounds;
-    [SerializeField] AudioClip[] _rightFootSounds;
-    [SerializeField] AudioClip[] _grabSound;
-    [SerializeField] AudioClip[] _squeakSound;
 
     [SerializeField] ParticleSystem _hitSmashVFX;
     [SerializeField] ParticleSystem _hitChipVFX;
@@ -127,10 +120,10 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayLeftFoot() {
-        if (_leftFootSounds == null || _leftFootSounds.Length == 0) {
+        if (_audioSettings.LeftFootSounds == null || _audioSettings.LeftFootSounds.Length == 0) {
             return;
         }
-        _source.PlayOneShot(_leftFootSounds[UnityEngine.Random.Range(0, _leftFootSounds.Length)], 1f);
+        _source.PlayOneShot(_audioSettings.LeftFootSounds[UnityEngine.Random.Range(0, _audioSettings.LeftFootSounds.Length)], 1f);
     }
 
     public void PlaySound(AudioClip clip) {
@@ -138,11 +131,11 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void PlayRightFoot() {
-        if (_rightFootSounds == null || _rightFootSounds.Length == 0) {
+        if (_audioSettings.RightFootSounds == null || _audioSettings.RightFootSounds.Length == 0) {
             return;
         }
 
-        _source.PlayOneShot(_rightFootSounds[UnityEngine.Random.Range(0, _rightFootSounds.Length)], 1f);
+        _source.PlayOneShot(_audioSettings.RightFootSounds[UnityEngine.Random.Range(0, _audioSettings.RightFootSounds.Length)], 1f);
     }
 
     public virtual void SetFilter(FighterFilter filter) {
@@ -333,7 +326,7 @@ public abstract class FighterController : MonoBehaviour
         }
     }
 
-    public void KO(Vector3 velocity) {
+    public virtual void KO(Vector3 velocity) {
         _myState = FighterState.dead;
         _animator.Rebind();
         _animator.SetLayerWeight(1, 1);
@@ -341,8 +334,8 @@ public abstract class FighterController : MonoBehaviour
         _grounded = false;
 
 
-        if (_damageSounds.Length > 0) {
-            _source.PlayOneShot(_damageSounds[UnityEngine.Random.Range(0, _damageSounds.Length)], 1.5f);
+        if (_audioSettings.DamageSounds.Length > 0) {
+            _source.PlayOneShot(_audioSettings.DamageSounds[UnityEngine.Random.Range(0, _audioSettings.DamageSounds.Length)], 1.5f);
         }
 
         OnJump();
@@ -523,7 +516,7 @@ public abstract class FighterController : MonoBehaviour
     public virtual void OnLand() {
         _controllerScaler.localScale = new Vector3(1.2f, 0.8f, 1);
         GameManager.Get().GetCameraShaker().SetShake(0.1f, 1.5f, true);
-        _source.PlayOneShot(_jumpDownSFX);
+        _source.PlayOneShot(_audioSettings.JumpDownSFX, _audioSettings.JumpSFXVolume);
         _dashCoolDown = 0;
 
         if (_jumpLand != null) {
@@ -564,7 +557,7 @@ public abstract class FighterController : MonoBehaviour
             _jumpDust.Play();
         }
 
-        _source.PlayOneShot(_jumpUpSFX);
+        _source.PlayOneShot(_audioSettings.JumpUpSFX, _audioSettings.JumpSFXVolume);
 
         _myAction = FighterAction.jumping;
 
@@ -574,8 +567,8 @@ public abstract class FighterController : MonoBehaviour
 
     //Plays a swing sound for the attack
     public virtual void OnAttack() {
-        if (_swingSounds.Length > 0) {
-            _source.PlayOneShot(_swingSounds[UnityEngine.Random.Range(0, _swingSounds.Length)], 1.75f);
+        if (_audioSettings.SwingSounds.Length > 0) {
+            _source.PlayOneShot(_audioSettings.SwingSounds[UnityEngine.Random.Range(0, _audioSettings.SwingSounds.Length)], _audioSettings.SwingSFXVolume);
         }
     }
 
@@ -774,13 +767,13 @@ public abstract class FighterController : MonoBehaviour
         }
 
         if (!isGrab) {
-            if (_hitSounds.Length > 0) {
-                _source.PlayOneShot(_hitSounds[UnityEngine.Random.Range(0, _hitSounds.Length)], 0.5f);
+            if (_audioSettings.HitSounds.Length > 0) {
+                _source.PlayOneShot(_audioSettings.HitSounds[UnityEngine.Random.Range(0, _audioSettings.HitSounds.Length)], 0.5f);
             }
         }
         else {
-            if (_grabSound.Length > 0) {
-                _source.PlayOneShot(_grabSound[UnityEngine.Random.Range(0, _grabSound.Length)], 1f);
+            if (_audioSettings.GrabSound.Length > 0) {
+                _source.PlayOneShot(_audioSettings.GrabSound[UnityEngine.Random.Range(0, _audioSettings.GrabSound.Length)], 1f);
             }
         }
 
@@ -802,7 +795,7 @@ public abstract class FighterController : MonoBehaviour
             _runningRightVFX.Play();
         }
 
-        _source.PlayOneShot(_squeakSound[UnityEngine.Random.Range(0, _squeakSound.Length)], 0.5f);
+        _source.PlayOneShot(_audioSettings.SqueakSound[UnityEngine.Random.Range(0, _audioSettings.SqueakSound.Length)], 0.5f);
     }
 
     public bool IsDashing() {

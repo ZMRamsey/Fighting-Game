@@ -38,13 +38,17 @@ public class EsmeFighter : FighterController
     }
 
     public override void OnSuperEnd(bool instant) {
-        if (instant) {
-
+        if (!instant) {
+            if (_blackHoleObject) {
+                _blackHoleObject.GetComponent<BlackHole>().OnEnd();
+            }
         }
+
 
         if (_blackHoleObject) {
             _blackHoleObject.SetActive(false);
         }
+
         _shieldTimer = 0.0f;
     }
 
@@ -64,9 +68,9 @@ public class EsmeFighter : FighterController
         }
 
 
-        if (_blackHoleObject) {
+        if (_blackHoleObject && _blackHoleObject.activeSelf) {
             _shieldTimer += Time.deltaTime;
-            if (_shieldTimer > 10.0f) {
+            if (_shieldTimer >= 5.5f) {
                 OnSuperEnd(false);
             }
         }

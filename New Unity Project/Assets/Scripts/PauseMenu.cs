@@ -112,7 +112,7 @@ public class PauseMenu : MonoBehaviour
                     Resume();
                     GameManager.Get().KillSwitch();
                     GameLogic.Get()._loadInToCharacterSelect = true;
-                    GameLogic.Get().LoadScene("Menu", "Base");
+                    GameLogic.Get().LoadScene("Menu", "Base", false);
                     break;
 
                 case (3):
@@ -120,7 +120,7 @@ public class PauseMenu : MonoBehaviour
                     Resume();
                     GameManager.Get().KillSwitch();
                     GameLogic.Get()._loadInToCharacterSelect = false;
-                    GameLogic.Get().LoadScene("Menu", "Base");
+                    GameLogic.Get().LoadScene("Menu", "Base", false);
                     break;
 
                 default:

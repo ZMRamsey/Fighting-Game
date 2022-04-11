@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b73662f2c2957b4fa2fa235083adf68, type: 3}
+  m_Name: Audio_Default
+  m_EditorClassIdentifier: 
+  _jumpUpSFX: {fileID: 8300000, guid: 801bd5124eb749049a7af9d713aa4227, type: 3}
+  _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
+  _hitSounds:
+  - {fileID: 8300000, guid: 9b53b50bc9551dc4c90ef574717e2e41, type: 3}
+  - {fileID: 8300000, guid: c83356b0121d8564bab19626d7f14542, type: 3}
+  - {fileID: 8300000, guid: 455498123f15ed247a790a0835b8f33b, type: 3}
+  - {fileID: 8300000, guid: ce387894d4550c142845a8d21f06db16, type: 3}
+  _damageSounds:
+  - {fileID: 8300000, guid: 994d68a4b1b06ad49bff5aaa39f2363a, type: 3}
+  _swingSounds:
+  - {fileID: 8300000, guid: 206ea55499eceef45bc5318ec0b745f9, type: 3}
+  - {fileID: 8300000, guid: 9d6e84057ab59b54a82cdaaadb6aa347, type: 3}
+  - {fileID: 8300000, guid: 6bc7fb6b374974c498ef22bb76061047, type: 3}
+  - {fileID: 8300000, guid: 1ae3cde99abfdc745adb3a52de3f96f6, type: 3}
+  _leftFootSounds:
+  - {fileID: 8300000, guid: a566fc844c28dcc4fac71457840c47ee, type: 3}
+  - {fileID: 8300000, guid: f9b05328a63798347a912fa5964f631c, type: 3}
+  - {fileID: 8300000, guid: b39f7de466f3b4549ba50b633532fa17, type: 3}
+  - {fileID: 8300000, guid: b4079c134bc7a4448bc9be4492c73eae, type: 3}
+  - {fileID: 8300000, guid: 0693592a046630f4c8e06aa8527127ea, type: 3}
+  _rightFootSounds:
+  - {fileID: 8300000, guid: ce725f592e0644d4d89b1e6b75d901db, type: 3}
+  - {fileID: 8300000, guid: e97d0866f714a5d4db6b2543467e50c0, type: 3}
+  - {fileID: 8300000, guid: ae7d92697a983594894513ef9c408c09, type: 3}
+  - {fileID: 8300000, guid: fe6298ef62df8e34f851f047e230a5f6, type: 3}
+  - {fileID: 8300000, guid: be150584304d3ba43aa2180c90f69cff, type: 3}
+  _grabSound:
+  - {fileID: 8300000, guid: 5ff2cb5079d9211489124ecf9c077230, type: 3}
+  - {fileID: 8300000, guid: 14a4e4d4f8338e243ad4b4cb30f78639, type: 3}
+  - {fileID: 8300000, guid: 7db9cd15c1ba7884bb08787b9a0a2837, type: 3}
+  _squeakSound:
+  - {fileID: 8300000, guid: c19ceebb760e5124aaa36462123ecc5e, type: 3}
+  - {fileID: 8300000, guid: 22bcff685b3b50747b8ac9807e3633dd, type: 3}
+  - {fileID: 8300000, guid: 4f50f448631814643805a457542fb31d, type: 3}
+  - {fileID: 8300000, guid: f0dc1bf005bd7d546b7405028627f46b, type: 3}
+  - {fileID: 8300000, guid: 91613c4f867069843b557c3938fb89b6, type: 3}
+  _jumpSFXVolume: 1
+  _swingSFXVolume: 1.7

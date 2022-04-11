@@ -253,6 +253,12 @@ public class CharacterSelectSystem : MonoBehaviour
             _fighterOne.SetAsReady();
             _fighterTwo.SetAsReady();
         }
+
+        if(_type == GameType.training) {
+            _canSelectSecondCharacter = false;
+            _fighterTwo.SetAsReady();
+            _fighterTwo.DisableVisuals();
+        }
     }
 
     public static CharacterSelectSystem Get() {
@@ -345,7 +351,7 @@ public class CharacterSelectSystem : MonoBehaviour
         yield return new WaitForSeconds(1);
         _fadeWhite.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
-        GameLogic.Get().LoadScene("Base", "Menu");
+        GameLogic.Get().LoadScene("Base", "Menu", _type != GameType.training);
     }
 }
 

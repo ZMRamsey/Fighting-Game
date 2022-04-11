@@ -29737,6 +29737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _filter: 0
   _settings: {fileID: 11400000, guid: d29bcb7f561bae54ea248c42bd6b7a75, type: 2}
+  _audioSettings: {fileID: 11400000, guid: 891da4ddc9d7f9e419f6a941793a2d81, type: 2}
   _hitboxes: {fileID: 4874520955026096318}
   _hurtBox: {fileID: 4874520953896087311}
   _hitboxFlipper: {fileID: 1540060562962152633}
@@ -29793,6 +29794,7 @@ MonoBehaviour:
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _extraVelocity: {x: 0, y: 0, z: 0}
+  IsGrabbing: {fileID: 0}
   _animator: {fileID: 4874520954698666501}
   _subWooferPrefab: {fileID: 766030058933936881, guid: cdce95959f776db4a9f550d31adeceeb, type: 3}
   _mrHandyPrefab: {fileID: 4953018871932507929, guid: e4fa35645e5b0064c955dd98649419a2, type: 3}
@@ -30153,6 +30155,7 @@ MonoBehaviour:
     _hitFrame: 0
     _clip: {fileID: 0}
     _hitDirection: {x: 0, y: 0, z: 0}
+    _mutesVelocity: 0
   _character: {fileID: 4874520954698666502}
   _debugRenderer: {fileID: 6828636648354380501}
   cooldowns: []

@@ -19774,6 +19774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _filter: 0
   _settings: {fileID: 11400000, guid: 69585e759ea7f354a92548de13060874, type: 2}
+  _audioSettings: {fileID: 11400000, guid: 891da4ddc9d7f9e419f6a941793a2d81, type: 2}
   _hitboxes: {fileID: 0}
   _hurtBox: {fileID: 4874520953896087311}
   _hitboxFlipper: {fileID: 1540060562962152633}
@@ -19783,20 +19784,6 @@ MonoBehaviour:
   _rgbRenderer: {fileID: 0}
   _stretchSpeed: 4
   _source: {fileID: 4874520954667380378}
-  _jumpUpSFX: {fileID: 8300000, guid: afa0a6ec66470f7478abebeb4cb21ef6, type: 3}
-  _jumpDownSFX: {fileID: 8300000, guid: b340c80e992c87e4786b2a77beea3252, type: 3}
-  _hitSounds: []
-  _damageSounds:
-  - {fileID: 8300000, guid: 994d68a4b1b06ad49bff5aaa39f2363a, type: 3}
-  _swingSounds: []
-  _leftFootSounds:
-  - {fileID: 8300000, guid: bae40a80957c60e478963f7b0617fd40, type: 3}
-  - {fileID: 8300000, guid: 26845b02455333d4c825eedb68da50ec, type: 3}
-  _rightFootSounds:
-  - {fileID: 8300000, guid: d9f301596c9466e41875928bf8edeba3, type: 3}
-  - {fileID: 8300000, guid: 969cbcbb10ceb2d45bbb9c5f2b769ec3, type: 3}
-  _grabSound: []
-  _squeakSound: []
   _hitSmashVFX: {fileID: 0}
   _hitChipVFX: {fileID: 0}
   _hitDriveVFX: {fileID: 0}
@@ -19808,8 +19795,8 @@ MonoBehaviour:
   _jumpLand: {fileID: 0}
   _controllerVelocity: {x: 0, y: 0, z: 0}
   _extraVelocity: {x: 0, y: 0, z: 0}
+  IsGrabbing: {fileID: 0}
   _animator: {fileID: 4874520954698666501}
-  _fighterUI: {fileID: 0}
 --- !u!114 &8360797179634471218
 MonoBehaviour:
   m_ObjectHideFlags: 0

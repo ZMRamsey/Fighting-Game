@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ad93af2033f4a4da7c96aa1af81314, type: 3}
   m_Name: MainSettings
   m_EditorClassIdentifier: 
-  _fighterOne: {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
-  _fighterTwo: {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  _fighterOne: {fileID: 11400000, guid: aa36e8eb24bfba24796befd0b9487ef7, type: 2}
+  _fighterTwo: {fileID: 11400000, guid: c40a68d55e733844b9e3bfdb16234584, type: 2}
   _fighterOneDevice:
     _id: 1
     _device: 0
@@ -22,5 +22,5 @@ MonoBehaviour:
     _id: 1
     _device: 0
     _inputState: 2
-  _skinOneID: 1
+  _skinOneID: 0
   _skinTwoID: 1

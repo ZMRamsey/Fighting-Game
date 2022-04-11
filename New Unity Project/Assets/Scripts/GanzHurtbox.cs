@@ -22,13 +22,20 @@ public class GanzHurtbox : Hurtbox
         }
         else
         {
+            GanzFighter fighter = transform.root.GetComponent<GanzFighter>();
+            fighter.SetOutSuit();
+            fighter.StunController(0.2f);
             GameManager.Get().GetCameraShaker().SetShake(0.1f, 2.0f, true);
             //hurt._speed = 1;
-            var hitMes = new HitMessage(new Vector3(axis, 5, 0), new VelocityInfluence(), false, FighterFilter.both, ShotType.chip);
+            var hitMes = new HitMessage(new Vector3(axis, 5, 0), new VelocityInfluence(), true, FighterFilter.both, ShotType.chip, 1);
             hurt.SetOwner(FighterFilter.both);
             hurt.Shoot(hitMes);
             Damage();
         }
+    }
+
+    public bool IsDamaged() {
+        return damaged;
     }
 
     public void Damage()

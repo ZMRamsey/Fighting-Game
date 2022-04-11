@@ -64,10 +64,10 @@ public class GameLogic : MonoBehaviour
 
     AsyncOperation _scene;
 
-    public void LoadScene(string sceneName, string from) {
+    public void LoadScene(string sceneName, string from, bool useVersus) {
         _screen = _loadScreenCanvas;
 
-        if (sceneName == "Base") {
+        if (useVersus) {
             _screen = _versusScreenCanvas;
         }
 

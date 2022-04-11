@@ -46,9 +46,12 @@ public class TekaFighter : FighterController
     }
 
     public override void OnAfterSuperScreen() {
+        ResetSuper();
         _timeStopCanvas.gameObject.SetActive(true);
         Vector2 viewportPoint = Camera.main.WorldToViewportPoint(transform.position);
         _timeCenter.anchoredPosition = viewportPoint;
+
+        _tangibleLevel = 1;
 
         _timeStop = true;
         _timeStopTimer = 0.0f;

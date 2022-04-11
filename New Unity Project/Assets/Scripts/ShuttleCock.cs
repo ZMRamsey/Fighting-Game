@@ -98,11 +98,13 @@ public class ShuttleCock : MonoBehaviour
     void OnCollisionStay(Collision collision) {
         _rb.velocity *= 0.9f;
 
-        if(_rb.velocity.magnitude < 0.01f && _canTimeOut && GameManager.Get().NoActiveCoroutines()) {
-            _timeOutValue += Time.deltaTime;
-        }
-        else {
-            _timeOutValue = 0;
+        if (GameLogic.Get()._type != GameType.training) {
+            if (_rb.velocity.magnitude < 0.01f && _canTimeOut && GameManager.Get().NoActiveCoroutines()) {
+                _timeOutValue += Time.deltaTime;
+            }
+            else {
+                _timeOutValue = 0;
+            }
         }
     }
 
@@ -232,6 +234,10 @@ public class ShuttleCock : MonoBehaviour
     }
 
     void Update() {
+        if(transform.position.z != 0) {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        }
+
         _speed = Mathf.Clamp(_speed, 1, _maximumJail);
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxSpeed);
 

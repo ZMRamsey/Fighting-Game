@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HunterFighter : FighterController
 {
     [SerializeField] LineRenderer _rope;
     [SerializeField] GameObject _lion;
     [SerializeField] AnimationClip _lionClip;
+    [SerializeField] LayerMask _netDetection;
     Transform _tetheredShuttle;
     bool _pullBack;
     float _tetheredTimer;
@@ -15,11 +17,19 @@ public class HunterFighter : FighterController
     bool _superProcess;
     float _superLenghth;
 
+    [Header("UI")]
+    [SerializeField] Transform _UIHolder;
+    [SerializeField] Animator _iconAnimator;
+    [SerializeField] GameObject _loadBarHolder;
+    [SerializeField] Image _loadBar;
+    [SerializeField] CanvasGroup _canvas;
+
     public override void InitializeFighter() {
         base.InitializeFighter();
 
         if (GetFilter() == FighterFilter.two) {
             _lion.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+            _UIHolder.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
@@ -37,6 +47,10 @@ public class HunterFighter : FighterController
     }
 
     public override void OnFighterUpdate() {
+        _canvas.alpha = CanTether() ? 1f : 0.2f;
+        _loadBarHolder.SetActive(!CanTether());
+        _loadBar.fillAmount =  1 - (_canTether / 5);
+
         if (_superProcess)
         {
             var shuttle = GameManager.Get().GetShuttle().transform;
@@ -48,10 +62,17 @@ public class HunterFighter : FighterController
             rb.AddForce(100f * (transform.position - shuttle.position));
             rb.velocity *= 0.9f;
 
+            //RaycastHit hit;
+            //if (Physics.Raycast(transform.position, transform.position - shuttle.position, out hit, Mathf.Infinity, _netDetection)) {
+            //    Debug.DrawRay(transform.position, transform.position - shuttle.position * hit.distance, Color.yellow);
+            //    Debug.Log("Did Hit");
+            //}
+
             if (Vector3.Distance(shuttle.position, transform.position) < 1)
             {
-                _canTether = 0;
                 GameManager.Get().GetShuttle().BoundToPlayer(this);
+                OnSuccessfulHit(shuttle.position, Vector3.zero, false, ShotType.chip, true, GameManager.Get().GetShuttle());
+                _tetheredTimer = 4.0f;
                 _superProcess = false;
             }
         }
@@ -90,15 +111,10 @@ public class HunterFighter : FighterController
 
         if (_canTether > 0) {
             _canTether -= Time.deltaTime;
+            if(_canTether <= 0) {
+                _iconAnimator.SetTrigger("Flash");
+            }
         }
-
-        //if (_superLenghth > 0 && _superProcess) {
-        //    _superLenghth -= Time.deltaTime;
-        //    if (_superLenghth <= 0) {
-        //        OnSuperEnd(false);
-        //        _superProcess = false;
-        //    }
-        //}
 
         _rope.enabled = _tetheredShuttle != null || _superProcess;
 
@@ -112,7 +128,7 @@ public class HunterFighter : FighterController
     public override void OnSuccessfulHit(Vector3 point, Vector3 dir, bool big, ShotType shot, bool isGrab, ShuttleCock shuttle) {
         base.OnSuccessfulHit(point, dir, big, shot, isGrab, shuttle);
 
-        if (shuttle != null && isGrab && _canTether <= 0) {
+        if (shuttle != null && isGrab && CanTether()) {
             _tetheredShuttle = shuttle.transform;
             _tetheredTimer = 2.0f;
             _canTether = 5.0f;
@@ -120,5 +136,9 @@ public class HunterFighter : FighterController
 
         _pullBack = false;
 
+    }
+
+    public bool CanTether() {
+        return _canTether <= 0;
     }
 }
