@@ -13,11 +13,13 @@ public class UICheckBox : UIButton
     public void Check()
     {
         SetSprites(_checkedSprite);
+        _checked = true;
     }
 
     public void UnCheck()
     {
         SetSprites(_uncheckedSprite);
+        _checked = false;
     }
 
     public override void OnSubmit()
@@ -31,7 +33,6 @@ public class UICheckBox : UIButton
         {
             Check();
         }
-        _checked = !_checked;
     }
 
     public bool GetChecked()

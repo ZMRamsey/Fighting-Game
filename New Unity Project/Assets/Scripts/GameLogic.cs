@@ -15,6 +15,9 @@ public class GameLogic : MonoBehaviour
     public bool _loadInToCharacterSelect;
     public GameType _type;
 
+    public bool _fullScreen = true;
+    public Vector2 _resolution = new Vector2(1920,1080);
+
     public static GameLogic Get() {
         return _logic;
     }
@@ -24,6 +27,7 @@ public class GameLogic : MonoBehaviour
     void Awake() {
         if (!_logic) {
             _logic = this;
+            Screen.SetResolution((int)_resolution.x, (int)_resolution.y, _fullScreen);
         }
         else {
             Destroy(this.gameObject);
@@ -97,5 +101,23 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    public void SetResolution(Vector2 res)
+    {
+        _resolution = res;
+    }
 
+    public Vector2 GetResolution()
+    {
+        return _resolution;
+    }
+
+    public void SetFullScreen(bool fullscreen)
+    {
+        _fullScreen = fullscreen;
+    }
+
+    public bool GetFullScreen()
+    {
+        return _fullScreen;
+    }
 }
