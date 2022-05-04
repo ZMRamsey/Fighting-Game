@@ -4676,6 +4676,9 @@ MonoBehaviour:
   - {fileID: 7333495048239372533}
   - {fileID: 393758560}
   - {fileID: 1078710926}
+  _settingsMenuSliders:
+  - {fileID: 1810606502}
+  - {fileID: 484260972}
   _settingsMenuButtons:
   - {fileID: 23544811}
   - {fileID: 1060932116}
@@ -4757,6 +4760,22 @@ PrefabInstance:
     - target: {fileID: 9228471094976193, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113131670592015996, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2135662238}
+    - target: {fileID: 113131670592015996, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 113131670592015996, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 113131670592015996, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 242968202856217122, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4896,7 +4915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2701928403772513283, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 493.95102
+      value: 493.95105
       objectReference: {fileID: 0}
     - target: {fileID: 2701928403772513283, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4990,6 +5009,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4072386245840393118, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072386245840393118, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 94.890015
+      objectReference: {fileID: 0}
     - target: {fileID: 4170737620675805902, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5021,6 +5048,10 @@ PrefabInstance:
     - target: {fileID: 4252553163594861403, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276917555538494803, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -36.064606
       objectReference: {fileID: 0}
     - target: {fileID: 4283828552603505344, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5357,6 +5388,14 @@ PrefabInstance:
     - target: {fileID: 7352176049640103795, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -36.064606
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380490813408714964, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380490813408714964, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 94.890015
       objectReference: {fileID: 0}
     - target: {fileID: 7475189593608521542, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
