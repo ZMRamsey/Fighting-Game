@@ -53,7 +53,7 @@ public class RacketFighter : FighterController
             dir.x *= -1;
         }
 
-        _subWooferObject.GetComponent<Rigidbody>().velocity = dir;
+        _subWooferObject.GetComponent<Rigidbody>().velocity = dir * 3;
     }
 
     public override void OnFighterUpdate() {
@@ -101,7 +101,5 @@ public class RacketFighter : FighterController
         if (_mrHandyObject && _mrHandyObject.activeSelf) {
             _mrHandyObject.GetComponent<MrHandy>().OnDeath(true);
         }
-    }
-
-
+    }  
 }

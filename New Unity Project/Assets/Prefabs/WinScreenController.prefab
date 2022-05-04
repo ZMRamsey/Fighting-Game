@@ -1041,14 +1041,6 @@ MonoBehaviour:
   _score: {fileID: 1671394011929212172}
   _winnerNumber: {fileID: 1671394011762734738}
   _quote: {fileID: 1671394013656387730}
-  imageHolder: {fileID: 1671394012921426355}
-  DannyA: {fileID: 2384582040748058796}
-  HunterA: {fileID: 0}
-  EsmeA: {fileID: 2384582040002840664}
-  RaketA: {fileID: 2384582040177458286}
-  GanzA: {fileID: 0}
-  RayA: {fileID: 0}
-  winnerAnimation: {fileID: 0}
 --- !u!1 &1671394012088717144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2083,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: RAKET
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
   m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2099,7 +2091,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2155,7 +2147,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1671394012765980375
@@ -2571,15 +2563,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
-  m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0562f9aedb0849f4ba14337b89709f8c, type: 2}
+  m_sharedMaterial: {fileID: 779142576450344397, guid: d1c0f883f413d3c4495c4fc8122ab563, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3397,11 +3389,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 832af1b588c15284598c6201329e39bb, type: 3}
---- !u!1 &2384582040002840664 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3901884487417876931, guid: 832af1b588c15284598c6201329e39bb, type: 3}
-  m_PrefabInstance: {fileID: 1671394011832850843}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2269174313134922566 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 597925403014333149, guid: 832af1b588c15284598c6201329e39bb, type: 3}
@@ -3468,11 +3455,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23ef34f227cd9724eadd7179dc700dd7, type: 3}
---- !u!1 &2384582040748058796 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3901884487417876931, guid: 23ef34f227cd9724eadd7179dc700dd7, type: 3}
-  m_PrefabInstance: {fileID: 1671394012851222895}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2269174312523807666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 597925403014333149, guid: 23ef34f227cd9724eadd7179dc700dd7, type: 3}
@@ -3542,10 +3524,5 @@ PrefabInstance:
 --- !u!4 &2269174311886647152 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 597925403014333149, guid: 6188f3f404e3a584e8add6a3e5b3be78, type: 3}
-  m_PrefabInstance: {fileID: 1671394013286755757}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2384582040177458286 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3901884487417876931, guid: 6188f3f404e3a584e8add6a3e5b3be78, type: 3}
   m_PrefabInstance: {fileID: 1671394013286755757}
   m_PrefabAsset: {fileID: 0}

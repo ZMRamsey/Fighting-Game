@@ -29,21 +29,21 @@ public class WinScreen : MonoBehaviour
     //public Sprite Raket;
     //public Sprite Ganz;
 
-    public Image imageHolder;
+    //public Image imageHolder;
 
-    [Header("Animations")]
-    public GameObject DannyA;
-    public GameObject HunterA;
-    public GameObject EsmeA;
-    public GameObject RaketA;
-    public GameObject GanzA;
-    public GameObject RayA;
+    //[Header("Animations")]
+    //public GameObject DannyA;
+    //public GameObject HunterA;
+    //public GameObject EsmeA;
+    //public GameObject RaketA;
+    //public GameObject GanzA;
+    //public GameObject RayA;
 
-    public GameObject winnerAnimation;
+    //public GameObject winnerAnimation;
 
     public void Awake()
     {
-        winnerAnimation = RaketA;
+        //winnerAnimation = RaketA;
         //int[,] newScores = { { _p1r1, _p2r1 }, { _p1r2, _p2r2 }, { _p1r3, _p2r3 } };
         //ScoreManager.Get().SetScores(newScores);
         int[,] scores = ScoreManager.Get().GetScores();
@@ -103,8 +103,8 @@ public class WinScreen : MonoBehaviour
             hasContinued = true;
             GameLogic.Get().LoadScene("Menu", "WinScreen", false);
         }
-        winnerAnimation.SetActive(true);
-        imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
+        //winnerAnimation.SetActive(true);
+        //imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void SetQuoteText()
@@ -112,7 +112,7 @@ public class WinScreen : MonoBehaviour
         switch (winner)
         {
             case "Dan":
-                winnerAnimation = DannyA;
+                //winnerAnimation = DannyA;
                 switch (loser)
                 {
                     case "Hunter":
@@ -142,7 +142,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Hunter":
-                winnerAnimation = HunterA;
+                //winnerAnimation = HunterA;
                 switch (loser)
                 {
                     case "Dan":
@@ -172,7 +172,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Raket":
-                winnerAnimation = RaketA;
+                //winnerAnimation = RaketA;
                 switch (loser)
                 {
                     case "Dan":
@@ -202,7 +202,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Esme":
-                winnerAnimation = EsmeA;
+                //winnerAnimation = EsmeA;
                 switch (loser)
                 {
                     case "Dan":
@@ -232,7 +232,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Ganz":
-                winnerAnimation = GanzA;
+                //winnerAnimation = GanzA;
                 switch (loser)
                 {
                     case "Dan":
@@ -262,7 +262,7 @@ public class WinScreen : MonoBehaviour
                 break;
 
             case "Ray + Teka":
-                winnerAnimation = RayA;
+                //winnerAnimation = RayA;
                 switch (loser)
                 {
                     case "Dan":

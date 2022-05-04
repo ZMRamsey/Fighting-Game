@@ -559,6 +559,7 @@ public class GameManager : MonoBehaviour
     IEnumerator EndGameProcess(FighterFilter winner, FighterFilter loser) {
         _UIStage.SetTrigger("Fade");
         _UIBars.SetBool("Show", true);
+        DisableUI();
         _spinDown = true;
 
         var winController = _fighterOne.GetController();
@@ -704,6 +705,11 @@ public class GameManager : MonoBehaviour
 
     public void EnableUI() {
         _uiCamera.SetActive(true);
+    }
+
+    public void DisableUI()
+    {
+        _uiCamera.SetActive(false);
     }
 
     public void SetSounds(float volumeMult, float lowpass) {
