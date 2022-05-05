@@ -784,7 +784,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738b3f90f04a5484c94cd0f34ad5b933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxQuotes: 25
   loadingFacts:
   - Atlantis fell into the ocean after an unknown hero used a special move in a match
     against Neptune
@@ -833,6 +832,7 @@ MonoBehaviour:
   - Be careful of all objects coming towards you - send them right back to your opponent!
   - Whatever you do, don't let anything settle on your side of the playing field!
   - While the opponent is near the net, aim for the far side!
+  - Be careful of Ganz! His helmet allows for extra protection against KOs!
 --- !u!1 &2559296794360284016
 GameObject:
   m_ObjectHideFlags: 0
