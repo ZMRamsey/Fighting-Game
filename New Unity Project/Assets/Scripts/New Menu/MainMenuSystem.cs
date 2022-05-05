@@ -84,7 +84,7 @@ public class MainMenuSystem : MonoBehaviour
     void Update() {
         for (int i = 0; i < _mainMenuButtons.Length; i++) {
             int steve = i + 1;
-            if (_mainMenuButtons[i].OnClick()) {
+            if (_mainMenuButtons[i].OnClick() && steve != 2) {
                 SetPage(steve);
                 if (steve == 3)
                 {

@@ -9941,7 +9941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 245}
+  m_AnchoredPosition: {x: 0, y: 325}
   m_SizeDelta: {x: 0, y: 144.23529}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1711200304272264416
@@ -12753,8 +12753,8 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
-  _defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 1}
+  _defaultColor: {r: 1, g: 1, b: 1, a: 0.09803922}
+  _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 0.09803922}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
