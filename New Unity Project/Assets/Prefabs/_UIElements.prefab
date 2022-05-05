@@ -144,7 +144,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'PRESS R TO RESET BALL
 
-    PRESS  T FOR HITBOXES
+    PRESS T FOR HITBOXES
 
     PRESS Y FOR SUPER'
   m_isRightToLeft: 0

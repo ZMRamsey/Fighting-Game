@@ -10192,6 +10192,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1935516907, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
+      propertyPath: m_text
+      value: 'PRESS R TO RESET BALL
+
+        PRESS T FOR HITBOXES
+
+        PRESS
+        Y FOR SUPER'
+      objectReference: {fileID: 0}
     - target: {fileID: 442906598258183681, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
