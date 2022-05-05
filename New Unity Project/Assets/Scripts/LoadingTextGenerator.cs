@@ -5,7 +5,6 @@ using TMPro;
 
 public class LoadingTextGenerator : MonoBehaviour
 {
-    public int _maxQuotes;
     int randQuoteNum;
     public string[] loadingFacts;
 
