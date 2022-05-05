@@ -6990,10 +6990,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'THE BADMINTONEERS NEED YOU!
 
-    ARE YOU SURE YOU WANT TO LET
+    ARE YOU SURE YOU WANT TO
 
-    THEM
-    DOWN? (;_;)
+    LEAVE THEM?
 
 '
   m_isRightToLeft: 0
@@ -14705,7 +14704,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: QUIT :(
+  m_text: QUIT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
   m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
@@ -15167,7 +15166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BACK
+  m_text: RETURN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
   m_sharedMaterial: {fileID: -5041320037071214566, guid: 42353a74cf1435d4097f447bc4bbc538, type: 2}
