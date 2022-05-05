@@ -118,9 +118,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - BChannel: {r: 0.34117648, g: 0.26666668, b: 0.227451, a: 0}
-    - GChannel: {r: 0.9528302, g: 0.9121658, b: 0.86743504, a: 0}
-    - RChannel: {r: 0.8207547, g: 0.33462396, b: 0.25938943, a: 0}
+    - BChannel: {r: 1, g: 1, b: 1, a: 0}
+    - GChannel: {r: 1, g: 1, b: 1, a: 0}
+    - RChannel: {r: 1, g: 0.9876417, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
