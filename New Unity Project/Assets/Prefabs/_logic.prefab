@@ -788,15 +788,16 @@ MonoBehaviour:
   loadingFacts:
   - Atlantis fell into the ocean after an unknown hero used a special move in a match
     against Neptune
-  - The fastest serve ever recorded was Mach 1.4, and injured every observer
+  - The fastest serve ever recorded was Mach 1.4, and injured every observer present.
   - "Danny Default\u2019s favourite flavour of ice cream is vanilla"
-  - Hunter Blaze owns a tiger named Hunter Jr who does not like him
+  - Hunter Blaze owns a tiger named Hunter Jr who does not like him - not a surprise,
+    really.
   - "Ganz\u2019s hatred of humanity comes from their use of goose feathers in old
     shuttlecocks"
-  - Ganz was an ordinary goose who wandered onto a badminton court, where the cosmic
+  - Ganz was an ordinary goose who wandered onto a badminton court, where cosmic
     power changed his IQ from 3 to 300
-  - "Ganz does not endorse a genocide of humans, he just wants to be told he\u2019s
-    a very good goose"
+  - Try and build up momentum with the shuttlecock; that's the best way to KO your
+    opponent!
   - "Hunter\u2019s bionic arm brace is supposed to help his tennis elbow, but he
     dials it up to 11 for added smash power"
   - "Hunter is yet to be cancelled on social media despite overwhelming evidence
@@ -808,15 +809,16 @@ MonoBehaviour:
   - The Badminton Incident of 2022 was the first recorded incident of a special move
     in modern history
   - Many unlicensed badminton players use underground black market courts
-  - "If Racket can\u2019t find her racquet, she just builds a new one. She\u2019s
-    on her 17th"
+  - "If Raket can\u2019t find her racquet, she just builds a new one; she\u2019s
+    on her 17th."
   - Rome would host badminton matches in the colosseum if they ran out of gladiators
-  - Hunter has dressed as himself for the last 4 Halloweens
-  - Racket has never successfully made it through airport security with the number
+  - Hunter has dressed as himself for the last 4 Halloweens - coincidentally, everyone
+    was too scared to give him anything.
+  - Raket has never successfully made it through airport security with the number
     of rockets she carries
   - Esme only uses her psychic powers to get free coffees when she really needs it,
     but she also has a caffeine addiction
-  - "Hunter\u2019s longest relationship lasted for 2 months"
+  - "Hunter\u2019s longest relationship lasted for 2 weeks."
   - Hunter only gets photos taken from one side because his bionic arm makes his
     muscles look bigger
   - Stone Age tribes played an early form of badminton, but had not worked out that
@@ -824,9 +826,13 @@ MonoBehaviour:
   - NASA has studied a number of potential Space Shuttlecocks that could be served
     into space by a giant badminton racket instead of using rockets
   - Stonehenge is believed to be an ancient badminton arena, but the nets between
-    the stones have been lost to time
+    the stones have been lost to time.
   - The most common injury in badminton competitions is Achilles Tendonitis. The
     second most common injury is impalement from supersonic shuttlecocks
+  - When the shuttlecock's speed reaches "warning", smash it into your opponent!
+  - Be careful of all objects coming towards you - send them right back to your opponent!
+  - Whatever you do, don't let anything settle on your side of the playing field!
+  - While the opponent is near the net, aim for the far side!
 --- !u!1 &2559296794360284016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2541,6 +2547,8 @@ MonoBehaviour:
   _versusScreenCanvas: {fileID: 4849020879011118923}
   _loadInToCharacterSelect: 0
   _type: 0
+  _fullScreen: 1
+  _resolution: {x: 1920, y: 1080}
   _settings: {fileID: 11400000, guid: 758fa2ae524b0774fbcbca715a7e3a4c, type: 2}
 --- !u!114 &7701450292703718117
 MonoBehaviour:
