@@ -22,9 +22,4 @@ public class LoadingTextGenerator : MonoBehaviour
         scrollingText.text = loadingFacts[randQuoteNum];
         Debug.Log(randQuoteNum.ToString());
     }
-
-    private void Update()
-    {
-        
-    }
 }

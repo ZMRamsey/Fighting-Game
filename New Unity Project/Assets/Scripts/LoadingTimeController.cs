@@ -19,6 +19,7 @@ public class LoadingTimeController : MonoBehaviour
 
     string minutes;
     string months;
+    string dates;
 
     private void Start()
     {
@@ -47,11 +48,20 @@ public class LoadingTimeController : MonoBehaviour
         {
             months = ""+month;
         }
-        
+
+        if (date < 10)
+        {
+            dates = "0" + date;
+        }
+        else
+        {
+            dates = "" + date;
+        }
+
         date = System.DateTime.Now.Day;
         month = System.DateTime.Now.Month;
 
         timeText.text = "" + hour + ":" + minutes;
-        dateText.text = "" + date + "." + months + ".XX";
+        dateText.text = "" + dates + "." + months + ".XX";
     }
 }
