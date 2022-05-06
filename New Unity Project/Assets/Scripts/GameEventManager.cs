@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameEventManager : MonoBehaviour
 {
@@ -47,9 +48,11 @@ public class GameEvent
     public void SetOrientation(FighterFilter filter) {
         if(filter == FighterFilter.one) {
             _screen.transform.localScale = new Vector3(1, 1, 1);
+            _screen.GetComponent<Image>().color = Color.red;
         }
         else {
             _screen.transform.localScale = new Vector3(-1, 1, 1);
+            _screen.GetComponent<Image>().color = Color.blue;
         }
     }
 

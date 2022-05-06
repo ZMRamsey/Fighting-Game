@@ -29,6 +29,8 @@ public class ShuttleCock : MonoBehaviour
     [SerializeField] GameObject _wind;
     [SerializeField] Transform _circle;
     [SerializeField] Image _timeOutVisual;
+    [SerializeField] SpriteRenderer _shuttleRenderer;
+    [SerializeField] SpriteRenderer _rgb;
 
     [Header("Particles")]
     [SerializeField] ParticleSystem _hit;
@@ -49,6 +51,7 @@ public class ShuttleCock : MonoBehaviour
     protected AudioSource _source;
     protected Rigidbody _rb;
     FighterController _owner;
+    [SerializeField] Material[] _materials;
 
     [Header("Stats")]
     FighterFilter _filter;
@@ -110,6 +113,7 @@ public class ShuttleCock : MonoBehaviour
 
     public virtual void ResetShuttle(bool freeze) {
         _speed = 1;
+        _overSpeed = 0;
         _timeOutValue = 0;
 
         UnboundFromPlayer(false);
@@ -584,13 +588,31 @@ public class ShuttleCock : MonoBehaviour
         _filter = owner;
 
         if (_filter == FighterFilter.one) {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetRedOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetRedOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<SpriteRenderer>().material = _materials[0];
+            _shuttleRenderer.material = GameManager.Get().GetRedOutline();
+            if (_rgb != null)
+            {
+                _rgb.material = _materials[0];
+            }
         }
         else if (_filter == FighterFilter.two) {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetBlueOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetBlueOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<SpriteRenderer>().material = _materials[1];
+            _shuttleRenderer.material = GameManager.Get().GetBlueOutline();
+            if (_rgb != null)
+            {
+                _rgb.material = _materials[1];
+            }
         }
         else {
-            transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetYellowOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().material = GameManager.Get().GetYellowOutline();
+            //transform.root.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<SpriteRenderer>().material = _materials[2];
+            _shuttleRenderer.material = GameManager.Get().GetYellowOutline();
+            if (_rgb != null)
+            {
+                _rgb.material = _materials[2];
+            }
         }
     }
 

@@ -5005,11 +5005,16 @@ MonoBehaviour:
   _canImpactFrame: 0
   _useGravity: 1
   _flipGravity: 0
+  _canTimeOut: 0
+  _timeOutCounter: 0
   _ballHolder: {fileID: 766030058610662237}
   _smoothing: 4
   _squishThreshold: 0.1
   _wind: {fileID: 0}
   _circle: {fileID: 6718436650371670146}
+  _timeOutVisual: {fileID: 0}
+  _shuttleRenderer: {fileID: 766030059737987046}
+  _rgb: {fileID: 0}
   _hit: {fileID: 6268000892362266039}
   _wallHit: {fileID: 1896314728285587626}
   _impactFrameEffect: {fileID: 0}
@@ -5022,6 +5027,7 @@ MonoBehaviour:
   _soundManager: {fileID: 3464881925245864052}
   _ricochets:
   - {fileID: 8300000, guid: ba1a15385ffca9e4e8e55b6f7431b9ca, type: 3}
+  _materials: []
   _subWooferThreshold: 5
   _explosion: {fileID: 8450355122867388900}
   _beepRadius: {fileID: 4497041428315905340}
