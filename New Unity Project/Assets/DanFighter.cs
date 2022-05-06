@@ -33,6 +33,7 @@ public class DanFighter : FighterController
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetDannySuper(), _filter, this);
 
         _inFunnyMode = true;
         _superTimer = 10;

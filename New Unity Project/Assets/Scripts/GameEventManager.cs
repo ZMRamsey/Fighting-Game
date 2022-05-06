@@ -47,6 +47,11 @@ public class GameEventManager : MonoBehaviour
         return _gansSuper;
     }
 
+    public GameEvent GetDannySuper()
+    {
+        return _dannySuper;
+    }
+
     public void DisableAll() {
         _impactFlash.DisableScreen();
         _darkness.DisableScreen();
