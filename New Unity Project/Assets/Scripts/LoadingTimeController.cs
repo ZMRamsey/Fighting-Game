@@ -38,7 +38,7 @@ public class LoadingTimeController : MonoBehaviour
         else
         {
             minutes = ""+minute;
-        }
+        } 
         
         if(month < 10)
         {
