@@ -35,6 +35,7 @@ public class HunterFighter : FighterController
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetHunterSuper(), _filter, this);
         _superProcess = true;
         _superLenghth = _lionClip.length;
         //_lion.SetActive(true);

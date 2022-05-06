@@ -14,26 +14,15 @@ public class GanzFighter : FighterController
     [SerializeField] ParticleSystem _helmet;
     [SerializeField] AudioClip _damage;
     [SerializeField] AudioClip _explodeSFX;
-    [SerializeField] GameObject _super;
     GanzHurtbox hurtbox;
     GameObject _parachuteGans;
-    GameObject _superObj;
-    float _timer;
-    bool _inSuper;
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
-        _superObj.SetActive(true);
-        _inSuper = true;
-        _timer = 7f;
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetGanzSuper(), _filter, this);
     }
 
     public override void OnSuperEnd(bool instant) {
-        if (_superObj)
-        {
-            _superObj.SetActive(false);
-            _inSuper = false;
-        }
     }
 
     public override void OnSuperEvent() {
@@ -74,17 +63,6 @@ public class GanzFighter : FighterController
 
     }
 
-    public override void OnFixedFighterUpdate()
-    {
-        base.OnFixedFighterUpdate();
-        _timer -= Time.deltaTime;
-
-        if(_timer <= 0 && _inSuper)
-        {
-            OnSuperEnd(false);
-        }
-    }
-
     public override void InitializeFighter() {
         base.InitializeFighter();
         hurtbox = transform.root.GetComponentInChildren<GanzHurtbox>();
@@ -92,12 +70,6 @@ public class GanzFighter : FighterController
         _parachuteGans = Instantiate(_parachute, transform.position, transform.rotation);
         _parachuteGans.transform.localScale = new Vector3(0.5f,0.5f, 0.5f);
         _parachuteGans.SetActive(false);
-
-
-        _superObj = Instantiate(_super, transform.position, transform.rotation);
-        _superObj.SetActive(false);
-
-        _superObj.transform.position = new Vector3(0, 0, 0);
 
 
         if (GetFilter() == FighterFilter.two) {
