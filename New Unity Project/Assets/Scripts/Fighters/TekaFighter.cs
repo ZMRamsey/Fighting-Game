@@ -38,7 +38,7 @@ public class TekaFighter : FighterController
     }
 
     public override void OnSuperMechanic() {
-        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRacketSuper(), _filter, this);
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetRaySuper(), _filter, this);
     }
 
     public Vector3 GetRayPos() {

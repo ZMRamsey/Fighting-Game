@@ -14,6 +14,7 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] GameEvent _racketSuper;
     [SerializeField] GameEvent _esmeSuper;
     [SerializeField] GameEvent _gansSuper;
+    [SerializeField] GameEvent _raySuper;
 
     public GameEvent GetImpactFlash() {
         return _impactFlash;
@@ -29,6 +30,21 @@ public class GameEventManager : MonoBehaviour
 
     public GameEvent GetEsmetSuper() {
         return _esmeSuper;
+    }
+
+    public GameEvent GetRaySuper()
+    {
+        return _raySuper;
+    }
+
+    public GameEvent GetHunterSuper()
+    {
+        return _hunterSuper;
+    }
+
+    public GameEvent GetGanzSuper()
+    {
+        return _gansSuper;
     }
 
     public void DisableAll() {

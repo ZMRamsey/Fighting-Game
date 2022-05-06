@@ -19,6 +19,7 @@ public class GanzFighter : FighterController
 
     public override void OnSuperMechanic() {
         base.OnSuperMechanic();
+        GameManager.Get().OnSpecial(GameManager.Get().GetEventManager().GetGanzSuper(), _filter, this);
     }
 
     public override void OnSuperEnd(bool instant) {
