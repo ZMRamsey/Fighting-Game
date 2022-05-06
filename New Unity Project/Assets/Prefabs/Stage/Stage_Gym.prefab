@@ -762,6 +762,8 @@ MonoBehaviour:
   _dampen: 1
   _shakeDuration: 0
   _ignoreScaling: 1
+  _disablePosition: 0
+  _disableRotation: 0
   shake: 0
 --- !u!1 &2760468026646244696
 GameObject:
@@ -1518,7 +1520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5821345069037252546
 Transform:
   m_ObjectHideFlags: 0
@@ -2296,6 +2298,8 @@ MonoBehaviour:
   _dampen: 1
   _shakeDuration: 0
   _ignoreScaling: 1
+  _disablePosition: 0
+  _disableRotation: 0
   shake: 0
 --- !u!1 &8539188134880785382
 GameObject:
@@ -22450,6 +22454,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5fed52ca0f51e1a4caf07259c33288f3, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5fed52ca0f51e1a4caf07259c33288f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fed52ca0f51e1a4caf07259c33288f3, type: 3}
