@@ -73524,6 +73524,7 @@ MonoBehaviour:
   _helmet: {fileID: 4283958682595120364}
   _damage: {fileID: 8300000, guid: e37c27b02b736344d92f9e8ca10a5ac4, type: 3}
   _explodeSFX: {fileID: 8300000, guid: fd1ec562bce55fc4897425b3dfd04ad6, type: 3}
+  _super: {fileID: 1336940856900537338, guid: 15e16244b0c84db44882a43245057e0c, type: 3}
 --- !u!114 &4874520954667380375
 MonoBehaviour:
   m_ObjectHideFlags: 0
