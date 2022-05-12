@@ -14,9 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _optionName: Strike
   _optionVideo: {fileID: 0}
-  _optionDescription: According to all known laws of aviation, there is no way a
-    bee should be able to fly. Its wings are too small to get its fat little body
-    off the ground. The bee, of course, flies anyway because bees don't care what
-    humans think is impossible. gregory, do you see the small vent on the floor?
-    have you ever heard of among us, gregory? you need to vent. i know it will be
-    hard for you to be sus but i know you can do it gregory.
+  _optionDescription: Standard shot types, common between all characters
