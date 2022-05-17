@@ -20,6 +20,6 @@ public class LoadingTextGenerator : MonoBehaviour
     {
         randQuoteNum = Random.Range(0, loadingFacts.Length);
         scrollingText.text = loadingFacts[randQuoteNum];
-        Debug.Log(randQuoteNum.ToString());
+        //Debug.Log(randQuoteNum.ToString());
     }
 }
