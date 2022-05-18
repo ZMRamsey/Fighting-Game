@@ -780,22 +780,29 @@ public abstract class FighterController : MonoBehaviour
     }
 
     public void OnChangeDirection(bool isLeft) {
-        if (_runningLeftVFX == null || _runningRightVFX == null) {
-            return;
-        }
+        if (_myState == FighterState.inControl)
+        {
+            if (_runningLeftVFX == null || _runningRightVFX == null)
+            {
+                return;
+            }
 
-        if (!_canAttack) {
-            return;
-        }
+            if (!_canAttack)
+            {
+                return;
+            }
 
-        if (isLeft) {
-            _runningLeftVFX.Play();
-        }
-        else {
-            _runningRightVFX.Play();
-        }
+            if (isLeft)
+            {
+                _runningLeftVFX.Play();
+            }
+            else
+            {
+                _runningRightVFX.Play();
+            }
 
-        _source.PlayOneShot(_audioSettings.SqueakSound[UnityEngine.Random.Range(0, _audioSettings.SqueakSound.Length)], 0.5f);
+            _source.PlayOneShot(_audioSettings.SqueakSound[UnityEngine.Random.Range(0, _audioSettings.SqueakSound.Length)], 0.5f);
+        }
     }
 
     public bool IsDashing() {

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using TMPro;
 
-public enum GameType { pvp, pva, watch, tutorial, training};
+public enum GameType { pvp, pva, watch, tutorial, training, arcade};
 public class InputSelectionSystem : MonoBehaviour
 {
     [SerializeField] GameObject _connectorPrefab;

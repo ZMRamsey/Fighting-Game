@@ -120,4 +120,9 @@ public class GameLogic : MonoBehaviour
     {
         return _fullScreen;
     }
+
+    public void ArcadeStoreUser()
+    {
+
+    }
 }
