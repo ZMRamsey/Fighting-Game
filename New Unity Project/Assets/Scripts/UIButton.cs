@@ -26,6 +26,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] Image _extraHighlight;
     bool _isFocused = false;
     bool _onClick = false;
+    bool interactable = true;
 
     void Update() {
         if (_useColourTint) {

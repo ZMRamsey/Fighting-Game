@@ -353,6 +353,12 @@ public class CharacterSelectSystem : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameLogic.Get().LoadScene("Base", "Menu", _type != GameType.training);
     }
+
+    public void StartArcadeGame()
+    {
+        _fighterTwo.RandomCharacter(_profiles.Length);
+        StartCoroutine("StartGame");
+    }
 }
 
 [System.Serializable]

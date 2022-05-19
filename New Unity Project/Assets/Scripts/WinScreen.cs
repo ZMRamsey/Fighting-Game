@@ -103,6 +103,12 @@ public class WinScreen : MonoBehaviour
             hasContinued = true;
             GameLogic.Get().LoadScene("Menu", "WinScreen", false);
         }
+
+        //if (GlobalInputManager.Get().GetRandomInput() && !hasContinued)
+        //{
+        //    hasContinued = true;
+        //    CharacterSelectSystem.Get().StartArcadeGame();
+        //}
         //winnerAnimation.SetActive(true);
         //imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
     }
