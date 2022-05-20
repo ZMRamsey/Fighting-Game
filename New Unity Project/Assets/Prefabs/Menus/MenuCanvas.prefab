@@ -376,8 +376,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: 7624c36446042b94a95fbbe868e034ce, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 2da6f8a6b7227964da10fe94d5742cb6, type: 3}
   _currentSprite: {fileID: 0}
@@ -386,6 +388,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 8906084203065123456}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &411885142202547706
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +556,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: e93e1d0fc89c08442ab8cb2f5df6f7e7, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 8fe399bc5995baa4a97e39c8da7773c4, type: 3}
   _currentSprite: {fileID: 0}
@@ -563,6 +568,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 6251288553333065850}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &553250782992575193
 GameObject:
   m_ObjectHideFlags: 0
@@ -5601,8 +5607,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -5611,6 +5619,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 5089453872176759386}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &929525156750649698
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,8 +5712,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: fade7e91e6ec99e4585c35d19352b4f5, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 2119a3a4495aa954d83a64237fc038e6, type: 3}
   _currentSprite: {fileID: 0}
@@ -5713,6 +5724,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 7145700756364649865}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &1060668446459982865
 GameObject:
   m_ObjectHideFlags: 0
@@ -6608,8 +6620,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 1
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
   _defaultSprite: {fileID: 21300000, guid: a32b4d84f7798724c91cc4606e484003, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: a32b4d84f7798724c91cc4606e484003, type: 3}
   _currentSprite: {fileID: 0}
@@ -6618,6 +6632,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 2549053700974605402}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &2098427261318087160
 GameObject:
   m_ObjectHideFlags: 0
@@ -7426,8 +7441,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: 8a89d25d180e42745bf5a3eb5706d42d, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: d6bb9300f2afd1b44bad00fb69452735, type: 3}
   _currentSprite: {fileID: 0}
@@ -7436,6 +7453,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 655120067603036731}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &2979565511563236593
 GameObject:
   m_ObjectHideFlags: 0
@@ -7707,8 +7725,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -7717,6 +7737,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 4877398347276503342}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &3159425346638902673
 GameObject:
   m_ObjectHideFlags: 0
@@ -8440,8 +8461,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 1
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
   _defaultSprite: {fileID: 21300000, guid: 6fa78d1d50e4f5b40af90eda935426d1, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 6fa78d1d50e4f5b40af90eda935426d1, type: 3}
   _currentSprite: {fileID: 0}
@@ -8450,6 +8473,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 6813332172199295421}
   _extraHighlight: {fileID: 0}
+  interactable: 1
   _checkedSprite: {fileID: 21300000, guid: 6fa78d1d50e4f5b40af90eda935426d1, type: 3}
   _uncheckedSprite: {fileID: 21300000, guid: e9bbc8a19bf02b24b88a56a41c787399, type: 3}
 --- !u!1 &3813380619031987885
@@ -8513,8 +8537,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -8523,6 +8549,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 264374215220832245}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &3916895019747168626
 GameObject:
   m_ObjectHideFlags: 0
@@ -8893,8 +8920,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -8903,6 +8932,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 706573256582481312}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &4252553163594861403
 GameObject:
   m_ObjectHideFlags: 0
@@ -8995,8 +9025,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: e93e1d0fc89c08442ab8cb2f5df6f7e7, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 8fe399bc5995baa4a97e39c8da7773c4, type: 3}
   _currentSprite: {fileID: 0}
@@ -9005,6 +9037,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 1819022985684644568}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &4403709458175162777
 GameObject:
   m_ObjectHideFlags: 0
@@ -9711,8 +9744,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: e93e1d0fc89c08442ab8cb2f5df6f7e7, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 8fe399bc5995baa4a97e39c8da7773c4, type: 3}
   _currentSprite: {fileID: 0}
@@ -9721,6 +9756,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 3062182238752652004}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &5577480822938534034
 GameObject:
   m_ObjectHideFlags: 0
@@ -12147,8 +12183,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 1
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
   _defaultSprite: {fileID: 21300000, guid: a32b4d84f7798724c91cc4606e484003, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: a32b4d84f7798724c91cc4606e484003, type: 3}
   _currentSprite: {fileID: 0}
@@ -12157,6 +12195,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 4712815826330191795}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &7840925129671115036
 GameObject:
   m_ObjectHideFlags: 0
@@ -12753,8 +12792,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 0.09803922}
   _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 0.09803922}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -12763,6 +12804,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 7333495048199736669}
   _extraHighlight: {fileID: 6867642568682299999}
+  interactable: 1
 --- !u!1 &7853911125936639275
 GameObject:
   m_ObjectHideFlags: 0
@@ -13134,8 +13176,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -13144,6 +13188,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 7333495048467477337}
   _extraHighlight: {fileID: 4437274136671606842}
+  interactable: 1
 --- !u!1 &7853911126289925054
 GameObject:
   m_ObjectHideFlags: 0
@@ -13340,8 +13385,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: e93e1d0fc89c08442ab8cb2f5df6f7e7, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: 8fe399bc5995baa4a97e39c8da7773c4, type: 3}
   _currentSprite: {fileID: 0}
@@ -13350,6 +13397,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 2085044052732866178}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &7853911126600263529
 GameObject:
   m_ObjectHideFlags: 0
@@ -13843,8 +13891,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: 24f83b7f207ae8741a5a60e78bbc25de, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: a8665ed87d36b984b8d68d8d383acc01, type: 3}
   _currentSprite: {fileID: 0}
@@ -13853,6 +13903,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 1393054434162026109}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &7853911126946336569
 GameObject:
   m_ObjectHideFlags: 0
@@ -13914,8 +13965,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -13924,6 +13977,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 7853911125594179992}
   _extraHighlight: {fileID: 3298449612769224526}
+  interactable: 1
 --- !u!1 &7853911127071381455
 GameObject:
   m_ObjectHideFlags: 0
@@ -14016,8 +14070,10 @@ MonoBehaviour:
   _useColourTint: 0
   _useSize: 1
   _useSpriteSwap: 1
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 21300000, guid: 9e1918c48b52dff468145a12e9937086, type: 3}
   _highlightedSprite: {fileID: 21300000, guid: f0d90ce337e5aec4c96b24916df5c191, type: 3}
   _currentSprite: {fileID: 0}
@@ -14026,6 +14082,7 @@ MonoBehaviour:
   _crossfadeSpeed: 10
   _effectorObject: {fileID: 1855996329013387189}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &7853911127247821479
 GameObject:
   m_ObjectHideFlags: 0
@@ -14170,8 +14227,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0.12941177, g: 0.8470589, b: 0.9568628, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -14180,6 +14239,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 7333495048677640147}
   _extraHighlight: {fileID: 369991893267920552}
+  interactable: 1
 --- !u!1 &7853911127418560773
 GameObject:
   m_ObjectHideFlags: 0
@@ -14241,8 +14301,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -14251,6 +14313,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 7333495046990858368}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &7983960140215861745
 GameObject:
   m_ObjectHideFlags: 0
@@ -15296,8 +15359,10 @@ MonoBehaviour:
   _useColourTint: 1
   _useSize: 1
   _useSpriteSwap: 0
+  _useInteractable: 0
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 0, g: 1, b: 0.9187336, a: 1}
+  _disabledColor: {r: 1, g: 1, b: 1, a: 1}
   _defaultSprite: {fileID: 0}
   _highlightedSprite: {fileID: 0}
   _currentSprite: {fileID: 0}
@@ -15306,6 +15371,7 @@ MonoBehaviour:
   _crossfadeSpeed: 6
   _effectorObject: {fileID: 6610252203283011267}
   _extraHighlight: {fileID: 0}
+  interactable: 1
 --- !u!1 &8731594540988773617
 GameObject:
   m_ObjectHideFlags: 0

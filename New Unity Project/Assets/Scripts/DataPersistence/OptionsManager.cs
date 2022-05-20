@@ -162,7 +162,6 @@ public class OptionsManager : MonoBehaviour, IDataPersistence
         if (_fullscreenToggle.OnClick())
         {
             //ToggleFullScreen();
-            print("WJHAT HTHAT HFUCK"); 
         }
 
         if (_1080p.OnClick())

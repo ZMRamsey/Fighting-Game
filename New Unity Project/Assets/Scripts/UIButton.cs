@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] bool _useColourTint, _useSize, _useSpriteSwap;
+    [SerializeField] bool _useColourTint, _useSize, _useSpriteSwap, _useInteractable;
     [Header("Colour Settings")]
     [SerializeField] Color _defaultColor = Color.white;
     [SerializeField] Color _highlightedColor = Color.white;
+    [SerializeField] Color _disabledColor = Color.white;
     Color _currentColorTarget;
     [Header("Sprite Settings")]
     [SerializeField] Sprite _defaultSprite;
@@ -26,7 +27,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] Image _extraHighlight;
     bool _isFocused = false;
     bool _onClick = false;
-    bool interactable = true;
+    public bool interactable = true;
 
     void Update() {
         if (_useColourTint) {
@@ -35,6 +36,12 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (_extraHighlight) {
                 _extraHighlight.color = Color.Lerp(_effectorObject.GetComponent<TextMeshProUGUI>().color, _currentColorTarget, Time.deltaTime * _crossfadeSpeed);
             }
+        }
+
+        if (_useInteractable)
+        {
+            _currentColorTarget = interactable ? _defaultColor : _disabledColor;
+            _effectorObject.GetComponent<Image>().color = Color.Lerp(_effectorObject.GetComponent<Image>().color, _currentColorTarget, Time.deltaTime * _crossfadeSpeed); ;
         }
 
         if (_useSize) {
@@ -49,7 +56,10 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        OnFocus();
+        if (interactable)
+        {
+            OnFocus();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
@@ -69,7 +79,10 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     public virtual void OnSubmit() {
-        _onClick = true;
+        if (interactable)
+        {
+            _onClick = true;
+        }
     }
 
     public bool OnClick() {

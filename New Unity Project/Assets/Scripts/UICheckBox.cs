@@ -24,14 +24,17 @@ public class UICheckBox : UIButton
 
     public override void OnSubmit()
     {
-        base.OnSubmit();
-        if (_checked)
+        if (interactable)
         {
-            UnCheck();
-        }
-        else
-        {
-            Check();
+            base.OnSubmit();
+            if (_checked)
+            {
+                UnCheck();
+            }
+            else
+            {
+                Check();
+            }
         }
     }
 

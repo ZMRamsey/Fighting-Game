@@ -287,6 +287,7 @@ public class MainMenuSystem : MonoBehaviour
                 for (int i = 0; i < _settingsMenuButtons.Length; i++)
                 {
                     _settingsMenuButtons[i].OnUnfocus();
+                    _settingsMenuButtons[i].interactable = false;
                 }
                 for (int i = 0; i < _settingsMenuSliders.Length; i++)
                 {
@@ -296,7 +297,7 @@ public class MainMenuSystem : MonoBehaviour
                 _settingsMenuSliders[0].Select();
             }
         }
-        if (_selectedSettingsTab == 1)
+        else if (_selectedSettingsTab == 1)
         {
             if (swapped)
             {
@@ -305,6 +306,11 @@ public class MainMenuSystem : MonoBehaviour
                     _settingsMenuSliders[i].interactable = false;
 
                 }
+                for (int i = 0; i < _settingsMenuButtons.Length; i++)
+                {
+                    _settingsMenuButtons[i].interactable = true;
+                }
+                _settingsSelectionIndex = 0;
                 _settingsMenuButtons[0].OnFocus();
             }
 
@@ -467,6 +473,10 @@ public class MainMenuSystem : MonoBehaviour
         {
             _settingsMenuSliders[i].interactable = true;
         }
+        for (int i = 0; i < _settingsMenuButtons.Length; i++)
+        {
+            _settingsMenuButtons[i].interactable = false;
+        }
         if (!GameLogic.Get().GetFullScreen())
         {
             checkbox.UnCheck();
@@ -478,7 +488,6 @@ public class MainMenuSystem : MonoBehaviour
                 _resolutionIndex = i;
             }
         }
-
     }
 
     public void FullScreenClick()
