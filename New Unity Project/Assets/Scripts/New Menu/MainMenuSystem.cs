@@ -492,7 +492,7 @@ public class MainMenuSystem : MonoBehaviour
 
     public void FullScreenClick()
     {
-        print("FSC");
+        //print("FSC");
         UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
         Screen.fullScreen = checkbox.GetChecked();
         GameLogic.Get().SetFullScreen(checkbox.GetChecked());
@@ -517,7 +517,7 @@ public class MainMenuSystem : MonoBehaviour
         UICheckBox checkbox = (UICheckBox)_settingsMenuButtons[0];
         Screen.SetResolution((int)_savedResolution.x, (int)_savedResolution.y, checkbox.GetChecked());
         _resolutionText.text = _savedResolution.x + " x " + _savedResolution.y;
-        print("Resolution set to " + _savedResolution.x + " x " + _savedResolution.y);
+        //print("Resolution set to " + _savedResolution.x + " x " + _savedResolution.y);
     }
 
 }

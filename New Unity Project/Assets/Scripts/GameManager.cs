@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Material _blueMaterial;
     [SerializeField] Material _yellowMaterial;
 
+    [Header("Shadows")]
+    [SerializeField] CircleShadow _fighterOneShadow;
+    [SerializeField] CircleShadow _fighterTwoShadow;
+    [SerializeField] CircleShadow _shuttleShadow;
 
     [Header("UI")]
     [SerializeField] GameObject _debugCanvas;
@@ -146,6 +150,8 @@ public class GameManager : MonoBehaviour
 
         _fighterOne.GetController().InitializeFighter();
         _fighterTwo.GetController().InitializeFighter();
+
+        SetUpShadows();
 
         _fighterOne.GetController().transform.position = _fighterOne.GetSpawn();
         _fighterTwo.GetController().transform.position = _fighterTwo.GetSpawn();
@@ -716,4 +722,23 @@ public class GameManager : MonoBehaviour
         _musicMixer.SetFloat("lowpass", lowpass);
         _sfxMixer.SetFloat("volume", (-80 + volumeMult * 100));
     }
+
+    public void SetUpShadows() {
+        _fighterOneShadow.SetParent(_fighterOne.GetController().transform);
+        _fighterOneShadow.SetSize(_settings.GetFighterOneProfile().GetRelativeSize());
+
+        if (GameLogic.Get()._type == GameType.tutorial || GameLogic.Get()._type == GameType.training)
+        {
+            _fighterTwoShadow.gameObject.SetActive(false);
+        }
+        else
+        {
+            _fighterTwoShadow.SetParent(_fighterTwo.GetController().transform);
+            _fighterTwoShadow.SetSize(_settings.GetFighterTwoProfile().GetRelativeSize());
+        }
+
+        _shuttleShadow.SetParent(_shuttle.transform);
+        _shuttleShadow.SetSize(Vector3.one * 0.4f);
+    }
+
 }

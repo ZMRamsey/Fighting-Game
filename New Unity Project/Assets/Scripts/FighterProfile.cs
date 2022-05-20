@@ -12,6 +12,7 @@ public class FighterProfile : ScriptableObject
     [SerializeField] Sprite _digitalKOSprite;
     [SerializeField] GameObject _fighterPrefab;
     [SerializeField] Material[] _fighterPalettes;
+    [SerializeField] Vector3 _relativeSize;
 
     [Header("VS Screen")]
     [SerializeField] Sprite _fighterVSArtSprite;
@@ -69,6 +70,11 @@ public class FighterProfile : ScriptableObject
     public int GetPalleteIndex()
     {
         return _selectedIndex;
+    }
+
+    public Vector3 GetRelativeSize()
+    {
+        return _relativeSize;
     }
 
     public Sprite GetFighterVSSprite() {
