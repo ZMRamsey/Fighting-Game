@@ -16377,7 +16377,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 3
+    tilesX: 4
     tilesY: 1
     animationType: 0
     rowIndex: 0
@@ -21241,7 +21241,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 3
+    tilesX: 4
     tilesY: 1
     animationType: 0
     rowIndex: 0
@@ -46208,7 +46208,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 3
+    tilesX: 4
     tilesY: 1
     animationType: 0
     rowIndex: 0
@@ -51072,7 +51072,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 3
+    tilesX: 4
     tilesY: 1
     animationType: 0
     rowIndex: 0

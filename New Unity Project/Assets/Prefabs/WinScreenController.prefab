@@ -1041,6 +1041,13 @@ MonoBehaviour:
   _score: {fileID: 1671394011929212172}
   _winnerNumber: {fileID: 1671394011762734738}
   _quote: {fileID: 1671394013656387730}
+  _profiles:
+  - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
+  - {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
+  - {fileID: 11400000, guid: c40a68d55e733844b9e3bfdb16234584, type: 2}
+  - {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
+  - {fileID: 11400000, guid: aa36e8eb24bfba24796befd0b9487ef7, type: 2}
 --- !u!1 &1671394012088717144
 GameObject:
   m_ObjectHideFlags: 0

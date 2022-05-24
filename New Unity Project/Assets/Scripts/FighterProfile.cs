@@ -13,6 +13,7 @@ public class FighterProfile : ScriptableObject
     [SerializeField] GameObject _fighterPrefab;
     [SerializeField] Material[] _fighterPalettes;
     [SerializeField] Vector3 _relativeSize;
+    [SerializeField] FighterProfile[] _arcadeRoute;
 
     [Header("VS Screen")]
     [SerializeField] Sprite _fighterVSArtSprite;
@@ -115,5 +116,10 @@ public class FighterProfile : ScriptableObject
     public string GetSuperDesc()
     {
         return _superDescription;
+    }
+
+    public FighterProfile GetNextArcadeFight(int index)
+    {
+        return _arcadeRoute[index];
     }
 }

@@ -28,6 +28,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0bc801160be78ab45a7182b760808b6f, type: 2}
   - {fileID: 2100000, guid: 4106c6054c5be254cb35081d379cdebf, type: 2}
   _relativeSize: {x: 0.85, y: 0.85, z: 0.85}
+  _arcadeRoute:
+  - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
+  - {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
+  - {fileID: 11400000, guid: aa36e8eb24bfba24796befd0b9487ef7, type: 2}
+  - {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
+  - {fileID: 11400000}
   _fighterVSArtSprite: {fileID: 21300000, guid: b3ccbb70379550a4aa5d7c5bd271abd6, type: 3}
   _fighterIconSprite: {fileID: 21300000, guid: e692a0e9290c7104b880ec6a24227ad8, type: 3}
   _fighterNameLSprite: {fileID: 21300000, guid: 78bc3d3704ca06442a1556a9ad75a697, type: 3}

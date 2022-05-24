@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         if (GameManager.Get() != null)
         {
             SetPlayerTypes(GameManager.Get().GetFighterOne().name.Split('(')[0], GameManager.Get().GetFighterTwo().name.Split('(')[0]);

@@ -14,6 +14,7 @@ public class GameLogic : MonoBehaviour
     bool _hasLoaded;
     public bool _loadInToCharacterSelect;
     public GameType _type;
+    public int _arcadeRoute = 0;
 
     public bool _fullScreen = true;
     public Vector2 _resolution = new Vector2(1920,1080);
@@ -124,5 +125,15 @@ public class GameLogic : MonoBehaviour
     public void ArcadeStoreUser()
     {
 
+    }
+
+    public int GetArcadePoint()
+    {
+        _arcadeRoute++;
+        if(_arcadeRoute > 6)
+        {
+            _arcadeRoute = 1;
+        }
+        return _arcadeRoute -1;
     }
 }

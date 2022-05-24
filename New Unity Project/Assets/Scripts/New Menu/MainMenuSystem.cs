@@ -106,7 +106,8 @@ public class MainMenuSystem : MonoBehaviour
                 }
 
                 if (i == 3) {
-                    type = GameType.tutorial;
+                    //type = GameType.tutorial;
+                    type = GameType.arcade;
                 }
 
                 if (i == 4) {

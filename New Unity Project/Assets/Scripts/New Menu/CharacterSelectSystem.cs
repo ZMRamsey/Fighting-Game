@@ -123,6 +123,15 @@ public class CharacterSelectSystem : MonoBehaviour
                         MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
 
                         if (_type != GameType.pvp) {
+                            if (_type == GameType.arcade)
+                            {
+                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);
+                                _fighterTwo.Refresh(arcadeOpponent, FighterFilter.two);
+                                _fighterTwo.SetAsReady();
+                                _fighterTwo.DisableVisuals();
+                                _fighterTwo._characterIcon.gameObject.SetActive(false);
+                                return;
+                            }
                             _canSelectSecondCharacter = true;
                             return;
                         }
@@ -133,7 +142,17 @@ public class CharacterSelectSystem : MonoBehaviour
 
                         MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
 
-                        if (_type != GameType.pvp) {
+                        if (_type != GameType.pvp)
+                        {
+                            if (_type == GameType.arcade)
+                            {
+                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);
+                                _fighterTwo.Refresh(arcadeOpponent, FighterFilter.two);
+                                _fighterTwo.SetAsReady();
+                                _fighterTwo.DisableVisuals();
+                                _fighterTwo._characterIcon.gameObject.SetActive(false);
+                                return;
+                            }
                             _canSelectSecondCharacter = true;
                             return;
                         }
@@ -254,6 +273,15 @@ public class CharacterSelectSystem : MonoBehaviour
             _fighterTwo.SetAsReady();
         }
 
+        if(_type == GameType.arcade)
+        {
+            _canSelectSecondCharacter = false;
+            _fighterTwo.DisableVisuals();
+            _fighterTwo._characterIcon.gameObject.SetActive(false);
+            _fighterTwo._characterName.gameObject.SetActive(false);
+            _fighterTwo._characterSkin.gameObject.SetActive(false);
+        }
+
         if(_type == GameType.training) {
             _canSelectSecondCharacter = false;
             _fighterTwo.SetAsReady();
@@ -356,7 +384,7 @@ public class CharacterSelectSystem : MonoBehaviour
 
     public void StartArcadeGame()
     {
-        _fighterTwo.RandomCharacter(_profiles.Length);
+        //_fighterTwo.RandomCharacter(_profiles.Length);
         StartCoroutine("StartGame");
     }
 }
@@ -365,10 +393,10 @@ public class CharacterSelectSystem : MonoBehaviour
 public class CharacterSelectFighter
 {
     [SerializeField] CharacterUI[] _characterVisuals;
-    [SerializeField] TextMeshProUGUI _characterName;
-    [SerializeField] TextMeshProUGUI _characterSkin;
+    [SerializeField] public TextMeshProUGUI _characterName;
+    [SerializeField] public TextMeshProUGUI _characterSkin;
     [SerializeField] TextMeshProUGUI _characterTagLine;
-    [SerializeField] Image _characterIcon;
+    [SerializeField] public Image _characterIcon;
     [SerializeField] Animator _characterPopin;
     [SerializeField] GameObject _readyObject;
     public bool IsReady;

@@ -18,10 +18,15 @@ public class WinScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _winnerNumber;
     [SerializeField] GameObject _quote;
+
+    [SerializeField] FighterProfile[] _profiles;
+
     string text;
 
     string winner;
     string loser;
+
+
 
     //public Sprite Danny;
     //public Sprite Hunter;
@@ -104,11 +109,15 @@ public class WinScreen : MonoBehaviour
             GameLogic.Get().LoadScene("Menu", "WinScreen", false);
         }
 
-        //if (GlobalInputManager.Get().GetRandomInput() && !hasContinued)
-        //{
-        //    hasContinued = true;
-        //    CharacterSelectSystem.Get().StartArcadeGame();
-        //}
+        if (GlobalInputManager.Get().GetRandomInput() && !hasContinued)
+        {
+            GameManager.Get().KillSwitch();
+            hasContinued = true;
+            //RandomCharacter();
+            ArcadeAdvance();
+            //GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[RandomCharacter()]);
+            GameLogic.Get().LoadScene("Base", "Menu", GameLogic.Get()._type != GameType.training);
+        }
         //winnerAnimation.SetActive(true);
         //imageHolder.sprite = winnerAnimation.GetComponent<SpriteRenderer>().sprite;
     }
@@ -313,5 +322,36 @@ public class WinScreen : MonoBehaviour
         showWinnerName();
         showQuote();
         //showCharacter();
+    }
+
+    //IEnumerator StartGame()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    _fadeWhite.gameObject.SetActive(true);
+    //    yield return new WaitForSeconds(2);
+    //    GameLogic.Get().LoadScene("Base", "Menu", GameLogic.Get()._type != GameType.training);
+    //}
+
+    public void RandomCharacter()
+    {
+        int randomSelection =  Random.Range(0, _profiles.Length-1);
+        GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[randomSelection]);
+
+        if (_profiles[randomSelection] == GameLogic.Get().GetSettings().GetFighterOneProfile() 
+            && GameLogic.Get().GetSettings().GetFighterOneProfile().GetPalleteIndex() == 0)
+        {
+            //GameLogic.Get().GetSettings().GetFighterTwoProfile().;
+        }
+
+    }
+
+    public void ArcadeAdvance()
+    {
+        FighterProfile upNext = GameLogic.Get().GetSettings().GetFighterOneProfile().GetNextArcadeFight(GameLogic.Get().GetArcadePoint());
+        GameLogic.Get().GetSettings().SetFighterTwoProfile(upNext);
+        if (upNext.GetName() == GameLogic.Get().GetSettings().GetFighterOneProfile().GetName() && GameLogic.Get().GetSettings().GetSkinOneID() == 0)
+        {
+            GameLogic.Get().GetSettings().SetSkinTwoID(1);
+        }
     }
 }
