@@ -61,7 +61,7 @@ public class WinScreen : MonoBehaviour
         winner = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
         loser = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();
 
-        Debug.Log("Winner is " + winner + " and loser is " + loser);
+        //Debug.Log("Winner is " + winner + " and loser is " + loser);
         GetMatchData(ScoreManager.Get().gameOver);
     }
 
@@ -103,19 +103,18 @@ public class WinScreen : MonoBehaviour
     bool hasContinued;
     public void Update()
     {
-        if (GlobalInputManager.Get().GetSubmitInput() && !hasContinued)
+        if ((GlobalInputManager.Get().GetSubmitInput() && !hasContinued && !ArcadeContinue()) ||
+            GlobalInputManager.Get().GetBackInput() && !hasContinued && ArcadeContinue())
         {
             hasContinued = true;
+            GameLogic.Get().ResetArcade();
             GameLogic.Get().LoadScene("Menu", "WinScreen", false);
         }
-
-        if (GlobalInputManager.Get().GetRandomInput() && !hasContinued)
+        else if (GlobalInputManager.Get().GetSubmitInput() && !hasContinued && ArcadeContinue())
         {
             GameManager.Get().KillSwitch();
             hasContinued = true;
-            //RandomCharacter();
             ArcadeAdvance();
-            //GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[RandomCharacter()]);
             GameLogic.Get().LoadScene("Base", "Menu", GameLogic.Get()._type != GameType.training);
         }
         //winnerAnimation.SetActive(true);
@@ -332,25 +331,32 @@ public class WinScreen : MonoBehaviour
     //    GameLogic.Get().LoadScene("Base", "Menu", GameLogic.Get()._type != GameType.training);
     //}
 
-    public void RandomCharacter()
+    //public void RandomCharacter()
+    //{
+    //    int randomSelection =  Random.Range(0, _profiles.Length-1);
+    //    GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[randomSelection]);
+
+    //    if (_profiles[randomSelection] == GameLogic.Get().GetSettings().GetFighterOneProfile() 
+    //        && GameLogic.Get().GetSettings().GetFighterOneProfile().GetPalleteIndex() == 0)
+    //    {
+    //        GameLogic.Get().GetSettings().GetFighterTwoProfile().;
+    //    }
+
+    //}
+
+    public bool ArcadeContinue()
     {
-        int randomSelection =  Random.Range(0, _profiles.Length-1);
-        GameLogic.Get().GetSettings().SetFighterTwoProfile(_profiles[randomSelection]);
-
-        if (_profiles[randomSelection] == GameLogic.Get().GetSettings().GetFighterOneProfile() 
-            && GameLogic.Get().GetSettings().GetFighterOneProfile().GetPalleteIndex() == 0)
-        {
-            //GameLogic.Get().GetSettings().GetFighterTwoProfile().;
-        }
-
+        return GameLogic.Get()._type == GameType.arcade && GameLogic.Get().GetArcadePoint() != GameLogic.Get().GetSettings().GetFighterOneProfile().GetArcadeLength() - 1 && ScoreManager.Get().DecideThreeRoundWinner() == FighterFilter.one;
     }
 
     public void ArcadeAdvance()
     {
+        GameLogic.Get().IncreaseArcadeCount();
         FighterProfile upNext = GameLogic.Get().GetSettings().GetFighterOneProfile().GetNextArcadeFight(GameLogic.Get().GetArcadePoint());
         GameLogic.Get().GetSettings().SetFighterTwoProfile(upNext);
         if (upNext.GetName() == GameLogic.Get().GetSettings().GetFighterOneProfile().GetName() && GameLogic.Get().GetSettings().GetSkinOneID() == 0)
         {
+            Debug.Log(upNext.GetName() + " " + GameLogic.Get().GetSettings().GetFighterOneProfile().GetName());
             GameLogic.Get().GetSettings().SetSkinTwoID(1);
         }
     }

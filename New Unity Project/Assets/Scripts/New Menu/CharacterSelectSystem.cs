@@ -76,7 +76,7 @@ public class CharacterSelectSystem : MonoBehaviour
         }
 
         if (_canvas.activeSelf) {
-            if (_currentPage == 1 && _type != GameType.watch) {
+            if (_currentPage == 1 && !(_type == GameType.watch || _type == GameType.arcade)) {
                 if (!_fighterOne.IsReady && !_fighterTwo.IsReady) {
                     if (GlobalInputManager.Get().GetBackInput()) {
                         SetPage(0);
@@ -115,10 +115,7 @@ public class CharacterSelectSystem : MonoBehaviour
                     }
 
                     if (GlobalInputManager.Get().GetRandomInput(_fighterOneFilter)) {
-                        //_fighterOne.RandomCharacter(_profiles.Length);
-                        //_fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
                         StartCoroutine("RandomSelectFighterOne");
-                        //_fighterOne.SetAsReady();
 
                         MainMenuSystem.Get().PlaySFXOverlap(_readySFX);
 
@@ -146,11 +143,12 @@ public class CharacterSelectSystem : MonoBehaviour
                         {
                             if (_type == GameType.arcade)
                             {
-                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);
+                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);                                
                                 _fighterTwo.Refresh(arcadeOpponent, FighterFilter.two);
                                 _fighterTwo.SetAsReady();
                                 _fighterTwo.DisableVisuals();
                                 _fighterTwo._characterIcon.gameObject.SetActive(false);
+                                GameLogic.Get().GetSettings().SetSkinTwoID(0);
                                 return;
                             }
                             _canSelectSecondCharacter = true;
@@ -222,19 +220,26 @@ public class CharacterSelectSystem : MonoBehaviour
     public void RefreshSelectors()
     {
         _selectorOne.localPosition = _selectorPositions[_fighterOne.GetSelection()];
-        _selectorTwo.localPosition = _selectorPositions[_fighterTwo.GetSelection()];
-        _selectorJoint.localPosition = _selectorPositions[_fighterOne.GetSelection()];
-        if (_fighterOne.GetSelection() == _fighterTwo.GetSelection())
-        {
-            _selectorJoint.gameObject.SetActive(true);
-            _selectorOne.gameObject.SetActive(false);
-            _selectorTwo.gameObject.SetActive(false);
+        if (_type != GameType.arcade) {
+            _selectorTwo.localPosition = _selectorPositions[_fighterTwo.GetSelection()];
+            _selectorJoint.localPosition = _selectorPositions[_fighterOne.GetSelection()];
+            if (_fighterOne.GetSelection() == _fighterTwo.GetSelection())
+            {
+                _selectorJoint.gameObject.SetActive(true);
+                _selectorOne.gameObject.SetActive(false);
+                _selectorTwo.gameObject.SetActive(false);
+            }
+            else
+            {
+                _selectorJoint.gameObject.SetActive(false);
+                _selectorOne.gameObject.SetActive(true);
+                _selectorTwo.gameObject.SetActive(true);
+            }
         }
         else
         {
             _selectorJoint.gameObject.SetActive(false);
-            _selectorOne.gameObject.SetActive(true);
-            _selectorTwo.gameObject.SetActive(true);
+            _selectorTwo.gameObject.SetActive(false);
         }
     }
 
@@ -243,7 +248,7 @@ public class CharacterSelectSystem : MonoBehaviour
         for (int i = 0; i < _borders.Length; i++)
         {
             _borders[i].SetActive(true);
-            if (i == _fighterOne.GetSelection() || i == _fighterTwo.GetSelection())
+            if (i == _fighterOne.GetSelection() || (i == _fighterTwo.GetSelection() && _type != GameType.arcade))
             {
                 _borders[i].SetActive(false);
             }

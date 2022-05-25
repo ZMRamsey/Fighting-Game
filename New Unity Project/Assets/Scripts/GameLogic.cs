@@ -129,11 +129,22 @@ public class GameLogic : MonoBehaviour
 
     public int GetArcadePoint()
     {
+        //_arcadeRoute++;
+        //if(_arcadeRoute > 6)
+        //{
+        //    _arcadeRoute = 1;
+        //}
+        //return _arcadeRoute -1;
+        return _arcadeRoute;
+    }
+
+    public void IncreaseArcadeCount()
+    {
         _arcadeRoute++;
-        if(_arcadeRoute > 6)
-        {
-            _arcadeRoute = 1;
-        }
-        return _arcadeRoute -1;
+    }
+
+    public void ResetArcade()
+    {
+        _arcadeRoute = 0;
     }
 }

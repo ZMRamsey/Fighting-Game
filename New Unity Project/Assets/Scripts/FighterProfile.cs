@@ -122,4 +122,9 @@ public class FighterProfile : ScriptableObject
     {
         return _arcadeRoute[index];
     }
+
+    public int GetArcadeLength()
+    {
+        return _arcadeRoute.Length;
+    }
 }

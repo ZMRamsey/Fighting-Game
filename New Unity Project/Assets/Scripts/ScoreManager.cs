@@ -38,7 +38,7 @@ public class ScoreManager : MonoBehaviour
             scorerN = 1;
         }
         _scores[_roundIndex, scorerN]++;
-        Debug.Log("Round " + (_roundIndex+1) + " Point: " + (GetCurrentPoint()-1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
+        //Debug.Log("Round " + (_roundIndex+1) + " Point: " + (GetCurrentPoint()-1) + " Score: " + _scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1] + " Point Scored Via: " + method);
         if (_scores[_roundIndex, scorerN] == _pointsToWin)
         {
             NextRound();
@@ -50,7 +50,7 @@ public class ScoreManager : MonoBehaviour
     public void NextRound()
     {
         FighterFilter roundWinner = DecideRoundWinner();
-        Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + roundWinner.ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
+        //Debug.Log("Round: " + GetCurrentRound() + " Was Won By Player " + roundWinner.ToString() + " " +_scores[_roundIndex, 0] + " - " + _scores[_roundIndex, 1]);
 
         if (roundWinner == FighterFilter.one)
         {
@@ -62,7 +62,7 @@ public class ScoreManager : MonoBehaviour
         }
 
         gameOver = DecideGameWinner();
-        Debug.Log("The winner is " + gameOver.ToString());
+        //Debug.Log("The winner is " + gameOver.ToString());
 
         //if ((_p1Wins < 2) && (_p2Wins < 2))
         //{
