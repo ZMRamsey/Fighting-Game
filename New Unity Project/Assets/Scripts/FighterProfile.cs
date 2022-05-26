@@ -32,6 +32,8 @@ public class FighterProfile : ScriptableObject
 
     [SerializeField] int _selectedIndex;
 
+    [SerializeField] public player _enumTag;
+
     public string GetName() {
         return _fighterName;
     }

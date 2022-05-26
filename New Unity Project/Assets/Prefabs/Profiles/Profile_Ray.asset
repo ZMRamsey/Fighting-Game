@@ -47,3 +47,4 @@ MonoBehaviour:
   _superVideo: {fileID: 0}
   _superDescription: time stop
   _selectedIndex: 0
+  _enumTag: 5

@@ -49,7 +49,7 @@ MonoBehaviour:
     _mutesVelocity: 0
   _hitType: 1
   _speed: 12
-  _height: 2
+  _height: 2.5
   _meterIncreaseValue: 12
   _grabThreshold: 1
   _maxJumps: 0

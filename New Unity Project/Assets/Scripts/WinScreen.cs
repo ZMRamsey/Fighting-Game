@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public enum player { danny, hunter, raket, esme, ganz, ray};
+public enum player { dan, hunter, raket, esme, ganz, ray, bonkers, sword};
 public class WinScreen : MonoBehaviour
 {
     [Header("Screen")]
@@ -23,8 +23,8 @@ public class WinScreen : MonoBehaviour
 
     string text;
 
-    string winner;
-    string loser;
+    player winner;
+    player loser;
 
 
 
@@ -58,8 +58,8 @@ public class WinScreen : MonoBehaviour
         //}
         _score.text = "" + scores[0, 0] + " - " + scores[0, 1];
 
-        winner = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
-        loser = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner())).GetName();
+        winner = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner())._enumTag;
+        loser = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().GetLoser(ScoreManager.Get().DecideThreeRoundWinner()))._enumTag;
 
         //Debug.Log("Winner is " + winner + " and loser is " + loser);
         GetMatchData(ScoreManager.Get().gameOver);
@@ -67,7 +67,7 @@ public class WinScreen : MonoBehaviour
 
     public void GetMatchData(FighterFilter winnerFilter)
     {
-        _winnerName.text = winner;
+        _winnerName.text = GameManager.Get().GetGameSettings().GetFighterProfile(ScoreManager.Get().DecideThreeRoundWinner()).GetName();
 
         string playerNum = "P2";
         if (winnerFilter == FighterFilter.one) 
@@ -125,27 +125,27 @@ public class WinScreen : MonoBehaviour
     {
         switch (winner)
         {
-            case "Dan":
+            case player.dan:
                 //winnerAnimation = DannyA;
                 switch (loser)
                 {
-                    case "Hunter":
+                    case player.hunter:
                         text = "Don’t worry, I’ll be the best badminton champion the world has ever seen!";
                         break;
 
-                    case "Raket":
+                    case player.raket:
                         text = "You don’t need these tricks to win, you just need to believe in the badminton spirit!";
                         break;
 
-                    case "Esme":
+                    case player.esme:
                         text = "Those sure are some neat moves, but nothing beats the feeling of real badminton!";
                         break;
 
-                    case "Ganz":
+                    case player.ganz:
                         text = "Woah! You were a goose this whole time? What a plot twist!";
                         break;
 
-                    case "Ray + Teka":
+                    case player.ray:
                         text = "Placeholder.txt";
                         break;
 
@@ -155,27 +155,27 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Hunter":
+            case player.hunter:
                 //winnerAnimation = HunterA;
                 switch (loser)
                 {
-                    case "Dan":
+                    case player.dan:
                         text = "You’re right to be jealous of me. I’m just naturally better than you, lil man.";
                         break;
 
-                    case "Raket":
+                    case player.raket:
                         text = "No damn explosives near the face, I’ve got a photo shoot tomorrow and I’m not risking the money-maker.";
                         break;
 
-                    case "Esme":
+                    case player.esme:
                         text = "Are you a parking ticket? Because you got FINE written all over you. Wait, come back I have better ones.";
                         break;
 
-                    case "Ganz":
+                    case player.ganz:
                         text = "I’ve got to get a new agent, I’m playing against weirdos now. What are you, a chicken or something?";
                         break;
 
-                    case "Ray + Teka":
+                    case player.ray:
                         text = "Placeholder.txt";
                         break;
 
@@ -185,27 +185,27 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Raket":
+            case player.raket:
                 //winnerAnimation = RaketA;
                 switch (loser)
                 {
-                    case "Dan":
+                    case player.dan:
                         text = "BORING! Mix it up a bit, it’s like playing against my grandad.";
                         break;
 
-                    case "Hunter":
+                    case player.hunter:
                         text = "Nice job boomer, shouldn’t you have retired already?";
                         break;
 
-                    case "Esme":
+                    case player.esme:
                         text = "Are you doing that with holograms? Drones? Strings? Whatever, my racquet is still better.";
                         break;
 
-                    case "Ganz":
+                    case player.ganz:
                         text = "Sweet mech, mind if I do just a few upgrades? You might have a shot against me with a few more booster rockets.";
                         break;
 
-                    case "Ray + Teka":
+                    case player.ray:
                         text = "Placeholder.txt";
                         break;
 
@@ -215,27 +215,27 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Esme":
+            case player.esme:
                 //winnerAnimation = EsmeA;
                 switch (loser)
                 {
-                    case "Dan":
+                    case player.dan:
                         text = "You might be good at the sport, but you’re out of your depth with us.";
                         break;
 
-                    case "Hunter":
+                    case player.hunter:
                         text = "Do I have your attention now Hunter? Are you scared? You should be terrified.";
                         break;
 
-                    case "Raket":
+                    case player.raket:
                         text = "I’m sorry Racket, but I need you out of my way for good this time.";
                         break;
 
-                    case "Ganz":
+                    case player.ganz:
                         text = "Your emotions, I can feel them so strong. What happened to you?";
                         break;
 
-                    case "Ray + Teka":
+                    case player.ray:
                         text = "Placeholder.txt";
                         break;
 
@@ -245,27 +245,27 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Ganz":
+            case player.ganz:
                 //winnerAnimation = GanzA;
                 switch (loser)
                 {
-                    case "Dan":
+                    case player.dan:
                         text = "HONK (Your fighting spirit can only take you so far, true badminton prowess comes from intellect and invention)";
                         break;
 
-                    case "Hunter":
+                    case player.hunter:
                         text = "HONK (You humans could never hope to stay the dominant species forever if this is the best you have to offer).";
                         break;
 
-                    case "Raket":
+                    case player.raket:
                         text = "HONK (Foolish child, you play with simple toys while I reshape our very world).";
                         break;
 
-                    case "Esme":
+                    case player.esme:
                         text = "HONK (Your powers intrigue me young witch, what a goose you could have been. Alas, your failure only proves that you are the inferior species).";
                         break;
 
-                    case "Ray + Teka":
+                    case player.ray:
                         text = "Placeholder.txt";
                         break;
 
@@ -275,27 +275,27 @@ public class WinScreen : MonoBehaviour
                 }
                 break;
 
-            case "Ray + Teka":
+            case player.ray:
                 //winnerAnimation = RayA;
                 switch (loser)
                 {
-                    case "Dan":
+                    case player.dan:
                         text = "Placeholder.txt";
                         break;
 
-                    case "Hunter":
+                    case player.hunter:
                         text = "Placeholder.txt";
                         break;
 
-                    case "Raket":
+                    case player.raket:
                         text = "Placeholder.txt";
                         break;
 
-                    case "Esme":
+                    case player.esme:
                         text = "Placeholder.txt";
                         break;
 
-                    case "Ganz":
+                    case player.ganz:
                         text = "Placeholder.txt";
                         break;
 

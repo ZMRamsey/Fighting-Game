@@ -26,7 +26,7 @@ public class ResultsHolderScript : MonoBehaviour
                 break;
 
             case "Danny": //Danny
-                winnerPlayer = player.danny;
+                winnerPlayer = player.dan;
                 break;
 
             case "Hunter": //Hunter
@@ -53,7 +53,7 @@ public class ResultsHolderScript : MonoBehaviour
                 break;
 
             case "Danny": //Danny
-                loserPlayer = player.danny;
+                loserPlayer = player.dan;
                 break;
 
             case "Hunter": //Hunter

@@ -489,7 +489,7 @@ public abstract class FighterController : MonoBehaviour
         float relativeVel = targetDirVel - groundDirVel;
 
         float x = _groundHit.distance - _settings.GetHeight();
-        float springForce = (x * 1) - (relativeVel * 0.01f);
+        float springForce = (x * 1) - (relativeVel * 0.1f);
 
         Vector3 result = rayDirection * springForce;
         _yVelocity = result.y;

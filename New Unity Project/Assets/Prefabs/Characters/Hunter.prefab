@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 5710299949144610727}
   - component: {fileID: 7310617723920792596}
   - component: {fileID: 2129382010392622737}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 2372018997350943446}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.35699987, y: -1.9910002, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.66, z: 1}
   m_Children: []
   m_Father: {fileID: 4874520954667380374}
   m_RootOrder: 14
@@ -298,7 +298,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: 1cbfb0caea1aed34aaaec156b9ea6e9a, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.7058824}
   m_FlipX: 0
@@ -324,11 +324,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 4874520954667380374}
   _renderer: {fileID: 7310617723920792596}
-  _position: {x: 0, y: 0.84, z: 0.1}
   _shadowShrinkFactor: 2
-  _baseShadowSize: {x: 0.85, y: 0.85, z: 0.85}
   _canRotate: 0
   _alphaCap: 0.66
+  _offset: {x: -0.37, y: 0, z: 0}
 --- !u!1 &2411469699189703089
 GameObject:
   m_ObjectHideFlags: 0

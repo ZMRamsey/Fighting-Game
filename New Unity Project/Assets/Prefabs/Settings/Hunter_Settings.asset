@@ -18,33 +18,38 @@ MonoBehaviour:
     _hitFrame: 5
     _clip: {fileID: 7400000, guid: 89212665f3b0b1540bd50248506a1b6b, type: 2}
     _hitDirection: {x: 12, y: -6, z: 0}
+    _mutesVelocity: 0
   _chipMove:
     _animationPath: drive
     _frames: 8
     _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 0.4, y: 2, z: 0}
+    _mutesVelocity: 0
   _driveMove:
     _animationPath: drive
     _frames: 8
     _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 12, y: 0.5, z: 0}
+    _mutesVelocity: 0
   _liftMove:
     _animationPath: drive
     _frames: 8
     _hitFrame: 11
     _clip: {fileID: 7400000, guid: e56d78ceeb1c99e46b595f44a65d335f, type: 2}
     _hitDirection: {x: 6, y: 8, z: 0}
+    _mutesVelocity: 0
   _specialMove:
     _animationPath: super
     _frames: 12
     _hitFrame: 0
     _clip: {fileID: 7400000, guid: ffb07a3b636060d47bad2cee552ed43d, type: 2}
     _hitDirection: {x: 6, y: 4, z: 0}
+    _mutesVelocity: 0
   _hitType: 1
   _speed: 11
-  _height: 2
+  _height: 2.5
   _meterIncreaseValue: 12
   _grabThreshold: 1
   _maxJumps: 0

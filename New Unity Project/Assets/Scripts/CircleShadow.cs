@@ -6,27 +6,34 @@ public class CircleShadow : MonoBehaviour
 {
     [SerializeField] Transform _parent;
     [SerializeField] SpriteRenderer _renderer;
-    [SerializeField] Vector3 _position = new Vector3(0,0.84f,0);
+     Vector3 _position = new Vector3(0,0.84f,0);
     [SerializeField] float _shadowShrinkFactor;
-    [SerializeField] Vector3 _baseShadowSize;
+    Vector3 _baseShadowSize;
     [SerializeField] bool _canRotate;
     [Range(0.0f, 1.0f)] [SerializeField] float _alphaCap = 0.66f;
     Vector3 maxSize;
     Vector3 minSize;
+    [SerializeField] Vector3 _offset;
 
     // Start is called before the first frame update
     void Start()
     {
         _renderer = transform.GetComponent<SpriteRenderer>();
+        _baseShadowSize = transform.localScale;
         SetSize(_baseShadowSize);
+        //_offset = transform.position;
+        transform.SetParent(null);
         //_parent = transform.GetComponentInChildren<FighterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _position.x = _parent.transform.root.position.x;
+        _position = transform.position;
+        _position.y = 0.84f;
+        _position.x = _offset.x + _parent.transform.position.x;
         transform.position = _position;
+        //transform.rotation = Quaternion.identity;
     }
     private void LateUpdate()
     {

@@ -48,3 +48,4 @@ MonoBehaviour:
   _superVideo: {fileID: 0}
   _superDescription: wall
   _selectedIndex: 0
+  _enumTag: 3
