@@ -10,6 +10,7 @@ public class GameLogic : MonoBehaviour
     static GameLogic _logic;
     [SerializeField] GameObject _loadScreenCanvas;
     [SerializeField] GameObject _versusScreenCanvas;
+    [SerializeField] GameObject _arcadeScreenCanvas;
     GameObject _screen;
     bool _hasLoaded;
     public bool _loadInToCharacterSelect;
@@ -70,7 +71,7 @@ public class GameLogic : MonoBehaviour
     AsyncOperation _scene;
 
     public void LoadScene(string sceneName, string from, bool useVersus) {
-        _screen = _loadScreenCanvas;
+        _screen = _type == GameType.arcade ? _arcadeScreenCanvas : _loadScreenCanvas;
 
         if (useVersus) {
             _screen = _versusScreenCanvas;

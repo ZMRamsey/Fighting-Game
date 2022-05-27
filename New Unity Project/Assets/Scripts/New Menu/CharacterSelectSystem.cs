@@ -143,8 +143,8 @@ public class CharacterSelectSystem : MonoBehaviour
                         {
                             if (_type == GameType.arcade)
                             {
-                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);                                
-                                _fighterTwo.Refresh(arcadeOpponent, FighterFilter.two);
+                                FighterProfile arcadeOpponent = _profiles[_fighterOne.GetSelection()].GetNextArcadeFight(0);
+                                GameLogic.Get().GetSettings().SetFighterTwoProfile(arcadeOpponent);
                                 _fighterTwo.SetAsReady();
                                 _fighterTwo.DisableVisuals();
                                 _fighterTwo._characterIcon.gameObject.SetActive(false);
@@ -282,6 +282,7 @@ public class CharacterSelectSystem : MonoBehaviour
         {
             _canSelectSecondCharacter = false;
             _fighterTwo.DisableVisuals();
+            _fighterTwo.SetNull();
             _fighterTwo._characterIcon.gameObject.SetActive(false);
             _fighterTwo._characterName.gameObject.SetActive(false);
             _fighterTwo._characterSkin.gameObject.SetActive(false);
@@ -536,5 +537,11 @@ public class CharacterSelectFighter
             GetCharacter().UpdatePallete(profile.GetPallete(_currentSkinSelection));
             _characterSkin.text = $"<{profile.GetPallete(_currentSkinSelection).name}>";
         }
+    }
+
+    public void SetNull()
+    {
+        _currentSelection = -1;
+        _currentSkinSelection = -1;
     }
 }
