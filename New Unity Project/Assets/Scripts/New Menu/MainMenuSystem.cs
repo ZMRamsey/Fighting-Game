@@ -20,6 +20,7 @@ public class MainMenuSystem : MonoBehaviour
     [SerializeField] GameObject[] _canvasArray;
     [SerializeField] CanvasGroup _group;
     [SerializeField] AudioSource _sfxSource, _sfxMainSource;
+    [SerializeField] GameObject _unlockable;
     int _currentPage;
     int _mainSelectionIndex;
     int _playSelectionIndex;
@@ -82,6 +83,11 @@ public class MainMenuSystem : MonoBehaviour
     }
 
     void Update() {
+        if (!GameLogic.Get()._devLocked && _unlockable.activeSelf)
+        {
+            _unlockable.SetActive(false);
+        }
+
         for (int i = 0; i < _mainMenuButtons.Length; i++) {
             int steve = i + 1;
             if (_mainMenuButtons[i].OnClick() && steve != 2) {
@@ -101,13 +107,21 @@ public class MainMenuSystem : MonoBehaviour
                     type = GameType.pvp;
                 }
 
-                if (i == 2) {
-                    type = GameType.training;
+                if (i == 2)
+                {
+                    //type = GameType.tutorial;
+                    if (!GameLogic.Get()._devLocked)
+                    {
+                        type = GameType.arcade;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 if (i == 3) {
-                    //type = GameType.tutorial;
-                    type = GameType.arcade;
+                    type = GameType.training;
                 }
 
                 if (i == 4) {

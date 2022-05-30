@@ -16,6 +16,9 @@ public class PauseMenu : MonoBehaviour
     private int _index;
     private int _pauseLayer;
     protected FighterFilter _pauseOwner;
+    [SerializeField] Color _pauseTeal;
+    [SerializeField] Color _pauseGreyedTeal;
+    [SerializeField] Color _pauseGreyedWhite;
 
     //continue, movelist, characterSelect, returnToMenu
     [SerializeField] TextMeshProUGUI[] _options;
@@ -69,25 +72,29 @@ public class PauseMenu : MonoBehaviour
     {
         if (GlobalInputManager.Get().GetDownInput(_pauseOwner))
         {
-            _options[_index].color = Color.black;
+            _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+            //_options[_index].color = Color.white;
             _index++;
             if (_index == 4)
             {
                 _index = 0;
             }
-            _options[_index].color = Color.white;
+            _options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
+            //_options[_index].color = _pauseTeal;
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
         if (GlobalInputManager.Get().GetUpInput(_pauseOwner))
         {
-            _options[_index].color = Color.black;
+            _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+            //_options[_index].color = Color.white;
             _index--;
             if (_index == -1)
             {
                 _index = 3;
             }
-            _options[_index].color = Color.white;
+            _options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
+            //_options[_index].color = _pauseTeal;
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
@@ -105,7 +112,7 @@ public class PauseMenu : MonoBehaviour
                     break;
 
                 case (1):
-                    SetMovelist();
+                    //SetMovelist();
                     break;
 
                 case (2):
@@ -205,11 +212,12 @@ public class PauseMenu : MonoBehaviour
     {
         GameManager.Get().SetSounds(0, 424);
         _active = true;
-        _options[_index].color = Color.black;
+        _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+        //_options[_index].color = Color.white;
         _index = 0;
         _pauseLayer = 0;
         _selector.transform.localPosition = _targetPoints[_index];
-        _options[_index].color = Color.white;
+        _options[_index].color = _pauseTeal;
         _pausePanel.SetActive(true);
     }
     public void Disable()

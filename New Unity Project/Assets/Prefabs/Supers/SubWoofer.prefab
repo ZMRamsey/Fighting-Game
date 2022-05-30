@@ -39263,7 +39263,7 @@ Transform:
   m_GameObject: {fileID: 3905329098795947441}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 766030058933936887}
   m_RootOrder: 8
@@ -39282,11 +39282,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 766030058933936887}
   _renderer: {fileID: 1331947789002266055}
-  _position: {x: 0, y: 0.84, z: -0.1}
   _shadowShrinkFactor: 2
-  _baseShadowSize: {x: 0.4, y: 0.4, z: 0.4}
   _canRotate: 1
   _alphaCap: 0.66
+  _offset: {x: 0, y: 0, z: 0}
+  _baseColor: {r: 0.16862746, g: 0.03529412, b: 0.1882353, a: 0}
 --- !u!212 &1331947789002266055
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class GameLogic : MonoBehaviour
     public bool _loadInToCharacterSelect;
     public GameType _type;
     public int _arcadeRoute = 0;
+    public bool _devLocked = true;
 
     public bool _fullScreen = true;
     public Vector2 _resolution = new Vector2(1920,1080);
@@ -65,6 +66,12 @@ public class GameLogic : MonoBehaviour
             CharacterSelectSystem.Get().SetGameType(_type);
             MainMenuSystem.Get().SkipToCharacterSelect();
             _loadInToCharacterSelect = false;
+        }
+
+        if (GlobalInputManager.Get().GetLockInput() && _devLocked)
+        {
+            _devLocked = false;
+            Debug.Log("Unlocked");
         }
     }
 

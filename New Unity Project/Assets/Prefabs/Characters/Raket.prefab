@@ -24721,6 +24721,7 @@ MonoBehaviour:
   _canRotate: 0
   _alphaCap: 0.66
   _offset: {x: -0.34, y: 0, z: 0}
+  _baseColor: {r: 0.16862746, g: 0.03529412, b: 0.1882353, a: 0}
 --- !u!212 &3320005697243693861
 SpriteRenderer:
   m_ObjectHideFlags: 0

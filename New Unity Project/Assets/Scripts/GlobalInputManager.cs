@@ -83,6 +83,11 @@ public class GlobalInputManager : MonoBehaviour
         return GetDashInput(FighterFilter.none);
     }
 
+    public bool GetLockInput()
+    {
+        return GetLockInput(FighterFilter.none);
+    }
+
     public bool GetAnyButton() {
         RefreshDevices(FighterFilter.none);
         var gamepadButtonPressed = HasController() && _controller.allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic);
@@ -170,6 +175,12 @@ public class GlobalInputManager : MonoBehaviour
         RefreshDevices(filter);
         return (HasController() && (_controller.leftTrigger.wasPressedThisFrame)
             || (HasKeyboard() && (_keyboard.leftShiftKey.wasPressedThisFrame)));
+    }
+
+    public bool GetLockInput(FighterFilter filter)
+    {
+        RefreshDevices(filter);
+        return (HasKeyboard() && (_keyboard.f12Key.wasPressedThisFrame));
     }
 
 

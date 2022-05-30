@@ -380,8 +380,8 @@ MonoBehaviour:
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
   _disabledColor: {r: 1, g: 1, b: 1, a: 1}
-  _defaultSprite: {fileID: 21300000, guid: 7624c36446042b94a95fbbe868e034ce, type: 3}
-  _highlightedSprite: {fileID: 21300000, guid: 2da6f8a6b7227964da10fe94d5742cb6, type: 3}
+  _defaultSprite: {fileID: 21300000, guid: a025640778f8aff4fa46ee94ceac0acc, type: 3}
+  _highlightedSprite: {fileID: 21300000, guid: 6b59737d279787c48bf721c61943379c, type: 3}
   _currentSprite: {fileID: 0}
   _defaultSize: {x: 1, y: 1, z: 1}
   _highlightedSize: {x: 1.1, y: 1.1, z: 1.1}
@@ -6698,7 +6698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7624c36446042b94a95fbbe868e034ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a025640778f8aff4fa46ee94ceac0acc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8859,6 +8859,81 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &4077196284852595276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6235208653838503113}
+  - component: {fileID: 2349323100398230204}
+  - component: {fileID: 8429839319462895200}
+  m_Layer: 5
+  m_Name: ArcadeLock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6235208653838503113
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077196284852595276}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7853911127071381452}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.3, y: 76}
+  m_SizeDelta: {x: 336, y: 372}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2349323100398230204
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077196284852595276}
+  m_CullTransparentMesh: 1
+--- !u!114 &8429839319462895200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077196284852595276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2613f7f557955b04193db0da0f0ca070, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4136296116823949808
 GameObject:
   m_ObjectHideFlags: 0
@@ -10142,7 +10217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9e1918c48b52dff468145a12e9937086, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a204c34f999af674bac8ee476a772122, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14009,6 +14084,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1855996329013387189}
+  - {fileID: 6235208653838503113}
   m_Father: {fileID: 7333495048103421773}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14074,8 +14150,8 @@ MonoBehaviour:
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightedColor: {r: 1, g: 1, b: 1, a: 1}
   _disabledColor: {r: 1, g: 1, b: 1, a: 1}
-  _defaultSprite: {fileID: 21300000, guid: 9e1918c48b52dff468145a12e9937086, type: 3}
-  _highlightedSprite: {fileID: 21300000, guid: f0d90ce337e5aec4c96b24916df5c191, type: 3}
+  _defaultSprite: {fileID: 21300000, guid: a204c34f999af674bac8ee476a772122, type: 3}
+  _highlightedSprite: {fileID: 21300000, guid: a292fccc475135b439ee8dc0756a3d64, type: 3}
   _currentSprite: {fileID: 0}
   _defaultSize: {x: 1, y: 1, z: 1}
   _highlightedSize: {x: 1.1, y: 1.1, z: 1.1}

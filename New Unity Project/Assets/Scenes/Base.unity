@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6839814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7175,7 +7175,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6af9e0a965c2446429a3982c43bbfa00, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a5db4c1d4def447449c9b911d80c98e3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7980,7 +7980,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8422,7 +8422,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 959.8801, y: 33.899902}
-  m_SizeDelta: {x: 514, y: 43}
+  m_SizeDelta: {x: 194, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954674624
 MonoBehaviour:
@@ -8444,7 +8444,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e787a4a062112ed49890ec8be5d51483, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 929b2dd5bf48c4a4096974aa9951a182, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8781,7 +8781,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13863,7 +13863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1066969569
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14123,6 +14123,9 @@ MonoBehaviour:
   _pausePanel: {fileID: 1487734429}
   _movelistPanel: {fileID: 1663874346}
   _selector: {fileID: 2058243878}
+  _pauseTeal: {r: 0.09411765, g: 0.84705883, b: 0.95686275, a: 1}
+  _pauseGreyedTeal: {r: 0.09411766, g: 0.8470589, b: 0.9568628, a: 0.2}
+  _pauseGreyedWhite: {r: 1, g: 1, b: 1, a: 0.2}
   _options:
   - {fileID: 1840816793}
   - {fileID: 858589636}
@@ -15182,7 +15185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1519990828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21952,7 +21955,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.09411765, g: 0.84705883, b: 0.95686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -23018,7 +23021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2058243879
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23280,7 +23283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6dde7c63b90b1184186e3203080a835d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23864,6 +23867,10 @@ PrefabInstance:
     - target: {fileID: 1211052718778248170, guid: 8eec5127bbb3aec4aa463e137b039168, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211052718778248170, guid: 8eec5127bbb3aec4aa463e137b039168, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1211052718778248181, guid: 8eec5127bbb3aec4aa463e137b039168, type: 3}
       propertyPath: m_Camera
@@ -24819,6 +24826,10 @@ PrefabInstance:
     - target: {fileID: 2888926208732733498, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_Name
       value: _UIElements
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888926208732733498, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2888926208844946734, guid: 0015ed656ec477749b1defe62add2dd2, type: 3}
       propertyPath: m_IsActive

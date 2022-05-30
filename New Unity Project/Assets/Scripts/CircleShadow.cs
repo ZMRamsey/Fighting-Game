@@ -14,6 +14,7 @@ public class CircleShadow : MonoBehaviour
     Vector3 maxSize;
     Vector3 minSize;
     [SerializeField] Vector3 _offset;
+    [SerializeField] Color _baseColor = new Color(0.1686275f, 0.03529412f, 0.1882353f, 0f);
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +49,9 @@ public class CircleShadow : MonoBehaviour
         float heightCoeff = Mathf.Clamp(Mathf.Abs(((_parent.position.y - 2) / 10) - 1), 0, 1);
 
         //float newAlpha = Mathf.Clamp(_alphaCap * heightCoeff, 0, _alphaCap);
-        _renderer.color = Color.black * heightCoeff * _alphaCap;
+        //_renderer.color = Color.black * heightCoeff * _alphaCap;
+        _baseColor.a = heightCoeff * _alphaCap;
+        _renderer.color = _baseColor;//new Color(_baseColor.r,0.04f,0.19f, heightCoeff * _alphaCap);//Color.black * heightCoeff * _alphaCap;
 
         Vector3 newScale = minSize + ((maxSize - minSize) * heightCoeff);
         transform.localScale = newScale;
