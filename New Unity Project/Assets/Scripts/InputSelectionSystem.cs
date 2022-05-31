@@ -67,6 +67,13 @@ public class InputSelectionSystem : MonoBehaviour
 
             CharacterSelectSystem.Get().SetPage(1);
         }
+        else if (_type == GameType.training)
+        {
+            GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);
+            GameLogic.Get().GetSettings().GetFighterTwoDevice().SetInputState(InputState.ai);
+
+            CharacterSelectSystem.Get().SetPage(1);
+        }
         else if (_type == GameType.arcade)
         {
             GameLogic.Get().GetSettings().GetFighterOneDevice().SetInputState(InputState.player);

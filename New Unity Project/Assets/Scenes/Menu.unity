@@ -2412,18 +2412,18 @@ MonoBehaviour:
   - {fileID: 1353119049}
   _canvas: {fileID: 1792350288}
   _profiles:
-  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
-  - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
   - {fileID: 11400000, guid: fb231484cc34df5459ac6e7aa8a09a6b, type: 2}
   - {fileID: 11400000, guid: c40a68d55e733844b9e3bfdb16234584, type: 2}
+  - {fileID: 11400000, guid: 8b7c762bf9ffed84d812995d8e9ed199, type: 2}
+  - {fileID: 11400000, guid: c6738a619f33eb348b03742c17eb9e39, type: 2}
   - {fileID: 11400000, guid: 443bb64173ef10248a5da859e861f303, type: 2}
   - {fileID: 11400000, guid: aa36e8eb24bfba24796befd0b9487ef7, type: 2}
   _fighterOne:
     _characterVisuals:
-    - {fileID: 59465958}
-    - {fileID: 2085274774}
     - {fileID: 2083649563}
     - {fileID: 70756317}
+    - {fileID: 2085274774}
+    - {fileID: 59465958}
     - {fileID: 1339054037}
     - {fileID: 1454294470}
     _characterName: {fileID: 1312117248}
@@ -2435,10 +2435,10 @@ MonoBehaviour:
     IsReady: 0
   _fighterTwo:
     _characterVisuals:
-    - {fileID: 398482258}
-    - {fileID: 242523657}
     - {fileID: 1823274262}
     - {fileID: 751185734}
+    - {fileID: 242523657}
+    - {fileID: 398482258}
     - {fileID: 1821631978}
     - {fileID: 1196552457}
     _characterName: {fileID: 2113860238}
@@ -5230,6 +5230,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -211.53673
       objectReference: {fileID: 0}
+    - target: {fileID: 5112720821816075014, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5495280181839926845, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_Name
       value: 720pButton
@@ -5466,6 +5470,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSFXVolume
       objectReference: {fileID: 0}
+    - target: {fileID: 7652079242373135856, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
+      propertyPath: _audio
+      value: 
+      objectReference: {fileID: 1550434632}
     - target: {fileID: 7745091189216334863, guid: e1e875faaf3cdcf49934103a30e2cc86, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

@@ -86,7 +86,7 @@ public class CharacterSelectSystem : MonoBehaviour
                 }
             }
 
-            if (_currentPage == 1 && !(_type == GameType.watch || _type == GameType.arcade)) {
+            if (_currentPage == 1 && !(_type == GameType.watch || _type == GameType.arcade || _type == GameType.training)) {
                 if (!_fighterOne.IsReady && !_fighterTwo.IsReady) {
                     if (GlobalInputManager.Get().GetBackInput()) {
                         SetPage(0);
@@ -97,7 +97,8 @@ public class CharacterSelectSystem : MonoBehaviour
             else {
                 if (GlobalInputManager.Get().GetBackInput()) {
                     _mainLoadFlag = true;
-                    if (_type == GameType.arcade)
+                    _fighterTwo.EnableGraphics();
+                    if (_type == GameType.arcade || _type == GameType.training)
                     {
                         _fighterTwo.ResetSelectionsArcade();
                     }
@@ -150,7 +151,7 @@ public class CharacterSelectSystem : MonoBehaviour
                     }
 
                     if (GlobalInputManager.Get().GetSubmitInput(_fighterOneFilter)) {
-                        if (!GameLogic.Get()._devLocked || _fighterOne.GetSelection() <= 1)
+                        if (!GameLogic.Get()._devLocked || (_fighterOne.GetSelection() == 2 || _fighterOne.GetSelection() == 3))
                         {
                             _fighterOne.SetAsReady();
                         }
@@ -220,7 +221,7 @@ public class CharacterSelectSystem : MonoBehaviour
 
                     if (GlobalInputManager.Get().GetSubmitInput(_fighterTwoFilter))
                     {
-                        if (!GameLogic.Get()._devLocked || _fighterTwo.GetSelection() <= 1)
+                        if (!GameLogic.Get()._devLocked || (_fighterTwo.GetSelection() == 2 || _fighterTwo.GetSelection() == 3))
                         {
                             _fighterTwo.SetAsReady();
                         }
@@ -244,7 +245,7 @@ public class CharacterSelectSystem : MonoBehaviour
     public void RefreshSelectors()
     {
         _selectorOne.localPosition = _selectorPositions[_fighterOne.GetSelection()];
-        if (_type != GameType.arcade) {
+        if (_type != GameType.arcade && _type != GameType.training) {
             _selectorTwo.localPosition = _selectorPositions[_fighterTwo.GetSelection()];
             _selectorJoint.localPosition = _selectorPositions[_fighterOne.GetSelection()];
             if (_fighterOne.GetSelection() == _fighterTwo.GetSelection())
@@ -302,21 +303,19 @@ public class CharacterSelectSystem : MonoBehaviour
             _fighterTwo.SetAsReady();
         }
 
-        if(_type == GameType.arcade)
+        if(_type == GameType.arcade || _type == GameType.training)
         {
             _canSelectSecondCharacter = false;
             _fighterTwo.DisableVisuals();
             _fighterTwo.SetNull();
-            _fighterTwo._characterIcon.gameObject.SetActive(false);
-            _fighterTwo._characterName.gameObject.SetActive(false);
-            _fighterTwo._characterSkin.gameObject.SetActive(false);
+            _fighterTwo.DisableGraphics();
         }
 
-        if(_type == GameType.training) {
-            _canSelectSecondCharacter = false;
-            _fighterTwo.SetAsReady();
-            _fighterTwo.DisableVisuals();
-        }
+        //if(_type == GameType.training) {
+        //    _canSelectSecondCharacter = false;
+        //    _fighterTwo.SetAsReady();
+        //    _fighterTwo.DisableVisuals();
+        //}
     }
 
     public static CharacterSelectSystem Get() {
@@ -388,7 +387,7 @@ public class CharacterSelectSystem : MonoBehaviour
         _fighterOne.RandomCharacter(_profiles.Length);
         _fighterOne.Refresh(_profiles[_fighterOne.GetSelection()], FighterFilter.one);
         yield return new WaitForSeconds(0.3f);
-        if (!GameLogic.Get()._devLocked || _fighterOne.GetSelection() <= 1)
+        if (!GameLogic.Get()._devLocked || (_fighterOne.GetSelection() == 2 || _fighterOne.GetSelection() == 3))
         {
             _fighterOne.SetAsReady();
         }
@@ -405,7 +404,7 @@ public class CharacterSelectSystem : MonoBehaviour
         _fighterTwo.RandomCharacter(_profiles.Length);
         _fighterTwo.Refresh(_profiles[_fighterTwo.GetSelection()], FighterFilter.two);
         yield return new WaitForSeconds(0.3f);
-        if (!GameLogic.Get()._devLocked || _fighterTwo.GetSelection() <= 1)
+        if (!GameLogic.Get()._devLocked || (_fighterTwo.GetSelection() == 2 || _fighterTwo.GetSelection() == 3))
         {
             _fighterTwo.SetAsReady();
         }
@@ -579,5 +578,19 @@ public class CharacterSelectFighter
     {
         _currentSelection = 3;
         _currentSkinSelection = 0;
+    }
+
+    public void EnableGraphics()
+    {
+        _characterIcon.gameObject.SetActive(true);
+        _characterName.gameObject.SetActive(true);
+        _characterSkin.gameObject.SetActive(true);
+    }
+
+    public void DisableGraphics()
+    {
+        _characterIcon.gameObject.SetActive(false);
+        _characterName.gameObject.SetActive(false);
+        _characterSkin.gameObject.SetActive(false);
     }
 }

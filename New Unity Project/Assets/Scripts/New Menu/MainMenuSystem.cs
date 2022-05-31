@@ -90,7 +90,7 @@ public class MainMenuSystem : MonoBehaviour
 
         for (int i = 0; i < _mainMenuButtons.Length; i++) {
             int steve = i + 1;
-            if (_mainMenuButtons[i].OnClick() && steve != 2) {
+            if (_mainMenuButtons[i].OnClick()) {
                 SetPage(steve);
                 if (steve == 3)
                 {
