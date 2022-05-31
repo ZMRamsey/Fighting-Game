@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     private bool _active;
     [SerializeField] GameObject _pausePanel;
     [SerializeField] GameObject _movelistPanel;
+    [SerializeField] GameObject _controlsPanel;
     [SerializeField] GameObject _selector;
     private int _index;
     private int _pauseLayer;
@@ -60,7 +61,8 @@ public class PauseMenu : MonoBehaviour
                     _pauseLayer = 0;
                     break;
                 case (2):
-                    OnMoveList();
+                    //OnMoveList();
+                    OnControls();
                     break;
                 default:
                     break;
@@ -72,29 +74,29 @@ public class PauseMenu : MonoBehaviour
     {
         if (GlobalInputManager.Get().GetDownInput(_pauseOwner))
         {
-            _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
-            //_options[_index].color = Color.white;
+            //_options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+            _options[_index].color = Color.white;
             _index++;
             if (_index == 4)
             {
                 _index = 0;
             }
-            _options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
-            //_options[_index].color = _pauseTeal;
+            //_options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
+            _options[_index].color = _pauseTeal;
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
         if (GlobalInputManager.Get().GetUpInput(_pauseOwner))
         {
-            _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
-            //_options[_index].color = Color.white;
+            //_options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+            _options[_index].color = Color.white;
             _index--;
             if (_index == -1)
             {
                 _index = 3;
             }
-            _options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
-            //_options[_index].color = _pauseTeal;
+            //_options[_index].color = _index != 1 ? _pauseTeal : _pauseGreyedTeal;
+            _options[_index].color = _pauseTeal;
             _selector.transform.localPosition = _targetPoints[_index];
         }
 
@@ -113,6 +115,7 @@ public class PauseMenu : MonoBehaviour
 
                 case (1):
                     //SetMovelist();
+                    SetControls();
                     break;
 
                 case (2):
@@ -140,7 +143,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnMoveList()
     {
-        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner) || GlobalInputManager.Get().GetBackInput())
+        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner) || GlobalInputManager.Get().GetBackInput(_pauseOwner))
         {
             DeselectLeftSide();
             SetMainPause();
@@ -212,8 +215,8 @@ public class PauseMenu : MonoBehaviour
     {
         GameManager.Get().SetSounds(0, 424);
         _active = true;
-        _options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
-        //_options[_index].color = Color.white;
+        //_options[_index].color = _index != 1 ? Color.white : _pauseGreyedWhite;
+        _options[_index].color = Color.white;
         _index = 0;
         _pauseLayer = 0;
         _selector.transform.localPosition = _targetPoints[_index];
@@ -244,6 +247,7 @@ public class PauseMenu : MonoBehaviour
     public void SetMainPause()
     {
         _pauseLayer = 1;
+        _controlsPanel.SetActive(false);
         _movelistPanel.SetActive(false);
         ResetLeftSide();
         _pausePanel.SetActive(true);
@@ -360,5 +364,20 @@ public class PauseMenu : MonoBehaviour
             _rightSideDescriptions[i] = set[i].GetOptionDesc();
         }
         UpdateRightSide();
+    }
+
+    public void SetControls()
+    {
+        _pauseLayer = 2;
+        _controlsPanel.SetActive(true);
+        _pausePanel.SetActive(false);
+    }
+
+    public void OnControls()
+    {
+        if (GlobalInputManager.Get().GetPauseInput(_pauseOwner) || GlobalInputManager.Get().GetBackInput(_pauseOwner))
+        {
+            SetMainPause();
+        }
     }
 }

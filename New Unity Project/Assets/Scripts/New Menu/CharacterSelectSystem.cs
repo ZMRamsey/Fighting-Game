@@ -303,7 +303,12 @@ public class CharacterSelectSystem : MonoBehaviour
             _fighterTwo.SetAsReady();
         }
 
-        if(_type == GameType.arcade || _type == GameType.training)
+        if (_type == GameType.training)
+        {
+            _fighterTwo.SetAsReady();
+        }
+
+        if (_type == GameType.arcade || _type == GameType.training)
         {
             _canSelectSecondCharacter = false;
             _fighterTwo.DisableVisuals();
