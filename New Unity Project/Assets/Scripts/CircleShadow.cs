@@ -30,6 +30,7 @@ public class CircleShadow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _renderer.enabled = _parent.root.gameObject.activeSelf;
         _position = transform.position;
         _position.y = 0.84f;
         _position.x = _offset.x + _parent.transform.position.x;
